@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_intraday_c2_20260501",
+  "run_id": "exploratory_intraday_c2_20260501",
+  "attempt_id": "attempt_20260501_111212",
+  "generated_at": "2026-05-01T11:17:12.242605+08:00",
+  "candidate_scheme_id": "exploratory_intraday_c2_trendbias_upsideshare",
+  "research_round_id": "rr_exploratory_intraday_microstructure_independent_baseline_20260501",
+  "low_liquidity_holding_count": 6650,
+  "low_liquidity_weight_total": 30.227272727272677,
+  "low_liquidity_weight_share": 0.12824468700582653,
+  "low_liquidity_contribution_total": -0.006900391760046216,
+  "low_liquidity_contribution_share_of_strategy": -0.007615184389440517,
+  "low_liquidity_alpha_contribution_share": -0.0051493909328402,
+  "flag_high_low_liquidity_exposure": false
+}

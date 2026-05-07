@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/return_attribution_summary.schema.json",
+  "title": "Return Attribution Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "benchmark_contribution_total",
+    "cash_drag_total",
+    "selection_alpha_total",
+    "low_liquidity_contribution_total"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "benchmark_contribution_total": { "type": "number" },
+    "cash_drag_total": { "type": "number" },
+    "selection_alpha_total": { "type": "number" },
+    "low_liquidity_contribution_total": { "type": "number" }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-04-18T07:35:00+08:00",
+  "research_round_id": "rr_baseline_challenger_drop_liquidity_20260417",
+  "baseline_candidate_scheme_id": "baseline_reversal_momentum_lowvol_liquidity_v1",
+  "challenger_candidate_scheme_id": "baseline_reversal_momentum_lowvol_v2",
+  "comparison_scope": "fixed_test_audit_core_metrics",
+  "baseline": {
+    "annual_relative_return": -0.12249111755100861,
+    "avg_cash_weight": 0.8684539881036782,
+    "avg_invested_weight": 0.13154601189630252,
+    "low_liquidity_flag_high": true,
+    "low_liquidity_weight_share": 0.9999829986908992,
+    "low_liquidity_alpha_contribution_share": 1.3684531163107034,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false,
+    "cost_stress_annual_relative_return": -0.14841115114719172
+  },
+  "challenger": {
+    "annual_relative_return": -0.12326055901792021,
+    "avg_cash_weight": 0.8492761290095185,
+    "avg_invested_weight": 0.1507238709904969,
+    "low_liquidity_flag_high": true,
+    "low_liquidity_weight_share": 0.9972518672129203,
+    "low_liquidity_alpha_contribution_share": 1.4340984776285584,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false,
+    "cost_stress_annual_relative_return": -0.1535501656751247
+  },
+  "differences": {
+    "annual_relative_return_delta": -0.0007694414669116045,
+    "avg_cash_weight_delta": -0.019177859094159674,
+    "avg_invested_weight_delta": 0.019177859094194377,
+    "low_liquidity_weight_share_delta": -0.002731131477978911,
+    "low_liquidity_alpha_contribution_share_delta": 0.06564536131785504,
+    "cost_stress_annual_relative_return_delta": -0.005139014527933
+  },
+  "decision": "weak_candidate",
+  "decision_reason": "Removing the liquidity feature did not materially solve the low-liquidity dependence and did not improve TopK perturbation or cost stress outcomes; relative return also deteriorated slightly."
+}

@@ -1,0 +1,14 @@
+{
+  "research_round_id": "rr_baseline_challenger_drop_lowvol_20260418",
+  "candidate_scheme_id": "baseline_reversal_momentum_v3",
+  "recorded_at": "2026-04-18T09:06:30+08:00",
+  "experiment_type": "engineering_runtime_parameter",
+  "parameter_name": "signal_date_chunk_size",
+  "tested_value": 300,
+  "baseline_reference_value": 500,
+  "scope": "run_state full-chain materialization only",
+  "strategy_logic_changed": false,
+  "result": "rejected",
+  "reason": "The 300-chunk run produced materially slower early parquet growth and poorer end-to-end throughput characteristics than the established 500-chunk configuration on the current MacBook Air M4 workload.",
+  "action": "Keep the project default at signal_date_chunk_size=500. Do not treat chunk_size experiments as strategy research degrees of freedom."
+}

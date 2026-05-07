@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "attempt_id": "attempt_20260423_153416",
+  "generated_at": "2026-04-23T15:40:27.329266+08:00",
+  "candidate_scheme_id": "price_volume_v21_liquidity_trend_60_120_substitution",
+  "research_round_id": "rr_price_volume_liquidity_trend_60_120_substitution_family_20260423",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.09728996266346301,
+  "pass_cost_stress_relative_return_floor": false
+}

@@ -1,0 +1,79 @@
+{
+  "registered_at": "2026-05-02T15:00:00+08:00",
+  "research_round_id": "rr_exploratory_reversal_cord30_composite_20260502",
+  "research_phase": "signal_learnability",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "minimal_composite_check",
+  "round_note": "Signal/learnability phase. Single-candidate minimal composite test: does adding cord30 to p98 reversal improve pipeline compatibility without degrading IC? Not a multi-signal search. Not a full pipeline run.",
+  "research_question": "尾部处理后的 reversal (p98) 和 cord30 是否足够正交，使得最小等权复合 (0.5×rank(reversal) + 0.5×rank(cord30)) 在 IC 上不劣于 p98 reversal 的同时，提升 TopK pipeline compatibility？",
+  "changed_dimension": "minimal_two_signal_composite",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "将 p98 tail-handled reversal 与 cord30 做等权 rank 复合。两个信号分别按 signal_date 横截面 PERCENT_RANK，等权平均为 composite score。在 composite score 上重排取 TopK=10。不改变: 数据源、snapshot、contract、TopK、执行语义、成本模型。不引入新数据源。不调整权重。不做多信号搜索。",
+  "primary_baseline": {
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "name": "p98 tail-handled reversal",
+    "median_daily_ic": 0.0459,
+    "median_ci": [0.0422, 0.0499],
+    "top10_avg_label": 0.0076,
+    "top10_bot10_spread": 0.0049,
+    "source_round": "rr_exploratory_reversal_tail_handling_20260502"
+  },
+  "secondary_reference": {
+    "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+    "name": "alpha158_cord30",
+    "median_daily_ic": 0.0325,
+    "median_ci": [0.0300, 0.0346],
+    "top10_avg_label": 0.0076,
+    "top10_bot10_spread": 0.0098,
+    "role": "aspirational ceiling for spread only — not a hard pass/fail threshold",
+    "source": "learnability_diagnostic_20260502_frozen"
+  },
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "candidate_scheme_ids": ["reversal_p98_cord30_ew_v1"],
+  "planned_candidate_scheme_ids": ["reversal_p98_cord30_ew_v1"],
+  "candidates": {
+    "reversal_p98_cord30_ew_v1": {
+      "name": "p98 reversal + cord30 equal-weight rank composite",
+      "formula": "composite_score = 0.5 × PERCENT_RANK(p98_reversal_score) + 0.5 × PERCENT_RANK(cord30_score)",
+      "implementation": {
+        "step_1": "Compute p98 tail-handled reversal scores: negate reversal model_score_D0, exclude stocks with raw score above daily p98, keep remaining",
+        "step_2": "Compute cord30 scores from confirmatory_cord30 model_score_D0",
+        "step_3": "Per signal_date, PERCENT_RANK each signal cross-sectionally",
+        "step_4": "Average the two rank scores with equal weight (0.5 each)",
+        "step_5": "Re-rank composite cross-sectionally for TopK=10 selection",
+        "step_6": "Measure IC and Top10/Bot10 labels"
+      },
+      "expected_mechanism": "Reversal (anti-momentum) and cord30 (price-volume co-movement) are mechanistically distinct. If orthogonal, equal-weight composite diversifies noise and concentrates signal."
+    }
+  },
+  "success_rules": {
+    "dimension_a_learnability": {
+      "median_daily_ic_ge_0040": "median_daily_ic >= 0.040",
+      "median_daily_ic_gt_p98_reversal": "median_daily_ic > 0.0459",
+      "note": "Must exceed primary baseline (p98 reversal). Cord30 floor (0.0325) is implied but not a separate hard check."
+    },
+    "dimension_b_pipeline_compatibility": {
+      "top10_avg_label_gt_0": "top10_avg_label > 0",
+      "top10_bot10_spread_gt_p98_reversal": "top10_bot10_spread > 0.0049",
+      "note": "Must exceed primary baseline (p98 reversal). Cord30 spread (0.0098) is aspirational, not a hard threshold."
+    },
+    "core_pass_condition": "All 4 criteria must pass (2 learnability + 2 pipeline).",
+    "stop_condition": "If composite IC does not exceed p98 reversal IC (0.0459) OR composite spread does not exceed p98 reversal spread (0.0049): composite fails. p98 reversal remains primary standalone baseline. Cord30 is retired as a composite partner for reversal. Next step: either find a different orthogonal partner for reversal, or conclude current signal space is maximally extracted.",
+    "ic_computation_method": "Spearman rank correlation (CORR of score vs oracle label_5d_next_open_close). Daily IC aggregated over all trading days in trainval snapshot where >= 20 stocks have non-null scores and labels. Bootstrap CI: 10,000 resamples, seed=42."
+  },
+  "exclusions": {
+    "multi_signal_search": "Excluded. Single candidate only.",
+    "weight_optimization": "Excluded. Equal-weight only. No IC-IR, shrinkage, or dynamic weights.",
+    "full_portfolio_pipeline": "Excluded. IC + TopK diagnostic only. No fixed test, no cost stress, no 9-gate evaluation.",
+    "new_data_sources": "Excluded.",
+    "contract_changes": "Excluded.",
+    "D10_holding_period": "Excluded."
+  },
+  "design_document": "项目总纲及计划/design_reversal_cord30_composite.md",
+  "tail_handling_reference": "artifacts/fixed_test/reversal_tail_handling/reversal_tail_handling_results_20260502.json",
+  "learnability_diagnostic_reference": "artifacts/fixed_test/learnability_diagnostic/learnability_diagnostic_20260502.md",
+  "serial_rule": "如果通过，p98+cord30 composite 成为新 baseline，进入 small composite design 方向。如果不过，p98 reversal standalone 成为主 baseline，cord30 退出复合候选，信号空间在当前数据下视为已最大化提取。"
+}

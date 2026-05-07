@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-18T17:20:00+08:00",
+  "research_round_id": "rr_baseline_universe_liquidity_guard_20260418",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "challenger_candidate_scheme_id": "baseline_momentum_v8_universe_liquidity_guard",
+  "engineering_comparison": {
+    "baseline_chunk_size": 5,
+    "challenger_chunk_size": 8,
+    "baseline_run_state_seconds": 277,
+    "challenger_run_state_seconds": 315,
+    "observation": "chunk=8 was slower than chunk=5 on this hardware, and the strategy result did not improve versus v7."
+  },
+  "metric_comparison": {
+    "annual_relative_return": {
+      "baseline_v7": -0.05294782486017935,
+      "challenger_v8": -0.05294782486017935,
+      "delta_v8_minus_v7": 0.0
+    },
+    "relative_ir": {
+      "baseline_v7": -0.3851253891565567,
+      "challenger_v8": -0.3851253891565567,
+      "delta_v8_minus_v7": 0.0
+    },
+    "max_drawdown": {
+      "baseline_v7": -0.4235167178426035,
+      "challenger_v8": -0.4235167178426035,
+      "delta_v8_minus_v7": 0.0
+    },
+    "avg_cash_weight": {
+      "baseline_v7": 0.8626331713859813,
+      "challenger_v8": 0.8626331713859813,
+      "delta_v8_minus_v7": 0.0
+    },
+    "avg_invested_weight": {
+      "baseline_v7": 0.13736682861399285,
+      "challenger_v8": 0.13736682861399283,
+      "delta_v8_minus_v7": -2.7755575615628914e-17
+    },
+    "low_liquidity_weight_share": {
+      "baseline_v7": 1.0,
+      "challenger_v8": 1.0,
+      "delta_v8_minus_v7": 0.0
+    },
+    "low_liquidity_alpha_contribution_share": {
+      "baseline_v7": 0.5990868057974615,
+      "challenger_v8": 0.5990868057974635,
+      "delta_v8_minus_v7": 1.9984014443252818e-15
+    },
+    "cost_stress_annual_relative_return": {
+      "baseline_v7": -0.08199613759429958,
+      "challenger_v8": -0.08199613759429958,
+      "delta_v8_minus_v7": 0.0
+    }
+  },
+  "audit_gate_comparison": {
+    "baseline_v7": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    },
+    "challenger_v8": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    }
+  },
+  "conclusion": [
+    "Moving the same 0.70 liquidity guard from ranking eligibility to the effective universe boundary produced effectively identical strategy results to v7.",
+    "The challenger did not improve any fixed-test metric or audit gate outcome versus v7.",
+    "chunk=8 was slower than chunk=5 on this hardware, so the engineering experiment also did not justify replacing the current faster chunk setting.",
+    "This result suggests that, in the current implementation, universe guard and ranking guard are functionally equivalent for this scheme family."
+  ]
+}

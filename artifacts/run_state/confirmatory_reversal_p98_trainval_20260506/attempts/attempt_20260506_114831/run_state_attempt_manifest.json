@@ -1,0 +1,45 @@
+{
+  "run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "attempt_id": "attempt_20260506_114831",
+  "run_type": "confirmatory",
+  "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+  "status": "completed",
+  "started_at": "2026-05-06T11:48:31.622061+08:00",
+  "attempt_dir": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831",
+  "input_paths": {
+    "project_label_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/inputs/project_label_panel.parquet",
+    "project_sample_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/inputs/project_sample_panel.parquet",
+    "project_execution_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/inputs/project_execution_panel.parquet",
+    "model_scores_D0": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/inputs/model_scores_D0.parquet",
+    "base_data_quality_audit": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/inputs/data_quality_audit.json"
+  },
+  "source_input_paths": {
+    "project_label_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/project_label_panel.parquet",
+    "project_sample_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/project_sample_panel.parquet",
+    "project_execution_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/project_execution_panel.parquet",
+    "model_scores_D0": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/model_scores_D0.parquet",
+    "base_data_quality_audit": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/data_quality_audit.json"
+  },
+  "output_paths": {
+    "ranking_state_daily": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/ranking_state_daily.parquet",
+    "execution_state_daily": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/execution_state_daily.parquet",
+    "data_quality_audit": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/data_quality_audit.json"
+  },
+  "parameters": {
+    "topk": 10,
+    "signal_date_chunk_size": 5,
+    "max_threads": 8,
+    "memory_limit_gb": 20.0,
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "changed_dimension": "score_family_composition",
+    "liquidity_guard": null
+  },
+  "registry_preflight": {
+    "candidate_scheme_id_registered": true,
+    "research_round_id_registered": true,
+    "changed_dimension": "score_family_composition",
+    "change_control_rule": "single_dimension_only",
+    "preregistration_path": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_reversal_cord30_promotion_20260506/preregistration.json"
+  },
+  "completed_at": "2026-05-06T11:50:55.341493+08:00"
+}

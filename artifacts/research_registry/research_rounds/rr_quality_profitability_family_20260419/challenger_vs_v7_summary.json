@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-04-19T09:32:13.109734+08:00",
+  "candidate_scheme_id": "quality_profitability_v12_core",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "comparison_type": "v12_vs_recalibrated_v7",
+  "v7": {
+    "run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.06976572569304007,
+    "relative_ir": -0.5287021621315882,
+    "max_drawdown": -0.3968114993586318,
+    "avg_cash_weight": 0.7919965084907071,
+    "avg_invested_weight": 0.2080034915092814,
+    "avg_turnover_daily": 0.09811299793683326,
+    "low_liquidity_weight_share": 0.020450724262800736,
+    "low_liquidity_alpha_contribution_share": -0.10314096828107921,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "v12": {
+    "run_id": "fullchain_quality_profitability_core_20260419_0018",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.07569526560439244,
+    "relative_ir": -0.4917468763342457,
+    "max_drawdown": -0.19423341791732263,
+    "avg_cash_weight": 0.8950028443208294,
+    "avg_invested_weight": 0.10499715567916247,
+    "avg_turnover_daily": 0.04731264353285867,
+    "low_liquidity_weight_share": 0.10730804810359125,
+    "low_liquidity_alpha_contribution_share": -0.3027090411497928,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "deltas": {
+    "annual_relative_return_delta": -0.005929539911352366,
+    "relative_ir_delta": 0.036955285797342474,
+    "max_drawdown_delta": 0.20257808144130918,
+    "avg_cash_weight_delta": 0.10300633583012231,
+    "avg_invested_weight_delta": -0.10300633583011894,
+    "avg_turnover_daily_delta": -0.05080035440397459,
+    "low_liquidity_weight_share_delta": 0.0868573238407905,
+    "low_liquidity_alpha_contribution_share_delta": -0.1995680728687136
+  },
+  "decision": {
+    "status": "weak_candidate",
+    "reason": "quality/profitability core score reduced drawdown and turnover but worsened annual relative return, kept perturbation and cost-stress gates failing, and therefore did not surpass recalibrated v7 as the active reference weak scheme"
+  }
+}

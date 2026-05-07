@@ -1,0 +1,67 @@
+{
+  "candidate_scheme_id": "price_volume_v16_remove_trend_consistency",
+  "research_round_id": "rr_price_volume_remove_trend_consistency_family_20260422",
+  "generated_at": "2026-04-22T14:10:55+08:00",
+  "signal_edge_readout": {
+    "candidate_scheme_id": "price_volume_v16_remove_trend_consistency",
+    "research_round_id": "rr_price_volume_remove_trend_consistency_family_20260422",
+    "as_of_date": "20260422",
+    "coverage": {
+      "ranking_eligible_rows": 15233701,
+      "null_score_rows": 135887,
+      "null_score_share": 0.008920156697312097,
+      "scored_with_label_rows": 14888004
+    },
+    "ic_readout": {
+      "full_sample_corr_ic": 0.013345465999261282,
+      "avg_daily_ic": 0.020657510312888944,
+      "median_daily_ic": 0.017744140849193183,
+      "positive_daily_ic_share": 0.558220810166799
+    },
+    "decile_monotonicity": {
+      "1": 0.005080754240868894,
+      "2": 0.004583137411760834,
+      "3": 0.004355979760754771,
+      "4": 0.004255673484015276,
+      "5": 0.004051766698139714,
+      "6": 0.003812765809660145,
+      "7": 0.0036840781536061026,
+      "8": 0.003518795324854359,
+      "9": 0.0027342344532154065,
+      "10": 0.001424974620331419
+    },
+    "top_slice_readout": {
+      "avg_label_top10": 0.006813846752840204,
+      "avg_label_rank11_20": 0.006294745429802957,
+      "avg_label_bottom10": 0.0005162098119236943,
+      "top10_minus_rank11_20": 0.0005191013230372472,
+      "top10_minus_bottom10": 0.00629763694091651
+    },
+    "cutoff_gap": {
+      "avg_rank10_11_score_gap": 0.0020064736449069338,
+      "median_rank10_11_score_gap": 0.0012840649334233678,
+      "days_with_both_ranks": 6302,
+      "days_gap_lt_0_005": 5731,
+      "days_gap_lt_0_001": 2613
+    }
+  },
+  "fixed_test_readout": {
+    "annual_relative_return": -0.05889061355032099,
+    "relative_ir": -0.4267481179417596,
+    "max_drawdown": -0.40370233923872245,
+    "avg_turnover_daily": 0.07405234822311478,
+    "avg_cash_weight": 0.841918254733673,
+    "avg_invested_weight": 0.15808174526631844,
+    "low_liquidity_weight_share": 0.1501594293415469,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false,
+    "cost_stress_annual_relative_return": -0.09345163994819183
+  },
+  "diagnosis": {
+    "broad_edge_positive": true,
+    "head_slice_positive_but_thin": true,
+    "topk_cutoff_still_fragile": true,
+    "main_issue": "The two-signal family now has clean positive signal-edge and a positive top10-minus-rank11_20 spread, but the rank10/11 score gap remains thin on most days, so fixed-test robustness still fails mainly at the extraction/cutoff layer rather than the family direction layer.",
+    "v17_direction_suggestion": "Prefer a portfolio_extraction-only challenger that keeps the v16 two-signal family fixed and changes only the mapping from score ranks into TopK capital allocation."
+  }
+}

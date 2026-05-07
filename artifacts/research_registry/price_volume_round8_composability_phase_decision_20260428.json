@@ -1,0 +1,44 @@
+{
+  "as_of_date": "20260428",
+  "scope": "round8 + two composability screens",
+  "decision": {
+    "working_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+    "keep_v18_as_working_reference": true,
+    "pause_current_price_volume_family_tuning_line": true,
+    "promote_round8_keepers_into_new_family_now": false
+  },
+  "evidence": {
+    "round8_positive_keepers": [
+      "price_volume_single_signal_intraday_reversal_asymmetry_20d_v1",
+      "price_volume_single_signal_high_open_hold_ratio_20d_v1"
+    ],
+    "composability_screens": [
+      {
+        "research_round_id": "rr_price_volume_intraday_reversal_asymmetry_composability_screen_20260428",
+        "classification": "composability_screen_mixed",
+        "reference_avg_top10_overlap_next_day": 7.223070739549839,
+        "screen_avg_top10_overlap_next_day": 6.870377813504823,
+        "overlap_drop": -0.3526929260450164
+      },
+      {
+        "research_round_id": "rr_price_volume_high_open_hold_ratio_composability_screen_20260428",
+        "classification": "composability_screen_mixed",
+        "reference_avg_top10_overlap_next_day": 7.223070739549839,
+        "screen_avg_top10_overlap_next_day": 7.140072347266881,
+        "overlap_drop": -0.08299839228295803
+      }
+    ]
+  },
+  "hard_promotion_gate": {
+    "metric": "screen_avg_top10_overlap_next_day",
+    "reference_metric": "reference_avg_top10_overlap_next_day",
+    "max_allowed_drop": 0.1,
+    "rule": "promotion_blocked_if_reference_minus_screen_exceeds_max_allowed_drop",
+    "rationale": "head stability degradation has been the repeated failure mode at composition stage."
+  },
+  "next_step": {
+    "open_new_atomic_discovery_batch": true,
+    "new_batch_size": 6,
+    "design_goal": "find signals that can pass composability rather than only standalone positivity."
+  }
+}

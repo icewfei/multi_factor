@@ -1,0 +1,368 @@
+{
+  "research_round_id": "rr_composability_screen_orthogonal_family_v19_test_20260430",
+  "generated_at": "2026-04-30T21:14:46+08:00",
+  "candidate_scheme_id": "composability_screen_orthogonal_family_v19_v1",
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "candidate_signal_composition": [
+    "alpha158_corr20_raw",
+    "alpha158_vsumd60_raw",
+    "intraday_trend_bias_20d",
+    "momentum_60_5",
+    "lower_shadow_support_20d"
+  ],
+  "reference_signal_composition": [
+    "pv_beta_20d",
+    "intraday_trend_bias_20d",
+    "liq_trend_20_60",
+    "momentum_60_5",
+    "upside_range_share_20d"
+  ],
+  "coverage": {
+    "total_rows": 11198074,
+    "ranking_eligible_rows": 10780956,
+    "reference_scored_rows": 10780956,
+    "screen_scored_rows": 10780956
+  },
+  "reference_readout": {
+    "full_sample_corr_ic": 0.018331939201843422,
+    "avg_daily_ic": 0.03028831949042561,
+    "median_daily_ic": 0.030316096713004524,
+    "positive_daily_ic_share": 0.5917026468931856,
+    "avg_label_top10": 0.010130196670538327,
+    "avg_label_rank11_20": 0.007670861053434556,
+    "avg_label_bottom10": -0.007552808299798897,
+    "top10_minus_rank11_20": 0.002459335617103771,
+    "avg_rank10_11_score_gap": 0.01253453156618072,
+    "avg_top10_liquidity_rank_mean": 0.45028365714435153
+  },
+  "screen_readout": {
+    "full_sample_corr_ic": 0.022452944015988314,
+    "avg_daily_ic": 0.03679962270331066,
+    "median_daily_ic": 0.0363552371355809,
+    "positive_daily_ic_share": 0.6196733621175146,
+    "avg_label_top10": 0.011339418757957262,
+    "avg_label_rank11_20": 0.00834715184235844,
+    "avg_label_bottom10": 0.004133709368858984,
+    "top10_minus_rank11_20": 0.002992266915598821,
+    "avg_rank10_11_score_gap": 0.014229047102973402,
+    "avg_top10_liquidity_rank_mean": 0.4812718804941659
+  },
+  "pairwise_component_correlation": {
+    "candidate_family": {
+      "rank_alpha158_corr20_raw_vs_rank_alpha158_vsumd60_raw": {
+        "corr_full": 0.14789636683319682,
+        "corr_avg_daily": 0.13711674395953996,
+        "corr_median_daily": 0.1505063292940151,
+        "corr_positive_daily_share": 0.8158438145297541
+      },
+      "rank_alpha158_corr20_raw_vs_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.20326631609832962,
+        "corr_avg_daily": 0.18117359000330527,
+        "corr_median_daily": 0.19914928170802698,
+        "corr_positive_daily_share": 0.8179087666604092
+      },
+      "rank_alpha158_corr20_raw_vs_rank_momentum_60_5": {
+        "corr_full": 0.062003556077294936,
+        "corr_avg_daily": 0.04765930541368627,
+        "corr_median_daily": 0.046135490514771824,
+        "corr_positive_daily_share": 0.5905763093673737
+      },
+      "rank_alpha158_corr20_raw_vs_rank_lower_shadow_support_20d": {
+        "corr_full": -0.04127860895330093,
+        "corr_avg_daily": -0.04021450554121941,
+        "corr_median_daily": -0.04120719385354113,
+        "corr_positive_daily_share": 0.2827107189787873
+      },
+      "rank_alpha158_vsumd60_raw_vs_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.2713785883703351,
+        "corr_avg_daily": 0.25307279402916705,
+        "corr_median_daily": 0.25831915714558684,
+        "corr_positive_daily_share": 0.9836681058757274
+      },
+      "rank_alpha158_vsumd60_raw_vs_rank_momentum_60_5": {
+        "corr_full": 0.26399318728536286,
+        "corr_avg_daily": 0.2401996071533567,
+        "corr_median_daily": 0.25770975170590843,
+        "corr_positive_daily_share": 0.924347662849634
+      },
+      "rank_alpha158_vsumd60_raw_vs_rank_lower_shadow_support_20d": {
+        "corr_full": 0.03579975931834805,
+        "corr_avg_daily": 0.03467276196353312,
+        "corr_median_daily": 0.036785877155477306,
+        "corr_positive_daily_share": 0.6990801576872536
+      },
+      "rank_intraday_trend_bias_20d_vs_rank_momentum_60_5": {
+        "corr_full": 0.3367762328056496,
+        "corr_avg_daily": 0.3267250489744705,
+        "corr_median_daily": 0.35106312347926233,
+        "corr_positive_daily_share": 0.9607659095175521
+      },
+      "rank_intraday_trend_bias_20d_vs_rank_lower_shadow_support_20d": {
+        "corr_full": 0.1757484401322197,
+        "corr_avg_daily": 0.17772411841344124,
+        "corr_median_daily": 0.17637849572550515,
+        "corr_positive_daily_share": 0.9571991740191478
+      },
+      "rank_momentum_60_5_vs_rank_lower_shadow_support_20d": {
+        "corr_full": 0.07900298599906588,
+        "corr_avg_daily": 0.07468418142803959,
+        "corr_median_daily": 0.0776755188530157,
+        "corr_positive_daily_share": 0.7873099305425192
+      }
+    },
+    "reference_family": {
+      "ref_rank_pv_beta_20d_vs_ref_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.4816192978251299,
+        "corr_avg_daily": 0.45403191119616676,
+        "corr_median_daily": 0.4734201705947929,
+        "corr_positive_daily_share": 0.9956823728177211
+      },
+      "ref_rank_pv_beta_20d_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.3413003793469917,
+        "corr_avg_daily": 0.32274592731119456,
+        "corr_median_daily": 0.33524397667442424,
+        "corr_positive_daily_share": 0.9960578186596584
+      },
+      "ref_rank_pv_beta_20d_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.20251040713178386,
+        "corr_avg_daily": 0.17776742502392626,
+        "corr_median_daily": 0.188907156855634,
+        "corr_positive_daily_share": 0.84700581941055
+      },
+      "ref_rank_pv_beta_20d_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.3651707415031741,
+        "corr_avg_daily": 0.3469853439843791,
+        "corr_median_daily": 0.3645563874193439,
+        "corr_positive_daily_share": 0.9926788060822226
+      },
+      "ref_rank_intraday_trend_bias_20d_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.4084274243164905,
+        "corr_avg_daily": 0.3916356707366335,
+        "corr_median_daily": 0.40303844670484523,
+        "corr_positive_daily_share": 0.999436831237094
+      },
+      "ref_rank_intraday_trend_bias_20d_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.33677623280566193,
+        "corr_avg_daily": 0.3267250489744702,
+        "corr_median_daily": 0.3510631234792624,
+        "corr_positive_daily_share": 0.9607659095175521
+      },
+      "ref_rank_intraday_trend_bias_20d_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.6716604257100743,
+        "corr_avg_daily": 0.6569457691120927,
+        "corr_median_daily": 0.6679738821156652,
+        "corr_positive_daily_share": 1.0
+      },
+      "ref_rank_liq_trend_20_60_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.3457730846787613,
+        "corr_avg_daily": 0.3224003879156323,
+        "corr_median_daily": 0.3274797400057543,
+        "corr_positive_daily_share": 0.9810399849821663
+      },
+      "ref_rank_liq_trend_20_60_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.3081470308843273,
+        "corr_avg_daily": 0.30147801254130774,
+        "corr_median_daily": 0.3018735954976517,
+        "corr_positive_daily_share": 0.9966209874225643
+      },
+      "ref_rank_momentum_60_5_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.23929351291086726,
+        "corr_avg_daily": 0.23368476070574615,
+        "corr_median_daily": 0.2435672799259966,
+        "corr_positive_daily_share": 0.9294161817157875
+      }
+    },
+    "cross_family": {
+      "rank_alpha158_corr20_raw_vs_ref_rank_pv_beta_20d": {
+        "corr_full": 0.43483641318312133,
+        "corr_avg_daily": 0.41936899087284896,
+        "corr_median_daily": 0.4313310341505515,
+        "corr_positive_daily_share": 0.9979350478693448
+      },
+      "rank_alpha158_corr20_raw_vs_ref_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.20326631609832962,
+        "corr_avg_daily": 0.18117359000330552,
+        "corr_median_daily": 0.19914928170802698,
+        "corr_positive_daily_share": 0.8179087666604092
+      },
+      "rank_alpha158_corr20_raw_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.14465227826877997,
+        "corr_avg_daily": 0.12497666658571582,
+        "corr_median_daily": 0.1373125829208274,
+        "corr_positive_daily_share": 0.7743570489956824
+      },
+      "rank_alpha158_corr20_raw_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.06200355607729617,
+        "corr_avg_daily": 0.04765930541368632,
+        "corr_median_daily": 0.046135490514771824,
+        "corr_positive_daily_share": 0.5905763093673737
+      },
+      "rank_alpha158_corr20_raw_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.2044877756031865,
+        "corr_avg_daily": 0.19306482604246272,
+        "corr_median_daily": 0.20917151229227593,
+        "corr_positive_daily_share": 0.8545147362492961
+      },
+      "rank_alpha158_vsumd60_raw_vs_ref_rank_pv_beta_20d": {
+        "corr_full": 0.20132809979073119,
+        "corr_avg_daily": 0.1857144539186285,
+        "corr_median_daily": 0.18886434300774405,
+        "corr_positive_daily_share": 0.9609536324385207
+      },
+      "rank_alpha158_vsumd60_raw_vs_ref_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.2713785883703324,
+        "corr_avg_daily": 0.25307279402916694,
+        "corr_median_daily": 0.2583191571455869,
+        "corr_positive_daily_share": 0.9836681058757274
+      },
+      "rank_alpha158_vsumd60_raw_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.47493328272064056,
+        "corr_avg_daily": 0.4554668391098034,
+        "corr_median_daily": 0.46194669688228635,
+        "corr_positive_daily_share": 0.9986859395532195
+      },
+      "rank_alpha158_vsumd60_raw_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.26399318728536153,
+        "corr_avg_daily": 0.24019960715335645,
+        "corr_median_daily": 0.2577097517059085,
+        "corr_positive_daily_share": 0.924347662849634
+      },
+      "rank_alpha158_vsumd60_raw_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.22850913816956553,
+        "corr_avg_daily": 0.21499355681202412,
+        "corr_median_daily": 0.21760489082271536,
+        "corr_positive_daily_share": 0.9842312746386334
+      },
+      "rank_intraday_trend_bias_20d_vs_ref_rank_pv_beta_20d": {
+        "corr_full": 0.48161929782512786,
+        "corr_avg_daily": 0.45403191119616765,
+        "corr_median_daily": 0.473420170594793,
+        "corr_positive_daily_share": 0.9956823728177211
+      },
+      "rank_intraday_trend_bias_20d_vs_ref_rank_intraday_trend_bias_20d": {
+        "corr_full": 1.0000000000000002,
+        "corr_avg_daily": 1.0,
+        "corr_median_daily": 1.0,
+        "corr_positive_daily_share": 1.0
+      },
+      "rank_intraday_trend_bias_20d_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.4084274243164973,
+        "corr_avg_daily": 0.3916356707366336,
+        "corr_median_daily": 0.40303844670484534,
+        "corr_positive_daily_share": 0.999436831237094
+      },
+      "rank_intraday_trend_bias_20d_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.3367762328056497,
+        "corr_avg_daily": 0.32672504897446997,
+        "corr_median_daily": 0.3510631234792624,
+        "corr_positive_daily_share": 0.9607659095175521
+      },
+      "rank_intraday_trend_bias_20d_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.6716604257100748,
+        "corr_avg_daily": 0.6569457691120937,
+        "corr_median_daily": 0.6679738821156648,
+        "corr_positive_daily_share": 1.0
+      },
+      "rank_momentum_60_5_vs_ref_rank_pv_beta_20d": {
+        "corr_full": 0.20251040713178464,
+        "corr_avg_daily": 0.17776742502392628,
+        "corr_median_daily": 0.18890715685563403,
+        "corr_positive_daily_share": 0.84700581941055
+      },
+      "rank_momentum_60_5_vs_ref_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.3367762328056505,
+        "corr_avg_daily": 0.32672504897447024,
+        "corr_median_daily": 0.35106312347926233,
+        "corr_positive_daily_share": 0.9607659095175521
+      },
+      "rank_momentum_60_5_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.34577308467876666,
+        "corr_avg_daily": 0.3224003879156328,
+        "corr_median_daily": 0.3274797400057543,
+        "corr_positive_daily_share": 0.9810399849821663
+      },
+      "rank_momentum_60_5_vs_ref_rank_momentum_60_5": {
+        "corr_full": 1.0,
+        "corr_avg_daily": 1.0,
+        "corr_median_daily": 1.0,
+        "corr_positive_daily_share": 1.0
+      },
+      "rank_momentum_60_5_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": 0.23929351291086562,
+        "corr_avg_daily": 0.23368476070574656,
+        "corr_median_daily": 0.24356727992599664,
+        "corr_positive_daily_share": 0.9294161817157875
+      },
+      "rank_lower_shadow_support_20d_vs_ref_rank_pv_beta_20d": {
+        "corr_full": -0.013899046680952619,
+        "corr_avg_daily": -0.016562886032348977,
+        "corr_median_daily": -0.018313062838771682,
+        "corr_positive_daily_share": 0.4304486577811151
+      },
+      "rank_lower_shadow_support_20d_vs_ref_rank_intraday_trend_bias_20d": {
+        "corr_full": 0.17574844013221386,
+        "corr_avg_daily": 0.1777241184134411,
+        "corr_median_daily": 0.17637849572550554,
+        "corr_positive_daily_share": 0.9571991740191478
+      },
+      "rank_lower_shadow_support_20d_vs_ref_rank_liq_trend_20_60": {
+        "corr_full": 0.06573887469171176,
+        "corr_avg_daily": 0.061264095426040034,
+        "corr_median_daily": 0.06235248632544601,
+        "corr_positive_daily_share": 0.7587760465552844
+      },
+      "rank_lower_shadow_support_20d_vs_ref_rank_momentum_60_5": {
+        "corr_full": 0.07900298599906713,
+        "corr_avg_daily": 0.07468418142803968,
+        "corr_median_daily": 0.07767551885301574,
+        "corr_positive_daily_share": 0.7873099305425192
+      },
+      "rank_lower_shadow_support_20d_vs_ref_rank_upside_range_share_20d": {
+        "corr_full": -0.09575263242535303,
+        "corr_avg_daily": -0.10802858327124507,
+        "corr_median_daily": -0.10721143796814413,
+        "corr_positive_daily_share": 0.12108128402477943
+      }
+    }
+  },
+  "component_interaction": {
+    "bucket_readout": {
+      "ref_high_scr_high": 0.005515938930699852,
+      "ref_high_scr_mid": 0.004863346842660389,
+      "ref_high_scr_low": 0.004917675676397694,
+      "ref_mid_scr_high": 0.005848625418331557,
+      "ref_mid_scr_mid": 0.004289174567330918,
+      "ref_mid_scr_low": 0.0033601626405402175,
+      "ref_low_scr_high": 0.006867763903249297,
+      "ref_low_scr_mid": 0.004342458607075791,
+      "ref_low_scr_low": 0.0019665716170506335
+    }
+  },
+  "head_stability": {
+    "reference_avg_top10_overlap_next_day": 6.647408464098906,
+    "screen_avg_top10_overlap_next_day": 4.876190476190477,
+    "reference_median_top10_overlap_next_day": 7.0,
+    "screen_median_top10_overlap_next_day": 5.0,
+    "avg_top10_overlap_same_day_vs_reference": 2.7064183033002633,
+    "median_top10_overlap_same_day_vs_reference": 2.0,
+    "overlap_drop_tolerance": 0.2
+  },
+  "judgement": {
+    "classification": "composability_screen_mixed",
+    "primary_conclusion": "The orthogonal 5-signal family shows mixed composability vs v18. It may improve some static ordering diagnostics, but at least one of additive monotonicity, head stability, or liquidity/head proxy behavior remains questionable.",
+    "implication_for_next_step": "Keep the orthogonal family as a research candidate; do not promote into confirmatory yet. Consider subset reduction or alternative signal selection.",
+    "top_slice_improved": true,
+    "head_stability_not_worse": false,
+    "liquidity_not_worse": true,
+    "additive_high_bucket": true,
+    "hard_gate": {
+      "screen_avg_top10_overlap_next_day_drop_tolerance": 0.2,
+      "head_stability_not_worse": false
+    }
+  },
+  "notes": [
+    "This is a static composability screen (signal-edge only, no portfolio execution).",
+    "The candidate family replaces 3 of v18's 5 signals with more orthogonal alternatives.",
+    "Equal-weight percentile-rank blend used for both reference and candidate composites."
+  ]
+}

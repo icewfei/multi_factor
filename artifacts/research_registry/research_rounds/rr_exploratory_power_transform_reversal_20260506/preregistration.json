@@ -1,0 +1,13 @@
+{
+  "registered_at": "2026-05-06T15:00:00+08:00",
+  "research_round_id": "rr_exploratory_power_transform_reversal_20260506",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "nonlinear_score_transform",
+  "research_question": "Can a parametric power transform (1 - PERCENT_RANK^alpha) on reversal_5d outperform p98's hard 2% tail exclusion in both IC and full-chain performance?",
+  "changed_dimension": "score_nonlinear_transform",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": ["power_inv_rev_a4_v1", "power_inv_rev_a6_v1"],
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "snapshot_id": "warehouse_20260429_trainval_20211231"
+}

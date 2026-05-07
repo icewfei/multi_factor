@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/annual_return_table.schema.json",
+  "title": "Annual Return Table CSV",
+  "type": "object",
+  "required": [
+    "calendar_year",
+    "effective_days",
+    "strategy_return_year",
+    "benchmark_return_year",
+    "year_relative_return",
+    "positive_relative_year_flag"
+  ],
+  "properties": {
+    "calendar_year": { "type": "string" },
+    "effective_days": { "type": "integer" },
+    "strategy_return_year": { "type": ["number", "null"] },
+    "benchmark_return_year": { "type": ["number", "null"] },
+    "year_relative_return": { "type": ["number", "null"] },
+    "positive_relative_year_flag": { "type": "boolean" }
+  }
+}

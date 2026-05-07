@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "test_fundamental_single_roe_dt",
+  "run_id": "test_fundamental_single_roe_dt",
+  "attempt_id": "attempt_20260501_162543",
+  "generated_at": "2026-05-01T16:28:42.837017+08:00",
+  "candidate_scheme_id": "test_fundamental_single_roe_dt",
+  "research_round_id": "plumbing_validation_fundamental_20260501",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -0.6021310448790556,
+  "selection_alpha_total": 0.8156412558688662,
+  "low_liquidity_contribution_total": -1.4340533513373144
+}

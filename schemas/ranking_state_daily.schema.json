@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/ranking_state_daily.schema.json",
+  "title": "Ranking State Daily",
+  "type": "object",
+  "required": [
+    "run_id",
+    "attempt_id",
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "model_score_D0",
+    "ranking_eligible_D0",
+    "topk_frozen_D0"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "snapshot_id": { "type": "string" },
+    "instrument": { "type": "string" },
+    "signal_date": { "type": "string" },
+    "model_score_D0": { "type": ["number", "null"] },
+    "ranking_eligible_D0": { "type": "boolean" },
+    "rank_position": { "type": ["integer", "null"] },
+    "topk_threshold_rank": { "type": ["integer", "null"] },
+    "topk_frozen_D0": { "type": "boolean" },
+    "candidate_scheme_id": { "type": ["string", "null"] }
+  }
+}

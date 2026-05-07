@@ -1,0 +1,79 @@
+{
+  "registered_at": "2026-04-19T00:15:00+08:00",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "quality_profitability_v12_core"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_question": "Can we keep the calibrated v7 operational contract fixed, but replace the momentum-only score family with one PIT-based quality/profitability family, so that the resulting cross-sectional signal has thicker gross edge and better fixed-test robustness?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "score_family_contract": {
+    "family_name": "quality_profitability_core_v1",
+    "builder_name": "build_quality_profitability_model_scores.py",
+    "source_table": "fina_indicator_pit",
+    "feature_set": [
+      {
+        "field": "roe_dt",
+        "ranking_direction": "DESC",
+        "interpretation": "higher profitability is better"
+      },
+      {
+        "field": "roa_yearly",
+        "ranking_direction": "DESC",
+        "interpretation": "higher asset profitability is better"
+      },
+      {
+        "field": "q_roe",
+        "ranking_direction": "DESC",
+        "interpretation": "higher quarterly ROE is better"
+      },
+      {
+        "field": "q_dt_roe",
+        "ranking_direction": "DESC",
+        "interpretation": "higher quarterly ex-nonrecurring ROE is better"
+      }
+    ],
+    "score_rule": "mean(percentile_rank(roe_dt DESC), percentile_rank(roa_yearly DESC), percentile_rank(q_roe DESC), percentile_rank(q_dt_roe DESC)); require min_feature_count >= 3",
+    "missing_data_rule": "Only score rows with at least 3 non-null ranked features; otherwise emit null model_score_D0 and preserve the row for audit."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated v7 0.70 ranking liquidity guard and same TopK=10 width",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same equal-weight daily Top10 extraction used by calibrated v7",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "avg_turnover_daily",
+    "topk_perturbation_pass",
+    "cost_stress_pass",
+    "low_liquidity_weight_share"
+  ],
+  "disallowed_changes": [
+    "Do not change the calibrated v7 liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not combine this round with weight-penalty, extraction, or turnover-suppression changes.",
+    "Do not sweep multiple quality/profitability feature sets inside this round.",
+    "Do not sweep multiple score aggregation formulas inside this round.",
+    "Do not mix value, investment, or momentum features into this family scaffold round."
+  ],
+  "notes": [
+    "This round changes exactly one core dimension: the score family.",
+    "The purpose is to test whether a truly different PIT-based fundamental family can produce a stronger edge than the exhausted baseline momentum family.",
+    "This registration does not claim implementation completeness; it freezes the family definition and governance boundary first."
+  ]
+}

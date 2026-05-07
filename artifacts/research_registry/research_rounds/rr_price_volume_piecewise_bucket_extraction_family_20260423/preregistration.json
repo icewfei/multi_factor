@@ -1,0 +1,110 @@
+{
+  "registered_at": "2026-04-23T09:28:51+08:00",
+  "research_round_id": "rr_price_volume_piecewise_bucket_extraction_family_20260423",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_v20_piecewise_bucket_extraction"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Can a portfolio-extraction-only challenger freeze the v18 two-signal score family, calibrated liquidity guard, and mild refresh hysteresis, but replace equal-weight refreshed holdings with a deterministic piecewise bucket extraction that reduces incumbent resize churn enough to improve cost robustness without giving back the v17/v18 return and drawdown gains?",
+  "allowed_core_dimension": "portfolio extraction only",
+  "changed_dimension": "portfolio_extraction",
+  "change_control_rule": "single_dimension_only",
+  "score_contract_frozen": {
+    "feature_preset": "price_volume_v16_remove_trend_consistency",
+    "feature_set": [
+      "momentum_60_5_raw",
+      "liquidity_trend_20_60_raw"
+    ],
+    "score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2"
+  },
+  "guard_contract": {
+    "guard_name": "liquidity_guard_v2_recalibrated",
+    "guard_application_stage": "ranking_eligibility_guard",
+    "guard_definition": "Freeze the calibrated v7 / v17 ranking guard: only rows that are already ranking_eligible_D0 and whose 20-day average amount cross-sectional liquidity rank is >= 0.70 on the same signal_date may enter the ranking universe.",
+    "liquidity_field": "liquidity_20d_raw",
+    "liquidity_rank_direction": "higher_liquidity_means_higher_rank",
+    "liquidity_min_percentile": 0.70,
+    "treatment_of_rows_below_guard": "Remain in audit tables but must be excluded from ranking_state_daily eligibility."
+  },
+  "portfolio_refresh_contract_frozen": {
+    "refresh_rule_name": "refresh_hysteresis_top15_v1",
+    "refresh_definition": "Freeze the v18 incumbent-retention hysteresis: retain an incumbent if it still has rank_position <= 15 on the new signal_date and still satisfies the frozen guard plus tradability requirements. Only vacated slots may be refilled from the highest-ranked non-held eligible names until 10 names are held.",
+    "reference_rank_field": "rank_position",
+    "retain_if_rank_leq": 15,
+    "retain_if_guard_still_passes": true,
+    "retain_if_entry_tradeable": true,
+    "replacement_rule": "Fill remaining slots with highest-ranked non-held eligible names in ascending rank order until 10 names are held.",
+    "max_holdings": 10,
+    "target_weight_rule": "Equal-weight across currently held names after refresh; unfilled slots remain cash."
+  },
+  "portfolio_extraction_contract": {
+    "extraction_name": "piecewise_bucket_extraction_v1",
+    "extraction_definition": "After the frozen v18 refresh rule selects the held names for each signal_date, sort the selected names by current rank_position and assign deterministic per-name bucket weights within the refreshed portfolio: ranks 1-3 get 0.15 each, ranks 4-6 get 0.10 each, and ranks 7-10 get 0.0625 each. Normalize active selected weights to sum to 1.0 when fewer than 10 names are held.",
+    "rank_field": "rank_position",
+    "head_size": 10,
+    "weight_formula": "piecewise_bucket",
+    "bucket_weights": [
+      {
+        "rank_from": 1,
+        "rank_to": 3,
+        "per_name_weight": 0.15
+      },
+      {
+        "rank_from": 4,
+        "rank_to": 6,
+        "per_name_weight": 0.10
+      },
+      {
+        "rank_from": 7,
+        "rank_to": 10,
+        "per_name_weight": 0.0625
+      }
+    ],
+    "normalization": "same_signal_date_selected_head_sum_to_1",
+    "treatment_of_ranks_above_head_size": "Ranks above 10 may remain selected by the frozen refresh rule but receive zero extraction weight until renormalization over active selected names.",
+    "treatment_of_missing_rank": "Set target weight to 0.0."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "selection_contract": "same v18 score family, same calibrated 0.70 ranking liquidity guard, and same top-15 refresh hysteresis",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "avg_turnover_daily",
+    "topk_perturbation_pass",
+    "cost_stress_pass",
+    "low_liquidity_weight_share"
+  ],
+  "motivation_from_v17_to_v19_evidence": [
+    "v17 showed portfolio_extraction can materially improve annual_relative_return, relative_ir, max_drawdown, and low-liquidity weight share versus v16, but turnover rose sharply.",
+    "v18 showed mild refresh hysteresis preserved those extraction gains but did not reduce turnover.",
+    "v19 showed a direct stability cap also failed to reduce turnover, implying the main issue may be continuous cross-rank resizing inside the refreshed head rather than replacement flow alone."
+  ],
+  "disallowed_changes": [
+    "Do not change score features or score weights.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or its stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen top-15 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not change sample labels or return definitions.",
+    "Do not sweep multiple bucket layouts.",
+    "Do not sweep multiple extraction formulas.",
+    "Do not combine this round with score-family, refresh-rule, or weight-penalty changes."
+  ],
+  "notes": [
+    "This round changes exactly one core dimension: portfolio extraction.",
+    "The purpose is to preserve the productive v17/v18 direction while replacing continuous resized weights with a coarse bucket schedule that should be less sensitive to small day-to-day rank reshuffles."
+  ]
+}

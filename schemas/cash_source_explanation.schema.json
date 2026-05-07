@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/cash_source_explanation.schema.json",
+  "title": "Cash Source Explanation CSV",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "cash_reason",
+      "event_count",
+      "cash_weight_total",
+      "cash_weight_share_of_total"
+    ],
+    "properties": {
+      "cash_reason": { "type": "string" },
+      "event_count": { "type": "integer" },
+      "cash_weight_total": { "type": "number" },
+      "cash_weight_share_of_total": { "type": ["number", "null"] }
+    }
+  }
+}

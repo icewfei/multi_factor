@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/holding_period_return_distribution.schema.json",
+  "title": "Holding Period Return Distribution CSV",
+  "type": "object",
+  "required": [
+    "return_bucket",
+    "holding_count",
+    "holding_share",
+    "bucket_min_return",
+    "bucket_max_return",
+    "bucket_avg_return"
+  ],
+  "properties": {
+    "return_bucket": { "type": "string" },
+    "holding_count": { "type": "integer" },
+    "holding_share": { "type": ["number", "null"] },
+    "bucket_min_return": { "type": ["number", "null"] },
+    "bucket_max_return": { "type": ["number", "null"] },
+    "bucket_avg_return": { "type": ["number", "null"] }
+  }
+}

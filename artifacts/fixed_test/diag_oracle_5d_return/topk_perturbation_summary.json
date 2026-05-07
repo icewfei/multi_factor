@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "diag_oracle_5d_return",
+  "run_id": "diag_oracle_5d_return",
+  "attempt_id": "attempt_20260502_002223",
+  "generated_at": "2026-05-02T00:24:52.480600+08:00",
+  "candidate_scheme_id": "diag_oracle_5d_return",
+  "research_round_id": "diag_perfect_foresight_stress_probe_20260501",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 456.88296924023064,
+      "relative_ir": 25.770160830671454
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 302.8689058257438,
+      "relative_ir": 25.256441631018163
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "diag_oracle_tradeable_constrained",
+  "run_id": "diag_oracle_tradeable_constrained",
+  "attempt_id": "attempt_20260502_002454",
+  "generated_at": "2026-05-02T00:27:33.072980+08:00",
+  "candidate_scheme_id": "diag_oracle_tradeable_constrained",
+  "research_round_id": "diag_perfect_foresight_stress_probe_20260501",
+  "low_liquidity_holding_count": 6852,
+  "low_liquidity_weight_total": 68.51999999999884,
+  "low_liquidity_weight_share": 0.1286277454477128,
+  "low_liquidity_contribution_total": 10.112188223105695,
+  "low_liquidity_contribution_share_of_strategy": 0.08254243526337468,
+  "low_liquidity_alpha_contribution_share": 3.556227698626665e-52,
+  "flag_high_low_liquidity_exposure": false
+}

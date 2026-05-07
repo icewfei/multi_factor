@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_intraday_mom_5d_v1",
+  "run_id": "exploratory_intraday_mom_5d_v1",
+  "attempt_id": "attempt_20260506_141513",
+  "generated_at": "2026-05-06T14:17:37.884645+08:00",
+  "candidate_scheme_id": "intraday_mom_5d_v1",
+  "research_round_id": "rr_exploratory_overnight_intraday_decomposition_20260506",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.12331294468845866,
+  "pass_cost_stress_relative_return_floor": false
+}

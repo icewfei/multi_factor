@@ -1,0 +1,158 @@
+{
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+  "as_of_date": "20260425",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "final_classification": {
+    "price_volume_single_signal_price_volume_corr_20d_v1": "signal_edge_positive",
+    "price_volume_single_signal_turnover_mean_reversion_gap_5_20_v1": "signal_edge_negative",
+    "price_volume_single_signal_volume_momentum_5_20_v1": "signal_edge_positive",
+    "price_volume_single_signal_close_to_high_ratio_20d_v1": "signal_edge_mixed",
+    "price_volume_single_signal_upper_shadow_pressure_20d_v1": "signal_edge_mixed",
+    "price_volume_single_signal_path_efficiency_60d_v1": "signal_edge_negative",
+    "price_volume_single_signal_breakout_distance_20d_v1": "signal_edge_mixed",
+    "price_volume_single_signal_breakdown_distance_20d_v1": "signal_edge_mixed",
+    "price_volume_single_signal_range_compression_5_20_v1": "signal_edge_negative",
+    "price_volume_single_signal_downside_recovery_strength_10d_v1": "signal_edge_mixed"
+  },
+  "new_clean_positive_keepers": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_corr_20d_v1",
+      "field_name": "price_volume_corr_20d_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.016661079759757717,
+      "avg_daily_ic": 0.0299661139051484,
+      "positive_daily_ic_share": 0.6367642429965377,
+      "avg_label_top10": 0.007764347893009484,
+      "avg_label_rank11_20": 0.006708834568243169,
+      "avg_label_bottom10": -0.001614381165646688,
+      "notes": "Round-6 atomic signal candidate built from price_volume_corr_20d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_volume_momentum_5_20_v1",
+      "field_name": "volume_momentum_5_20_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.007194320175549876,
+      "avg_daily_ic": 0.011315643184657213,
+      "positive_daily_ic_share": 0.5578284815106216,
+      "avg_label_top10": 0.003593268162263328,
+      "avg_label_rank11_20": 0.0031289723842006056,
+      "avg_label_bottom10": -0.005476155364752614,
+      "notes": "Round-6 atomic signal candidate built from volume_momentum_5_20_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_turnover_mean_reversion_gap_5_20_v1",
+      "field_name": "turnover_mean_reversion_gap_5_20_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_negative",
+      "full_sample_corr_ic": -0.006322218379453917,
+      "avg_daily_ic": -0.01109830624735138,
+      "positive_daily_ic_share": 0.43839496459480726,
+      "avg_label_top10": -0.006492686827481328,
+      "avg_label_rank11_20": -0.0036347222874692,
+      "avg_label_bottom10": 0.0028517592123449577,
+      "notes": "Round-6 atomic signal candidate built from turnover_mean_reversion_gap_5_20_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_negative."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_path_efficiency_60d_v1",
+      "field_name": "path_efficiency_60d_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_negative",
+      "full_sample_corr_ic": -0.0016701798343883012,
+      "avg_daily_ic": -0.008431592115122323,
+      "positive_daily_ic_share": 0.4803812549642573,
+      "avg_label_top10": 0.0030418013927296355,
+      "avg_label_rank11_20": 0.0038524591075715527,
+      "avg_label_bottom10": 0.0012237589204415202,
+      "notes": "Round-6 atomic signal candidate built from path_efficiency_60d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_negative."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_range_compression_5_20_v1",
+      "field_name": "range_compression_5_20_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_negative",
+      "full_sample_corr_ic": -0.0019151473387820897,
+      "avg_daily_ic": -0.0029004335085336913,
+      "positive_daily_ic_share": 0.4745869394177813,
+      "avg_label_top10": -0.0036960096666357033,
+      "avg_label_rank11_20": -0.0008876539026520926,
+      "avg_label_bottom10": 0.0027553350015051934,
+      "notes": "Round-6 atomic signal candidate built from range_compression_5_20_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_negative."
+    }
+  ],
+  "mixed_candidates": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_close_to_high_ratio_20d_v1",
+      "field_name": "close_to_high_ratio_20d_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.007014701477021778,
+      "avg_daily_ic": 0.008826544802992296,
+      "positive_daily_ic_share": 0.5210070810385523,
+      "avg_label_top10": 0.0037551281826695036,
+      "avg_label_rank11_20": 0.004110096683746046,
+      "avg_label_bottom10": -0.0009254020213557427,
+      "notes": "Round-6 atomic signal candidate built from close_to_high_ratio_20d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_upper_shadow_pressure_20d_v1",
+      "field_name": "upper_shadow_pressure_20d_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.0023550912526387868,
+      "avg_daily_ic": 0.0003539631186366882,
+      "positive_daily_ic_share": 0.505428796223446,
+      "avg_label_top10": 0.0031258001986002137,
+      "avg_label_rank11_20": 0.003462795973769192,
+      "avg_label_bottom10": 0.0006065022598017412,
+      "notes": "Round-6 atomic signal candidate built from upper_shadow_pressure_20d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_breakout_distance_20d_v1",
+      "field_name": "breakout_distance_20d_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.014219259298851561,
+      "avg_daily_ic": 0.026395663052101965,
+      "positive_daily_ic_share": 0.5571293673276676,
+      "avg_label_top10": 0.0026640564946046135,
+      "avg_label_rank11_20": 0.005821886502396698,
+      "avg_label_bottom10": -0.005261730422837779,
+      "notes": "Round-6 atomic signal candidate built from breakout_distance_20d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_breakdown_distance_20d_v1",
+      "field_name": "breakdown_distance_20d_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.006300346036344205,
+      "avg_daily_ic": 0.012856838134439772,
+      "positive_daily_ic_share": 0.5354107648725213,
+      "avg_label_top10": -0.0023053788946113354,
+      "avg_label_rank11_20": 0.0023082124895709745,
+      "avg_label_bottom10": -0.0007986343127403586,
+      "notes": "Round-6 atomic signal candidate built from breakdown_distance_20d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_downside_recovery_strength_10d_v1",
+      "field_name": "downside_recovery_strength_10d_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.006165131355637949,
+      "avg_daily_ic": 0.007899077784853353,
+      "positive_daily_ic_share": 0.5407617248977022,
+      "avg_label_top10": 0.0013453314999505132,
+      "avg_label_rank11_20": 0.003708460746151559,
+      "avg_label_bottom10": -0.0012992532549421687,
+      "notes": "Round-6 atomic signal candidate built from downside_recovery_strength_10d_raw under the frozen v18 operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    }
+  ],
+  "decision": {
+    "continue_pool_expansion": false,
+    "reopen_family_construction": true,
+    "reason": "Round 6 produced at least one new clean positive keeper, which is enough new information to reopen family construction or composability screening with a disciplined next step."
+  }
+}

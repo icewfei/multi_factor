@@ -1,0 +1,51 @@
+{
+  "research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+  "as_of_date": "20260422",
+  "summary_status": "phase_gate_reached",
+  "retained_signals": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_momentum_60_5_v1",
+      "status": "signal_edge_positive",
+      "full_sample_corr_ic": 0.009757764048797187,
+      "avg_daily_ic": 0.013398272056083639,
+      "positive_daily_ic_share": 0.5235901509134233,
+      "comment": "Weak but directionally coherent positive edge; keep in candidate pool, but do not treat as promotable strategy."
+    }
+  ],
+  "rejected_signals": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_reversal_5d_v1",
+      "status": "signal_edge_negative",
+      "full_sample_corr_ic": -0.021762062164607444,
+      "avg_daily_ic": -0.04157791682624978,
+      "positive_daily_ic_share": 0.37196850393700787
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_volatility_20d_v1",
+      "status": "signal_edge_negative",
+      "full_sample_corr_ic": -0.005087964826397524,
+      "avg_daily_ic": -0.0057868191558732435,
+      "positive_daily_ic_share": 0.48111425873465535
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_20d_v1",
+      "status": "signal_edge_negative",
+      "full_sample_corr_ic": -0.025579773534096628,
+      "avg_daily_ic": -0.03755544154329008,
+      "positive_daily_ic_share": 0.36428009441384734
+    }
+  ],
+  "recommended_next_step": {
+    "action": "continue_single_signal_discovery",
+    "why": [
+      "Only one of the four tested atomic signals shows positive edge.",
+      "A new mixed family built now would likely just reintroduce rejected signals and increase research freedom too early.",
+      "Another positive atomic signal should be found before opening the next family-construction round."
+    ]
+  },
+  "do_not_do_next": [
+    "Do not open a new mixed price-volume family immediately.",
+    "Do not remix momentum_60_5 with reversal_5d, volatility_20d, or liquidity_20d as currently defined.",
+    "Do not try to rescue rejected signals with extraction or turnover tweaks before they show positive edge on their own."
+  ]
+}

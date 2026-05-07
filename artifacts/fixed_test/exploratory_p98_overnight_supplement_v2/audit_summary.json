@@ -1,0 +1,27 @@
+{
+  "fixed_test_run_id": "exploratory_p98_overnight_supplement_v2",
+  "run_id": "exploratory_p98_overnight_supplement_v2",
+  "attempt_id": "attempt_20260506_141738",
+  "generated_at": "2026-05-06T14:19:58.961964+08:00",
+  "candidate_scheme_id": "p98_overnight_supplement_v2",
+  "research_round_id": "rr_exploratory_overnight_intraday_decomposition_20260506",
+  "warnings": [
+    "execution_path_daily contains unresolved or unpriced rows.",
+    "terminal_event_daily is present but partially degraded in the shared source."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 0,
+  "unfilled_topk_count": 1122,
+  "terminal_event_degraded_rows": 144,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": false,
+  "topk_perturbation_pass": false,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.0822344233349267,
+  "exposure_driven_or_liquidity_driven": false,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

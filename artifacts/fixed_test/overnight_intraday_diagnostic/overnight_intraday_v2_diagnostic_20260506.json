@@ -1,0 +1,277 @@
+{
+  "as_of": "20260506",
+  "p98_ic": 0.04604476596399468,
+  "results": [
+    {
+      "name": "p98 (baseline)",
+      "scheme": "reversal_tail_exclude_p98_v1",
+      "family": "baseline",
+      "diag": {
+        "n_days": 5322,
+        "mean_ic": 0.04808009457138138,
+        "median_ic": 0.04604476596399468,
+        "std_ic": 0.1272319255982915,
+        "pos_share": 0.6503194287861707,
+        "ci_lo": 0.042275546906405996,
+        "ci_hi": 0.049974457440643556,
+        "top10_label": 0.007474216226600959,
+        "bot10_label": 0.0026894159742355188,
+        "spread": 0.00478480025236544
+      },
+      "classification": "baseline"
+    },
+    {
+      "name": "overnight_rev_5d_v1 (v1)",
+      "scheme": "overnight_rev_5d_v1",
+      "family": "v1_ref",
+      "diag": {
+        "n_days": 5326,
+        "mean_ic": -0.01604817244007295,
+        "median_ic": -0.013647801187087633,
+        "std_ic": 0.06999868983843853,
+        "pos_share": 0.40687194892977846,
+        "ci_lo": -0.016016018055964802,
+        "ci_hi": -0.011817440949136494,
+        "top10_label": 0.004374598678795713,
+        "bot10_label": -0.00514745574792901,
+        "spread": 0.009522054426724724
+      },
+      "p98_corr": {
+        "median_corr": -0.1816170876966916,
+        "n_days": 5322
+      },
+      "classification": "MARGINAL",
+      "p98_overlap": "LOW"
+    },
+    {
+      "name": "intraday_rev_5d_v1 (v1)",
+      "scheme": "intraday_rev_5d_v1",
+      "family": "v1_ref",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": -0.03917653575173689,
+        "median_ic": -0.0366412277111965,
+        "std_ic": 0.11663739718949871,
+        "pos_share": 0.3632438520743383,
+        "ci_lo": -0.04022889727022299,
+        "ci_hi": -0.033580333925449915,
+        "top10_label": -0.005403494836766416,
+        "bot10_label": 0.004417266992987884,
+        "spread": -0.0098207618297543
+      },
+      "p98_corr": {
+        "median_corr": -0.8580906254057181,
+        "n_days": 5322
+      },
+      "classification": "THRESHOLD_CI_ISSUE",
+      "p98_overlap": "HIGH"
+    },
+    {
+      "name": "intraday_mom_5d_v1",
+      "scheme": "intraday_mom_5d_v1",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": 0.03917664118608351,
+        "median_ic": 0.03664122771119654,
+        "std_ic": 0.11663729426898396,
+        "pos_share": 0.6367561479256617,
+        "ci_lo": 0.033580333925449866,
+        "ci_hi": 0.040228897270222976,
+        "top10_label": 0.00441726699298789,
+        "bot10_label": -0.005403494836766417,
+        "spread": 0.009820761829754308
+      },
+      "p98_corr": {
+        "median_corr": 0.8580906254057166,
+        "n_days": 5322
+      },
+      "classification": "PASS",
+      "p98_overlap": "HIGH"
+    },
+    {
+      "name": "overnight_mom_5d_v1",
+      "scheme": "overnight_mom_5d_v1",
+      "family": "v2",
+      "diag": {
+        "n_days": 5326,
+        "mean_ic": 0.016048256874530455,
+        "median_ic": 0.01364807198155094,
+        "std_ic": 0.06999857552114659,
+        "pos_share": 0.5931280510702216,
+        "ci_lo": 0.011817545607624066,
+        "ci_hi": 0.016016018055964833,
+        "top10_label": -0.005147455747929019,
+        "bot10_label": 0.004374598678795712,
+        "spread": -0.00952205442672473
+      },
+      "p98_corr": {
+        "median_corr": 0.1816171056442926,
+        "n_days": 5322
+      },
+      "classification": "MARGINAL",
+      "p98_overlap": "LOW"
+    },
+    {
+      "name": "intraday_mom_20d_v1",
+      "scheme": "intraday_mom_20d_v1",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": 0.01929082617827983,
+        "median_ic": 0.016211751726986336,
+        "std_ic": 0.1281360565937428,
+        "pos_share": 0.5535948939365497,
+        "ci_lo": 0.012333038876370342,
+        "ci_hi": 0.020350422752731294,
+        "top10_label": 0.0064941586012545165,
+        "bot10_label": -0.0021482672993005138,
+        "spread": 0.00864242590055503
+      },
+      "p98_corr": {
+        "median_corr": 0.3515487154545523,
+        "n_days": 5322
+      },
+      "classification": "MARGINAL",
+      "p98_overlap": "LOW"
+    },
+    {
+      "name": "overnight_mom_20d_v1",
+      "scheme": "overnight_mom_20d_v1",
+      "family": "v2",
+      "diag": {
+        "n_days": 5326,
+        "mean_ic": 0.014386360246669404,
+        "median_ic": 0.012454157237661688,
+        "std_ic": 0.07699587032098262,
+        "pos_share": 0.5719113781449493,
+        "ci_lo": 0.010169406811846535,
+        "ci_hi": 0.014798706586597868,
+        "top10_label": -0.0006863568107857527,
+        "bot10_label": 0.0023211876386353973,
+        "spread": -0.00300754444942115
+      },
+      "p98_corr": {
+        "median_corr": 0.08370700731847625,
+        "n_days": 5322
+      },
+      "classification": "MARGINAL",
+      "p98_overlap": "LOW"
+    },
+    {
+      "name": "intraday_p98_ew_v2",
+      "scheme": "intraday_p98_ew_v2",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": 0.045003583679784125,
+        "median_ic": 0.043592323461228266,
+        "std_ic": 0.1220226360659104,
+        "pos_share": 0.6480195231837808,
+        "ci_lo": 0.039097848476765076,
+        "ci_hi": 0.0473202903583345,
+        "top10_label": 0.007303126776363073,
+        "bot10_label": -0.00474015990243822,
+        "spread": 0.012043286678801293
+      },
+      "p98_corr": {
+        "median_corr": 0.964454398037017,
+        "n_days": 5322
+      },
+      "classification": "PASS",
+      "p98_overlap": "HIGH"
+    },
+    {
+      "name": "overnight_p98_ew_v2",
+      "scheme": "overnight_p98_ew_v2",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": NaN,
+        "median_ic": 0.038540718589458615,
+        "std_ic": NaN,
+        "pos_share": 0.6636005256241787,
+        "ci_lo": 0.036665180982468196,
+        "ci_hi": 0.21166525852651819,
+        "top10_label": 0.00551075161454128,
+        "bot10_label": 0.0038198147886810956,
+        "spread": 0.0016909368258601846
+      },
+      "p98_corr": {
+        "median_corr": 0.7708595871404706,
+        "n_days": 5322
+      },
+      "classification": "PASS",
+      "p98_overlap": "MODERATE"
+    },
+    {
+      "name": "p98_overnight_supplement_v2",
+      "scheme": "p98_overnight_supplement_v2",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": NaN,
+        "median_ic": 0.0445642192908945,
+        "std_ic": NaN,
+        "pos_share": 0.6590951755209311,
+        "ci_lo": -0.0034546929838860604,
+        "ci_hi": 0.26711294982869366,
+        "top10_label": 0.006696457896641904,
+        "bot10_label": 0.003763664476473946,
+        "spread": 0.002932793420167958
+      },
+      "p98_corr": {
+        "median_corr": 0.9944091257382184,
+        "n_days": 5322
+      },
+      "classification": "THRESHOLD_CI_ISSUE",
+      "p98_overlap": "HIGH"
+    },
+    {
+      "name": "overnight_intraday_mom_ew_v2",
+      "scheme": "overnight_intraday_mom_ew_v2",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": 0.04388772053684669,
+        "median_ic": 0.0417724434513209,
+        "std_ic": 0.11748915067009824,
+        "pos_share": 0.6502721982354045,
+        "ci_lo": 0.0377854020609683,
+        "ci_hi": 0.04568619361055563,
+        "top10_label": 0.003604158356253238,
+        "bot10_label": -0.0033820482376089155,
+        "spread": 0.006986206593862154
+      },
+      "p98_corr": {
+        "median_corr": 0.8532595546124127,
+        "n_days": 5322
+      },
+      "classification": "PASS",
+      "p98_overlap": "HIGH"
+    },
+    {
+      "name": "intraday80_overnight20_mom_v2",
+      "scheme": "intraday80_overnight20_mom_v2",
+      "family": "v2",
+      "diag": {
+        "n_days": 5327,
+        "mean_ic": 0.04392407117227258,
+        "median_ic": 0.04106150261068163,
+        "std_ic": 0.12415912455439315,
+        "pos_share": 0.6425755584756899,
+        "ci_lo": 0.03735010680885144,
+        "ci_hi": 0.04526445497643154,
+        "top10_label": 0.0042960060365538535,
+        "bot10_label": -0.003372601993232137,
+        "spread": 0.00766860802978599
+      },
+      "p98_corr": {
+        "median_corr": 0.9356610944207597,
+        "n_days": 5322
+      },
+      "classification": "PASS",
+      "p98_overlap": "HIGH"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "research_round_id": "rr_alpha158_exact_keeper_composability_screen_20260428",
+  "as_of_date": "20260428",
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "result_count": 4,
+  "promising_candidates": [],
+  "mixed_candidates": [
+    {
+      "candidate_scheme_id": "price_volume_screen_alpha158_corr20_composability_v1",
+      "standalone_candidate_scheme_id": "price_volume_single_signal_alpha158_corr20_v1",
+      "field_name": "alpha158_corr20_raw",
+      "qlib_feature_name": "CORR20",
+      "classification": "composability_screen_mixed",
+      "screen_full_sample_corr_ic": 0.019526959345236978,
+      "screen_top10_minus_rank11_20": 0.003073459899981151,
+      "reference_overlap": 7.223070739549839,
+      "screen_overlap": 6.876406752411576,
+      "score_rule": "screen only: mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC), percentile_rank(alpha158_corr20_raw DESC)); require min_feature_count >= 3",
+      "score_family_rule": "This candidate is a composability screen, not a live family. The question is whether alpha158_corr20_raw interacts cleanly enough with the frozen v18 core two-signal family to justify later promotion.",
+      "notes": "Alpha158 keeper composability screen completed for alpha158_corr20_raw. Standalone status is positive, but screen verdict is composability_screen_mixed under the frozen v18 core family.",
+      "run_id": "screendiag_alpha158_corr20_composability_20260428"
+    },
+    {
+      "candidate_scheme_id": "price_volume_screen_alpha158_cord30_composability_v1",
+      "standalone_candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "field_name": "alpha158_cord30_raw",
+      "qlib_feature_name": "CORD30",
+      "classification": "composability_screen_mixed",
+      "screen_full_sample_corr_ic": 0.017734366470876204,
+      "screen_top10_minus_rank11_20": 0.0019754456978049745,
+      "reference_overlap": 7.223070739549839,
+      "screen_overlap": 7.110932475884244,
+      "score_rule": "screen only: mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC), percentile_rank(alpha158_cord30_raw DESC)); require min_feature_count >= 3",
+      "score_family_rule": "This candidate is a composability screen, not a live family. The question is whether alpha158_cord30_raw interacts cleanly enough with the frozen v18 core two-signal family to justify later promotion.",
+      "notes": "Alpha158 keeper composability screen completed for alpha158_cord30_raw. Standalone status is positive, but screen verdict is composability_screen_mixed under the frozen v18 core family.",
+      "run_id": "screendiag_alpha158_cord30_composability_20260428"
+    },
+    {
+      "candidate_scheme_id": "price_volume_screen_alpha158_vma60_composability_v1",
+      "standalone_candidate_scheme_id": "price_volume_single_signal_alpha158_vma60_v1",
+      "field_name": "alpha158_vma60_raw",
+      "qlib_feature_name": "VMA60",
+      "classification": "composability_screen_mixed",
+      "screen_full_sample_corr_ic": 0.015951560415286937,
+      "screen_top10_minus_rank11_20": 0.0008583322590090996,
+      "reference_overlap": 7.223070739549839,
+      "screen_overlap": 5.068826725699336,
+      "score_rule": "screen only: mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC), percentile_rank(alpha158_vma60_raw ASC)); require min_feature_count >= 3",
+      "score_family_rule": "This candidate is a composability screen, not a live family. The question is whether alpha158_vma60_raw interacts cleanly enough with the frozen v18 core two-signal family to justify later promotion.",
+      "notes": "Alpha158 keeper composability screen completed for alpha158_vma60_raw. Standalone status is positive, but screen verdict is composability_screen_mixed under the frozen v18 core family.",
+      "run_id": "screendiag_alpha158_vma60_composability_20260428"
+    },
+    {
+      "candidate_scheme_id": "price_volume_screen_alpha158_vsumd60_composability_v1",
+      "standalone_candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "field_name": "alpha158_vsumd60_raw",
+      "qlib_feature_name": "VSUMD60",
+      "classification": "composability_screen_mixed",
+      "screen_full_sample_corr_ic": 0.015817960216647678,
+      "screen_top10_minus_rank11_20": 0.0012767903558435992,
+      "reference_overlap": 7.223070739549839,
+      "screen_overlap": 5.399155439372612,
+      "score_rule": "screen only: mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC), percentile_rank(alpha158_vsumd60_raw DESC)); require min_feature_count >= 3",
+      "score_family_rule": "This candidate is a composability screen, not a live family. The question is whether alpha158_vsumd60_raw interacts cleanly enough with the frozen v18 core two-signal family to justify later promotion.",
+      "notes": "Alpha158 keeper composability screen completed for alpha158_vsumd60_raw. Standalone status is positive, but screen verdict is composability_screen_mixed under the frozen v18 core family.",
+      "run_id": "screendiag_alpha158_vsumd60_composability_20260428"
+    }
+  ],
+  "decision": {
+    "recommended_next_step": "Advance only promising alpha158 keepers into later overlay or restrained family tests; keep mixed candidates as standalone keepers only.",
+    "hard_gate": {
+      "screen_avg_top10_overlap_next_day_drop_tolerance": 0.2
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+  "run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+  "attempt_id": "attempt_20260418_224927",
+  "generated_at": "2026-04-18T22:55:18.623112+08:00",
+  "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+  "low_liquidity_holding_count": 1265,
+  "low_liquidity_weight_total": 6.324999999999983,
+  "low_liquidity_weight_share": 0.020450724262800736,
+  "low_liquidity_contribution_total": -0.04112613341329168,
+  "low_liquidity_contribution_share_of_strategy": -0.0938670203775196,
+  "low_liquidity_alpha_contribution_share": -0.10314096828107921,
+  "flag_high_low_liquidity_exposure": false
+}

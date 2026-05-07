@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_imxd5_trainval_20260429",
+  "run_id": "confirmatory_imxd5_trainval_20260429",
+  "attempt_id": "attempt_20260429_145147",
+  "generated_at": "2026-04-29T14:56:22.168405+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_imxd5_v1",
+  "research_round_id": "rr_confirmatory_alpha158_standalone_shortlist_round1_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.09535260723745753,
+  "pass_cost_stress_relative_return_floor": false
+}

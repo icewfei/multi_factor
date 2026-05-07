@@ -1,0 +1,995 @@
+{
+  "as_of_date": "20260430",
+  "summary": {
+    "historical_positive_signal_count": 54,
+    "factor_card_md_present_count": 54,
+    "factor_card_json_present_count": 54,
+    "legacy_positive_card_registry_present_count": 54,
+    "current_keeper_count": 3,
+    "active_confirmatory_winner": "none",
+    "strict_confirmatory_winner": "none"
+  },
+  "current_keepers": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "latest_registry_status": "confirmatory_strict_recheck_rejected",
+      "latest_research_round_id": "rr_confirmatory_alpha158_cord30_round5_strict_recheck_20260430",
+      "current_keeper_tier": "high-quality reserve atomic keeper(高质量储备原子信号)",
+      "status_source_doc": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_cord30_turnover_control_seed_closeout_and_pause_decision_20260430.md",
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.016812,
+        "avg_daily_ic": 0.031407,
+        "top10_minus_bottom10": 0.009034
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+      "latest_registry_status": "confirmatory_strict_recheck_rejected",
+      "latest_research_round_id": "rr_confirmatory_alpha158_corr30_round3_strict_recheck_20260430",
+      "current_keeper_tier": "reserve atomic keeper(储备原子信号)",
+      "status_source_doc": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_confirmatory_line_phase_closeout_and_next_round_direction_20260430.md",
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.015796,
+        "avg_daily_ic": 0.026934,
+        "top10_minus_bottom10": 0.011129
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "latest_registry_status": "confirmatory_walk_forward_continue",
+      "latest_research_round_id": "rr_walk_forward_alpha158_vsumd60_v1_20260430",
+      "current_keeper_tier": "reserve atomic keeper(储备原子信号)",
+      "status_source_doc": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_confirmatory_line_phase_closeout_and_next_round_direction_20260430.md",
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.014043,
+        "avg_daily_ic": 0.023207,
+        "top10_minus_bottom10": 0.013535
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    }
+  ],
+  "missing": {
+    "missing_formal_factor_card_md": [],
+    "missing_formal_factor_card_json": [],
+    "missing_legacy_positive_card_registry_entry": []
+  },
+  "notes": [
+    "formal_factor_cards_20260430.md is treated as the latest authoritative card body for positive signals.",
+    "factor_card_registry_20260430.json is treated as the current structured factor-card registry snapshot.",
+    "Candidate registry does not yet encode reserve atomic keeper tiers directly; those tiers are reconstructed from closeout documents."
+  ],
+  "rows": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "latest_registry_status": "confirmatory_strict_recheck_rejected",
+      "latest_research_round_id": "rr_confirmatory_alpha158_cord30_round5_strict_recheck_20260430",
+      "current_keeper_tier": "high-quality reserve atomic keeper(高质量储备原子信号)",
+      "status_source_doc": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_cord30_turnover_control_seed_closeout_and_pause_decision_20260430.md",
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.016812,
+        "avg_daily_ic": 0.031407,
+        "top10_minus_bottom10": 0.009034
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+      "latest_registry_status": "confirmatory_strict_recheck_rejected",
+      "latest_research_round_id": "rr_confirmatory_alpha158_corr30_round3_strict_recheck_20260430",
+      "current_keeper_tier": "reserve atomic keeper(储备原子信号)",
+      "status_source_doc": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_confirmatory_line_phase_closeout_and_next_round_direction_20260430.md",
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.015796,
+        "avg_daily_ic": 0.026934,
+        "top10_minus_bottom10": 0.011129
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "latest_registry_status": "confirmatory_walk_forward_continue",
+      "latest_research_round_id": "rr_walk_forward_alpha158_vsumd60_v1_20260430",
+      "current_keeper_tier": "reserve atomic keeper(储备原子信号)",
+      "status_source_doc": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_confirmatory_line_phase_closeout_and_next_round_direction_20260430.md",
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.014043,
+        "avg_daily_ic": 0.023207,
+        "top10_minus_bottom10": 0.013535
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr20_v1",
+      "latest_registry_status": "confirmatory_shortlist_not_passed",
+      "latest_research_round_id": "rr_confirmatory_alpha158_head_extraction_shortlist_round2_20260430",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.018514,
+        "avg_daily_ic": 0.030448,
+        "top10_minus_bottom10": 0.0129
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr10_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch03_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.01824,
+        "avg_daily_ic": 0.029058,
+        "top10_minus_bottom10": 0.012868
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_beta_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "price_volume -> beta",
+        "full_sample_corr_ic": 0.017161,
+        "avg_daily_ic": 0.028287,
+        "top10_minus_bottom10": 0.007779
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_corr_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "price_volume -> correlation",
+        "full_sample_corr_ic": 0.016661,
+        "avg_daily_ic": 0.029966,
+        "top10_minus_bottom10": 0.009379
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_volume_price_synchronicity_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round5_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "price_volume -> correlation",
+        "full_sample_corr_ic": 0.016661,
+        "avg_daily_ic": 0.029966,
+        "top10_minus_bottom10": 0.009379
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.016534,
+        "avg_daily_ic": 0.029667,
+        "top10_minus_bottom10": 0.008273
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_imxd5_v1",
+      "latest_registry_status": "confirmatory_shortlist_not_passed",
+      "latest_research_round_id": "rr_confirmatory_alpha158_high_invested_weight_head_extraction_shortlist_round4_20260430",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "滚动价格(alpha158)",
+        "full_sample_corr_ic": 0.016256,
+        "avg_daily_ic": 0.031425,
+        "top10_minus_bottom10": 0.006634
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr5_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch03_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.016252,
+        "avg_daily_ic": 0.027261,
+        "top10_minus_bottom10": 0.008377
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord5_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.014893,
+        "avg_daily_ic": 0.029532,
+        "top10_minus_bottom10": 0.007191
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_intraday_trend_bias_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round7_orthogonal_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "intraday -> bias",
+        "full_sample_corr_ic": 0.01474,
+        "avg_daily_ic": 0.019716,
+        "top10_minus_bottom10": 0.009348
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.014042,
+        "avg_daily_ic": 0.023203,
+        "top10_minus_bottom10": 0.013525
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsump60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.014042,
+        "avg_daily_ic": 0.023205,
+        "top10_minus_bottom10": 0.01352
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.013683,
+        "avg_daily_ic": 0.02612,
+        "top10_minus_bottom10": 0.006436
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd30_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.013641,
+        "avg_daily_ic": 0.022346,
+        "top10_minus_bottom10": 0.013912
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn30_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.01364,
+        "avg_daily_ic": 0.022342,
+        "top10_minus_bottom10": 0.013902
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsump30_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.01364,
+        "avg_daily_ic": 0.022344,
+        "top10_minus_bottom10": 0.013898
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord10_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.013113,
+        "avg_daily_ic": 0.024033,
+        "top10_minus_bottom10": 0.007534
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.012987,
+        "avg_daily_ic": 0.022111,
+        "top10_minus_bottom10": 0.01381
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_20_60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "liquidity -> trend",
+        "full_sample_corr_ic": 0.012159,
+        "avg_daily_ic": 0.018665,
+        "top10_minus_bottom10": 0.007168
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_low0_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch01_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "alpha158 -> named",
+        "full_sample_corr_ic": 0.011783,
+        "avg_daily_ic": 0.019262,
+        "top10_minus_bottom10": 0.013717
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_rank_corr_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "price_volume -> correlation",
+        "full_sample_corr_ic": 0.011394,
+        "avg_daily_ic": 0.020216,
+        "top10_minus_bottom10": 0.005601
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_036_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "alpha158 -> full",
+        "full_sample_corr_ic": 0.01124,
+        "avg_daily_ic": 0.019715,
+        "top10_minus_bottom10": 0.008815
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_003_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "alpha158 -> full",
+        "full_sample_corr_ic": 0.01116,
+        "avg_daily_ic": 0.019319,
+        "top10_minus_bottom10": 0.008211
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.010995,
+        "avg_daily_ic": 0.017574,
+        "top10_minus_bottom10": 0.012561
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.010994,
+        "avg_daily_ic": 0.017571,
+        "top10_minus_bottom10": 0.012551
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsump20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量路径(alpha158)",
+        "full_sample_corr_ic": 0.010994,
+        "avg_daily_ic": 0.017573,
+        "top10_minus_bottom10": 0.012547
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_027_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "alpha158 -> full",
+        "full_sample_corr_ic": 0.010886,
+        "avg_daily_ic": 0.018942,
+        "top10_minus_bottom10": 0.007638
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_upside_range_share_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round7_orthogonal_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "intraday -> structure",
+        "full_sample_corr_ic": 0.010329,
+        "avg_daily_ic": 0.015721,
+        "top10_minus_bottom10": 0.005403
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_momentum_60_5_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "momentum -> medium_term",
+        "full_sample_corr_ic": 0.009758,
+        "avg_daily_ic": 0.013398,
+        "top10_minus_bottom10": 0.002461
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_004_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "alpha158 -> full",
+        "full_sample_corr_ic": 0.009717,
+        "avg_daily_ic": 0.01743,
+        "top10_minus_bottom10": 0.007888
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma30_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.009701,
+        "avg_daily_ic": 0.016449,
+        "top10_minus_bottom10": 0.013021
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vstd60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.009688,
+        "avg_daily_ic": 0.015409,
+        "top10_minus_bottom10": 0.008924
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_up_amount_persistence_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round5_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "volume -> persistence",
+        "full_sample_corr_ic": 0.009374,
+        "avg_daily_ic": 0.013587,
+        "top10_minus_bottom10": 0.006922
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_imax20_v1",
+      "latest_registry_status": "confirmatory_shortlist_not_passed",
+      "latest_research_round_id": "rr_confirmatory_alpha158_high_invested_weight_head_extraction_shortlist_round4_20260430",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "滚动价格(alpha158)",
+        "full_sample_corr_ic": 0.008608,
+        "avg_daily_ic": 0.013915,
+        "top10_minus_bottom10": 0.004652
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma10_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.008574,
+        "avg_daily_ic": 0.015808,
+        "top10_minus_bottom10": 0.010681
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_60_120_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round3_20260423",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "liquidity -> trend",
+        "full_sample_corr_ic": 0.008324,
+        "avg_daily_ic": 0.013666,
+        "top10_minus_bottom10": 0.005172
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr60_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "量价滚动相关(alpha158)",
+        "full_sample_corr_ic": 0.00821,
+        "avg_daily_ic": 0.015454,
+        "top10_minus_bottom10": 0.005522
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.008139,
+        "avg_daily_ic": 0.014107,
+        "top10_minus_bottom10": 0.011979
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma5_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.007469,
+        "avg_daily_ic": 0.012777,
+        "top10_minus_bottom10": 0.007411
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_breakout_volume_confirmation_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round4_20260423",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "breakout -> failure",
+        "full_sample_corr_ic": 0.007258,
+        "avg_daily_ic": 0.011053,
+        "top10_minus_bottom10": 0.011006
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_amount_shock_5_20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round4_20260423",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "liquidity -> shock",
+        "full_sample_corr_ic": 0.007194,
+        "avg_daily_ic": 0.011316,
+        "top10_minus_bottom10": 0.009069
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_volume_momentum_5_20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "turnover -> level",
+        "full_sample_corr_ic": 0.007194,
+        "avg_daily_ic": 0.011316,
+        "top10_minus_bottom10": 0.009069
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_019_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "alpha158 -> full",
+        "full_sample_corr_ic": 0.006428,
+        "avg_daily_ic": 0.011171,
+        "top10_minus_bottom10": 0.010865
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_turnover_acceleration_5_20_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round5_20260425",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "turnover -> level",
+        "full_sample_corr_ic": 0.006315,
+        "avg_daily_ic": 0.011075,
+        "top10_minus_bottom10": 0.009274
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_lower_shadow_support_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round9_composability_first_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "kline -> shadow",
+        "full_sample_corr_ic": 0.006151,
+        "avg_daily_ic": 0.010726,
+        "top10_minus_bottom10": 0.004427
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_intraday_reversal_asymmetry_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round8_orthogonal_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "intraday -> bias",
+        "full_sample_corr_ic": 0.00555,
+        "avg_daily_ic": 0.00762,
+        "top10_minus_bottom10": 0.002987
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_high_open_hold_ratio_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round8_orthogonal_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "intraday -> structure",
+        "full_sample_corr_ic": 0.005027,
+        "avg_daily_ic": 0.007099,
+        "top10_minus_bottom10": 0.001916
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr10_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch02_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "滚动价格(alpha158)",
+        "full_sample_corr_ic": 0.004196,
+        "avg_daily_ic": 0.006838,
+        "top10_minus_bottom10": 0.00234
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_trend_consistency_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "trend -> consistency",
+        "full_sample_corr_ic": 0.003251,
+        "avg_daily_ic": 0.005854,
+        "top10_minus_bottom10": 0.000149
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vstd30_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "成交量滚动(alpha158)",
+        "full_sample_corr_ic": 0.002992,
+        "avg_daily_ic": 0.00484,
+        "top10_minus_bottom10": 0.005786
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_downside_range_convexity_20d_v1",
+      "latest_registry_status": "signal_edge_positive",
+      "latest_research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "current_keeper_tier": "historical_positive_only",
+      "status_source_doc": null,
+      "factor_card_md_present": true,
+      "factor_card_json_present": true,
+      "legacy_positive_card_registry_present": true,
+      "formal_md_summary": {
+        "family_label": "downside -> risk",
+        "full_sample_corr_ic": 0.002081,
+        "avg_daily_ic": 0.004594,
+        "top10_minus_bottom10": 0.001629
+      },
+      "legacy_registry_status": "signal_edge_positive"
+    }
+  ]
+}

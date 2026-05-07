@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-04-22T10:13:30+08:00",
+  "reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "challenger_candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+  "reference_run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+  "challenger_run_id": "fullchain_price_volume_trend_liquidity_improvement_core_20260422_100611",
+  "summary_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.06976572569304007,
+      "challenger": -0.05491140825491203,
+      "delta": 0.01485431743812804
+    },
+    "relative_ir": {
+      "reference": -0.5287021621315882,
+      "challenger": -0.41193817996353127,
+      "delta": 0.11676398216805693
+    },
+    "max_drawdown": {
+      "reference": -0.3968114993586318,
+      "challenger": -0.48751594951872457,
+      "delta": -0.09070445016009277
+    },
+    "avg_cash_weight": {
+      "reference": 0.7919965084907071,
+      "challenger": 0.8119678152377275,
+      "delta": 0.01997130674702036
+    },
+    "avg_invested_weight": {
+      "reference": 0.2080034915092814,
+      "challenger": 0.18803218476225964,
+      "delta": -0.01997130674702175
+    },
+    "avg_turnover_daily": {
+      "reference": 0.09811299793683326,
+      "challenger": 0.08846736505123712,
+      "delta": -0.00964563288559614
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.020450724262800736,
+      "challenger": 0.1593236714975641,
+      "delta": 0.13887294723476336
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    }
+  },
+  "conclusion": "The first mixed family built from retained discovery-round signals improved annual_relative_return, relative_ir, and turnover versus calibrated v7, but it worsened drawdown, raised low-liquidity weight share, and still failed both TopK perturbation and cost-stress audit gates."
+}

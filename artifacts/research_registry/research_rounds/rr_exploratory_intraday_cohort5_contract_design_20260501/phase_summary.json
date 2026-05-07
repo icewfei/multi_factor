@@ -1,0 +1,31 @@
+{
+  "research_round_id": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+  "research_tier": "exploratory",
+  "round_type": "contract_design_exploratory",
+  "status": "completed_intraday_cohort5_not_viable",
+  "conclusion": "5-cohort contract improved intraday family from 5/9 to 6/9. Topk perturbation bottleneck materially relieved. Absolute return/IR and cost_stress still failed. Intraday family under 5-cohort is still not viable under prereg success rules.",
+  "completed_at": "2026-05-01T12:30:00+08:00",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_param": {"holding_cohort_count": 5},
+  "runs": [
+    {"candidate": "exploratory_cohort5_v18_ref", "role": "contract-matched baseline", "verdict": "reference", "avg_inv_weight": 0.8030, "annual_relative_return": -0.5712},
+    {"candidate": "exploratory_cohort5_c1_trendbias_only", "role": "intraday single signal", "verdict": "fail (6/9)", "avg_inv_weight": 0.8079, "annual_relative_return": -0.1940, "note": "best cost-stress profile among intraday candidates"},
+    {"candidate": "exploratory_cohort5_c2_trendbias_upsideshare", "role": "intraday 2-signal", "verdict": "fail (6/9)", "avg_inv_weight": 0.8076, "annual_relative_return": -0.2459, "note": "diluted c1, no incremental value"},
+    {"candidate": "exploratory_cohort5_c3_trendbias_upsideshare_reversalasym", "role": "intraday 3-signal", "verdict": "fail (6/9)", "avg_inv_weight": 0.8286, "annual_relative_return": -0.1574, "note": "best return/drawdown among intraday candidates"}
+  ],
+  "formal_verdict": {
+    "gates_total": 9,
+    "gates_passed_by_best_candidate": 6,
+    "failing_gates": ["annual_relative_return >= 0.01", "relative_ir >= 0.30", "cost_stress >= 0.00"],
+    "gate_fixed_by_contract_change": ["topk_8 >= 0.00", "topk_12 >= 0.00"],
+    "any_candidate_passed_core_pass": false,
+    "best_candidate": "exploratory_cohort5_c3_trendbias_upsideshare_reversalasym"
+  },
+  "diagnostic_takeaway": "Under the 5-cohort contract, the intraday family became materially closer to viable than under the 26-cohort contract (5/9 -> 6/9, topk perturbation fixed), but still failed prereg success rules due to insufficient absolute return/IR and negative cost-stress performance. The contract change solved the topk perturbation bottleneck (was a contract problem). The remaining bottlenecks (absolute return, cost_stress) are signal-level problems, not contract problems.",
+  "cross_contract_comparison": {
+    "26_cohort": {"best_result": "5/9", "failing_gates": ["return", "IR", "topk_8", "topk_12", "cost_stress"]},
+    "5_cohort":  {"best_result": "6/9", "failing_gates": ["return", "IR", "cost_stress"]}
+  },
+  "note_on_turnover_gate_reporting": "c3_5cohort turnover_delta=0.0030, PASS (<=0.04). An earlier inline report script had a inequality-direction bug that marked it as FAIL. The actual data is correct.",
+  "next_direction_candidate": "Signal-layer improvement: intraday_trend_bias alone (c1) is the strongest single intraday signal, consistently beating v18 reference. Its remaining gap is absolute return and cost_stress. These require a different contract or a fundamentally different signal approach, not further intraday family expansion."
+}

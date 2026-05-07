@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "ft_c4_drop_liq_trend_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_145805",
+  "generated_at": "2026-04-29T15:02:23.268746+08:00",
+  "candidate_scheme_id": "confirmatory_ablation_drop_liq_trend_3sig",
+  "research_round_id": "rr_confirmatory_c4_ablation_mid_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": 0.014638869477200611,
+  "pass_cost_stress_relative_return_floor": true
+}

@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_vsumd60_trainval_20260429",
+  "run_id": "confirmatory_vsumd60_trainval_20260429",
+  "attempt_id": "attempt_20260429_122533",
+  "generated_at": "2026-04-29T14:51:38.947449+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "research_round_id": "rr_confirmatory_alpha158_standalone_shortlist_round1_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.09643125145847498,
+  "pass_cost_stress_relative_return_floor": false
+}

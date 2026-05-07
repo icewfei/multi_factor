@@ -1,0 +1,26 @@
+{
+  "fixed_test_run_id": "exploratory_fundamental_c1_roe_dt",
+  "run_id": "exploratory_fundamental_c1_roe_dt",
+  "attempt_id": "attempt_20260501_170511",
+  "generated_at": "2026-05-01T17:08:14.133326+08:00",
+  "candidate_scheme_id": "exploratory_fundamental_c1_roe_dt",
+  "research_round_id": "rr_exploratory_fundamental_quality_profitability_20260501",
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 3984387,
+  "unfilled_topk_count": 1415,
+  "terminal_event_degraded_rows": null,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": true,
+  "topk_perturbation_pass": true,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.15886816368317236,
+  "exposure_driven_or_liquidity_driven": true,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

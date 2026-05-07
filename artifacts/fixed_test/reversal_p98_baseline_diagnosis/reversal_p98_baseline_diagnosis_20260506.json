@@ -1,0 +1,222 @@
+{
+  "generated_at": "2026-05-06T12:45:32+08:00",
+  "run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "validation": {
+    "generated_at": "2026-05-06T11:51:07+08:00",
+    "fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "window_name": "validation",
+    "validation_start": "20190101",
+    "validation_end": "20211231",
+    "n_days": 730,
+    "total_return": 7.97983908660302,
+    "annualized_return": 1.133406079643815,
+    "benchmark_total_return": 0.8229886126869008,
+    "annual_relative_return": -0.12930687130266572,
+    "effective_relative_days": 730,
+    "positive_relative_days": 337,
+    "relative_ir": -1.0938458513364646,
+    "daily_volatility": 0.005254267938294381,
+    "annualized_volatility": 0.08340891771856203,
+    "sharpe_ratio": 13.588547971191144,
+    "max_drawdown": -0.08670322630336491,
+    "avg_cash_weight": 0.7489897260273958,
+    "avg_invested_weight": 0.25101027397260206,
+    "avg_turnover_daily": 0.12445205479452054,
+    "rebalance_days": 730
+  },
+  "cost_stress": {
+    "fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "attempt_id": "attempt_20260506_114831",
+    "generated_at": "2026-05-06T11:51:06.989436+08:00",
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+    "stress_open_bp": 20.0,
+    "stress_close_bp": 20.0,
+    "effective_relative_days": 4132,
+    "annual_relative_return": -0.06099311114942729,
+    "pass_cost_stress_relative_return_floor": false
+  },
+  "low_liquidity": {
+    "fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "attempt_id": "attempt_20260506_114831",
+    "generated_at": "2026-05-06T11:51:06.749066+08:00",
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+    "low_liquidity_holding_count": 5659,
+    "low_liquidity_weight_total": 35.36874999999986,
+    "low_liquidity_weight_share": 0.10840996168580862,
+    "low_liquidity_contribution_total": 0.2040420065590766,
+    "low_liquidity_contribution_share_of_strategy": 0.08863788977244166,
+    "low_liquidity_alpha_contribution_share": 0.025569689356472514,
+    "flag_high_low_liquidity_exposure": false
+  },
+  "topk_perturbation": {
+    "fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "run_id": "confirmatory_reversal_p98_trainval_20260506",
+    "attempt_id": "attempt_20260506_114831",
+    "generated_at": "2026-05-06T11:51:04.903378+08:00",
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+    "benchmark_code": "CSI_ALL_SHARE_TR",
+    "benchmark_name": "中证全指全收益指数",
+    "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+    "perturbations": [
+      {
+        "topk": 8,
+        "effective_relative_days": 4132,
+        "annual_relative_return": -0.0016882713115773385,
+        "relative_ir": -0.181303841080142
+      },
+      {
+        "topk": 12,
+        "effective_relative_days": 4132,
+        "annual_relative_return": -0.0008510854474259588,
+        "relative_ir": -0.1768928822935147
+      }
+    ]
+  },
+  "top10_deployment_profile": {
+    "fill_rate": 0.9808342728297632,
+    "avg_liquidity_rank": 0.6228793463957637,
+    "median_liquidity_rank": 0.6743799843763694,
+    "share_below_060": 0.41786922209695604
+  },
+  "oracle_topk_curve": [
+    {
+      "topk": 8,
+      "avg_oracle_label": 0.007651131818040893,
+      "avg_liquidity_rank": 0.6231875941527238
+    },
+    {
+      "topk": 10,
+      "avg_oracle_label": 0.0074742162266009686,
+      "avg_liquidity_rank": 0.6229362778877289
+    },
+    {
+      "topk": 12,
+      "avg_oracle_label": 0.007550901873288057,
+      "avg_liquidity_rank": 0.6211822984025585
+    },
+    {
+      "topk": 15,
+      "avg_oracle_label": 0.007315859864951226,
+      "avg_liquidity_rank": 0.6190371809196089
+    },
+    {
+      "topk": 20,
+      "avg_oracle_label": 0.0074211951187444095,
+      "avg_liquidity_rank": 0.6168648367208249
+    }
+  ],
+  "yearly_profile": {
+    "2005": {
+      "avg_relative_return_daily": 0.0006131223452369262,
+      "avg_invested_weight": 0.2533574380165292,
+      "avg_turnover_daily": 0.11918904958677688,
+      "n_days": 242
+    },
+    "2006": {
+      "avg_relative_return_daily": -0.0022041577286937768,
+      "avg_invested_weight": 0.28254668049792525,
+      "avg_turnover_daily": 0.12040975103734435,
+      "n_days": 241
+    },
+    "2007": {
+      "avg_relative_return_daily": -0.002325879923512588,
+      "avg_invested_weight": 0.26962809917355357,
+      "avg_turnover_daily": 0.12166838842975197,
+      "n_days": 242
+    },
+    "2008": {
+      "avg_relative_return_daily": 0.0031236898487324474,
+      "avg_invested_weight": 0.26524390243902457,
+      "avg_turnover_daily": 0.12037601626016257,
+      "n_days": 246
+    },
+    "2009": {
+      "avg_relative_return_daily": -0.001683345927967904,
+      "avg_invested_weight": 0.2625000000000006,
+      "avg_turnover_daily": 0.12297643442622946,
+      "n_days": 244
+    },
+    "2010": {
+      "avg_relative_return_daily": 0.000644967476519243,
+      "avg_invested_weight": 0.2680526859504129,
+      "avg_turnover_daily": 0.12262396694214871,
+      "n_days": 242
+    },
+    "2011": {
+      "avg_relative_return_daily": 0.001110760208653874,
+      "avg_invested_weight": 0.27359118852458963,
+      "avg_turnover_daily": 0.1231813524590164,
+      "n_days": 244
+    },
+    "2012": {
+      "avg_relative_return_daily": 0.00024228140253047448,
+      "avg_invested_weight": 0.26116255144032985,
+      "avg_turnover_daily": 0.1237911522633745,
+      "n_days": 243
+    },
+    "2013": {
+      "avg_relative_return_daily": 0.0003402968582396677,
+      "avg_invested_weight": 0.2588497899159667,
+      "avg_turnover_daily": 0.12442226890756297,
+      "n_days": 238
+    },
+    "2014": {
+      "avg_relative_return_daily": -0.0009033597485647049,
+      "avg_invested_weight": 0.26926020408163287,
+      "avg_turnover_daily": 0.12446428571428564,
+      "n_days": 245
+    },
+    "2015": {
+      "avg_relative_return_daily": -0.0004683046291972712,
+      "avg_invested_weight": 0.2757684426229508,
+      "avg_turnover_daily": 0.12195184426229506,
+      "n_days": 244
+    },
+    "2016": {
+      "avg_relative_return_daily": 0.0006294785467479612,
+      "avg_invested_weight": 0.260399590163935,
+      "avg_turnover_daily": 0.12482069672131146,
+      "n_days": 244
+    },
+    "2017": {
+      "avg_relative_return_daily": -0.0004010217568522943,
+      "avg_invested_weight": 0.2756147540983605,
+      "avg_turnover_daily": 0.12453893442622951,
+      "n_days": 244
+    },
+    "2018": {
+      "avg_relative_return_daily": 0.0009094170582774895,
+      "avg_invested_weight": 0.2725308641975313,
+      "avg_turnover_daily": 0.12453703703703703,
+      "n_days": 243
+    },
+    "2019": {
+      "avg_relative_return_daily": -0.0009228195923554693,
+      "avg_invested_weight": 0.25056352459016396,
+      "avg_turnover_daily": 0.12476946721311474,
+      "n_days": 244
+    },
+    "2020": {
+      "avg_relative_return_daily": -0.0009757986432845404,
+      "avg_invested_weight": 0.25501543209876587,
+      "avg_turnover_daily": 0.12479423868312757,
+      "n_days": 243
+    },
+    "2021": {
+      "avg_relative_return_daily": 4.058329235661748e-05,
+      "avg_invested_weight": 0.2474537037037037,
+      "avg_turnover_daily": 0.12379115226337449,
+      "n_days": 243
+    }
+  },
+  "recommended_next_axis": "liquidity_guard"
+}

@@ -1,0 +1,61 @@
+{
+  "registered_at": "2026-04-28T19:05:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "status": "completed_exact_scope",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Execute the exact 158 qlib Alpha158 canonical candidates under serial-only batching before any family reopening.",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "serial_only_batches",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "source_policy": {
+    "mode": "alpha158_paper_whitelist_only",
+    "whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json"
+  },
+  "full_universe_contract": {
+    "universe_id": "qlib_alpha158_exact_158",
+    "total_count": 158,
+    "already_tested_count": 158,
+    "remaining_count": 0,
+    "canonical_definition_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+    "remaining_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_full158_universe_manifest_20260428.json",
+    "serial_only": true,
+    "family_reopen_blocked": true,
+    "family_reopen_override_rule": "Any batch-level positive signal-edge result cannot reopen family construction while round11b serial-only policy is active.",
+    "historical_noncanonical_round_ids_not_counted_as_exact_completion": [
+      "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+      "rr_price_volume_single_signal_discovery_v18_round10_alpha158_paper_whitelist_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428"
+    ]
+  },
+  "batch_execution_plan": {
+    "executed_canonical_batch_count": 6,
+    "executed_canonical_candidate_count": 158,
+    "remaining_canonical_candidate_count": 0,
+    "historical_noncanonical_batch_round_ids": [
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428"
+    ],
+    "later_batches_rule": "Continue serial-only canonical batches under the same whitelist policy until remaining_count reaches 0.",
+    "completed_canonical_batch_round_ids": [
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428"
+    ]
+  },
+  "notes": [
+    "This is the round11b execution controller for exact qlib Alpha158 canonical work.",
+    "Earlier slot-numbered alpha158_full_001~036 batches are preserved as historical alpha158-style pilots only and are excluded from canonical completion counts.",
+    "Canonical batch06 is completed: exact progress is now 158/158 and the full exact Alpha158 serial-only execution scope is closed."
+  ]
+}

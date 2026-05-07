@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/project_execution_panel.schema.json",
+  "title": "Project Execution Panel",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "entry_date",
+    "planned_exit_date",
+    "execution_path_status"
+  ],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "instrument": { "type": "string" },
+    "signal_date": { "type": "string" },
+    "entry_date": { "type": ["string", "null"] },
+    "planned_exit_date": { "type": ["string", "null"] },
+    "actual_exit_date": { "type": ["string", "null"] },
+    "actual_exit_event_type": { "type": ["string", "null"] },
+    "actual_exit_price_field": { "type": ["string", "null"] },
+    "actual_sell_price": { "type": ["number", "null"] },
+    "exit_delay_days": { "type": ["integer", "null"] },
+    "execution_path_status": { "type": "string" },
+    "execution_delayed_realized_return": { "type": ["number", "null"] },
+    "terminal_event_flag": { "type": ["boolean", "null"] },
+    "terminal_event_type": { "type": ["string", "null"] },
+    "terminal_event_date": { "type": ["string", "null"] },
+    "terminal_exit_pricing_method": { "type": ["string", "null"] },
+    "terminal_exit_approximation_flag": { "type": ["boolean", "null"] },
+    "terminal_exit_conservative_flag": { "type": ["boolean", "null"] }
+  }
+}

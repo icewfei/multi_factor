@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-04-22T08:17:36.109792+08:00",
+  "candidate_scheme_id": "trend_quality_price_volume_v14_core",
+  "research_round_id": "rr_trend_quality_price_volume_family_20260419",
+  "diagnosis_scope": "trend-quality price/volume signal edge diagnosis",
+  "score_coverage": {
+    "scored_with_label_rows": 15021120,
+    "score_min": 0.0001858736059479554,
+    "score_max": 0.9989878542510121,
+    "score_avg": 0.5001257838933714,
+    "score_std": 0.1407999003378421,
+    "full_sample_corr_ic": -0.009235081874843863,
+    "ranking_eligible_rows": 15233701,
+    "scored_rows": 15232794,
+    "null_score_rows": 907,
+    "null_score_share": 5.9539044385865264e-05
+  },
+  "signal_quality": {
+    "full_sample_corr_ic": -0.009235081874843863,
+    "avg_daily_ic": -0.013901538989522386,
+    "median_daily_ic": -0.02877775347151916,
+    "positive_daily_ic_share": 0.3970727101038716,
+    "daily_ic_observation_days": 6354
+  },
+  "decile_monotonicity": {
+    "avg_label_by_decile_desc": {
+      "1": 0.003188176741410067,
+      "2": 0.003060304662580308,
+      "3": 0.0031116271844460214,
+      "4": 0.003247069749068192,
+      "5": 0.0033726564767089353,
+      "6": 0.003595026598643978,
+      "7": 0.00399793462813228,
+      "8": 0.004334455358571872,
+      "9": 0.004836052358748714,
+      "10": 0.005354319980765815
+    },
+    "interpretation": "top-to-bottom decile ordering indicates whether the trend-quality price/volume score carries broad monotonic information before portfolio extraction"
+  },
+  "top_bucket_readout": {
+    "avg_label_top10": 0.0023706328177574626,
+    "avg_label_rank11_20": 0.0032052067969411827,
+    "avg_label_bottom10": 0.005982248301463293,
+    "top10_minus_rank11_20": -0.0008345739791837201,
+    "top10_minus_bottom10": -0.00361161548370583,
+    "interpretation": "compare the extreme head bucket against the next 10 names and the bottom tail to see whether TopK=10 is extracting a robust edge or a noisy slice"
+  },
+  "cutoff_gap_readout": {
+    "avg_rank10_11_score_gap": 0.004078870536026359,
+    "median_rank10_11_score_gap": 0.002694001280423408,
+    "days_with_both_ranks_present": 6361,
+    "days_gap_lt_0_005": 4562,
+    "days_gap_lt_0_001": 1411
+  },
+  "conclusion": [
+    "The trend-quality price/volume score does not show convincing positive full-sample IC, so the family likely lacks usable gross edge in its current fixed form.",
+    "Ranks 11-20 outperform the top 10 on average, which suggests the current TopK=10 extraction is cutting too aggressively or too noisily at the head.",
+    "Decile ordering is weak or inverted, which suggests the family may not carry stable cross-sectional ordering information.",
+    "Use this diagnosis before deciding whether to continue the trend-quality price/volume family or switch to a different score family."
+  ]
+}

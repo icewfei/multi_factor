@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "ft_c2_drop_upside_share_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_142738",
+  "generated_at": "2026-04-29T14:33:47.786449+08:00",
+  "candidate_scheme_id": "confirmatory_ablation_drop_upside_range_share_4sig",
+  "research_round_id": "rr_confirmatory_c2_ablation_20260429",
+  "low_liquidity_holding_count": 8596,
+  "low_liquidity_weight_total": 171.91999999999697,
+  "low_liquidity_weight_share": 0.1670293797606046,
+  "low_liquidity_contribution_total": 0.9074375936282926,
+  "low_liquidity_contribution_share_of_strategy": 0.1134506155003776,
+  "low_liquidity_alpha_contribution_share": 0.0009190683670502345,
+  "flag_high_low_liquidity_exposure": false
+}

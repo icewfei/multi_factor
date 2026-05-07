@@ -1,0 +1,110 @@
+{
+  "registered_at": "2026-04-30T17:17:11+08:00",
+  "research_round_id": "rr_alpha158_corr30_cord30_dual_signal_family_20260430",
+  "research_tier": "exploratory",
+  "run_type": "exploratory_family_seed",
+  "candidate_scheme_ids": [
+    "alpha158_corr30_cord30_dual_signal_family_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "alpha158_corr30_cord30_dual_signal_family_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+  "external_anchor_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "reserve_anchor_candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_corr30_v1",
+    "price_volume_single_signal_alpha158_cord30_v1",
+    "price_volume_single_signal_alpha158_vsumd60_v1"
+  ],
+  "research_question": "After the Alpha158 confirmatory fine-tuning line was paused because CORD30 failed the final turnover-control-only follow-up, can one small dual-signal family built from the reserve head-extraction pair corr30 and cord30 smooth cross-sectional rank movement enough to reduce the structural turnover problem of single-signal TopK equal-weight selection, while preserving higher invested-weight head-extraction characteristics?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "lineage_note": "This is a new exploratory family-construction line. It does not reopen the paused Alpha158 confirmatory fine-tuning line.",
+  "based_on_artifacts": [
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_confirmatory_line_phase_closeout_and_next_round_direction_20260430.md",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_cord30_strict_recheck_closeout_and_next_decision_20260430.md",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_cord30_turnover_control_seed_closeout_and_pause_decision_20260430.md"
+  ],
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_input_contract_path": "/Users/wy/MiscProject/multi_factor/contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "data_contract_version": "multifactor_data_contract_v2",
+  "time_partition_plan": {
+    "train_window": {
+      "start_date": "20100101",
+      "end_date": "20181231"
+    },
+    "validation_window": {
+      "start_date": "20190101",
+      "end_date": "20211231"
+    },
+    "test_window_access": "forbidden",
+    "note": "The frozen 2022-2025 test window remains excluded by construction through the trainval-only snapshot."
+  },
+  "score_family_contract": {
+    "family_name": "alpha158_corr30_cord30_dual_signal_family_v1",
+    "builder_name": "build_alpha158_head_extraction_dual_signal_family_scores.py",
+    "feature_source": "bars_daily_derived",
+    "feature_set": [
+      {
+        "field": "alpha158_corr30_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger 30-day price-level and log-volume co-movement should rank higher"
+      },
+      {
+        "field": "alpha158_cord30_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger 30-day price-change and volume-change co-movement should rank higher"
+      }
+    ],
+    "score_rule": "mean(percentile_rank(alpha158_corr30_raw DESC), percentile_rank(alpha158_cord30_raw DESC)); require min_feature_count >= 2",
+    "missing_data_rule": "Only score rows with at least 2 non-null ranked features; otherwise emit null model_score_D0 and preserve the row for audit."
+  },
+  "combination_rationale": {
+    "primary_reference_signal": "price_volume_single_signal_alpha158_cord30_v1",
+    "supporting_reserve_signal": "price_volume_single_signal_alpha158_corr30_v1",
+    "why_not_vsumd60_first": "VSUMD60 remains a reserve atomic keeper, but its bottom-avoidance / cash-drag profile is intentionally excluded from the first multi-signal head-extraction family seed.",
+    "mechanism_hypothesis": "corr30 and cord30 are mechanism-near but not identical reserve cards. Blending level-correlation and change-correlation should smooth boundary rank movement more than either single signal alone, reducing turnover without immediately reverting to a defensive bottom-avoidance profile."
+  },
+  "constants_frozen": {
+    "selection_contract": "freeze the simpler standalone-family operating contract used by the CORD30 confirmatory line: no added liquidity guard, TopK=10, and cash allowed when names are not selected",
+    "portfolio_width_topk": 10,
+    "portfolio_extraction_rule": "equal_weight_topk",
+    "portfolio_refresh_rule": "full_daily_refresh",
+    "weight_mapping_rule": "equal_weight_across_selected_names",
+    "execution_semantics": "frozen",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_turnover_daily",
+    "avg_invested_weight",
+    "avg_cash_weight",
+    "low_liquidity_weight_share",
+    "topk_perturbation_pass",
+    "cost_stress_pass"
+  ],
+  "success_diagnostics": [
+    "Compare turnover compression versus standalone CORD30 under the same full-refresh equal-weight contract.",
+    "Compare whether avg_invested_weight stays at or above the higher-deployment regime established by CORD30.",
+    "Compare whether the family remains better than v18 on annual_relative_return, relative_ir, and max_drawdown.",
+    "Inspect whether the family reduces boundary instability enough that later refresh control might become unnecessary or materially weaker."
+  ],
+  "disallowed_changes": [
+    "Do not reopen Alpha158 confirmatory strict recheck or family-seed status inside this round.",
+    "Do not add VSUMD60, IMAX20, IMXD5, or any third signal into this first dual-signal family seed.",
+    "Do not add turnover-control hysteresis, extraction smoothing, or weight tilts inside this round.",
+    "Do not change TopK width, benchmark, execution semantics, or cost assumptions.",
+    "Do not sweep multiple aggregation formulas or multiple dual-signal pairs inside this round."
+  ],
+  "notes": [
+    "This round is opened only after the Alpha158 confirmatory fine-tuning line was formally paused.",
+    "The goal is not to continue local micro-tuning, but to test a new structural hypothesis: multi-signal blending itself may reduce single-signal structural turnover.",
+    "The first exploratory family is intentionally minimal: only corr30 and cord30, no third reserve card, no overlay, and no refresh-rule intervention."
+  ]
+}

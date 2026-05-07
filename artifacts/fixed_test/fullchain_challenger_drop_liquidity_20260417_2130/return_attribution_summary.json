@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "ft_challenger_drop_liquidity_20260418",
+  "run_id": "fullchain_challenger_drop_liquidity_20260417_2130",
+  "attempt_id": "attempt_challenger_drop_liquidity_20260418_0012",
+  "generated_at": "2026-04-18T07:27:03.308815+08:00",
+  "candidate_scheme_id": "baseline_reversal_momentum_lowvol_v2",
+  "research_round_id": "rr_baseline_challenger_drop_liquidity_20260417",
+  "benchmark_contribution_total": 2.794440723861887,
+  "cash_drag_total": -2.4602219431537655,
+  "selection_alpha_total": -0.883010719973019,
+  "low_liquidity_contribution_total": -0.8474778035190098
+}

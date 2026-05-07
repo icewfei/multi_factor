@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_power_inv_rev_a6_v1",
+  "run_id": "exploratory_power_inv_rev_a6_v1",
+  "attempt_id": "attempt_20260506_153517",
+  "generated_at": "2026-05-06T15:37:46.946592+08:00",
+  "candidate_scheme_id": "power_inv_rev_a6_v1",
+  "research_round_id": "rr_exploratory_power_transform_reversal_20260506",
+  "low_liquidity_holding_count": 4051,
+  "low_liquidity_weight_total": 14.467857142857095,
+  "low_liquidity_weight_share": 0.07895454899819698,
+  "low_liquidity_contribution_total": -0.5903173654081427,
+  "low_liquidity_contribution_share_of_strategy": 1.3188368745691303,
+  "low_liquidity_alpha_contribution_share": 1.5318391081911495,
+  "flag_high_low_liquidity_exposure": true
+}

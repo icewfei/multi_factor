@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_vsumd60_seed_linear_rank_decay_trainval_20260429",
+  "run_id": "confirmatory_vsumd60_seed_linear_rank_decay_trainval_20260429",
+  "attempt_id": "attempt_20260429_173136",
+  "generated_at": "2026-04-29T17:34:27.006569+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_vsumd60_seed_linear_rank_decay_v1",
+  "research_round_id": "rr_confirmatory_alpha158_vsumd60_family_seed_head_extraction_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.09691075239335034,
+  "pass_cost_stress_relative_return_floor": false
+}

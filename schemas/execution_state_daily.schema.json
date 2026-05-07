@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/execution_state_daily.schema.json",
+  "title": "Execution State Daily",
+  "type": "object",
+  "required": [
+    "run_id",
+    "attempt_id",
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "entry_date",
+    "execution_attempt_D1",
+    "entry_filled_D1",
+    "backtest_executable"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "snapshot_id": { "type": "string" },
+    "instrument": { "type": "string" },
+    "signal_date": { "type": "string" },
+    "entry_date": { "type": ["string", "null"] },
+    "planned_exit_date": { "type": ["string", "null"] },
+    "execution_attempt_D1": { "type": "boolean" },
+    "entry_filled_D1": { "type": "boolean" },
+    "backtest_executable": { "type": "boolean" },
+    "target_weight_D0": { "type": ["number", "null"] },
+    "entry_tradeable_shared_flag": { "type": ["boolean", "null"] },
+    "entry_filled_reason": { "type": ["string", "null"] }
+  }
+}

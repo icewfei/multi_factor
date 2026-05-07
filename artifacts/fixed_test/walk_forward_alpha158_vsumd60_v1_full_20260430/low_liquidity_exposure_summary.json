@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "walk_forward_fixed_test_alpha158_vsumd60_v1_full_20260430",
+  "run_id": "walk_forward_alpha158_vsumd60_v1_full_20260430",
+  "attempt_id": "attempt_20260430_123709",
+  "generated_at": "2026-04-30T12:41:53.114131+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "research_round_id": "rr_walk_forward_alpha158_vsumd60_v1_20260430",
+  "low_liquidity_holding_count": 7154,
+  "low_liquidity_weight_total": 34.066666666666556,
+  "low_liquidity_weight_share": 0.11442738323733748,
+  "low_liquidity_contribution_total": 0.03183591328593535,
+  "low_liquidity_contribution_share_of_strategy": 0.02317868478101889,
+  "low_liquidity_alpha_contribution_share": 0.01176247544817761,
+  "flag_high_low_liquidity_exposure": false
+}

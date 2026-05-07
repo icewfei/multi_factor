@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+  "run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+  "attempt_id": "attempt_20260506_115112",
+  "generated_at": "2026-05-06T11:54:44.746154+08:00",
+  "candidate_scheme_id": "reversal_p98_cord30_ew_v1",
+  "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+  "low_liquidity_holding_count": 6339,
+  "low_liquidity_weight_total": 35.216666666666555,
+  "low_liquidity_weight_share": 0.12145772259585191,
+  "low_liquidity_contribution_total": 0.2863038264335363,
+  "low_liquidity_contribution_share_of_strategy": 0.10972487985034976,
+  "low_liquidity_alpha_contribution_share": 0.024665402074993188,
+  "flag_high_low_liquidity_exposure": false
+}

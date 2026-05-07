@@ -1,0 +1,526 @@
+{
+  "as_of_date": "20260506",
+  "run_id": "exploratory_overnight_intraday_decomposition_v1",
+  "p98_median_ic": 0.04604476596399468,
+  "candidates": [
+    {
+      "name": "p98 (reversal baseline)",
+      "scheme_id": "reversal_tail_exclude_p98_v1",
+      "family": "baseline",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10386410
+        },
+        "ic": {
+          "mean_daily_ic": 0.04808009457138138,
+          "median_daily_ic": 0.04604476596399468,
+          "std_daily_ic": 0.1272319255982915,
+          "n_days": 5322,
+          "positive_daily_share": 0.6503194287861707,
+          "median_daily_ic_95ci_low": 0.042275546906405996,
+          "median_daily_ic_95ci_high": 0.049974457440643556
+        },
+        "decile_labels": {
+          "1": 0.0060614589083871975,
+          "2": 0.005810037075483274,
+          "3": 0.005591472325341963,
+          "4": 0.00544330798240865,
+          "5": 0.005063272244603925,
+          "6": 0.004795413681575546,
+          "7": 0.00415988609493117,
+          "8": 0.003371508221139163,
+          "9": 0.001922782912372753,
+          "10": -0.0007267107201424851
+        },
+        "top_slice": {
+          "top10_avg_label": 0.007474216226600954,
+          "bottom10_avg_label": 0.002689415974235512,
+          "top10_minus_bottom10": 0.0047848002523654416
+        }
+      },
+      "classification": "baseline"
+    },
+    {
+      "name": "overnight_rev_5d_v1",
+      "scheme_id": "overnight_rev_5d_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10603660
+        },
+        "ic": {
+          "mean_daily_ic": -0.01604817244007296,
+          "median_daily_ic": -0.013647801187087596,
+          "std_daily_ic": 0.06999868983843854,
+          "n_days": 5326,
+          "positive_daily_share": 0.40687194892977846,
+          "median_daily_ic_95ci_low": -0.01601601805596483,
+          "median_daily_ic_95ci_high": -0.011817440949136513
+        },
+        "decile_labels": {
+          "1": 0.0023932527986078654,
+          "2": 0.0036266298852849345,
+          "3": 0.004108891535777493,
+          "4": 0.004418448129544989,
+          "5": 0.004586791294388317,
+          "6": 0.004777995638170693,
+          "7": 0.004883199559887968,
+          "8": 0.0049201346144199356,
+          "9": 0.004685011814466478,
+          "10": 0.0028036843691593154
+        },
+        "top_slice": {
+          "top10_avg_label": 0.004374598678795708,
+          "bottom10_avg_label": -0.005147455747929018,
+          "top10_minus_bottom10": 0.009522054426724727
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.18161708769669163,
+        "n_days": 5322
+      },
+      "classification": "marginal",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "intraday_rev_5d_v1",
+      "scheme_id": "intraday_rev_5d_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": -0.03917653575173689,
+          "median_daily_ic": -0.03664122771119651,
+          "std_daily_ic": 0.11663739718949868,
+          "n_days": 5327,
+          "positive_daily_share": 0.3632438520743383,
+          "median_daily_ic_95ci_low": -0.040228897270222934,
+          "median_daily_ic_95ci_high": -0.033580333925450005
+        },
+        "decile_labels": {
+          "1": -0.0009346778551952926,
+          "2": 0.0023386168564469823,
+          "3": 0.0037921861295171114,
+          "4": 0.004392762067910592,
+          "5": 0.004797088184810518,
+          "6": 0.005004345741387152,
+          "7": 0.0052943806056883844,
+          "8": 0.005409318382244965,
+          "9": 0.00559117670467915,
+          "10": 0.005583087652996745
+        },
+        "top_slice": {
+          "top10_avg_label": -0.005403494836766418,
+          "bottom10_avg_label": 0.00441726699298789,
+          "top10_minus_bottom10": -0.009820761829754308
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.8580906254057179,
+        "n_days": 5322
+      },
+      "classification": "threshold_met_ci_issues",
+      "p98_overlap": "high"
+    },
+    {
+      "name": "overnight_rev_20d_v1",
+      "scheme_id": "overnight_rev_20d_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10603660
+        },
+        "ic": {
+          "mean_daily_ic": -0.014386432371263474,
+          "median_daily_ic": -0.012454157237661674,
+          "std_daily_ic": 0.07699576394691118,
+          "n_days": 5326,
+          "positive_daily_share": 0.4280886218550507,
+          "median_daily_ic_95ci_low": -0.01479870658659793,
+          "median_daily_ic_95ci_high": -0.010163510803717671
+        },
+        "decile_labels": {
+          "1": 0.002661296244250825,
+          "2": 0.0035043572498671027,
+          "3": 0.004159786429694663,
+          "4": 0.004304380016228356,
+          "5": 0.004527769722134362,
+          "6": 0.00473133340037436,
+          "7": 0.00465812957555516,
+          "8": 0.0047273414152531916,
+          "9": 0.004547594027269612,
+          "10": 0.003382332589119568
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0023211876386353965,
+          "bottom10_avg_label": -0.0006863568107857482,
+          "top10_minus_bottom10": 0.0030075444494211444
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.08370700731847627,
+        "n_days": 5322
+      },
+      "classification": "marginal",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "intraday_rev_20d_v1",
+      "scheme_id": "intraday_rev_20d_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": -0.01929082233339839,
+          "median_daily_ic": -0.016211751726986363,
+          "std_daily_ic": 0.1281360274051521,
+          "n_days": 5327,
+          "positive_daily_share": 0.44640510606345035,
+          "median_daily_ic_95ci_low": -0.020350422752731367,
+          "median_daily_ic_95ci_high": -0.012333038876370318
+        },
+        "decile_labels": {
+          "1": 0.0008659079256304037,
+          "2": 0.003270372659871511,
+          "3": 0.004031247941100615,
+          "4": 0.00448745307762674,
+          "5": 0.004696542522454774,
+          "6": 0.004709469064637153,
+          "7": 0.004770453529383119,
+          "8": 0.004737868467345098,
+          "9": 0.004696811851618691,
+          "10": 0.004991911336830695
+        },
+        "top_slice": {
+          "top10_avg_label": -0.0021482672993005094,
+          "bottom10_avg_label": 0.006494158601254518,
+          "top10_minus_bottom10": -0.008642425900555029
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.351548715454552,
+        "n_days": 5322
+      },
+      "classification": "marginal",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "overnight_vol_5d_v1",
+      "scheme_id": "overnight_vol_5d_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10602758
+        },
+        "ic": {
+          "mean_daily_ic": 0.007469707514969426,
+          "median_daily_ic": 0.008257803189066883,
+          "std_daily_ic": 0.1134714125609008,
+          "n_days": 5325,
+          "positive_daily_share": 0.5318309859154929,
+          "median_daily_ic_95ci_low": 0.00493699447002887,
+          "median_daily_ic_95ci_high": 0.012010493823611591
+        },
+        "decile_labels": {
+          "1": 0.003978630170340718,
+          "2": 0.00464713881619547,
+          "3": 0.004648581344857092,
+          "4": 0.0047024073461825015,
+          "5": 0.004656670301828408,
+          "6": 0.004351900931982216,
+          "7": 0.004136383812814885,
+          "8": 0.0041204882624877315,
+          "9": 0.003684015398171012,
+          "10": 0.002246936220583104
+        },
+        "top_slice": {
+          "top10_avg_label": 0.003140439435163649,
+          "bottom10_avg_label": 0.0014925724402172808,
+          "top10_minus_bottom10": 0.0016478669949463683
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": 0.0252340152009074,
+        "n_days": 5322
+      },
+      "classification": "below_threshold",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "overnight_intraday_divergence_v1",
+      "scheme_id": "overnight_intraday_divergence_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10603651
+        },
+        "ic": {
+          "mean_daily_ic": -0.011822849289863263,
+          "median_daily_ic": -0.011356526498862615,
+          "std_daily_ic": 0.06553956757643034,
+          "n_days": 5326,
+          "positive_daily_share": 0.421704844160721,
+          "median_daily_ic_95ci_low": -0.013214203852703246,
+          "median_daily_ic_95ci_high": -0.00956371494703898
+        },
+        "decile_labels": {
+          "1": 0.002838163140518413,
+          "2": 0.0036631641429105332,
+          "3": 0.004252520176148475,
+          "4": 0.004400102202386885,
+          "5": 0.004600146141141533,
+          "6": 0.0044857211969753,
+          "7": 0.004623718293503497,
+          "8": 0.004567372285594118,
+          "9": 0.004340616890028339,
+          "10": 0.0034311187808073237
+        },
+        "top_slice": {
+          "top10_avg_label": 0.003943889630974604,
+          "bottom10_avg_label": -0.000873100780744571,
+          "top10_minus_bottom10": 0.004816990411719175
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.08791496286930764,
+        "n_days": 5322
+      },
+      "classification": "marginal",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "overnight_p98_ew_v1",
+      "scheme_id": "overnight_p98_ew_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": NaN,
+          "median_daily_ic": 0.02304778904801066,
+          "std_daily_ic": NaN,
+          "n_days": 5327,
+          "positive_daily_share": 0.6172329641449221,
+          "median_daily_ic_95ci_low": -0.0017221590202749584,
+          "median_daily_ic_95ci_high": 0.10240877546508685
+        },
+        "decile_labels": {
+          "1": 0.005369772708950214,
+          "2": 0.005214074421998905,
+          "3": 0.00508994818701291,
+          "4": 0.004766249785168381,
+          "5": 0.004438264533229623,
+          "6": 0.003818986064306904,
+          "7": 0.004071869416337018,
+          "8": 0.004118953108128897,
+          "9": 0.003549738043748406,
+          "10": 0.0007921927856164278
+        },
+        "top_slice": {
+          "top10_avg_label": 0.005898574657699161,
+          "bottom10_avg_label": -0.00322236148594908,
+          "top10_minus_bottom10": 0.00912093614364824
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": 0.643627252646443,
+        "n_days": 5322
+      },
+      "classification": "marginal",
+      "p98_overlap": "moderate"
+    },
+    {
+      "name": "intraday_p98_ew_v1",
+      "scheme_id": "intraday_p98_ew_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": 0.00924024991598617,
+          "median_daily_ic": 0.008411568960847316,
+          "std_daily_ic": 0.05002783022482448,
+          "n_days": 5327,
+          "positive_daily_share": 0.5847568988173456,
+          "median_daily_ic_95ci_low": 0.007109854511755524,
+          "median_daily_ic_95ci_high": 0.00988374994377869
+        },
+        "decile_labels": {
+          "1": 0.004964286793928458,
+          "2": 0.00515854473471348,
+          "3": 0.004856487000149454,
+          "4": 0.004296271254057282,
+          "5": 0.003352698620601313,
+          "6": 0.003311702192377829,
+          "7": 0.0038822770641545002,
+          "8": 0.003966104118797618,
+          "9": 0.0039048613245831667,
+          "10": 0.0035451118900846133
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0034779088343748956,
+          "bottom10_avg_label": 0.00539564337231176,
+          "top10_minus_bottom10": -0.0019177345379368643
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": 0.2929846487454935,
+        "n_days": 5322
+      },
+      "classification": "below_threshold",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "overnight_intraday_ew_v1",
+      "scheme_id": "overnight_intraday_ew_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": -0.04388882081986301,
+          "median_daily_ic": -0.041772443451320904,
+          "std_daily_ic": 0.1174881137015531,
+          "n_days": 5327,
+          "positive_daily_share": 0.34972780176459545,
+          "median_daily_ic_95ci_low": -0.04568755572965531,
+          "median_daily_ic_95ci_high": -0.037743021941346024
+        },
+        "decile_labels": {
+          "1": 0.0006236714214829482,
+          "2": 0.002768796202098672,
+          "3": 0.0036127856291297057,
+          "4": 0.0038078269138749916,
+          "5": 0.0036069431932222638,
+          "6": 0.004455557703769897,
+          "7": 0.005258143781964438,
+          "8": 0.005541982848127427,
+          "9": 0.005828025168534264,
+          "10": 0.005762100927299724
+        },
+        "top_slice": {
+          "top10_avg_label": -0.003381424715568989,
+          "bottom10_avg_label": 0.003616246534490907,
+          "top10_minus_bottom10": -0.006997671250059896
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.8532596655296567,
+        "n_days": 5322
+      },
+      "classification": "threshold_met_ci_issues",
+      "p98_overlap": "high"
+    },
+    {
+      "name": "overnight70_p98_30_v1",
+      "scheme_id": "overnight70_p98_30_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": NaN,
+          "median_daily_ic": 0.0031889521541846344,
+          "std_daily_ic": NaN,
+          "n_days": 5327,
+          "positive_daily_share": 0.5239346724235029,
+          "median_daily_ic_95ci_low": -0.029579467652538754,
+          "median_daily_ic_95ci_high": 0.12222922037059156
+        },
+        "decile_labels": {
+          "1": 0.004788781543542335,
+          "2": 0.0038381191099815895,
+          "3": 0.0035236636461432693,
+          "4": 0.004166219110511465,
+          "5": 0.004552312727137742,
+          "6": 0.004785598181248889,
+          "7": 0.004951650696641823,
+          "8": 0.005106358220333257,
+          "9": 0.004331672909609317,
+          "10": 0.0011962077333706497
+        },
+        "top_slice": {
+          "top10_avg_label": 0.005148380997440557,
+          "bottom10_avg_label": -0.003860222936375166,
+          "top10_minus_bottom10": 0.009008603933815723
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": 0.24679514673594544,
+        "n_days": 5322
+      },
+      "classification": "below_threshold",
+      "p98_overlap": "low"
+    },
+    {
+      "name": "intraday70_p98_30_v1",
+      "scheme_id": "intraday70_p98_30_v1",
+      "family": "overnight_intraday",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "mean_daily_ic": -0.02702697645418289,
+          "median_daily_ic": -0.024919702290814524,
+          "std_daily_ic": 0.09751238083824554,
+          "n_days": 5327,
+          "positive_daily_share": 0.3900882297728553,
+          "median_daily_ic_95ci_low": -0.027472110735773478,
+          "median_daily_ic_95ci_high": -0.021564492341071804
+        },
+        "decile_labels": {
+          "1": 0.00017253441936834277,
+          "2": 0.0024062824303743855,
+          "3": 0.0036258023488822183,
+          "4": 0.004376978797154724,
+          "5": 0.004737555168518542,
+          "6": 0.004957287748034985,
+          "7": 0.005175459048572086,
+          "8": 0.005362236337412024,
+          "9": 0.005454596403545879,
+          "10": 0.004995454629503181
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0020423613556916015,
+          "bottom10_avg_label": 0.005417065147051158,
+          "top10_minus_bottom10": -0.0033747037913595566
+        }
+      },
+      "p98_pairwise_corr": {
+        "median_daily_corr": -0.635542366910061,
+        "n_days": 5322
+      },
+      "classification": "marginal",
+      "p98_overlap": "moderate"
+    }
+  ],
+  "recommendations": [
+    "SKIP: overnight_rev_5d_v1 — marginal IC, not worth full-chain",
+    "SKIP: overnight_rev_20d_v1 — marginal IC, not worth full-chain",
+    "SKIP: intraday_rev_20d_v1 — marginal IC, not worth full-chain",
+    "SKIP: overnight_intraday_divergence_v1 — marginal IC, not worth full-chain",
+    "SKIP: overnight_p98_ew_v1 — marginal IC, not worth full-chain",
+    "SKIP: intraday70_p98_30_v1 — marginal IC, not worth full-chain"
+  ]
+}

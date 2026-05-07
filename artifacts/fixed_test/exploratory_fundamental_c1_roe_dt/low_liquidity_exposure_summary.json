@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_fundamental_c1_roe_dt",
+  "run_id": "exploratory_fundamental_c1_roe_dt",
+  "attempt_id": "attempt_20260501_170511",
+  "generated_at": "2026-05-01T17:08:13.722594+08:00",
+  "candidate_scheme_id": "exploratory_fundamental_c1_roe_dt",
+  "research_round_id": "rr_exploratory_fundamental_quality_profitability_20260501",
+  "low_liquidity_holding_count": 7733,
+  "low_liquidity_weight_total": 154.65999999999764,
+  "low_liquidity_weight_share": 0.15876894017163626,
+  "low_liquidity_contribution_total": -2.011478989440465,
+  "low_liquidity_contribution_share_of_strategy": -0.8987479209278462,
+  "low_liquidity_alpha_contribution_share": -0.9234785090765871,
+  "flag_high_low_liquidity_exposure": true
+}

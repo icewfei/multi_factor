@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_breakout_volume_confirmation_substitution_20260424_0015",
+  "run_id": "fullchain_price_volume_breakout_volume_confirmation_substitution_20260424_0015",
+  "attempt_id": "attempt_20260424_223424",
+  "generated_at": "2026-04-24T22:39:55.467509+08:00",
+  "candidate_scheme_id": "price_volume_v22_breakout_volume_confirmation_substitution",
+  "research_round_id": "rr_price_volume_breakout_volume_confirmation_substitution_family_20260424",
+  "benchmark_contribution_total": 2.794440723861887,
+  "cash_drag_total": -2.2005759732019814,
+  "selection_alpha_total": -0.08039811967172679,
+  "low_liquidity_contribution_total": -0.15931863891951029
+}

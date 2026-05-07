@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "ft_minimal_fullchain_20260417",
+  "run_id": "fullchain_reviewfix_20260417_160610",
+  "attempt_id": "attempt_fullchain_reviewfix_20260417_160610",
+  "generated_at": "2026-04-17T21:02:15.093227+08:00",
+  "candidate_scheme_id": "baseline_reversal_momentum_lowvol_liquidity_v1",
+  "research_round_id": "rr_baseline_scaffold_20260417",
+  "benchmark_contribution_total": 2.794440723861886,
+  "cash_drag_total": -2.4973716105338153,
+  "selection_alpha_total": -0.8437212116785383,
+  "low_liquidity_contribution_total": -0.7300600293283025
+}

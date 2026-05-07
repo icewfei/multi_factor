@@ -1,0 +1,47 @@
+{
+  "registered_at": "2026-05-01T19:30:00+08:00",
+  "research_round_id": "rr_exploratory_retain50_10cohort_20260501",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "method_investigation",
+  "research_question": "在 10-cohort 合同下（turnover 已降至 0.199，feasibility 已验证），加入 retain50 daily-recheck refresh rule，能否在保持 turnover <= 0.25 和 invested_weight >= 0.30 的前提下，改善 return/IR/drawdown 和 cost_stress？",
+  "changed_dimension": "portfolio_refresh_rule",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "在 10-cohort 合同下，将 refresh rule 从 full refresh 改为 daily-recheck retain_if_rank_leq=50。每日检查 rank，rank <= 50 的持仓保留，其余替换。不改变：score family、TopK(10)、执行语义、成本合同、基准、持仓提取规则、purge gap、样本资格矩阵、流动性 guard、holding_cohort_count(10)、cash retention/no-replacement。",
+  "formal_baseline": "exploratory_cohort10_c1_trendbias_only (10-cohort, full refresh, same signal)",
+  "secondary_diagnostics": ["exploratory_retain50_c1", "exploratory_cohort5_c1_trendbias_only"],
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "contract_params": {"holding_cohort_count": 10},
+  "portfolio_refresh_contract": {
+    "refresh_rule_name": "retain_if_rank_leq",
+    "reference_rank_field": "rank_position",
+    "retain_if_rank_leq": 50,
+    "retain_if_guard_still_passes": true,
+    "retain_if_entry_tradeable": true,
+    "max_holdings": 10,
+    "target_weight_rule": "Equal-weight across currently held names after refresh; unfilled slots remain cash.",
+    "semantic_note": "Daily-recheck retention. Rank checked every signal_date. Incumbents with rank <= 50 are retained. Rank > 50 or outside guard/entry-tradeable are replaced. This is the same retain_if_rank_leq=50 semantics as exploratory_retain50_c1, now applied under 10-cohort contract."
+  },
+  "candidate_scheme_ids": ["exploratory_cohort10_retain50_c1"],
+  "planned_candidate_scheme_ids": ["exploratory_cohort10_retain50_c1"],
+  "success_rules": {
+    "pass_annual_relative_return": "annual_relative_return >= 0.01",
+    "pass_relative_ir": "relative_ir >= 0.30",
+    "pass_not_worse_than_baseline": "annual_relative_return_delta_vs_10cohort_full_refresh >= -0.01",
+    "pass_avg_invested_weight": "avg_invested_weight >= 0.15",
+    "pass_max_drawdown_not_worse": "max_drawdown_delta_vs_10cohort_full_refresh >= -0.05",
+    "pass_topk_perturbation": "topk_8_relative_return >= 0.00 AND topk_12_relative_return >= 0.00",
+    "pass_cost_stress": "cost_stress_annual_relative_return >= 0.00",
+    "pass_turnover_absolute": "avg_turnover_daily <= 0.25",
+    "core_pass_condition": "all 9 gates must pass"
+  },
+  "forbidden": [
+    "不能改 score family",
+    "不能改 TopK、holding period、execution semantics",
+    "不能改 holding_cohort_count（固定 10）",
+    "不能同时改 retention threshold"
+  ],
+  "serial_rule": "Refresh rule 在 10-cohort 合同下的最终验证。只允许 1 个候选。如果 retain50 + 10-cohort 仍无法通过 9 gates，portfolio_refresh_rule 方向正式关闭。"
+}

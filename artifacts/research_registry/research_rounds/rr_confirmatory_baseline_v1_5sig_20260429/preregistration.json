@@ -1,0 +1,42 @@
+{
+  "registered_at": "2026-04-29T10:30:00+08:00",
+  "research_round_id": "rr_confirmatory_baseline_v1_5sig_20260429",
+  "research_tier": "confirmatory",
+  "research_question": "Does a 5-signal equally-weighted linear baseline built from non-redundant price-volume mechanisms survive audit gates on the trainval (2000-2021) snapshot?",
+  "allowed_core_dimension": "linear_baseline_construction",
+  "changed_dimension": "linear_baseline_construction",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": ["confirmatory_baseline_v1_equally_weighted_5sig"],
+  "baseline_reference_candidate_scheme_id": null,
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "execution_logic_version": "warehouse_execution_v3",
+    "topk": 10,
+    "holding_period": "5d_D0_D1_D5",
+    "entry_and_exit_logic": "framework_v1",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary",
+    "cost_contract": "framework_default"
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "sub_period_direction_consistency"
+  ],
+  "promotion_rule": {
+    "pass_condition": "positive_daily_ic_share > 0.52 AND decile_monotonic_ok = true AND sub_period_direction_consistency >= 0.75"
+  },
+  "disallowed_changes": [
+    "Do not add or remove signals after model scores are generated.",
+    "Do not change snapshot_id.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not use test-set data."
+  ],
+  "notes": [
+    "First confirmatory baseline round. 5 signals selected from distinct mechanism families.",
+    "All features use D0-and-earlier market data.",
+    "Snapshot excludes test set (2022-2025)."
+  ]
+}

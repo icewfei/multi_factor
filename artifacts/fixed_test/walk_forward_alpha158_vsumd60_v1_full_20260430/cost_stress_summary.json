@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "walk_forward_fixed_test_alpha158_vsumd60_v1_full_20260430",
+  "run_id": "walk_forward_alpha158_vsumd60_v1_full_20260430",
+  "attempt_id": "attempt_20260430_123709",
+  "generated_at": "2026-04-30T12:41:53.371858+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "research_round_id": "rr_walk_forward_alpha158_vsumd60_v1_20260430",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.08080130626576876,
+  "pass_cost_stress_relative_return_floor": false
+}

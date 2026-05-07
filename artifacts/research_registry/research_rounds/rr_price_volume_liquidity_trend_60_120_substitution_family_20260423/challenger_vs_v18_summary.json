@@ -1,0 +1,58 @@
+{
+  "research_round_id": "rr_price_volume_liquidity_trend_60_120_substitution_family_20260423",
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "challenger_candidate_scheme_id": "price_volume_v21_liquidity_trend_60_120_substitution",
+  "reference_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "challenger_run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.04414228898711203,
+      "challenger": -0.050647760462924185,
+      "delta": -0.006505471475812154
+    },
+    "relative_ir": {
+      "reference": -0.4024807492034419,
+      "challenger": -0.42447715105560135,
+      "delta": -0.021996401852159455
+    },
+    "max_drawdown": {
+      "reference": -0.2772009864700842,
+      "challenger": -0.24764416178408155,
+      "delta": 0.029556824686002638
+    },
+    "avg_cash_weight": {
+      "reference": 0.7678748817060334,
+      "challenger": 0.7907481900170479,
+      "delta": 0.02287330831101442
+    },
+    "avg_invested_weight": {
+      "reference": 0.23212511829398338,
+      "challenger": 0.20925180998292534,
+      "delta": -0.02287330831105804
+    },
+    "avg_turnover_daily": {
+      "reference": 0.11104145726428083,
+      "challenger": 0.09993868217165833,
+      "delta": -0.011102775092622503
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.029557319223990304,
+      "challenger": 0.03100180375180495,
+      "delta": 0.0014444845278146457
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_annual_relative_return": {
+      "reference": -0.09617269729063371,
+      "challenger": -0.09728996266346301,
+      "delta": -0.0011172653728293002
+    }
+  },
+  "conclusion": "The direct substitution from liquidity_trend_20_60_raw to liquidity_trend_60_120_raw improved max_drawdown and avg_turnover_daily versus v18, but annual_relative_return and relative_ir worsened, low_liquidity_weight_share ticked up slightly, and both TopK perturbation plus cost-stress audit gates still failed, so the challenger remains a weak_candidate."
+}

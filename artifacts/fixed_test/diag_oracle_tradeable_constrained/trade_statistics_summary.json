@@ -1,0 +1,39 @@
+{
+  "fixed_test_run_id": "diag_oracle_tradeable_constrained",
+  "run_id": "diag_oracle_tradeable_constrained",
+  "attempt_id": "attempt_20260502_002454",
+  "generated_at": "2026-05-02T00:27:30.869392+08:00",
+  "candidate_scheme_id": "diag_oracle_tradeable_constrained",
+  "research_round_id": "diag_perfect_foresight_stress_probe_20260501",
+  "holdings_count": 53270,
+  "unique_instruments": 3536,
+  "signal_dates_with_positions": 5327,
+  "avg_exit_delay_days": 0.10653275764970903,
+  "delayed_exit_positions": 3025,
+  "terminal_event_positions": 0,
+  "total_entry_fill_weight": 532.6999999999505,
+  "avg_turnover_daily": 0.19984993434629644,
+  "median_turnover_daily": 0.20000000000000004,
+  "max_turnover_daily": 0.26000000000000006,
+  "rebalance_days": 5331,
+  "run_state_summary_counts": {
+    "ranking_state_rows": 11198074,
+    "execution_state_rows": 11198074,
+    "ranking_anomaly_rows": 243304,
+    "rankable_rows": 10537652,
+    "null_model_score_rows": 660422,
+    "nonfinite_model_score_rows": 0,
+    "topk_frozen_rows": 53270,
+    "execution_attempt_rows": 53270,
+    "entry_filled_rows": 53270,
+    "backtest_executable_rows": 53270,
+    "unfilled_topk_count": 0,
+    "unfilled_topk_weight": 0.0,
+    "topk_per_signal_breach_count": 0,
+    "topk_default_used": 10
+  },
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": []
+}

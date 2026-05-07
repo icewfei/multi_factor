@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-04-18T23:05:00+08:00",
+  "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+  "diagnosis_scope": "recalibrated momentum-only score edge diagnosis",
+  "score_coverage": {
+    "ranking_eligible_rows": 15233701,
+    "null_score_rows": 135887,
+    "null_score_share": 0.008920156697312097,
+    "score_min": 0.0,
+    "score_max": 1.0,
+    "score_avg": 0.5000000000000008,
+    "score_std": 0.2887956797226698
+  },
+  "signal_quality": {
+    "full_sample_corr_ic": 0.009757764048797732,
+    "avg_daily_ic": 0.013398272056083634,
+    "median_daily_ic": 0.007709789498289401,
+    "positive_daily_ic_share": 0.5235901509134233
+  },
+  "decile_monotonicity": {
+    "avg_label_by_decile_desc": {
+      "1": 0.0047239707558488,
+      "2": 0.004350692934385826,
+      "3": 0.004217785148202268,
+      "4": 0.004079258568130087,
+      "5": 0.003996898569728819,
+      "6": 0.003952909391310392,
+      "7": 0.003710839085062981,
+      "8": 0.003496632028356796,
+      "9": 0.0028843536960032057,
+      "10": 0.0020916209814684883
+    },
+    "interpretation": "there is broad monotonic decline from top decile to bottom decile, so the score is not random; however the slope is shallow"
+  },
+  "top_bucket_readout": {
+    "avg_label_top10": 0.004281878956130948,
+    "avg_label_rank11_20": 0.0054826373536042425,
+    "avg_label_bottom10": 0.0018203998202666303,
+    "top10_minus_rank11_20": -0.001200758397473294,
+    "top10_minus_bottom10": 0.002461479135864317,
+    "interpretation": "the top 10 names beat the bottom 10, but the next 10 names outperform the top 10; this points to weak edge concentration and noisy cutoff behavior at the extreme head of the ranking"
+  },
+  "conclusion": [
+    "The calibrated momentum-only score still has a real but weak positive signal, as shown by positive IC and decile monotonicity.",
+    "The edge is not concentrated cleanly in the top 10 names; rank 11-20 performs better on average than rank 1-10.",
+    "This supports the view that the strategy is failing because the gross edge is thin and the current TopK mapping is extracting a noisy extreme slice of the score rather than a robust high-conviction bucket.",
+    "Future candidate design should prefer one-dimensional tests that change score-to-portfolio mapping or top-of-book selection geometry, not more liquidity-guard tweaks."
+  ]
+}

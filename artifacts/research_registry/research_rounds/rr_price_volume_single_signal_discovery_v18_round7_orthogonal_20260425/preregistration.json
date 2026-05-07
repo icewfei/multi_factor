@@ -1,0 +1,193 @@
+{
+  "registered_at": "2026-04-25T11:00:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round7_orthogonal_20260425",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_return_autocorr_20d_v1",
+    "price_volume_single_signal_amount_autocorr_20d_v1",
+    "price_volume_single_signal_downside_volume_skew_20d_v1",
+    "price_volume_single_signal_upside_range_share_20d_v1",
+    "price_volume_single_signal_intraday_trend_bias_20d_v1",
+    "price_volume_single_signal_return_skew_20d_v1",
+    "price_volume_single_signal_amount_volatility_20d_v1",
+    "price_volume_single_signal_downside_gap_frequency_20d_v1",
+    "price_volume_single_signal_high_low_break_balance_20d_v1",
+    "price_volume_single_signal_downside_absorption_ratio_20d_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After treating round6 primarily as a standardization-and-dedup pass rather than genuine alpha expansion, which more orthogonal atomic price-volume mechanisms can still expand the retained keeper pool under the frozen v18 operational contract without colliding with the current canonical alias map or simply remixing existing confirmation and amount-shock clusters?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "candidate definitions may draw inspiration from Alpha158-style atomic expressions and common price-volume paper mechanisms, but every field must be implemented independently inside this project and must not rely on the neighboring qlib adapter stack",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_return_autocorr_20d_v1",
+        "field": "return_autocorr_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger positive short-horizon return autocorrelation may encode a serial-dependence mechanism distinct from simple medium-term momentum ranking",
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This tests serial dependence directly rather than cumulative trend strength, so it should be treated as a distinct micro-trend mechanism.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_amount_autocorr_20d_v1",
+        "field": "amount_autocorr_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more persistent amount dynamics may reveal a trading-activity persistence mechanism distinct from one-off amount shocks",
+        "dedup_note": {
+          "nearest_canonical_signal": "amount_shock_5_20_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This focuses on persistence in trading activity rather than short-vs-medium amount level displacement.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_downside_volume_skew_20d_v1",
+        "field": "downside_volume_skew_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower concentration of traded amount on down days may encode a downside-pressure mechanism distinct from broad price-volume confirmation",
+        "dedup_note": {
+          "nearest_canonical_signal": "signed_amount_imbalance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This isolates downside-flow asymmetry specifically instead of net signed flow.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_upside_range_share_20d_v1",
+        "field": "upside_range_share_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a larger share of recent trading range occurring on up days may capture directional range participation distinct from close-location or breakout proximity",
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This measures directional range participation across days rather than intraday close placement within each bar.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_intraday_trend_bias_20d_v1",
+        "field": "intraday_trend_bias_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger average intraday drift may encode a session-level trend-quality mechanism distinct from close-to-close momentum",
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This isolates open-to-close drift instead of multi-week cumulative trend path.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_return_skew_20d_v1",
+        "field": "return_skew_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more positively skewed recent return distributions may reveal an asymmetry mechanism distinct from volatility level or downside-tail pressure",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_tail_pressure_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This tests distribution asymmetry rather than just downside-tail magnitude.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_amount_volatility_20d_v1",
+        "field": "amount_volatility_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower recent amount volatility may encode steadier participation quality distinct from amount level or amount persistence",
+        "dedup_note": {
+          "nearest_canonical_signal": "turnover_stability_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This uses amount-path variability instead of turnover-path variability and may capture a different participation-quality mechanism.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_downside_gap_frequency_20d_v1",
+        "field": "downside_gap_frequency_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "fewer recent downside gaps may encode an overnight fragility mechanism distinct from post-gap recovery strength",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_gap_recovery_10d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This focuses on how often downside gaps occur, not how well they recover once they happen.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_high_low_break_balance_20d_v1",
+        "field": "high_low_break_balance_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a stronger balance of high-break events versus low-break events may capture structural dominance more directly than distance-to-breakout or distance-to-breakdown signals",
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This tests event-frequency balance rather than static distance to a recent boundary.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_downside_absorption_ratio_20d_v1",
+        "field": "downside_absorption_ratio_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger absorption on weak days may encode a downside-resilience mechanism distinct from generic downside recovery or intraday skew signals",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_recovery_strength_10d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This isolates absorption quality on weak sessions rather than average recovery strength across all relevant sessions.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later composability-screening round.",
+    "non_promotion_rule": "Alias-like variants, inverted duplicates, or signals whose top slice remains weaker than rank11_20 should be rejected rather than rescued by later overlay or family tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, stability-cap, overlay, or family-composition changes inside this round.",
+    "Do not import or depend on the neighboring qlib data adapter layer; this project must implement all candidate fields independently on its own data contracts.",
+    "Do not open budget for candidates that are already covered by the canonical alias map unless a new override_reason is explicitly approved."
+  ],
+  "notes": [
+    "This round starts after round6 was explicitly reclassified as a standardization-and-dedup step rather than genuine alpha expansion.",
+    "The objective is to probe more orthogonal atomic mechanisms instead of continuing to relabel or repackage existing price-volume confirmation and amount-shock clusters."
+  ]
+}

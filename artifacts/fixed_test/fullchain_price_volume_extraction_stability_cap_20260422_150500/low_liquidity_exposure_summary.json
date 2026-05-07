@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_extraction_stability_cap_20260422_150500",
+  "run_id": "fullchain_price_volume_extraction_stability_cap_20260422_150500",
+  "attempt_id": "attempt_20260422_150310",
+  "generated_at": "2026-04-22T15:08:37.719424+08:00",
+  "candidate_scheme_id": "price_volume_v19_extraction_stability_cap",
+  "research_round_id": "rr_price_volume_extraction_stability_cap_family_20260422",
+  "low_liquidity_holding_count": 1905,
+  "low_liquidity_weight_total": 10.38861165638107,
+  "low_liquidity_weight_share": 0.030132090567729884,
+  "low_liquidity_contribution_total": -0.012175991573986987,
+  "low_liquidity_contribution_share_of_strategy": -0.011061338551020527,
+  "low_liquidity_alpha_contribution_share": -0.007335024585444234,
+  "flag_high_low_liquidity_exposure": false
+}

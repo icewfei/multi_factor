@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/trade_statistics_summary.schema.json",
+  "title": "Trade Statistics Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "holdings_count"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "holdings_count": { "type": "integer" },
+    "unique_instruments": { "type": "integer" },
+    "signal_dates_with_positions": { "type": "integer" },
+    "avg_exit_delay_days": { "type": ["number", "null"] },
+    "delayed_exit_positions": { "type": "integer" },
+    "terminal_event_positions": { "type": "integer" },
+    "total_entry_fill_weight": { "type": ["number", "null"] },
+    "avg_turnover_daily": { "type": ["number", "null"] },
+    "median_turnover_daily": { "type": ["number", "null"] },
+    "max_turnover_daily": { "type": ["number", "null"] },
+    "rebalance_days": { "type": "integer" },
+    "run_state_summary_counts": { "type": "object" },
+    "warnings": { "type": "array" },
+    "fatal_blockers": { "type": "array" }
+  }
+}

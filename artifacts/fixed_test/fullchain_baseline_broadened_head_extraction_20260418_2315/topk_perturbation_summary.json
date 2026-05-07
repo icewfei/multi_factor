@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_broadened_head_extraction_20260418_2315",
+  "run_id": "fullchain_baseline_broadened_head_extraction_20260418_2315",
+  "attempt_id": "attempt_20260418_232405",
+  "generated_at": "2026-04-18T23:29:35.542643+08:00",
+  "candidate_scheme_id": "baseline_momentum_v10_broadened_head_extraction",
+  "research_round_id": "rr_baseline_broadened_head_extraction_20260418",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.07343435073990046,
+      "relative_ir": -0.5446868149078631
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.06611660002551778,
+      "relative_ir": -0.5110785936228414
+    }
+  ]
+}

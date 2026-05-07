@@ -1,0 +1,32 @@
+{
+  "registered_at": "2026-04-17T21:30:00+08:00",
+  "research_round_id": "rr_baseline_challenger_drop_liquidity_20260417",
+  "research_tier": "exploratory",
+  "research_question": "Test whether removing the liquidity component from the weak baseline score reduces low-liquidity dependence and improves robustness under TopK perturbation and cost stress.",
+  "allowed_core_dimension": "baseline score composition only",
+  "changed_dimension": "baseline_score_composition",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "baseline_reversal_momentum_lowvol_v2"
+  ],
+  "candidate_factor_list": [
+    "reversal_5d_raw",
+    "momentum_60_5_raw",
+    "volatility_20d_raw"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_reversal_momentum_lowvol_liquidity_v1",
+  "result_interpretation_rule": "Exploratory challenger round: compare fixed-test audit outputs against the weak baseline without making a promotion claim.",
+  "time_partition_plan": "Reuse the current fullchain exploratory snapshot and run-state inputs; no validation-budget consumption claimed.",
+  "fixed_test_run_id": null,
+  "code_hash": null,
+  "snapshot_id": "warehouse_20260413_165753",
+  "execution_logic_version": "warehouse_execution_v3",
+  "topk": 10,
+  "benchmark_rule": "inherit_current_formal_default",
+  "cost_rule": "inherit_current_formal_default",
+  "notes": [
+    "This challenger changes exactly one core dimension: remove liquidity_20d_raw from score composition.",
+    "TopK, entry_tradeable timing, execution semantics, benchmark choice, and cost parameters must remain unchanged.",
+    "This round is exploratory and should not consume validation budget or enter walk-forward."
+  ]
+}

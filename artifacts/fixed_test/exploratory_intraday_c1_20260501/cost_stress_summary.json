@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_intraday_c1_20260501",
+  "run_id": "exploratory_intraday_c1_20260501",
+  "attempt_id": "attempt_20260501_110857",
+  "generated_at": "2026-05-01T11:12:00.636423+08:00",
+  "candidate_scheme_id": "exploratory_intraday_c1_trendbias_only",
+  "research_round_id": "rr_exploratory_intraday_microstructure_independent_baseline_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.0965170360151354,
+  "pass_cost_stress_relative_return_floor": false
+}

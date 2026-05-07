@@ -1,0 +1,24 @@
+{
+  "fixed_test_run_id": "exploratory_retain50_c1",
+  "run_id": "exploratory_retain50_c1",
+  "attempt_id": "attempt_20260501_182233",
+  "generated_at": "2026-05-01T18:25:35.161263+08:00",
+  "candidate_scheme_id": "exploratory_retain50_c1",
+  "research_round_id": "rr_exploratory_retain50_round2_20260501",
+  "warnings": [],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 0,
+  "unfilled_topk_count": 1359,
+  "terminal_event_degraded_rows": null,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": false,
+  "topk_perturbation_pass": true,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.1156407495560291,
+  "exposure_driven_or_liquidity_driven": false,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/data_quality_audit.schema.json",
+  "title": "Data Quality Audit",
+  "type": "object",
+  "required": [
+    "run_id",
+    "snapshot_id",
+    "field_mapping_version",
+    "shared_source_degraded_flags",
+    "summary_counts"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "snapshot_id": { "type": "string" },
+    "field_mapping_version": { "type": "string" },
+    "shared_source_degraded_flags": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "summary_counts": {
+      "type": "object",
+      "additionalProperties": { "type": ["number", "integer", "boolean", "null"] }
+    },
+    "fatal_blockers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

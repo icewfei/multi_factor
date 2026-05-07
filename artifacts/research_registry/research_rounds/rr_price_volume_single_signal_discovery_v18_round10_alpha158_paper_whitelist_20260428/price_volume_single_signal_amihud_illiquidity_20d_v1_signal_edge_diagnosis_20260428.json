@@ -1,0 +1,43 @@
+{
+  "candidate_scheme_id": "price_volume_single_signal_amihud_illiquidity_20d_v1",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round10_alpha158_paper_whitelist_20260428",
+  "as_of_date": "20260428",
+  "coverage": {
+    "ranking_eligible_rows": 15233701,
+    "null_score_rows": 0,
+    "null_score_share": 0.0,
+    "scored_with_label_rows": 15022019
+  },
+  "ic_readout": {
+    "full_sample_corr_ic": 0.024664575101409895,
+    "avg_daily_ic": 0.03668859900049564,
+    "median_daily_ic": 0.04401542845098693,
+    "positive_daily_ic_share": 0.644059795436664
+  },
+  "decile_monotonicity": {
+    "1": 0.006605899491765439,
+    "2": 0.006058393590674189,
+    "3": 0.005268022122674983,
+    "4": 0.004588624980007819,
+    "5": 0.003938050947344951,
+    "6": 0.0033501238727087737,
+    "7": 0.0028292386943445957,
+    "8": 0.0022491873074512616,
+    "9": 0.001854585327104608,
+    "10": 0.0013588351595395197
+  },
+  "top_slice_readout": {
+    "avg_label_top10": 0.006116400459847114,
+    "avg_label_rank11_20": 0.007397349610889738,
+    "avg_label_bottom10": 0.0016955734035874568,
+    "top10_minus_rank11_20": -0.0012809491510426246,
+    "top10_minus_bottom10": 0.004420827056259657
+  },
+  "cutoff_gap": {
+    "avg_rank10_11_score_gap": 0.0005365288980949296,
+    "median_rank10_11_score_gap": 0.00044474096039526234,
+    "days_with_both_ranks": 6362,
+    "days_gap_lt_0_005": 6362,
+    "days_gap_lt_0_001": 6075
+  }
+}

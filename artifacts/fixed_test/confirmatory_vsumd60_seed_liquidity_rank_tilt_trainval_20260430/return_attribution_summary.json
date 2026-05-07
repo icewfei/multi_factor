@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_vsumd60_seed_liquidity_rank_tilt_trainval_20260430",
+  "run_id": "confirmatory_vsumd60_seed_liquidity_rank_tilt_trainval_20260430",
+  "attempt_id": "attempt_20260430_121050",
+  "generated_at": "2026-04-30T12:13:41.823682+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_vsumd60_seed_liquidity_rank_tilt_v1",
+  "research_round_id": "rr_confirmatory_alpha158_vsumd60_family_seed_weight_mapping_20260430",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -2.188557607724327,
+  "selection_alpha_total": 0.6950350841166734,
+  "low_liquidity_contribution_total": 0.018479400330099018
+}

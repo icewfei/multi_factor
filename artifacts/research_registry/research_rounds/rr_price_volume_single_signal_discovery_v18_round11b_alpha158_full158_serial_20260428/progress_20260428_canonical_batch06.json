@@ -1,0 +1,37 @@
+{
+  "as_of_date": "20260428",
+  "controller_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+  "policy": {
+    "serial_only": true,
+    "family_reopen_blocked": false
+  },
+  "canonical_progress": {
+    "exact_total_candidate_count": 158,
+    "exact_executed_candidate_count": 158,
+    "exact_remaining_candidate_count": 0,
+    "executed_canonical_batch_count": 6,
+    "completed_batches": [
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428"
+    ]
+  },
+  "canonical_batch06_summary": {
+    "signal_edge_positive_count": 6,
+    "signal_edge_mixed_count": 2,
+    "signal_edge_negative_count": 0,
+    "new_clean_positive_keepers": [
+      "price_volume_single_signal_alpha158_vsumn20_v1",
+      "price_volume_single_signal_alpha158_vsumn30_v1",
+      "price_volume_single_signal_alpha158_vsumn60_v1",
+      "price_volume_single_signal_alpha158_vsumd20_v1",
+      "price_volume_single_signal_alpha158_vsumd30_v1",
+      "price_volume_single_signal_alpha158_vsumd60_v1"
+    ],
+    "note": "Exact Alpha158 serial-only canonical execution is now fully complete."
+  },
+  "next_step": "exact Alpha158 full-scope execution complete; produce keeper-level consolidation and post-discovery research recommendation before any family reopening"
+}

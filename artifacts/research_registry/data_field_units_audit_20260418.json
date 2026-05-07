@@ -1,0 +1,5131 @@
+{
+  "generated_at": "2026-04-18",
+  "version": "data_field_units_audit_20260418_v1",
+  "notes": [
+    "Returns in project/fixed-test outputs are stored as decimal returns unless explicitly marked as % or bp.",
+    "Weights are stored on a 0-1 basis unless otherwise noted.",
+    "For financial_statement_raw_pit, all non-metadata numeric line items are treated as CNY amount fields except explicitly classified per-share/share-count fields."
+  ],
+  "entries": [
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_calendar",
+      "field": "trade_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared calendar contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_calendar",
+      "field": "prev_trade_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared calendar contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_calendar",
+      "field": "next_trade_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared calendar contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_calendar",
+      "field": "next_trade_date_1",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared calendar contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_calendar",
+      "field": "next_trade_date_5",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared calendar contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "ts_code",
+      "unit": "text/code",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "symbol",
+      "unit": "text/code",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "name",
+      "unit": "text/code",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "board",
+      "unit": "text/code",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "list_status",
+      "unit": "text/code",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "list_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instruments_main_chinext",
+      "field": "delist_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared instrument dimension",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "open",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "high",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "low",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "close",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "pre_close",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "change",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "adj_open",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": "adj_* remain price-scale after multiplying by dimensionless adj_factor"
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "adj_high",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": "adj_* remain price-scale after multiplying by dimensionless adj_factor"
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "adj_low",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": "adj_* remain price-scale after multiplying by dimensionless adj_factor"
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "adj_close",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare daily + adj_factor",
+      "notes": "adj_* remain price-scale after multiplying by dimensionless adj_factor"
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "pct_chg",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official",
+      "basis": "Tushare daily",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "vol",
+      "unit": "手",
+      "value_type": "volume",
+      "certainty": "official",
+      "basis": "Tushare daily",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "amount",
+      "unit": "千元",
+      "value_type": "amount",
+      "certainty": "official",
+      "basis": "Tushare daily",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "adj_factor",
+      "unit": "dimensionless",
+      "value_type": "factor",
+      "certainty": "official",
+      "basis": "Tushare adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "turnover_rate",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "turnover_rate_f",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "dv_ratio",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "dv_ttm",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "volume_ratio",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "pe",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "pe_ttm",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "pb",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "ps",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "ps_ttm",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "pcf_ncf_ttm",
+      "unit": "dimensionless",
+      "value_type": "ratio",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "total_mv",
+      "unit": "万元",
+      "value_type": "amount",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_bars_daily",
+      "field": "circ_mv",
+      "unit": "万元",
+      "value_type": "amount",
+      "certainty": "official",
+      "basis": "Tushare daily_basic",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_benchmark_daily",
+      "field": "close",
+      "unit": "index_points",
+      "value_type": "index_level",
+      "certainty": "derived",
+      "basis": "benchmark total return series",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_benchmark_aux_daily",
+      "field": "close",
+      "unit": "index_points",
+      "value_type": "index_level",
+      "certainty": "derived",
+      "basis": "benchmark total return series",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_benchmark_daily",
+      "field": "daily_return",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "derived",
+      "basis": "close/prev_close - 1",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_benchmark_daily",
+      "field": "is_total_return",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared benchmark contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_benchmark_aux_daily",
+      "field": "daily_return",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "derived",
+      "basis": "close/prev_close - 1",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_benchmark_aux_daily",
+      "field": "is_total_return",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared benchmark contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_limit_rules_daily",
+      "field": "up_limit_price_t",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare stk_limit / local tick contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_limit_rules_daily",
+      "field": "down_limit_price_t",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare stk_limit / local tick contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_limit_rules_daily",
+      "field": "pre_close",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare stk_limit / local tick contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_limit_rules_daily",
+      "field": "price_tick_quantize_t",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "official_or_derived",
+      "basis": "Tushare stk_limit / local tick contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "is_listed_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "is_suspended_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "is_st_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "no_trade_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "low_liquidity_flag_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "entry_buyable_D1_open",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "exit_sellable_D5_close",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "sellable_retry_next_open",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "tradability_rule_complete_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "tradability_degraded_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "tradability_degraded_reason",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared tradability contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_tradability_daily",
+      "field": "low_liquidity_flag_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "amount threshold rule",
+      "notes": "correct 500万元 rule corresponds to amount < 5000 because amount is in 千元"
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instrument_status_daily",
+      "field": "is_listed_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared status contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instrument_status_daily",
+      "field": "is_suspended_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared status contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instrument_status_daily",
+      "field": "is_st_t",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared status contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_instrument_status_daily",
+      "field": "trade_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared status contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "terminal_event_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "cash_settlement_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "contract_degraded_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "terminal_event_type",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "source",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "event_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_terminal_event_daily",
+      "field": "last_trade_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "terminal event contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "open_D1",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "derived",
+      "basis": "derived from bars_daily/adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "close_D5",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "derived",
+      "basis": "derived from bars_daily/adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "adj_open_base_D1",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "derived",
+      "basis": "derived from bars_daily/adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "adj_close_base_D5",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "derived",
+      "basis": "derived from bars_daily/adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "actual_sell_price",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "derived",
+      "basis": "derived from bars_daily/adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "adj_factor_D1",
+      "unit": "dimensionless",
+      "value_type": "factor",
+      "certainty": "derived",
+      "basis": "derived from adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "adj_factor_D5",
+      "unit": "dimensionless",
+      "value_type": "factor",
+      "certainty": "derived",
+      "basis": "derived from adj_factor",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "label_5d_next_open_close_raw",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "derived",
+      "basis": "ratio return derived from adjusted prices",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "label_5d_next_open_close",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "derived",
+      "basis": "ratio return derived from adjusted prices",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "execution_delayed_realized_return",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "derived",
+      "basis": "ratio return derived from adjusted prices",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "label_defined",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared labels contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_labels_daily",
+      "field": "label_masked_reason",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared labels contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "exit_delay_days",
+      "unit": "days",
+      "value_type": "count",
+      "certainty": "derived",
+      "basis": "difference between planned and actual exit date",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "terminal_event_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "terminal_exit_approximation_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "terminal_exit_conservative_flag",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "actual_exit_event_type",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "actual_exit_price_field",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "execution_path_status",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "terminal_event_type",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "terminal_exit_pricing_method",
+      "unit": "text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "entry_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "planned_exit_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "terminal_event_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_execution_path_daily",
+      "field": "actual_exit_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared execution-path contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "entry_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "planned_exit_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "label_defined",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "entry_tradeable",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "planned_exit_tradeable",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "actually_exited",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "feature_ready_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "price_window_ready_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "core_features_complete_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "pit_state_complete_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "base_universe_member_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "rules_filter_pass_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "state_filter_pass_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "universe_eligible_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "signal_emittable",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "ranking_eligible_D0",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "train_mask_v1",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "eval_mask_v1",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "train_mask_conservative",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "eval_mask_conservative",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "entry_filled_D1",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "backtest_executable",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "audit_included",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "shared_view",
+      "table": "serving.vw_sample_eligibility_daily",
+      "field": "mask_reason_json",
+      "unit": "json_text",
+      "value_type": "text",
+      "certainty": "local_contract",
+      "basis": "shared sample-eligibility contract",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "open_D1",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "close_D5",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "adj_open_base_D1",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "adj_close_base_D5",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "adj_factor_D1",
+      "unit": "dimensionless",
+      "value_type": "factor",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "adj_factor_D5",
+      "unit": "dimensionless",
+      "value_type": "factor",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "label_5d_next_open_close_raw",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "label_5d_next_open_close",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_label_panel",
+      "field": "label_defined",
+      "unit": "boolean",
+      "value_type": "boolean",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_execution_panel",
+      "field": "actual_sell_price",
+      "unit": "元/股",
+      "value_type": "price",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_execution_panel",
+      "field": "exit_delay_days",
+      "unit": "days",
+      "value_type": "count",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "project_execution_panel",
+      "field": "execution_delayed_realized_return",
+      "unit": "decimal_return",
+      "value_type": "return",
+      "certainty": "local_contract",
+      "basis": "project normalized panel",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "model_scores_D0",
+      "field": "model_score_D0",
+      "unit": "dimensionless",
+      "value_type": "score",
+      "certainty": "local_contract",
+      "basis": "project score output",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "model_scores_D0",
+      "field": "reversal_rank",
+      "unit": "0_to_1_percentile_rank",
+      "value_type": "rank",
+      "certainty": "local_contract",
+      "basis": "project score output",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "model_scores_D0",
+      "field": "momentum_rank",
+      "unit": "0_to_1_percentile_rank",
+      "value_type": "rank",
+      "certainty": "local_contract",
+      "basis": "project score output",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "model_scores_D0",
+      "field": "lowvol_rank",
+      "unit": "0_to_1_percentile_rank",
+      "value_type": "rank",
+      "certainty": "local_contract",
+      "basis": "project score output",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "model_scores_D0",
+      "field": "liquidity_rank",
+      "unit": "0_to_1_percentile_rank",
+      "value_type": "rank",
+      "certainty": "local_contract",
+      "basis": "project score output",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "model_scores_D0",
+      "field": "score_component_count",
+      "unit": "count",
+      "value_type": "count",
+      "certainty": "local_contract",
+      "basis": "project score output",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "target_weight_D0",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "entry_fill_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "opening_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "closing_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "cash_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "invested_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "max_single_name_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "top3_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "avg_cash_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "avg_invested_weight",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "avg_turnover_daily",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "turnover_daily",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "low_liquidity_weight_share",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "low_liquidity_contribution_share_of_strategy",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "portfolio_or_fixed_test",
+      "field": "low_liquidity_alpha_contribution_share",
+      "unit": "0_to_1_weight_or_share",
+      "value_type": "weight_or_share",
+      "certainty": "local_contract",
+      "basis": "portfolio/fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "portfolio_daily_return",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "benchmark_return_daily",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "relative_return_daily",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "total_return",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "annualized_return",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "annual_relative_return",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "max_drawdown",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "daily_volatility",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "annualized_volatility",
+      "unit": "decimal_return",
+      "value_type": "return_or_volatility",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "stress_open_bp",
+      "unit": "bp",
+      "value_type": "basis_points",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "project",
+      "table": "fixed_test",
+      "field": "stress_close_bp",
+      "unit": "bp",
+      "value_type": "basis_points",
+      "certainty": "local_contract",
+      "basis": "fixed-test artifacts",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "snapshot_id",
+      "unit": "string",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "shared snapshot id",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "ts_code",
+      "unit": "code",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "stock code",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "ann_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_schema",
+      "basis": "announcement date",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "end_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_schema",
+      "basis": "report period",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "pit_available_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date",
+      "certainty": "local_schema",
+      "basis": "first trade date after ann_date",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "eps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "dt_eps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "total_revenue_ps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "revenue_ps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "capital_rese_ps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "surplus_rese_ps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "undist_profit_ps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "gross_margin",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": "gross-margin style ratio"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "current_ratio",
+      "unit": "times",
+      "value_type": "ratio",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "quick_ratio",
+      "unit": "times",
+      "value_type": "ratio",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "cash_ratio",
+      "unit": "times",
+      "value_type": "ratio",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "assets_turn",
+      "unit": "times",
+      "value_type": "turnover",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "roe",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "roe_dt",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "roa_yearly",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "q_roe",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "q_dt_roe",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "q_sales_yoy",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "q_op_qoq",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "netprofit_yoy",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "fina_indicator_pit",
+      "field": "dt_netprofit_yoy",
+      "unit": "%",
+      "value_type": "percentage",
+      "certainty": "official_inferred",
+      "basis": "Tushare fina_indicator",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "snapshot_id",
+      "unit": "string_or_enum",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "statement_type",
+      "unit": "string_or_enum",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ts_code",
+      "unit": "string_or_enum",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ann_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date_or_text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "f_ann_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date_or_text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "end_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date_or_text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "report_type",
+      "unit": "string_or_enum",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "comp_type",
+      "unit": "string_or_enum",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "end_type",
+      "unit": "string_or_enum",
+      "value_type": "text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "pit_available_date",
+      "unit": "YYYYMMDD",
+      "value_type": "date_or_text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "update_flag",
+      "unit": "YYYYMMDD",
+      "value_type": "date_or_text",
+      "certainty": "local_schema",
+      "basis": "PIT/raw statement metadata",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_share",
+      "unit": "share_count",
+      "value_type": "share_count",
+      "certainty": "official_unspecified",
+      "basis": "Tushare balancesheet",
+      "notes": "official says period-end total share capital but does not spell out 股 vs 万股; treat as share-count field and validate scale before use"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "basic_eps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare income",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "diluted_eps",
+      "unit": "元/股",
+      "value_type": "per_share",
+      "certainty": "official",
+      "basis": "Tushare income",
+      "notes": ""
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "cap_rese",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "undistr_porfit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "surplus_rese",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "special_rese",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "money_cap",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "trad_asset",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "notes_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "accounts_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prepayment",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "div_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "int_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "inventories",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "amor_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "nca_within_1y",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "sett_rsrv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "loanto_oth_bank_fi",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "premium_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reinsur_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reinsur_res_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "pur_resale_fa",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_cur_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_cur_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fa_avail_for_sale",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "htm_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_eqt_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "invest_real_estate",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "time_deposits",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_rec",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fix_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "cip",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "const_materials",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fixed_assets_disp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "produc_bio_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oil_and_gas_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "intan_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "r_and_d",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "goodwill",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_amor_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "defer_tax_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "decr_in_disbur",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_nca",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_nca",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "cash_reser_cb",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "depos_in_oth_bfi",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prec_metals",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "deriv_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "rr_reins_une_prem",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "rr_reins_outstd_cla",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "rr_reins_lins_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "rr_reins_lthins_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "refund_depos",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ph_pledge_loans",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "refund_cap_depos",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "indep_acct_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "client_depos",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "client_prov",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "transac_seat_fee",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "invest_as_receiv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_borr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "st_borr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "cb_borr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "depos_ib_deposits",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "loan_oth_bank",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "trading_fl",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "notes_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "acct_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "adv_receipts",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "sold_for_repur_fa",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "comm_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "payroll_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "taxes_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "int_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "div_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "acc_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "deferred_inc",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "st_bonds_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "payable_to_reinsurer",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "rsrv_insur_cont",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "acting_trading_sec",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "acting_uw_sec",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "non_cur_liab_due_1y",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_cur_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_cur_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "bond_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "specific_payables",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "estimated_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "defer_tax_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "defer_inc_non_cur_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_ncl",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_ncl",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "depos_oth_bfi",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "deriv_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "depos",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "agency_bus_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prem_receiv_adva",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "depos_received",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ph_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reser_une_prem",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reser_outstd_claims",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reser_lins_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reser_lthins_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "indept_acc_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "pledge_borr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "indem_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "policy_div_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "treasury_share",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ordin_risk_reser",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "forex_differ",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "invest_loss_unconf",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "minority_int",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_hldr_eqy_exc_min_int",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_hldr_eqy_inc_min_int",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_liab_hldr_eqy",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_payroll_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_comp_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_eqt_tools",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_eqt_tools_p_shr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lending_funds",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "acc_receivable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "st_fin_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "payables",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "hfs_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "hfs_sales",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "cost_fin_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fair_value_fin_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "contract_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "contract_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "accounts_receiv_bill",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "accounts_pay",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_rcv_total",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fix_assets_total",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "cip_total",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_pay_total",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "long_pay_total",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "debt_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_debt_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_revenue",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "revenue",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "int_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prem_earned",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "comm_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_commis_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_oth_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_oth_b_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prem_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "out_prem",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "une_prem_reser",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reins_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_sec_tb_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_sec_uw_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_asset_mg_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_b_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fv_value_chg_gain",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "invest_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ass_invest_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "forex_gain",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_cogs",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oper_cost",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "int_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "comm_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "biz_tax_surchg",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "sell_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "admin_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fin_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "assets_impair_loss",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prem_refund",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "compens_payout",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reser_insur_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "div_payt",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reins_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oper_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "compens_payout_refu",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "insur_reser_refu",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "reins_cost_refund",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "other_bus_cost",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "operate_profit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "non_oper_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "non_oper_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "nca_disploss",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "total_profit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "income_tax",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_income_attr_p",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "minority_gain",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_compr_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "t_compr_income",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "compr_inc_attr_p",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "compr_inc_attr_m_s",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ebit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ebitda",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "insurance_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "undist_profit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "distable_profit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "rd_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fin_exp_int_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fin_exp_int_inc",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "transfer_surplus_rese",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "transfer_housing_imprest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "transfer_oth",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "adj_lossgain",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "withdra_legal_surplus",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "withdra_legal_pubfund",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "withdra_biz_devfund",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "withdra_rese_fund",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "withdra_oth_ersu",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "workers_welfare",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "distr_profit_shrhder",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prfshare_payable_dvd",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "comshare_payable_dvd",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "capit_comstock_div",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "continued_net_profit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "net_profit",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "finan_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_fr_sale_sg",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "recp_tax_rends",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_depos_incr_fi",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_loans_cb",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_inc_borr_oth_fi",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prem_fr_orig_contr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_insured_dep",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_reinsur_prem",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_disp_tfa",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "ifc_cash_incr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_disp_faas",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_loans_oth_bank",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_cap_incr_repur",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_fr_oth_operate_a",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_inf_fr_operate_a",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_paid_goods_s",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_paid_to_for_empl",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_paid_for_taxes",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_clt_loan_adv",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_dep_cbob",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_pay_claims_orig_inco",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "pay_handling_chrg",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "pay_comm_insur_plcy",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_cash_pay_oper_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "st_cash_out_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_cashflow_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_recp_ral_inv_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_disp_withdrwl_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_recp_return_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_recp_disp_fiolta",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_recp_disp_sobu",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "stot_inflows_inv_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_pay_acq_const_fiolta",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_paid_invest",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_disp_subs_oth_biz",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_pay_ral_inv_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_pledge_loan",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "stot_out_inv_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_cashflow_inv_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_recp_borrow",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "proc_issue_bonds",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_cash_recp_ral_fnc_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "stot_cash_in_fnc_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "free_cashflow",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_prepay_amt_borr",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_pay_dist_dpcp_int_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "incl_dvd_profit_paid_sc_ms",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_cashpay_ral_fnc_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "stot_cashout_fnc_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_cash_flows_fnc_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "eff_fx_flu_cash",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "n_incr_cash_cash_equ",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_cash_equ_beg_period",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_cash_equ_end_period",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "c_recp_cap_contrib",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "incl_cash_rec_saims",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "uncon_invest_loss",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "prov_depr_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "depr_fa_coga_dpba",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "amort_intang_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "lt_amort_deferred_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "decr_deferred_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "incr_acc_exp",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "loss_disp_fiolta",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "loss_scr_fa",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "loss_fv_chg",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "invest_loss",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "decr_def_inc_tax_assets",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "incr_def_inc_tax_liab",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "decr_inventories",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "decr_oper_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "incr_oper_payable",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "others",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "im_net_cashflow_oper_act",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "conv_debt_into_cap",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "conv_copbonds_due_within_1y",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "fa_fnc_leases",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "im_n_incr_cash_equ",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "net_dism_capital_add",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "net_cash_rece_sec",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "credit_impa_loss",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "use_right_asset_dep",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "oth_loss_asset",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "end_bal_cash",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "beg_bal_cash",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "end_bal_cash_equ",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    },
+    {
+      "scope": "shared_fundamental_pit",
+      "table": "financial_statement_raw_pit",
+      "field": "beg_bal_cash_equ",
+      "unit": "元",
+      "value_type": "monetary_amount",
+      "certainty": "official_statement_semantics",
+      "basis": "Tushare balancesheet/income/cashflow",
+      "notes": "raw statement line-item amount field"
+    }
+  ]
+}

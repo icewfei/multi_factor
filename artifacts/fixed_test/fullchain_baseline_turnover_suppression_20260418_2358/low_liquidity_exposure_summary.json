@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_turnover_suppression_20260418_2358",
+  "run_id": "fullchain_baseline_turnover_suppression_20260418_2358",
+  "attempt_id": "attempt_20260418_234936",
+  "generated_at": "2026-04-18T23:55:49.262862+08:00",
+  "candidate_scheme_id": "baseline_momentum_v11_turnover_suppression",
+  "research_round_id": "rr_baseline_turnover_suppression_20260418",
+  "low_liquidity_holding_count": 1400,
+  "low_liquidity_weight_total": 7.001111111111088,
+  "low_liquidity_weight_share": 0.02222574955907926,
+  "low_liquidity_contribution_total": -0.03213327377223361,
+  "low_liquidity_contribution_share_of_strategy": -0.07677152260654863,
+  "low_liquidity_alpha_contribution_share": -0.08784318161837207,
+  "flag_high_low_liquidity_exposure": false
+}

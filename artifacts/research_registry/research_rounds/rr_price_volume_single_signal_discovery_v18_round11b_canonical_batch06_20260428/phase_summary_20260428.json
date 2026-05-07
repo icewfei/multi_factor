@@ -1,0 +1,129 @@
+{
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+  "as_of_date": "20260428",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "final_classification": {
+    "price_volume_single_signal_alpha158_vsumn20_v1": "signal_edge_positive",
+    "price_volume_single_signal_alpha158_vsumn30_v1": "signal_edge_positive",
+    "price_volume_single_signal_alpha158_vsumn60_v1": "signal_edge_positive",
+    "price_volume_single_signal_alpha158_vsumd5_v1": "signal_edge_mixed",
+    "price_volume_single_signal_alpha158_vsumd10_v1": "signal_edge_mixed",
+    "price_volume_single_signal_alpha158_vsumd20_v1": "signal_edge_positive",
+    "price_volume_single_signal_alpha158_vsumd30_v1": "signal_edge_positive",
+    "price_volume_single_signal_alpha158_vsumd60_v1": "signal_edge_positive"
+  },
+  "new_clean_positive_keepers": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn20_v1",
+      "field_name": "alpha158_vsumn20_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.010994042048451454,
+      "avg_daily_ic": 0.017570968796957666,
+      "positive_daily_ic_share": 0.5875039345294303,
+      "avg_label_top10": 0.005347480675414909,
+      "avg_label_rank11_20": 0.004847431555360423,
+      "avg_label_bottom10": -0.007203386563202048,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumn20_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn30_v1",
+      "field_name": "alpha158_vsumn30_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.013640049259119859,
+      "avg_daily_ic": 0.02234249558625577,
+      "positive_daily_ic_share": 0.6104815864022662,
+      "avg_label_top10": 0.0065925495908905115,
+      "avg_label_rank11_20": 0.005547623605287933,
+      "avg_label_bottom10": -0.007309727136878588,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumn30_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn60_v1",
+      "field_name": "alpha158_vsumn60_raw",
+      "ranking_direction": "ASC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.01404196362307978,
+      "avg_daily_ic": 0.023203353986368018,
+      "positive_daily_ic_share": 0.618665407617249,
+      "avg_label_top10": 0.005516514687764811,
+      "avg_label_rank11_20": 0.004933155623022564,
+      "avg_label_bottom10": -0.008008117640696753,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumn60_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd20_v1",
+      "field_name": "alpha158_vsumd20_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.010994716096257845,
+      "avg_daily_ic": 0.017574221315985992,
+      "positive_daily_ic_share": 0.5873465533522191,
+      "avg_label_top10": 0.005347480675414916,
+      "avg_label_rank11_20": 0.0048474315553604114,
+      "avg_label_bottom10": -0.007213308157855596,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumd20_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd30_v1",
+      "field_name": "alpha158_vsumd30_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.013640723044658647,
+      "avg_daily_ic": 0.022345747852464314,
+      "positive_daily_ic_share": 0.610324205225055,
+      "avg_label_top10": 0.006592549590890523,
+      "avg_label_rank11_20": 0.005547623605287932,
+      "avg_label_bottom10": -0.007319648731532131,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumd30_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "field_name": "alpha158_vsumd60_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_positive",
+      "full_sample_corr_ic": 0.014042637258129754,
+      "avg_daily_ic": 0.023206605862348566,
+      "positive_daily_ic_share": 0.6185080264400378,
+      "avg_label_top10": 0.005516514687764806,
+      "avg_label_rank11_20": 0.004933155623022568,
+      "avg_label_bottom10": -0.008018039235350292,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumd60_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_positive."
+    }
+  ],
+  "rejected_candidates": [],
+  "mixed_candidates": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd5_v1",
+      "field_name": "alpha158_vsumd5_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.01168554231187515,
+      "avg_daily_ic": 0.021649421046300514,
+      "positive_daily_ic_share": 0.6131570664148568,
+      "avg_label_top10": 0.004659071570771431,
+      "avg_label_rank11_20": 0.005213766317904376,
+      "avg_label_bottom10": -0.0026325148846641708,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumd5_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd10_v1",
+      "field_name": "alpha158_vsumd10_raw",
+      "ranking_direction": "DESC",
+      "classification": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.008973860794168901,
+      "avg_daily_ic": 0.015932246399316664,
+      "positive_daily_ic_share": 0.5807365439093485,
+      "avg_label_top10": 0.0032320682402550175,
+      "avg_label_rank11_20": 0.0037818530650891827,
+      "avg_label_bottom10": -0.006353836463515598,
+      "notes": "Round-11b-Canonical-Batch06 atomic signal candidate built from alpha158_vsumd10_raw under the frozen price_volume_v18_refresh_hysteresis operational contract. Signal-edge diagnosis classified this candidate as signal_edge_mixed."
+    }
+  ],
+  "decision": {
+    "continue_pool_expansion": false,
+    "reopen_family_construction": true,
+    "reason": "Canonical batch06 produced at least one clean positive exact-Alpha158 keeper, but controller policy still blocks family reopening and requires continued serial-only canonical execution."
+  }
+}

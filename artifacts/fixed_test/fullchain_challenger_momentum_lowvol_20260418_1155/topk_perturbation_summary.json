@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "fullchain_challenger_momentum_lowvol_20260418_1155",
+  "run_id": "fullchain_challenger_momentum_lowvol_20260418_1155",
+  "attempt_id": "attempt_challenger_momentum_lowvol_20260418_1200",
+  "generated_at": "2026-04-18T14:36:25.048578+08:00",
+  "candidate_scheme_id": "baseline_momentum_lowvol_v5",
+  "research_round_id": "rr_baseline_challenger_add_lowvol_20260418",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.10852197934932184,
+      "relative_ir": -0.7130291630940241
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.0967064267456712,
+      "relative_ir": -0.6567178347581133
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/low_liquidity_exposure_summary.schema.json",
+  "title": "Low Liquidity Exposure Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "low_liquidity_holding_count",
+    "low_liquidity_weight_total",
+    "low_liquidity_weight_share",
+    "low_liquidity_contribution_total",
+    "flag_high_low_liquidity_exposure"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "low_liquidity_holding_count": { "type": "integer" },
+    "low_liquidity_weight_total": { "type": "number" },
+    "low_liquidity_weight_share": { "type": "number" },
+    "low_liquidity_contribution_total": { "type": "number" },
+    "low_liquidity_contribution_share_of_strategy": { "type": "number" },
+    "low_liquidity_alpha_contribution_share": { "type": "number" },
+    "flag_high_low_liquidity_exposure": { "type": "boolean" }
+  }
+}

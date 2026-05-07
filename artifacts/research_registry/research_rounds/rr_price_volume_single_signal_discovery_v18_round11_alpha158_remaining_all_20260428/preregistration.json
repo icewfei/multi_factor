@@ -1,0 +1,61 @@
+{
+  "registered_at": "2026-04-28T18:50:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round11_alpha158_remaining_all_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "status": "registered_scope_reconciled_canonical_full158",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Reset round11 to exact qlib Alpha158 full-definition scope: under whitelist-only policy, govern the canonical 158-feature Alpha158 set from local qlib definitions, and execute it independently under project-native data semantics before any family reopening.",
+  "allowed_core_dimension": "alpha158_full_universe_scope_definition",
+  "changed_dimension": "research_scope_reset",
+  "change_control_rule": "scope_reset_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "source_policy": {
+    "mode": "alpha158_paper_whitelist_only",
+    "whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json",
+    "notes": "Full-universe scope uses whitelist-only source governance."
+  },
+  "alpha158_full_universe_scope": {
+    "universe_name": "qlib_alpha158_exact_158",
+    "total_candidate_count": 158,
+    "already_tested_count": 0,
+    "remaining_untested_count": 158,
+    "tested_round_ids": [],
+    "canonical_definition_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+    "remaining_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_full158_universe_manifest_20260428.json",
+    "historical_noncanonical_round_ids_not_counted_as_exact_completion": [
+      "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+      "rr_price_volume_single_signal_discovery_v18_round10_alpha158_paper_whitelist_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428"
+    ]
+  },
+  "execution_plan": {
+    "policy": "serial_only",
+    "family_reopen_rule": "forbidden until remaining_untested_count reaches 0 or an explicit governance override is registered",
+    "sub_batch_plan": [
+      {
+        "sub_round_id": "round11a",
+        "goal": "finalize and lock the exact 158-feature qlib Alpha158 canonical-to-project mapping sheet"
+      },
+      {
+        "sub_round_id": "round11b+",
+        "goal": "run the 158 exact canonical candidates in strict serial batches under frozen v18 contract"
+      }
+    ]
+  },
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [],
+  "disallowed_changes": [
+    "Do not reopen family construction in this round.",
+    "Do not mix non-whitelist sources.",
+    "Do not change v18 frozen operational contract during the full-universe scope reset."
+  ],
+  "notes": [
+    "This prereg is intentionally a full-universe scope-reset record, not a direct single-run candidate execution file.",
+    "The previous atomic_pool_v1 boundary and slot-numbered alpha158_full_001~036 pilots are retained as historical alpha158-style work, but they do not count toward exact qlib Alpha158 completion.",
+    "Execution candidates for the exact 158 canonical signals will be registered in serial sub-batches under this reconciled governance umbrella."
+  ]
+}

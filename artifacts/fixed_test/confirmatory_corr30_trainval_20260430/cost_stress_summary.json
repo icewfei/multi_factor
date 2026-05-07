@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_corr30_trainval_20260430",
+  "run_id": "confirmatory_corr30_trainval_20260430",
+  "attempt_id": "attempt_20260430_143439",
+  "generated_at": "2026-04-30T14:38:08.378940+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+  "research_round_id": "rr_confirmatory_alpha158_head_extraction_shortlist_round2_20260430",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.10384423501358508,
+  "pass_cost_stress_relative_return_floor": false
+}

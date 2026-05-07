@@ -1,0 +1,15 @@
+{
+  "threshold": -0.15,
+  "scaling": 0.5,
+  "avg_buffer_active": 0.11742637403864191,
+  "adj_total_return": 607.6063389505372,
+  "adj_ann_return": 0.35399631043968594,
+  "adj_ann_rel_return": 0.2565990301853214,
+  "adj_sharpe": 1.2524052700147321,
+  "adj_max_dd": -0.4412131302045571,
+  "baseline_total_return": 987.3450400003744,
+  "baseline_ann_return": 0.38538782992235876,
+  "baseline_ann_rel_return": 0.2881722304035179,
+  "baseline_sharpe": 1.1962351041605561,
+  "baseline_max_dd": -0.5536570534907573
+}

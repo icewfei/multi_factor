@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-04-18T22:55:19.116102+08:00",
+  "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+  "comparison_type": "v7_calibration_before_after_liquidity_unit_and_rank_fix",
+  "before": {
+    "run_id": "fullchain_baseline_liquidity_guard70_20260418_1620",
+    "snapshot_id": "warehouse_20260413_165753",
+    "low_liquidity_weight_share": 1.0,
+    "low_liquidity_alpha_contribution_share": 0.5990868057974615,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false,
+    "annual_relative_return": -0.05294782486017935,
+    "avg_invested_weight": 0.13736682861399285
+  },
+  "after": {
+    "run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+    "snapshot_id": "warehouse_20260418_181408",
+    "low_liquidity_weight_share": 0.020450724262800736,
+    "low_liquidity_alpha_contribution_share": -0.10314096828107921,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false,
+    "annual_relative_return": -0.06976572569304007,
+    "avg_invested_weight": 0.2080034915092814
+  },
+  "deltas": {
+    "low_liquidity_weight_share_delta": -0.9795492757371993,
+    "low_liquidity_alpha_contribution_share_delta": -0.7022277740785408,
+    "annual_relative_return_delta": -0.01681790083286072,
+    "avg_invested_weight_delta": 0.07063666289528855
+  },
+  "run_state_acceptance_after": {
+    "overall_passed": true,
+    "fatal_blockers": []
+  },
+  "interpretation": [
+    "The low-liquidity audit signal changed materially after correcting shared-source amount units and project-side liquidity_rank direction.",
+    "low_liquidity_weight_share no longer indicates near-total exposure; the previous ~1.0 reading was heavily driven by unit mismatch in low_liquidity_flag_t.",
+    "Strategy robustness still remains insufficient because topk_perturbation_pass and cost_stress_pass remain false after recalibration.",
+    "The calibrated v7 now carries materially higher invested weight and weaker relative return than the pre-fix reading, so future research should treat the recalibrated run as the valid baseline reference."
+  ]
+}

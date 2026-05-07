@@ -1,0 +1,30 @@
+{
+  "registered_at": "2026-04-17T19:45:00+08:00",
+  "research_round_id": "rr_baseline_scaffold_20260417",
+  "research_tier": "exploratory",
+  "research_question": "Build the first reproducible baseline score-to-run-state pipeline and register the initial candidate scheme before entering fixed test / walk-forward.",
+  "allowed_core_dimension": "baseline score composition only",
+  "changed_dimension": "baseline_score_composition",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "baseline_reversal_momentum_lowvol_liquidity_v1"
+  ],
+  "candidate_factor_list": [
+    "reversal_5d_raw",
+    "momentum_60_5_raw",
+    "volatility_20d_raw",
+    "liquidity_20d_raw"
+  ],
+  "result_interpretation_rule": "Exploratory scaffold round: no pass/fail promotion claim; objective is reproducible score-to-run-state completion with 5/5 consistency checks passed.",
+  "time_partition_plan": "Full available snapshot used for infrastructure validation only; no validation-budget consumption claimed.",
+  "fixed_test_run_id": null,
+  "code_hash": null,
+  "snapshot_id": "warehouse_20260413_165753",
+  "execution_logic_version": "warehouse_execution_v3",
+  "governance_approver_id": "codex_scaffold_default",
+  "notes": [
+    "This is a governance scaffold, not a confirmatory research round.",
+    "Before entering confirmatory research, replace null code_hash and expand to full total纲 7.5 field coverage.",
+    "This round changes exactly one core dimension: baseline score composition."
+  ]
+}

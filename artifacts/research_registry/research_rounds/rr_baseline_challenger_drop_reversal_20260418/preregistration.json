@@ -1,0 +1,35 @@
+{
+  "registered_at": "2026-04-18T11:40:00+08:00",
+  "research_round_id": "rr_baseline_challenger_drop_reversal_20260418",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "baseline_momentum_v4"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_reversal_momentum_v3",
+  "research_question": "Does removing the short-term reversal component from the weak v3 challenger reduce microstructure sensitivity and improve fixed-test stability while preserving a usable momentum-only signal?",
+  "allowed_core_dimension": "baseline score composition only",
+  "changed_dimension": "baseline_score_composition",
+  "change_control_rule": "single_dimension_only",
+  "feature_set": [
+    "momentum_60_5_raw"
+  ],
+  "removed_feature": "reversal_5d_raw",
+  "score_rule": "percentile_rank(momentum_60_5 DESC); require min_feature_count >= 1",
+  "constants_frozen": {
+    "topk": 10,
+    "snapshot_id": "warehouse_20260413_165753",
+    "execution_logic_version": "warehouse_execution_v3",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "entry_and_exit_logic": "unchanged from framework v1"
+  },
+  "engineering_experiment": {
+    "signal_date_chunk_size": 100,
+    "note": "Chunk-size observation is engineering-only and must not be interpreted as a strategy degree of freedom."
+  },
+  "notes": [
+    "This round changes exactly one core dimension: score composition.",
+    "TopK, execution semantics, benchmark contract, cost contract, and data snapshot are frozen."
+  ]
+}

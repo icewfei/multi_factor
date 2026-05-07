@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_trend_bias_volume_gated_v1",
+  "run_id": "exploratory_trend_bias_volume_gated_v1",
+  "attempt_id": "attempt_20260501_145346",
+  "generated_at": "2026-05-01T14:56:28.448514+08:00",
+  "candidate_scheme_id": "exploratory_trend_bias_volume_gated_v1",
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.11252032615560459,
+  "pass_cost_stress_relative_return_floor": false
+}

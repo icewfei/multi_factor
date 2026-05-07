@@ -1,0 +1,48 @@
+{
+  "as_of_date": "20260425",
+  "purpose": "canonical alias map for atomic signal intake, deduplication, and future prereg standardization",
+  "canonical_alias_map": [
+    {
+      "canonical_field": "volume_price_synchronicity_20d_raw",
+      "aliases": [
+        "price_volume_corr_20d_raw"
+      ],
+      "relationship": "naming_alias"
+    },
+    {
+      "canonical_field": "amount_shock_5_20_raw",
+      "aliases": [
+        "volume_momentum_5_20_raw"
+      ],
+      "relationship": "naming_alias"
+    },
+    {
+      "canonical_field": "turnover_acceleration_5_20_raw",
+      "aliases": [
+        "turnover_mean_reversion_gap_5_20_raw"
+      ],
+      "relationship": "inverse_direction_duplicate"
+    },
+    {
+      "canonical_field": "breakout_proximity_20d_raw",
+      "aliases": [
+        "breakout_distance_20d_raw"
+      ],
+      "relationship": "naming_alias"
+    },
+    {
+      "canonical_field": "close_location_value_20d_raw",
+      "aliases": [
+        "close_to_high_ratio_20d_raw"
+      ],
+      "relationship": "naming_alias"
+    },
+    {
+      "canonical_field": "upper_shadow_ratio_20d_raw",
+      "aliases": [
+        "upper_shadow_pressure_20d_raw"
+      ],
+      "relationship": "naming_alias"
+    }
+  ]
+}

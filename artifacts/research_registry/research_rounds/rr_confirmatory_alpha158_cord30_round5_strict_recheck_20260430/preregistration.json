@@ -1,0 +1,73 @@
+{
+  "registered_at": "2026-04-30T19:20:00+08:00",
+  "research_round_id": "rr_confirmatory_alpha158_cord30_round5_strict_recheck_20260430",
+  "research_tier": "confirmatory",
+  "run_type": "confirmatory_recheck",
+  "candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_cord30_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_cord30_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After round 4 selected Alpha158 CORD30 as the only passing higher-invested-weight head-extraction candidate, does it still pass under a stricter confirmatory recheck that freezes the same trainval-only artifacts and tightens only the promotion rule through subperiod stability, cost-stress, low-liquidity, and TopK-perturbation gates?",
+  "allowed_core_dimension": "promotion rule strictness only",
+  "changed_dimension": "promotion_rule_strictness",
+  "change_control_rule": "single_dimension_only",
+  "based_on_round_id": "rr_confirmatory_alpha158_high_invested_weight_head_extraction_shortlist_round4_20260430",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "artifact_inputs": {
+    "candidate_run_id": "confirmatory_cord30_trainval_20260430_round4",
+    "candidate_fixed_test_run_id": "confirmatory_fixed_test_cord30_trainval_20260430_round4",
+    "reference_run_id": "confirmatory_reference_v18_trainval_20260429",
+    "reference_fixed_test_run_id": "confirmatory_fixed_test_reference_v18_trainval_20260429"
+  },
+  "time_partition_plan": {
+    "validation_window": {
+      "start_date": "20190101",
+      "end_date": "20211231"
+    },
+    "strict_subperiods": [
+      {
+        "name": "validation_h1_2019_2020h1",
+        "start_date": "20190101",
+        "end_date": "20200630"
+      },
+      {
+        "name": "validation_h2_2020h2_2021",
+        "start_date": "20200701",
+        "end_date": "20211231"
+      }
+    ],
+    "test_window_access": "forbidden"
+  },
+  "decision_rule": {
+    "type": "strict_boolean_promotion_gate",
+    "boolean_expression": "(validation_annual_relative_return_delta > 0.10) AND (validation_relative_ir_delta > 0.50) AND (validation_max_drawdown_delta >= 0.10) AND (validation_avg_turnover_daily_delta <= 0.02) AND (candidate_avg_invested_weight >= 0.18) AND (validation_h1_annual_relative_return_delta > 0) AND (validation_h1_relative_ir_delta > 0) AND (validation_h2_annual_relative_return_delta > 0) AND (validation_h2_relative_ir_delta > 0) AND (cost_stress_annual_relative_return_delta > 0) AND (low_liquidity_weight_share_delta <= 0) AND (topk8_annual_relative_return_delta > 0) AND (topk12_annual_relative_return_delta > 0)",
+    "interpretation": "The candidate must not only beat v18 in aggregate validation, but also preserve that advantage across both validation subperiods, under cost stress, under TopK perturbation, and on low-liquidity exposure."
+  },
+  "frozen_dimensions": {
+    "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+    "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+    "strategy_artifacts": "frozen from confirmatory shortlist round 4",
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "validation_window": "20190101-20211231"
+  },
+  "disallowed_changes": [
+    "Do not rebuild or retune the candidate strategy in this round.",
+    "Do not swap reference candidate, snapshot, or contract.",
+    "Do not change TopK, cost stress assumptions, or subperiod boundaries after registration.",
+    "Do not add any new candidate or reopen the shortlist."
+  ],
+  "expected_outputs": [
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_cord30_round5_strict_recheck_20260430/confirmatory_round5_strict_recheck_results.json",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_cord30_round5_strict_recheck_20260430/confirmatory_round5_strict_recheck_results.md"
+  ],
+  "code_hash": "26c30d0506aab9b1f20c423f6ec291bbc5aff218ca687c43d93befca76bf088c",
+  "governance_approver_id": "thread_user_approval_20260430",
+  "notes": [
+    "This round narrows the scope to the single passing round-4 candidate only.",
+    "The only changed dimension is promotion rule strictness; no strategy artifact is changed or rebuilt.",
+    "The strict gate is intentionally kept identical to the earlier VSUMD60 and CORR30 strict rechecks so that outcomes remain comparable."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_vsumd60_seed_liquidity_rank_tilt_trainval_20260430",
+  "run_id": "confirmatory_vsumd60_seed_liquidity_rank_tilt_trainval_20260430",
+  "attempt_id": "attempt_20260430_121050",
+  "generated_at": "2026-04-30T12:13:41.342645+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_vsumd60_seed_liquidity_rank_tilt_v1",
+  "research_round_id": "rr_confirmatory_alpha158_vsumd60_family_seed_weight_mapping_20260430",
+  "low_liquidity_holding_count": 7140,
+  "low_liquidity_weight_total": 30.94464571472967,
+  "low_liquidity_weight_share": 0.12443348530050992,
+  "low_liquidity_contribution_total": 0.018479400330099018,
+  "low_liquidity_contribution_share_of_strategy": 0.016927342624694953,
+  "low_liquidity_alpha_contribution_share": 0.010143964368138442,
+  "flag_high_low_liquidity_exposure": false
+}

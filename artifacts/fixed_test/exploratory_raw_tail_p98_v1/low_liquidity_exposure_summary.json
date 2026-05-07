@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_raw_tail_p98_v1",
+  "run_id": "exploratory_raw_tail_p98_v1",
+  "attempt_id": "attempt_20260507_120236",
+  "generated_at": "2026-05-07T12:05:11.731803+08:00",
+  "candidate_scheme_id": "raw_tail_p98_v1",
+  "research_round_id": "rr_exploratory_neut_tail_combo_20260506",
+  "low_liquidity_holding_count": 5659,
+  "low_liquidity_weight_total": 35.36874999999977,
+  "low_liquidity_weight_share": 0.10840996168580838,
+  "low_liquidity_contribution_total": 0.2040420065590767,
+  "low_liquidity_contribution_share_of_strategy": 0.08863788977244141,
+  "low_liquidity_alpha_contribution_share": 0.025569689356472528,
+  "flag_high_low_liquidity_exposure": false
+}

@@ -1,0 +1,94 @@
+{
+  "registered_at": "2026-04-24T23:45:00+08:00",
+  "research_round_id": "rr_price_volume_amount_shock_gated_overlay_family_20260424",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_v23_amount_shock_gated_overlay"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Under the frozen v18 operational contract, can amount_shock_5_20_raw improve the core two-signal family only as a constrained gated overlay inside already-strong core-score regions, without repeating the instability that appeared in direct additive promotion?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "reference_core_family_contract": {
+    "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+    "reference_components": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC"
+      },
+      {
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC"
+      }
+    ],
+    "reference_score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2"
+  },
+  "score_family_contract": {
+    "family_name": "price_volume_amount_shock_gated_overlay_v1",
+    "builder_name": "build_price_volume_v23_model_scores.py",
+    "feature_source": "bars_daily_derived",
+    "base_feature_set": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger medium-term momentum should rank higher"
+      },
+      {
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "near-term liquidity improvement should rank higher"
+      }
+    ],
+    "overlay_feature": {
+      "field": "amount_shock_5_20_raw",
+      "ranking_direction": "DESC",
+      "interpretation": "recent amount shock should only add value inside already strong core-score regions"
+    },
+    "base_score_rule": "core_score_v18 = mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2",
+    "overlay_rule": "If core_score_v18 >= 0.80 and amount_shock_rank is not null, add overlay_bonus = 0.05 * amount_shock_rank; otherwise add 0.0.",
+    "final_score_rule": "model_score_D0 = core_score_v18 + overlay_bonus",
+    "overlay_design_reason": "The amount_shock_5_20_raw composability screen improved static ordering but failed clean additive monotonicity in the high-core region, so this round constrains the signal to a small gated bonus rather than a direct equal-weight third component.",
+    "missing_data_rule": "Rows with null base core score emit null model_score_D0; rows with null amount_shock_rank simply receive zero overlay_bonus."
+  },
+  "guard_contract_frozen": {
+    "guard_name": "liquidity_guard_v2_recalibrated",
+    "guard_application_stage": "ranking_eligibility_guard",
+    "liquidity_min_percentile": 0.70,
+    "liquidity_rank_direction": "higher_liquidity_means_higher_rank"
+  },
+  "portfolio_contract_frozen": {
+    "topk_width": 10,
+    "portfolio_extraction": "freeze current v18 extraction",
+    "portfolio_refresh_rule": "freeze current v18 top-15 refresh hysteresis",
+    "execution_logic_version": "warehouse_execution_v3",
+    "benchmark_contract": "frozen",
+    "cost_contract": "frozen"
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_turnover_daily",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "low_liquidity_weight_share",
+    "topk_perturbation_pass",
+    "cost_stress_pass"
+  ],
+  "disallowed_changes": [
+    "Do not replace liquidity_trend_20_60_raw.",
+    "Do not add amount_shock_5_20_raw as a full equal-weight third component.",
+    "Do not change the overlay gate threshold, overlay bonus coefficient, or score formula inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard.",
+    "Do not change TopK width.",
+    "Do not change portfolio extraction.",
+    "Do not change refresh hysteresis.",
+    "Do not change execution semantics, benchmark, or cost contracts."
+  ],
+  "notes": [
+    "This round is opened only after the dedicated composability screen classified amount_shock_5_20_raw as composability_screen_mixed rather than cleanly promotable.",
+    "The sole purpose is to test whether a small gated overlay can preserve the v18 core family while harvesting some amount-shock information without destabilizing the head."
+  ]
+}

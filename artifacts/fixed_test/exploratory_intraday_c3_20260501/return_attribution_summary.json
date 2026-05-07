@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_intraday_c3_20260501",
+  "run_id": "exploratory_intraday_c3_20260501",
+  "attempt_id": "attempt_20260501_111214",
+  "generated_at": "2026-05-01T11:17:15.123493+08:00",
+  "candidate_scheme_id": "exploratory_intraday_c3_trendbias_upsideshare_reversalasym",
+  "research_round_id": "rr_exploratory_intraday_microstructure_independent_baseline_20260501",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.3107756559687225,
+  "selection_alpha_total": 0.5447358833066042,
+  "low_liquidity_contribution_total": 0.02792688186559916
+}

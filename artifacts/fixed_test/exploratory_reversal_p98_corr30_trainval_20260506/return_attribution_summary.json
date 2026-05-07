@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+  "attempt_id": "attempt_20260506_122707",
+  "generated_at": "2026-05-06T12:30:03.322302+08:00",
+  "candidate_scheme_id": "reversal_p98_corr30_ew_v1",
+  "research_round_id": "rr_exploratory_reversal_corr30_composite_20260506",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.199427817940615,
+  "selection_alpha_total": 1.4689278314925545,
+  "low_liquidity_contribution_total": 0.2743271224226073
+}

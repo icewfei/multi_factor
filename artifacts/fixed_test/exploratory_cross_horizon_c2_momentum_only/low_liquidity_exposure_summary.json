@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_cross_horizon_c2_momentum_only",
+  "run_id": "exploratory_cross_horizon_c2_momentum_only",
+  "attempt_id": "attempt_20260501_152109",
+  "generated_at": "2026-05-01T15:24:22.984710+08:00",
+  "candidate_scheme_id": "exploratory_cross_horizon_c2_momentum_only",
+  "research_round_id": "rr_exploratory_cross_horizon_reversal_momentum_20260501",
+  "low_liquidity_holding_count": 4884,
+  "low_liquidity_weight_total": 97.67999999999853,
+  "low_liquidity_weight_share": 0.09674160641774471,
+  "low_liquidity_contribution_total": -1.3988355311479452,
+  "low_liquidity_contribution_share_of_strategy": -0.5844521584020133,
+  "low_liquidity_alpha_contribution_share": -1.270001514012394,
+  "flag_high_low_liquidity_exposure": true
+}

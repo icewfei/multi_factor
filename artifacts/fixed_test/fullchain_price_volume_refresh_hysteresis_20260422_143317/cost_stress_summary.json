@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "attempt_id": "attempt_20260422_143548",
+  "generated_at": "2026-04-22T14:41:31.601498+08:00",
+  "candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_round_id": "rr_price_volume_refresh_hysteresis_family_20260422",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.09617269729063371,
+  "pass_cost_stress_relative_return_floor": false
+}

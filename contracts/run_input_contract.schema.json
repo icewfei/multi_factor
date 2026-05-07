@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/run_input_contract.schema.json",
+  "title": "MultiFactor Run Input Contract",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "generated_at",
+    "snapshot_id",
+    "etl_code_hash",
+    "execution_logic_version",
+    "data_contract_version",
+    "runtime_environment",
+    "source_root",
+    "source_views",
+    "field_mapping_version"
+  ],
+  "properties": {
+    "contract_version": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "snapshot_id": { "type": "string" },
+    "etl_code_hash": { "type": "string" },
+    "execution_logic_version": { "type": "string" },
+    "data_contract_version": { "type": "string" },
+    "runtime_environment": {
+      "type": "object",
+      "required": ["python_env_path"],
+      "properties": {
+        "python_env_path": { "type": "string" },
+        "python_executable": { "type": ["string", "null"] }
+      }
+    },
+    "source_root": {
+      "type": "object",
+      "required": ["repository_root", "snapshot_path"],
+      "properties": {
+        "repository_root": { "type": "string" },
+        "snapshot_path": { "type": "string" }
+      }
+    },
+    "source_views": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "field_mapping_version": { "type": "string" },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "shared_source_degraded_flags": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "downstream_required_fields": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

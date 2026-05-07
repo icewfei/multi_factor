@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-05-06T12:36:36+08:00",
+  "weights": [
+    {
+      "cord30_weight": 0.1,
+      "reversal_weight": 0.9,
+      "median_daily_ic": 0.04990785591452752,
+      "mean_daily_ic": 0.051152183234537525,
+      "n_days": 5322,
+      "top10_avg_label": 0.009524949490822474,
+      "bot10_avg_label": -0.0036771301823355245,
+      "top10_bot10_spread": 0.013202079673157998,
+      "top10_avg_liquidity_rank": 0.5813859362079378,
+      "top10_avg_rev_rank": 0.988909437439589,
+      "top10_avg_cord30_rank": 0.9039627084780003
+    },
+    {
+      "cord30_weight": 0.15,
+      "reversal_weight": 0.85,
+      "median_daily_ic": 0.05171133647418826,
+      "mean_daily_ic": 0.052650726414605505,
+      "n_days": 5322,
+      "top10_avg_label": 0.009567884604070346,
+      "bot10_avg_label": -0.0038033643149590324,
+      "top10_bot10_spread": 0.01337124891902938,
+      "top10_avg_liquidity_rank": 0.5760396175431943,
+      "top10_avg_rev_rank": 0.9860955083501708,
+      "top10_avg_cord30_rank": 0.9240814102477444
+    },
+    {
+      "cord30_weight": 0.2,
+      "reversal_weight": 0.8,
+      "median_daily_ic": 0.05341836806094251,
+      "mean_daily_ic": 0.05405778611001782,
+      "n_days": 5322,
+      "top10_avg_label": 0.009636542344365758,
+      "bot10_avg_label": -0.004002815131879069,
+      "top10_bot10_spread": 0.013639357476244826,
+      "top10_avg_liquidity_rank": 0.5721588894010167,
+      "top10_avg_rev_rank": 0.9834765649182252,
+      "top10_avg_cord30_rank": 0.9365317109735304
+    },
+    {
+      "cord30_weight": 0.25,
+      "reversal_weight": 0.75,
+      "median_daily_ic": 0.05443784071024457,
+      "mean_daily_ic": 0.055312217347698735,
+      "n_days": 5322,
+      "top10_avg_label": 0.009650958671277408,
+      "bot10_avg_label": -0.004143763814344507,
+      "top10_bot10_spread": 0.013794722485621915,
+      "top10_avg_liquidity_rank": 0.5692817638580845,
+      "top10_avg_rev_rank": 0.9810011742565888,
+      "top10_avg_cord30_rank": 0.9451108914007501
+    },
+    {
+      "cord30_weight": 0.3,
+      "reversal_weight": 0.7,
+      "median_daily_ic": 0.05515027481501805,
+      "mean_daily_ic": 0.05634275535779155,
+      "n_days": 5322,
+      "top10_avg_label": 0.009593958786819297,
+      "bot10_avg_label": -0.004084215195654375,
+      "top10_bot10_spread": 0.013678173982473672,
+      "top10_avg_liquidity_rank": 0.5679073061535073,
+      "top10_avg_rev_rank": 0.9785204356831717,
+      "top10_avg_cord30_rank": 0.9516781187328525
+    },
+    {
+      "cord30_weight": 0.4,
+      "reversal_weight": 0.6,
+      "median_daily_ic": 0.05630053423033486,
+      "mean_daily_ic": 0.057428129827368175,
+      "n_days": 5322,
+      "top10_avg_label": 0.009700264171261627,
+      "bot10_avg_label": -0.004118323428284426,
+      "top10_bot10_spread": 0.013818587599546052,
+      "top10_avg_liquidity_rank": 0.5642585937315773,
+      "top10_avg_rev_rank": 0.9733047018006947,
+      "top10_avg_cord30_rank": 0.961441619518693
+    },
+    {
+      "cord30_weight": 0.5,
+      "reversal_weight": 0.5,
+      "median_daily_ic": 0.054411692427322876,
+      "mean_daily_ic": 0.05680041778873037,
+      "n_days": 5322,
+      "top10_avg_label": 0.009713560093308756,
+      "bot10_avg_label": -0.004127722069144673,
+      "top10_bot10_spread": 0.013841282162453429,
+      "top10_avg_liquidity_rank": 0.5605491372615238,
+      "top10_avg_rev_rank": 0.9674048816654813,
+      "top10_avg_cord30_rank": 0.968645157851941
+    }
+  ],
+  "reference_50_50": {
+    "cord30_weight": 0.5,
+    "reversal_weight": 0.5,
+    "median_daily_ic": 0.054411692427322876,
+    "mean_daily_ic": 0.05680041778873037,
+    "n_days": 5322,
+    "top10_avg_label": 0.009713560093308756,
+    "bot10_avg_label": -0.004127722069144673,
+    "top10_bot10_spread": 0.013841282162453429,
+    "top10_avg_liquidity_rank": 0.5605491372615238,
+    "top10_avg_rev_rank": 0.9674048816654813,
+    "top10_avg_cord30_rank": 0.968645157851941
+  },
+  "preferred_followup": {
+    "cord30_weight": 0.1,
+    "reversal_weight": 0.9,
+    "median_daily_ic": 0.04990785591452752,
+    "mean_daily_ic": 0.051152183234537525,
+    "n_days": 5322,
+    "top10_avg_label": 0.009524949490822474,
+    "bot10_avg_label": -0.0036771301823355245,
+    "top10_bot10_spread": 0.013202079673157998,
+    "top10_avg_liquidity_rank": 0.5813859362079378,
+    "top10_avg_rev_rank": 0.988909437439589,
+    "top10_avg_cord30_rank": 0.9039627084780003
+  }
+}

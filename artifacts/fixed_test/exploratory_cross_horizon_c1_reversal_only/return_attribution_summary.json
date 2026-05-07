@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_cross_horizon_c1_reversal_only",
+  "run_id": "exploratory_cross_horizon_c1_reversal_only",
+  "attempt_id": "attempt_20260501_151329",
+  "generated_at": "2026-05-01T15:16:19.252051+08:00",
+  "candidate_scheme_id": "exploratory_cross_horizon_c1_reversal_only",
+  "research_round_id": "rr_exploratory_cross_horizon_reversal_momentum_20260501",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -1.0520292932287072,
+  "selection_alpha_total": -3.883980410489061,
+  "low_liquidity_contribution_total": -0.15380861239705693
+}

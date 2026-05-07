@@ -1,0 +1,207 @@
+{
+  "generated_at": "2026-04-22T13:50:09.457863+08:00",
+  "candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+  "research_round_id": "rr_price_volume_trend_liquidity_improvement_family_20260422",
+  "as_of_date": "20260422",
+  "single_signal_reference": {
+    "price_volume_single_signal_momentum_60_5_v1_signal_edge_diagnosis_20260422": {
+      "candidate_scheme_id": "price_volume_single_signal_momentum_60_5_v1",
+      "research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+      "as_of_date": "20260422",
+      "coverage": {
+        "ranking_eligible_rows": 15233701,
+        "null_score_rows": 135887,
+        "null_score_share": 0.008920156697312097,
+        "scored_with_label_rows": 14888004
+      },
+      "ic_readout": {
+        "full_sample_corr_ic": 0.009757764048797187,
+        "avg_daily_ic": 0.013398272056083639,
+        "median_daily_ic": 0.007709789498289484,
+        "positive_daily_ic_share": 0.5235901509134233
+      },
+      "decile_monotonicity": {
+        "1": 0.0047239707558488,
+        "2": 0.0043506929343858506,
+        "3": 0.004217785148202262,
+        "4": 0.004079258568130115,
+        "5": 0.003996898569728835,
+        "6": 0.003952909391310367,
+        "7": 0.0037108390850629867,
+        "8": 0.003496632028356777,
+        "9": 0.00288435369600323,
+        "10": 0.0020916209814685026
+      },
+      "top_slice_readout": {
+        "avg_label_top10": 0.004281878956130944,
+        "avg_label_rank11_20": 0.0054826373536042425,
+        "avg_label_bottom10": 0.0018203998202666284,
+        "top10_minus_rank11_20": -0.0012007583974732988,
+        "top10_minus_bottom10": 0.0024614791358643154
+      },
+      "cutoff_gap": {
+        "avg_rank10_11_score_gap": 0.0005347063789669797,
+        "median_rank10_11_score_gap": 0.00044642857142851433,
+        "days_with_both_ranks": 6302,
+        "days_gap_lt_0_005": 6302,
+        "days_gap_lt_0_001": 6041
+      }
+    },
+    "price_volume_single_signal_trend_consistency_20d_v1_signal_edge_diagnosis_20260422": {
+      "candidate_scheme_id": "price_volume_single_signal_trend_consistency_20d_v1",
+      "research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+      "as_of_date": "20260422",
+      "coverage": {
+        "ranking_eligible_rows": 15233701,
+        "null_score_rows": 0,
+        "null_score_share": 0.0,
+        "scored_with_label_rows": 15022019
+      },
+      "ic_readout": {
+        "full_sample_corr_ic": 0.003251478491108207,
+        "avg_daily_ic": 0.005854450111846067,
+        "median_daily_ic": 0.002756309914586876,
+        "positive_daily_ic_share": 0.5148701809598741
+      },
+      "decile_monotonicity": {
+        "1": 0.003464708304241358,
+        "2": 0.003982124970891848,
+        "3": 0.0041316812419423055,
+        "4": 0.0040770557679826215,
+        "5": 0.0041748341973967705,
+        "6": 0.004122942069346222,
+        "7": 0.00409150698933337,
+        "8": 0.003904984970837474,
+        "9": 0.0036855767766029775,
+        "10": 0.002483374054706584
+      },
+      "top_slice_readout": {
+        "avg_label_top10": 0.0021425785677706894,
+        "avg_label_rank11_20": 0.0033797441917712448,
+        "avg_label_bottom10": 0.0019934487657186127,
+        "top10_minus_rank11_20": -0.0012371656240005554,
+        "top10_minus_bottom10": 0.00014912980205207668
+      },
+      "cutoff_gap": {
+        "avg_rank10_11_score_gap": 0.0005365288980949296,
+        "median_rank10_11_score_gap": 0.00044474096039526234,
+        "days_with_both_ranks": 6362,
+        "days_gap_lt_0_005": 6362,
+        "days_gap_lt_0_001": 6075
+      }
+    },
+    "price_volume_single_signal_liquidity_trend_20_60_v1_signal_edge_diagnosis_20260422": {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_20_60_v1",
+      "research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+      "as_of_date": "20260422",
+      "coverage": {
+        "ranking_eligible_rows": 15233701,
+        "null_score_rows": 0,
+        "null_score_share": 0.0,
+        "scored_with_label_rows": 15022019
+      },
+      "ic_readout": {
+        "full_sample_corr_ic": 0.0121592981078272,
+        "avg_daily_ic": 0.01866538195634834,
+        "median_daily_ic": 0.02086806648872435,
+        "positive_daily_ic_share": 0.5792289535798584
+      },
+      "decile_monotonicity": {
+        "1": 0.004604504554802091,
+        "2": 0.004562356455288204,
+        "3": 0.004406068531517211,
+        "4": 0.0043665421154109214,
+        "5": 0.004334336046814329,
+        "6": 0.004159226839597553,
+        "7": 0.003929208067993581,
+        "8": 0.0034656544219972625,
+        "9": 0.0030896848956182372,
+        "10": 0.0011938551445782358
+      },
+      "top_slice_readout": {
+        "avg_label_top10": 0.005773789276196157,
+        "avg_label_rank11_20": 0.005599368382158272,
+        "avg_label_bottom10": -0.0013938370460949664,
+        "top10_minus_rank11_20": 0.00017442089403788517,
+        "top10_minus_bottom10": 0.007167626322291123
+      },
+      "cutoff_gap": {
+        "avg_rank10_11_score_gap": 0.0005365288980949296,
+        "median_rank10_11_score_gap": 0.00044474096039526234,
+        "days_with_both_ranks": 6362,
+        "days_gap_lt_0_005": 6362,
+        "days_gap_lt_0_001": 6075
+      }
+    }
+  },
+  "actual_v15_selected_profile": {
+    "avg_momentum_rank": 0.9515302735241399,
+    "avg_trend_consistency_rank": 0.9417485887482065,
+    "avg_liquidity_trend_rank": 0.9475534930706246,
+    "low_liquidity_share_proxy": 0.16537252436340774
+  },
+  "ablation_blocks": {
+    "full_v15": {
+      "rows_with_score_and_label": 14888004,
+      "full_sample_corr_ic": 0.01184849994592874,
+      "avg_daily_ic": 0.0190105956412857,
+      "median_daily_ic": 0.0182204865392326,
+      "positive_daily_ic_share": 0.5558379666401906,
+      "avg_label_top10": 0.0052660026768448515,
+      "avg_label_rank11_20": 0.005781124476298164,
+      "avg_label_bottom10": -0.001749634433410821,
+      "top10_low_liquidity_share_proxy": 0.1681493248610008,
+      "top10_avg_momentum_rank": 0.9489088886125742,
+      "top10_avg_trend_consistency_rank": 0.9392035971296395,
+      "top10_avg_liquidity_trend_rank": 0.9427569262645109
+    },
+    "remove_momentum_60_5": {
+      "rows_with_score_and_label": 15022019,
+      "full_sample_corr_ic": 0.00992789333096514,
+      "avg_daily_ic": 0.015945511241100406,
+      "median_daily_ic": 0.015433272495263349,
+      "positive_daily_ic_share": 0.5579858379228954,
+      "avg_label_top10": 0.00325971550316907,
+      "avg_label_rank11_20": 0.004745234338913552,
+      "avg_label_bottom10": -0.0023122227701764878,
+      "top10_low_liquidity_share_proxy": 0.188198269079465,
+      "top10_avg_momentum_rank": 0.6210167536534333,
+      "top10_avg_trend_consistency_rank": 0.970953517326801,
+      "top10_avg_liquidity_trend_rank": 0.9724625093434264
+    },
+    "remove_trend_consistency_20d": {
+      "rows_with_score_and_label": 14888004,
+      "full_sample_corr_ic": 0.013345465999259032,
+      "avg_daily_ic": 0.020657510312888944,
+      "median_daily_ic": 0.017744140849193176,
+      "positive_daily_ic_share": 0.558220810166799,
+      "avg_label_top10": 0.0068138467528402104,
+      "avg_label_rank11_20": 0.0062947454298029615,
+      "avg_label_bottom10": 0.000516209811923692,
+      "top10_low_liquidity_share_proxy": 0.15788721207307388,
+      "top10_avg_momentum_rank": 0.9759096581186882,
+      "top10_avg_trend_consistency_rank": 0.6339104528933847,
+      "top10_avg_liquidity_trend_rank": 0.9747215568875238
+    },
+    "remove_liquidity_trend_20_60": {
+      "rows_with_score_and_label": 14888004,
+      "full_sample_corr_ic": 0.008352982903645636,
+      "avg_daily_ic": 0.012600716673345726,
+      "median_daily_ic": 0.009810082684433853,
+      "positive_daily_ic_share": 0.5293089753772836,
+      "avg_label_top10": 0.0036757396468310405,
+      "avg_label_rank11_20": 0.005431566873880832,
+      "avg_label_bottom10": 0.00024038894193160502,
+      "top10_low_liquidity_share_proxy": 0.13027799841143764,
+      "top10_avg_momentum_rank": 0.9764895728473395,
+      "top10_avg_trend_consistency_rank": 0.9751062100355603,
+      "top10_avg_liquidity_trend_rank": 0.5971931358529461
+    }
+  },
+  "interpretations": [
+    "liquidity_trend_20_60_raw likely contributes positively to broad edge because removing it lowers full_sample_corr_ic(全样本IC).",
+    "liquidity_trend_20_60_raw likely contributes to higher low-liquidity exposure because removing it lowers top10_low_liquidity_share_proxy(前10低流动性占比代理).",
+    "trend_consistency_20d_raw may be the weakest contributor to head extraction because removing it does not worsen avg_label_top10(前10平均标签).",
+    "momentum_60_5_raw remains a core positive component because removing it weakens broad cross-sectional edge."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_amount_shock_gated_overlay_20260424_2345",
+  "run_id": "fullchain_price_volume_amount_shock_gated_overlay_20260424_2345",
+  "attempt_id": "attempt_20260424_235042",
+  "generated_at": "2026-04-24T23:56:34.943491+08:00",
+  "candidate_scheme_id": "price_volume_v23_amount_shock_gated_overlay",
+  "research_round_id": "rr_price_volume_amount_shock_gated_overlay_family_20260424",
+  "low_liquidity_holding_count": 9614,
+  "low_liquidity_weight_total": 40.05833333333298,
+  "low_liquidity_weight_share": 0.15827859271329764,
+  "low_liquidity_contribution_total": -0.326922171056069,
+  "low_liquidity_contribution_share_of_strategy": -0.29839188813451695,
+  "low_liquidity_alpha_contribution_share": -0.18367453537957942,
+  "flag_high_low_liquidity_exposure": false
+}

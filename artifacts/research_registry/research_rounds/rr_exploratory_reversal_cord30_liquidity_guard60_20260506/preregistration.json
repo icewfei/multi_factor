@@ -1,0 +1,63 @@
+{
+  "registered_at": "2026-05-06T12:12:00+08:00",
+  "research_round_id": "rr_exploratory_reversal_cord30_liquidity_guard60_20260506",
+  "research_phase": "signal_learnability",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "deployment_fix",
+  "research_question": "If we keep the reversal_p98_cord30 score unchanged and add only a stricter ranking liquidity guard at liquidity_rank >= 0.60, can the composite recover promotion against the p98 reversal baseline at the fixed-test / validation layer?",
+  "allowed_core_dimension": "ranking eligibility guard only",
+  "changed_dimension": "ranking_eligibility_guard",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "Single frozen challenger only. Keep the reversal_p98_cord30 equal-weight composite score unchanged. Add only one ranking liquidity guard: liquidity_rank >= 0.60 before TopK ranking.",
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "frozen_reference_fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "frozen_secondary_reference_run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+  "score_contract_frozen": {
+    "candidate_scheme_id": "reversal_p98_cord30_ew_v1",
+    "score_builder": "build_reversal_tail_composite_model_scores.py",
+    "score_rule": "0.5 × percent_rank(p98_reversal_score) + 0.5 × percent_rank(cord30_score)"
+  },
+  "guard_contract": {
+    "guard_name": "reversal_cord30_liquidity_guard60",
+    "guard_application_stage": "ranking_eligibility_guard",
+    "guard_definition": "Only rows already ranking_eligible_D0 and whose liquidity_rank is >= 0.60 on the same signal_date may enter the ranking universe.",
+    "liquidity_field": "liquidity_20d_raw",
+    "liquidity_percentile_direction": "DESC",
+    "liquidity_min_percentile": 0.60,
+    "treatment_of_rows_below_guard": "Remain in audit tables but must be excluded from ranking_state_daily eligibility."
+  },
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "candidate_scheme_ids": [
+    "reversal_p98_cord30_liqguard60_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "reversal_p98_cord30_liqguard60_v1"
+  ],
+  "success_rules": {
+    "validation_edge": {
+      "validation_annual_relative_return_delta_vs_p98": "> 0",
+      "validation_relative_ir_delta_vs_p98": "> 0",
+      "validation_max_drawdown_delta_vs_p98": ">= 0"
+    },
+    "deployment_robustness": {
+      "cost_stress_annual_relative_return_delta_vs_p98": ">= 0",
+      "low_liquidity_weight_share_delta_vs_p98": "<= 0.00",
+      "topk8_annual_relative_return_delta_vs_p98": "> 0",
+      "topk12_annual_relative_return_delta_vs_p98": "> 0",
+      "validation_avg_turnover_daily_delta_vs_p98": "<= 0.02",
+      "candidate_avg_invested_weight": ">= 0.18"
+    },
+    "core_pass_condition": "All 9 rules must pass."
+  },
+  "screen_reference": "artifacts/fixed_test/reversal_cord30_liquidity_guard_screen/liquidity_guard_screen_20260506.json",
+  "deployment_loss_reference": "artifacts/fixed_test/reversal_cord30_deployment_loss_diagnosis/deployment_loss_diagnosis_20260506.json",
+  "disallowed_changes": [
+    "Do not change the composite score weights.",
+    "Do not change p98 tail handling.",
+    "Do not add a second threshold or second candidate.",
+    "Do not change TopK, execution semantics, or cost assumptions."
+  ]
+}

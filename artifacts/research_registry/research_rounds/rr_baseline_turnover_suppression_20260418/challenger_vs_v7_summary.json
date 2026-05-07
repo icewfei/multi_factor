@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-18T23:55:46.670951+08:00",
+  "candidate_scheme_id": "baseline_momentum_v11_turnover_suppression",
+  "research_round_id": "rr_baseline_turnover_suppression_20260418",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "engineering_comparison": {
+    "v7_run_state_seconds": 304.079591,
+    "v11_run_state_seconds": 314.079591,
+    "v11_started_at": "2026-04-18T23:49:36.087206+08:00",
+    "v11_completed_at": "2026-04-18T23:54:50.166797+08:00",
+    "v11_signal_date_chunk_size": 10
+  },
+  "comparison": {
+    "annual_relative_return": {
+      "v7": -0.06976572569304007,
+      "v11": -0.07196185720803783,
+      "delta_v11_minus_v7": -0.0021961315149977567
+    },
+    "relative_ir": {
+      "v7": -0.5287021621315882,
+      "v11": -0.5439885252105651,
+      "delta_v11_minus_v7": -0.015286363078976906
+    },
+    "max_drawdown": {
+      "v7": -0.3968114993586318,
+      "v11": -0.42375584895246143,
+      "delta_v11_minus_v7": -0.02694434959382963
+    },
+    "avg_cash_weight": {
+      "v7": 0.7919965084907071,
+      "v11": 0.7893074511982074,
+      "delta_v11_minus_v7": -0.002689057292499686
+    },
+    "avg_invested_weight": {
+      "v7": 0.2080034915092814,
+      "v11": 0.21069254880177576,
+      "delta_v11_minus_v7": 0.0026890572924943568
+    },
+    "avg_turnover_daily": {
+      "v7": 0.09811299793683326,
+      "v11": 0.09992461514045135,
+      "delta_v11_minus_v7": 0.001811617203618096
+    },
+    "low_liquidity_weight_share": {
+      "v7": 0.020450724262800736,
+      "v11": 0.02222574955907926,
+      "delta_v11_minus_v7": 0.0017750252962785255
+    },
+    "low_liquidity_alpha_contribution_share": {
+      "v7": -0.10314096828107921,
+      "v11": -0.08784318161837207,
+      "delta_v11_minus_v7": 0.015297786662707147
+    },
+    "topk_perturbation_pass": {
+      "v7": false,
+      "v11": false
+    },
+    "cost_stress_pass": {
+      "v7": false,
+      "v11": false
+    },
+    "cost_stress_annual_relative_return": {
+      "v7": -0.1149467975673385,
+      "v11": -0.11755087664093089,
+      "delta_v11_minus_v7": -0.0026040790735923913
+    }
+  },
+  "conclusion": {
+    "winner": "v7_reference",
+    "classification": "weak_candidate",
+    "summary": "Turnover suppression with a sticky top20 retention band did not improve annual relative return, relative IR, drawdown, turnover, perturbation stability, or cost stress robustness versus the recalibrated v7 reference."
+  }
+}

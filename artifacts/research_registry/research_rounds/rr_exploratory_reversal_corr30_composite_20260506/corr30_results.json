@@ -1,0 +1,102 @@
+{
+  "research_round_id": "rr_exploratory_reversal_corr30_composite_20260506",
+  "generated_at": "2026-05-06T12:30:03+08:00",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "code_hash": "e733911a93c7d57e60585d9605f42d742ff462e414e59e27b2c3bc2296977f1f",
+  "challenger": {
+    "run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+    "candidate_scheme_id": "reversal_p98_corr30_ew_v1",
+    "validation": {
+      "generated_at": "2026-05-06T12:30:03+08:00",
+      "fixed_test_run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "candidate_scheme_id": "reversal_p98_corr30_ew_v1",
+      "research_round_id": "rr_exploratory_reversal_corr30_composite_20260506",
+      "snapshot_id": "warehouse_20260429_trainval_20211231",
+      "window_name": "validation",
+      "validation_start": "20190101",
+      "validation_end": "20211231",
+      "n_days": 730,
+      "total_return": 7.350927425580737,
+      "annualized_return": 1.080596541766579,
+      "benchmark_total_return": 0.8229886126869008,
+      "annual_relative_return": -0.1368075429411777,
+      "effective_relative_days": 730,
+      "positive_relative_days": 334,
+      "relative_ir": -1.0372534332169139,
+      "daily_volatility": 0.003594330086639067,
+      "annualized_volatility": 0.0570582212347453,
+      "sharpe_ratio": 18.93848981588223,
+      "max_drawdown": -0.056016941899974415,
+      "avg_cash_weight": 0.8178767123287712,
+      "avg_invested_weight": 0.18212328767123473,
+      "avg_turnover_daily": 0.09036737235367463,
+      "rebalance_days": 730
+    },
+    "cost_stress": {
+      "fixed_test_run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "attempt_id": "attempt_20260506_122707",
+      "generated_at": "2026-05-06T12:30:03.014230+08:00",
+      "candidate_scheme_id": "reversal_p98_corr30_ew_v1",
+      "research_round_id": "rr_exploratory_reversal_corr30_composite_20260506",
+      "stress_open_bp": 20.0,
+      "stress_close_bp": 20.0,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.05362453647009757,
+      "pass_cost_stress_relative_return_floor": false
+    },
+    "low_liquidity": {
+      "fixed_test_run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "attempt_id": "attempt_20260506_122707",
+      "generated_at": "2026-05-06T12:30:02.705600+08:00",
+      "candidate_scheme_id": "reversal_p98_corr30_ew_v1",
+      "research_round_id": "rr_exploratory_reversal_corr30_composite_20260506",
+      "low_liquidity_holding_count": 5519,
+      "low_liquidity_weight_total": 25.0863636363634,
+      "low_liquidity_weight_share": 0.10582122176631036,
+      "low_liquidity_contribution_total": 0.2743271224226073,
+      "low_liquidity_contribution_share_of_strategy": 0.12616863019375,
+      "low_liquidity_alpha_contribution_share": 0.03731870912886002,
+      "flag_high_low_liquidity_exposure": false
+    },
+    "topk_perturbation": {
+      "8": {
+        "topk": 8,
+        "effective_relative_days": 4132,
+        "annual_relative_return": -0.009119298415187771,
+        "relative_ir": -0.2064298453663941
+      },
+      "12": {
+        "topk": 12,
+        "effective_relative_days": 4132,
+        "annual_relative_return": -0.00830973976588456,
+        "relative_ir": -0.202608905656115
+      }
+    }
+  },
+  "deltas_vs_baseline": {
+    "validation_annual_relative_return_delta": -0.00750067163851198,
+    "validation_relative_ir_delta": 0.056592418119550736,
+    "validation_max_drawdown_delta": 0.030686284403390496,
+    "validation_avg_turnover_daily_delta": -0.034084682440845906,
+    "cost_stress_annual_relative_return_delta": 0.00736857467932972,
+    "low_liquidity_weight_share_delta": -0.002588739919498262,
+    "topk8_annual_relative_return_delta": -0.0074310271036104325,
+    "topk12_annual_relative_return_delta": -0.007458654318458602
+  },
+  "evaluation": {
+    "validation_annual_relative_return_delta_gt_0": false,
+    "validation_relative_ir_delta_gt_0": true,
+    "validation_max_drawdown_delta_ge_0": true,
+    "cost_stress_annual_relative_return_delta_ge_0": true,
+    "low_liquidity_weight_share_delta_le_0": true,
+    "topk8_annual_relative_return_delta_gt_0": false,
+    "topk12_annual_relative_return_delta_gt_0": false,
+    "validation_avg_turnover_daily_delta_le_002": true,
+    "candidate_avg_invested_weight_ge_018": true,
+    "all_pass": false
+  },
+  "round_decision": "CORR30_FAIL"
+}

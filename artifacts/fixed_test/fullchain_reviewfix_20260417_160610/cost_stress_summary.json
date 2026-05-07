@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "ft_minimal_fullchain_20260417",
+  "run_id": "fullchain_reviewfix_20260417_160610",
+  "attempt_id": "attempt_fullchain_reviewfix_20260417_160610",
+  "generated_at": "2026-04-17T21:02:14.858325+08:00",
+  "candidate_scheme_id": "baseline_reversal_momentum_lowvol_liquidity_v1",
+  "research_round_id": "rr_baseline_scaffold_20260417",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.14841115114719172,
+  "pass_cost_stress_relative_return_floor": false
+}

@@ -1,0 +1,28 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_multisignal_core_20260419_1008",
+  "run_id": "fullchain_price_volume_multisignal_core_20260419_1008",
+  "attempt_id": "attempt_20260419_100950",
+  "generated_at": "2026-04-19T10:15:07.837378+08:00",
+  "candidate_scheme_id": "price_volume_multisignal_v13_core",
+  "research_round_id": "rr_price_volume_multisignal_family_20260419",
+  "warnings": [
+    "execution_path_daily contains unresolved or unpriced rows.",
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK.",
+    "terminal_event_daily is present but partially degraded in the shared source."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 4538,
+  "unfilled_topk_count": 1764,
+  "terminal_event_degraded_rows": 314,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": false,
+  "topk_perturbation_pass": false,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.16306432232471757,
+  "exposure_driven_or_liquidity_driven": false,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

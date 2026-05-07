@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_cross_horizon_c3_reversal_momentum",
+  "run_id": "exploratory_cross_horizon_c3_reversal_momentum",
+  "attempt_id": "attempt_20260501_152947",
+  "generated_at": "2026-05-01T15:32:42.116798+08:00",
+  "candidate_scheme_id": "exploratory_cross_horizon_c3_reversal_momentum",
+  "research_round_id": "rr_exploratory_cross_horizon_reversal_momentum_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.42974860551954464,
+  "pass_cost_stress_relative_return_floor": false
+}

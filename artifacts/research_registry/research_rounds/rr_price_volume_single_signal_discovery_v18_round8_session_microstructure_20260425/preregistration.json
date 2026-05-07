@@ -1,0 +1,193 @@
+{
+  "registered_at": "2026-04-25T16:10:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round8_session_microstructure_20260425",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_overnight_return_bias_20d_v1",
+    "price_volume_single_signal_overnight_intraday_spread_20d_v1",
+    "price_volume_single_signal_gap_fill_rate_20d_v1",
+    "price_volume_single_signal_lower_shadow_support_20d_v1",
+    "price_volume_single_signal_range_asymmetry_20d_v1",
+    "price_volume_single_signal_down_up_turnover_ratio_20d_v1",
+    "price_volume_single_signal_open_strength_share_20d_v1",
+    "price_volume_single_signal_downside_semivol_ratio_20d_v1",
+    "price_volume_single_signal_post_downday_volume_recovery_20d_v1",
+    "price_volume_single_signal_intraday_range_efficiency_20d_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After both new round7 keepers failed to pass clean composability screening versus the frozen v18 core family, which more session-structure and microstructure-oriented atomic price-volume signals can expand the retained keeper pool without simply remixing existing momentum, liquidity-trend, amount-shock, or price-volume-confirmation mechanisms?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "candidate definitions may draw inspiration from Alpha158-style atomic expressions and common price-volume paper mechanisms, but every field must be implemented independently inside this project and must not rely on the neighboring qlib adapter stack",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_overnight_return_bias_20d_v1",
+        "field": "overnight_return_bias_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger average overnight contribution to total return may capture a session-allocation mechanism distinct from open-to-close trend bias",
+        "dedup_note": {
+          "nearest_canonical_signal": "intraday_trend_bias_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This isolates close-to-next-open return contribution, which is orthogonal to the already-tested open-to-close drift mechanism.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_overnight_intraday_spread_20d_v1",
+        "field": "overnight_intraday_spread_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "a smaller overnight-minus-intraday return spread may capture smoother session transmission rather than concentrated gap-driven moves",
+        "dedup_note": {
+          "nearest_canonical_signal": "intraday_trend_bias_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This measures the balance between overnight and intraday legs rather than the sign or strength of intraday drift alone.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_gap_fill_rate_20d_v1",
+        "field": "gap_fill_rate_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a higher recent rate of gap filling may capture price-resilience and auction overshoot correction distinct from simple gap frequency",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_gap_frequency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This focuses on whether gaps get absorbed intraday rather than how often gaps occur.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_lower_shadow_support_20d_v1",
+        "field": "lower_shadow_support_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger lower-shadow support may capture intraday buy-the-dip absorption distinct from broad downside recovery averages",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_recovery_strength_10d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This isolates wick-based support behavior inside each bar rather than average recovery conditional on weak sessions.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_range_asymmetry_20d_v1",
+        "field": "range_asymmetry_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a higher upside-versus-downside intraday range balance may capture directional pressure asymmetry distinct from upside_range_share",
+        "dedup_note": {
+          "nearest_canonical_signal": "upside_range_share_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This compares directional range asymmetry within bars, not the share of total range contributed by up days across the window.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_down_up_turnover_ratio_20d_v1",
+        "field": "down_up_turnover_ratio_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "a lower turnover concentration on down days may capture pressure imbalance distinct from signed amount or turnover acceleration",
+        "dedup_note": {
+          "nearest_canonical_signal": "turnover_acceleration_5_20_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This measures down-day versus up-day turnover allocation, not the short-vs-medium change in total turnover level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_open_strength_share_20d_v1",
+        "field": "open_strength_share_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a higher share of days that open strong and hold strength may capture opening-auction quality distinct from close-based confirmation signals",
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This emphasizes opening strength persistence rather than where the bar closes relative to the day's range.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_downside_semivol_ratio_20d_v1",
+        "field": "downside_semivol_ratio_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "a lower downside semivolatility share may encode asymmetric risk quality beyond simple total volatility or tail pressure",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_tail_pressure_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This normalizes downside volatility relative to total volatility instead of measuring absolute downside tail magnitude.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_post_downday_volume_recovery_20d_v1",
+        "field": "post_downday_volume_recovery_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger next-session recovery after down days with supportive volume may capture a resilience mechanism distinct from generic price-volume synchronicity",
+        "dedup_note": {
+          "nearest_canonical_signal": "volume_price_synchronicity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This is explicitly a conditional follow-up recovery mechanism after down days, not a same-day price-volume co-movement measure.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_intraday_range_efficiency_20d_v1",
+        "field": "intraday_range_efficiency_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more efficient translation of intraday range into directional close location may capture cleaner session trend structure than raw range or close-location alone",
+        "dedup_note": {
+          "nearest_canonical_signal": "intraday_trend_bias_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This measures how efficiently intraday range turns into net directional progress rather than the average sign of open-to-close drift.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later composability-screening round.",
+    "non_promotion_rule": "Signals whose top slice remains weaker than rank11_20, or that only restate an existing canonical mechanism under a new session label, should be rejected rather than rescued by later overlay or family tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, stability-cap, overlay, or family-composition changes inside this round.",
+    "Do not import or depend on the neighboring qlib data adapter layer; this project must implement all candidate fields independently on its own data contracts.",
+    "Do not open budget for candidates that are already covered by the canonical alias map unless a new override_reason is explicitly approved."
+  ],
+  "notes": [
+    "This round is opened after both round7 positive keepers returned composability_screen_mixed rather than cleanly promotable interaction with the frozen v18 core family.",
+    "The objective is to search for more session-structure and microstructure-oriented alpha mechanisms rather than repeating trend, liquidity-improvement, or confirmation clusters."
+  ]
+}

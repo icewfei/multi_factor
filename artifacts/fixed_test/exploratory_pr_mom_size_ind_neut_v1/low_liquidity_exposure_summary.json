@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_pr_mom_size_ind_neut_v1",
+  "run_id": "exploratory_pr_mom_size_ind_neut_v1",
+  "attempt_id": "attempt_20260507_114429",
+  "generated_at": "2026-05-07T11:47:16.409381+08:00",
+  "candidate_scheme_id": "pr_mom_size_ind_neut_v1",
+  "research_round_id": "rr_exploratory_neutralization_20260506",
+  "low_liquidity_holding_count": 5340,
+  "low_liquidity_weight_total": 28.10526315789422,
+  "low_liquidity_weight_share": 0.102751587454282,
+  "low_liquidity_contribution_total": -0.2926928454187429,
+  "low_liquidity_contribution_share_of_strategy": -0.2041129433301582,
+  "low_liquidity_alpha_contribution_share": -0.1011488834197813,
+  "flag_high_low_liquidity_exposure": false
+}

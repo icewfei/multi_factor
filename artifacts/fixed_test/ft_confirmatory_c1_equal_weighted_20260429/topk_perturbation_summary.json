@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "ft_confirmatory_c1_equal_weighted_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_123350",
+  "generated_at": "2026-04-29T13:46:05.640025+08:00",
+  "candidate_scheme_id": "confirmatory_baseline_v1_equally_weighted_5sig",
+  "research_round_id": "rr_confirmatory_baseline_v1_5sig_20260429",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 0.270748837725838,
+      "relative_ir": 1.2804767200755724
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 0.2720517151069779,
+      "relative_ir": 1.394935832660017
+    }
+  ]
+}

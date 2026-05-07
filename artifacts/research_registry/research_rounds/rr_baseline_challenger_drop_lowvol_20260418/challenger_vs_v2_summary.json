@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-04-18T11:25:00+08:00",
+  "comparison_title": "baseline_reversal_momentum_v3 vs baseline_reversal_momentum_lowvol_v2",
+  "reference_candidate_scheme_id": "baseline_reversal_momentum_lowvol_v2",
+  "challenger_candidate_scheme_id": "baseline_reversal_momentum_v3",
+  "reference_run_id": "fullchain_challenger_drop_liquidity_20260417_2130",
+  "reference_attempt_id": "attempt_challenger_drop_liquidity_20260418_0012",
+  "challenger_run_id": "fullchain_challenger_drop_lowvol_20260418_0745",
+  "challenger_attempt_id": "attempt_challenger_drop_lowvol_20260418_0915",
+  "changed_dimension": "baseline_score_composition",
+  "change_summary": "Removed volatility_20d_raw from the v2 challenger, leaving only reversal_5d_raw and momentum_60_5_raw.",
+  "engineering_note": {
+    "signal_date_chunk_size_reference": 500,
+    "signal_date_chunk_size_challenger": 300,
+    "reference_run_state_seconds": 4334.391896,
+    "challenger_run_state_seconds": 2711.457912,
+    "note": "Chunk-size observations are engineering-only and must not be interpreted as strategy alpha."
+  },
+  "metric_comparison": {
+    "annual_relative_return": {
+      "reference": -0.12326055901792021,
+      "challenger": -0.14644652049806306,
+      "delta_challenger_minus_reference": -0.023185961480142853
+    },
+    "avg_cash_weight": {
+      "reference": 0.8492761290095185,
+      "challenger": 0.8263029332818117,
+      "delta_challenger_minus_reference": -0.02297319572770681
+    },
+    "avg_invested_weight": {
+      "reference": 0.1507238709904969,
+      "challenger": 0.17369706671818633,
+      "delta_challenger_minus_reference": 0.022973195727689426
+    },
+    "relative_ir": {
+      "reference": -0.7608576173547041,
+      "challenger": -0.9011317083941884,
+      "delta_challenger_minus_reference": -0.14027409103948432
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.9972518672129203,
+      "challenger": 0.996981348443455,
+      "delta_challenger_minus_reference": -0.00027051876946533735
+    },
+    "low_liquidity_alpha_contribution_share": {
+      "reference": 1.4340984776285584,
+      "challenger": 1.9002075019172053,
+      "delta_challenger_minus_reference": 0.46610902428864687
+    }
+  },
+  "audit_flags": {
+    "reference": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    },
+    "challenger": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    }
+  },
+  "decision": {
+    "classification": "weak_candidate",
+    "rationale": [
+      "Relative performance deteriorated versus the v2 challenger.",
+      "Low-liquidity dependence remained extreme and alpha contribution share worsened.",
+      "TopK perturbation and cost stress checks still failed."
+    ]
+  }
+}

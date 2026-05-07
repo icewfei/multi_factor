@@ -1,0 +1,707 @@
+{
+  "registered_at": "2026-04-28T21:34:51+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch02_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_beta20_v1",
+    "price_volume_single_signal_alpha158_beta30_v1",
+    "price_volume_single_signal_alpha158_beta60_v1",
+    "price_volume_single_signal_alpha158_rsqr5_v1",
+    "price_volume_single_signal_alpha158_rsqr10_v1",
+    "price_volume_single_signal_alpha158_rsqr20_v1",
+    "price_volume_single_signal_alpha158_rsqr30_v1",
+    "price_volume_single_signal_alpha158_rsqr60_v1",
+    "price_volume_single_signal_alpha158_resi5_v1",
+    "price_volume_single_signal_alpha158_resi10_v1",
+    "price_volume_single_signal_alpha158_resi20_v1",
+    "price_volume_single_signal_alpha158_resi30_v1",
+    "price_volume_single_signal_alpha158_resi60_v1",
+    "price_volume_single_signal_alpha158_max5_v1",
+    "price_volume_single_signal_alpha158_max10_v1",
+    "price_volume_single_signal_alpha158_max20_v1",
+    "price_volume_single_signal_alpha158_max30_v1",
+    "price_volume_single_signal_alpha158_max60_v1",
+    "price_volume_single_signal_alpha158_min5_v1",
+    "price_volume_single_signal_alpha158_min10_v1",
+    "price_volume_single_signal_alpha158_min20_v1",
+    "price_volume_single_signal_alpha158_min30_v1",
+    "price_volume_single_signal_alpha158_min60_v1",
+    "price_volume_single_signal_alpha158_qtlu5_v1",
+    "price_volume_single_signal_alpha158_qtlu10_v1",
+    "price_volume_single_signal_alpha158_qtlu20_v1",
+    "price_volume_single_signal_alpha158_qtlu30_v1",
+    "price_volume_single_signal_alpha158_qtlu60_v1",
+    "price_volume_single_signal_alpha158_qtld5_v1",
+    "price_volume_single_signal_alpha158_qtld10_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Round11b canonical batch02: under the frozen v18 operational contract and serial-only controller policy, which of exact qlib Alpha158 standard features 31-60 show positive and head-usable cross-sectional edge when implemented independently on this project's own adjusted-price daily-bar data contracts?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "source_policy": {
+    "mode": "alpha158_paper_whitelist_only",
+    "whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json",
+    "notes": "Canonical Alpha158 definitions are allowed as whitelist-approved source inspiration, but every feature must be implemented independently on this project's own data contracts."
+  },
+  "canonical_scope": {
+    "scope_type": "qlib_alpha158_exact_canonical_subset",
+    "canonical_definition_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+    "controller_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+    "slot_start": 31,
+    "slot_end": 60,
+    "feature_count": 30,
+    "naming_rule": "price_volume_single_signal_alpha158_<qlib_feature_name_lower>_v1",
+    "project_field_rule": "alpha158_<qlib_feature_name_lower>_raw"
+  },
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "This round is exact-Alpha158 canonical and whitelist-only. Every candidate must map to one exact qlib Alpha158 definition, but must be implemented independently on this project's own adjusted-price daily-bar contracts.",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_beta20_v1",
+        "field": "alpha158_beta20_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger positive 20-day price slope",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:BETA20",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Slope($close, 20)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "20-day regression slope isolates standardized trend strength more canonically than multi-signal trend summaries.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_beta30_v1",
+        "field": "alpha158_beta30_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger positive 30-day price slope",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:BETA30",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Slope($close, 30)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "30-day regression slope adds a clean medium-horizon trend-strength atom absent from earlier custom definitions.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_beta60_v1",
+        "field": "alpha158_beta60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger positive 60-day price slope",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:BETA60",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Slope($close, 60)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_250_20_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "60-day regression slope captures long-horizon trend shape more canonically than discrete momentum ratios.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr5_v1",
+        "field": "alpha158_rsqr5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher 5-day linear-trend fit quality",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RSQR5",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Rsquare($close, 5)",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Trend-fit quality is orthogonal to raw slope magnitude and differs from persistence-count style trend measures.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr10_v1",
+        "field": "alpha158_rsqr10_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher 10-day linear-trend fit quality",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RSQR10",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Rsquare($close, 10)",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "10-day regression fit quality is a canonical smooth-trend atom not isolated by prior project signals.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr20_v1",
+        "field": "alpha158_rsqr20_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher 20-day linear-trend fit quality",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RSQR20",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Rsquare($close, 20)",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "20-day R-squared captures medium-horizon path smoothness rather than directional level alone.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr30_v1",
+        "field": "alpha158_rsqr30_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher 30-day linear-trend fit quality",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RSQR30",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Rsquare($close, 30)",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "path_efficiency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "30-day regression fit is a standardized path-smoothness metric distinct from custom path-efficiency formulations.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr60_v1",
+        "field": "alpha158_rsqr60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher 60-day linear-trend fit quality",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RSQR60",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Rsquare($close, 60)",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "path_efficiency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "60-day regression fit quality captures long-horizon smooth trend structure rather than simple return accumulation.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_resi5_v1",
+        "field": "alpha158_resi5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more positive 5-day regression residual relative to close",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RESI5",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Resi($close, 5)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "intraday_path_curvature_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Short-window signed regression residuals isolate above-trend displacement in a canonical price-only way unlike earlier roughness proxies.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_resi10_v1",
+        "field": "alpha158_resi10_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more positive 10-day regression residual relative to close",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RESI10",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Resi($close, 10)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "intraday_path_curvature_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "10-day signed regression residuals capture above-trend displacement rather than custom intraday noise summaries.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_resi20_v1",
+        "field": "alpha158_resi20_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more positive 20-day regression residual relative to close",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RESI20",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Resi($close, 20)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "path_efficiency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "20-day signed residuals provide a canonical medium-horizon above-trend displacement atom distinct from ratio-style path efficiency.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_resi30_v1",
+        "field": "alpha158_resi30_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more positive 30-day regression residual relative to close",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RESI30",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Resi($close, 30)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "path_efficiency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "30-day signed regression residuals give a standardized medium-horizon above-trend displacement measure missing from earlier signals.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_resi60_v1",
+        "field": "alpha158_resi60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more positive 60-day regression residual relative to close",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:RESI60",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Resi($close, 60)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "path_efficiency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "60-day signed residuals capture long-horizon above-trend displacement rather than pure cumulative momentum.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_max5_v1",
+        "field": "alpha158_max5_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close nearer the 5-day rolling high",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MAX5",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Max($high, 5)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Exact rolling-high distance ratio is more canonical and horizon-specific than earlier breakout proximity variants.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_max10_v1",
+        "field": "alpha158_max10_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close nearer the 10-day rolling high",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MAX10",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Max($high, 10)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "10-day rolling-high ratio adds a standardized short trend-strength anchor absent from prior custom definitions.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_max20_v1",
+        "field": "alpha158_max20_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close nearer the 20-day rolling high",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MAX20",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Max($high, 20)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "20-day rolling-high ratio is the exact Alpha158 proximity form rather than the project's prior bespoke breakout distance.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_max30_v1",
+        "field": "alpha158_max30_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close nearer the 30-day rolling high",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MAX30",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Max($high, 30)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "30-day rolling-high ratio introduces a standardized intermediate breakout horizon not previously isolated in this exact form.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_max60_v1",
+        "field": "alpha158_max60_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close nearer the 60-day rolling high",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MAX60",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Max($high, 60)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "60-day rolling-high ratio is a canonical long-horizon breakout anchor distinct from other trend proxies.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_min5_v1",
+        "field": "alpha158_min5_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close farther above the 5-day rolling low",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MIN5",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Min($low, 5)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "lower_shadow_support_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Rolling-low distance ratio measures support escape in a more canonical way than candle-shadow support summaries.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_min10_v1",
+        "field": "alpha158_min10_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close farther above the 10-day rolling low",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MIN10",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Min($low, 10)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "lower_shadow_support_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "10-day rolling-low ratio standardizes downside escape strength beyond intraday shadow-based support measures.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_min20_v1",
+        "field": "alpha158_min20_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close farther above the 20-day rolling low",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MIN20",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Min($low, 20)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakdown_distance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "20-day rolling-low ratio is an exact Alpha158 downside-distance measure rather than the project's earlier custom breakdown distance.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_min30_v1",
+        "field": "alpha158_min30_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close farther above the 30-day rolling low",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MIN30",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Min($low, 30)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakdown_distance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "30-day rolling-low ratio adds a standardized medium horizon to downside-distance measurement.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_min60_v1",
+        "field": "alpha158_min60_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close farther above the 60-day rolling low",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:MIN60",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Min($low, 60)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakdown_distance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "60-day rolling-low ratio is a canonical long-horizon downside-distance anchor distinct from custom breakdown metrics.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtlu5_v1",
+        "field": "alpha158_qtlu5_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close above the 5-day upper rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLU5",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 5, 0.8)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Upper-quantile displacement captures robust breakout position beyond max-high sensitivity.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtlu10_v1",
+        "field": "alpha158_qtlu10_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close above the 10-day upper rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLU10",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 10, 0.8)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "10-day upper-quantile displacement is a standardized robust-strength atom not previously isolated in this form.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtlu20_v1",
+        "field": "alpha158_qtlu20_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close above the 20-day upper rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLU20",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 20, 0.8)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "20-day upper-quantile displacement is more robust to outliers than rolling-high distance alone.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtlu30_v1",
+        "field": "alpha158_qtlu30_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close above the 30-day upper rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLU30",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 30, 0.8)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "30-day upper-quantile displacement adds a standardized medium-horizon robust breakout anchor.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtlu60_v1",
+        "field": "alpha158_qtlu60_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close above the 60-day upper rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLU60",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 60, 0.8)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "60-day upper-quantile displacement provides a canonical long-horizon robust trend-position measure.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtld5_v1",
+        "field": "alpha158_qtld5_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close well above the 5-day lower rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLD5",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 5, 0.2)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakdown_distance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Lower-quantile displacement measures downside clearance more robustly than raw rolling lows.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_qtld10_v1",
+        "field": "alpha158_qtld10_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "close well above the 10-day lower rolling quantile",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "QlibAlpha158Exact:QTLD10",
+          "source_title": "Qlib Alpha158 exact canonical feature definition",
+          "source_locator": "Qlib Alpha158 exact feature family specification (local manifest boundary)",
+          "mechanism_mapping": "Exact Alpha158 canonical expression: Quantile($close, 10, 0.2)/$close",
+          "independent_implementation_note": "implemented independently on this project's adjusted-price and native daily-bar contracts; no dependency on neighboring qlib adapters or exported qlib features"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "breakdown_distance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "10-day lower-quantile displacement standardizes downside clearance beyond extreme-low sensitivity.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "controller_override": {
+    "serial_only": true,
+    "family_reopen_blocked": true,
+    "note": "Even if batch02 produces positive keepers, round11b controller policy still blocks family reopening until later canonical execution criteria are met."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into later exact-canonical composability or family consideration.",
+    "non_promotion_rule": "A signal that shows negative or near-zero broad ordering, inverted decile structure, or clearly weaker head labels than both rank11_20 and tail labels should be rejected rather than rescued by later extraction or overlay tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not import neighboring qlib adapters or external precomputed Alpha158 features."
+  ]
+}

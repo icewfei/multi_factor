@@ -1,0 +1,167 @@
+{
+  "registered_at": "2026-04-22T12:30:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_20260422",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_momentum_60_5_v1",
+    "price_volume_single_signal_reversal_5d_v1",
+    "price_volume_single_signal_volatility_20d_v1",
+    "price_volume_single_signal_liquidity_20d_v1",
+    "price_volume_single_signal_trend_consistency_20d_v1",
+    "price_volume_single_signal_momentum_120_20_v1",
+    "price_volume_single_signal_vol_regime_20_60_v1",
+    "price_volume_single_signal_liquidity_trend_20_60_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_question": "Before designing any new mixed score family, which individual price-volume signals show genuinely positive cross-sectional edge under the calibrated v7 operational contract, and which ones should be eliminated before family construction?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_momentum_60_5_v1",
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger medium-term momentum should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This was the foundational medium-term trend-strength signal and not an alias, direction inversion, or horizon-neighbor duplicate at the time of round launch.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_reversal_5d_v1",
+        "field": "reversal_5d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "we are testing whether short-term reversal has standalone positive edge when ranked in the contrarian direction",
+        "dedup_note": {
+          "nearest_canonical_signal": "reversal_5d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This represented a distinct short-horizon contrarian mechanism rather than a relabeling of the medium-term momentum signal.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_volatility_20d_v1",
+        "field": "volatility_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower realized volatility should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "volatility_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This was the initial realized-volatility-level hypothesis and not an alias of any retained price-volume confirmation or liquidity-trend mechanism.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_liquidity_20d_v1",
+        "field": "liquidity_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher trading liquidity should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "liquidity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This was the initial structural liquidity-level hypothesis and not a rename of any trend or amount-shock signal.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_trend_consistency_20d_v1",
+        "field": "trend_consistency_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more internally consistent recent trend should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This introduced an explicit trend-quality mechanism that was not reducible to raw momentum strength alone.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_momentum_120_20_v1",
+        "field": "momentum_120_20_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger longer-horizon momentum excluding the most recent month should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "horizon_variant",
+          "independent_budget_reason": "This tests whether the same trend-strength mechanism becomes cleaner on a much longer skip-month horizon.",
+          "override_reason": "Registered as an explicit long-horizon variant to test whether the retained momentum mechanism thickens when the lookback window is stretched."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_vol_regime_20_60_v1",
+        "field": "vol_regime_20_60_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "a calmer short-term volatility regime relative to medium-term volatility should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "vol_regime_20_60_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This was a volatility-regime state signal rather than a simple volatility-level alias, so it deserved its own initial discovery budget.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_20_60_v1",
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "improving recent liquidity versus medium-term liquidity should rank higher",
+        "dedup_note": {
+          "nearest_canonical_signal": "liquidity_trend_20_60_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This was a liquidity-improvement trend mechanism, distinct from the rejected structural liquidity-level signal.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated v7 0.70 ranking liquidity guard and same TopK=10 width",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same equal-weight daily Top10 extraction used by calibrated v7",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later family-construction round.",
+    "non_promotion_rule": "A signal that shows negative full-sample IC or inverted decile ordering should be rejected instead of being rescued by later extraction, turnover, or weight-mapping tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated v7 liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, or turnover-suppression changes inside this round.",
+    "Do not sweep multiple alternative directions for the same signal inside one candidate; if a reverse-direction hypothesis is desired, register it as a separate candidate.",
+    "Do not introduce PIT quality, value, or investment fields into this round."
+  ],
+  "notes": [
+    "This round is intentionally discovery-oriented and does not start by creating a new mixed score family.",
+    "The purpose is to reduce research freedom later by first determining which atomic price-volume signals have credible positive edge on their own.",
+    "Candidates should be registered and run one by one under this frozen round contract rather than opened in parallel without review.",
+    "The first completed batch covers momentum_60_5, reversal_5d, volatility_20d, and liquidity_20d; the second planned batch expands the atomic pool with cleaner trend-structure and regime-style candidates before any new family construction."
+  ]
+}

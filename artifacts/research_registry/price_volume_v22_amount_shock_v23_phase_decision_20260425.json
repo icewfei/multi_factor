@@ -1,0 +1,92 @@
+{
+  "as_of_date": "2026-04-25",
+  "scope": [
+    "price_volume_v22_breakout_volume_confirmation_substitution",
+    "price_volume_screen_amount_shock_5_20_composability_v1",
+    "price_volume_v23_amount_shock_gated_overlay"
+  ],
+  "working_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "phase_judgement": {
+    "continue_testing_new_overlay_candidates": false,
+    "pause_current_price_volume_family_tuning_line": true,
+    "return_to_new_atomic_single_signal_discovery": true
+  },
+  "evidence": {
+    "v22_vs_v18": {
+      "annual_relative_return": {
+        "reference": -0.04414228898711203,
+        "challenger": -0.08030118174716394
+      },
+      "relative_ir": {
+        "reference": -0.4024807492034419,
+        "challenger": -0.6401095568057718
+      },
+      "max_drawdown": {
+        "reference": -0.2772009864700842,
+        "challenger": -0.5170785117289425
+      },
+      "avg_turnover_daily": {
+        "reference": 0.11104145726428083,
+        "challenger": 0.12491758162485046
+      },
+      "low_liquidity_weight_share": {
+        "reference": 0.029557319223990304,
+        "challenger": 0.05914497252801661
+      }
+    },
+    "amount_shock_composability_screen": {
+      "single_signal_full_sample_corr_ic": 0.007194320175548632,
+      "single_signal_avg_daily_ic": 0.011315643184657212,
+      "screen_full_sample_corr_ic": 0.014922652662869353,
+      "screen_avg_daily_ic": 0.023271713026289477,
+      "reference_top10_minus_rank11_20": 0.000519101323037249,
+      "screen_top10_minus_rank11_20": 0.0008676038884901441,
+      "core_high_amount_high_avg_label": 0.00438019484903815,
+      "core_high_amount_mid_avg_label": 0.005159124821196213,
+      "reference_avg_top10_overlap_next_day": 7.223070739549839,
+      "screen_avg_top10_overlap_next_day": 6.289790996784566,
+      "classification": "composability_screen_mixed"
+    },
+    "v23_vs_v18": {
+      "annual_relative_return": {
+        "reference": -0.04414228898711203,
+        "challenger": -0.04805837648402245
+      },
+      "relative_ir": {
+        "reference": -0.4024807492034419,
+        "challenger": -0.4244563502661919
+      },
+      "max_drawdown": {
+        "reference": -0.2772009864700842,
+        "challenger": -0.2839937622646995
+      },
+      "avg_turnover_daily": {
+        "reference": 0.11104145726428083,
+        "challenger": 0.10941737643055024
+      },
+      "low_liquidity_weight_share": {
+        "reference": 0.029557319223990304,
+        "challenger": 0.03295747422680713
+      },
+      "topk_perturbation_pass": {
+        "reference": false,
+        "challenger": false
+      },
+      "cost_stress_pass": {
+        "reference": false,
+        "challenger": false
+      }
+    }
+  },
+  "decision_reasoning": [
+    "v22 shows that a positive standalone keeper does not imply safe direct family substitution.",
+    "The amount_shock composability screen shows static score-layer improvement but mixed composability because additive monotonicity is not clean and head stability worsens.",
+    "v23 shows that even a constrained gated overlay does not beat v18 on annual_relative_return, relative_ir, or max_drawdown.",
+    "Therefore the current price-volume family tuning line has entered low marginal-return territory."
+  ],
+  "recommended_next_step": {
+    "type": "new_atomic_single_signal_discovery",
+    "priority": "high",
+    "instruction": "Open a new atomic single-signal discovery batch rather than continuing with more overlay or direct family-substitution variants on top of v18."
+  }
+}

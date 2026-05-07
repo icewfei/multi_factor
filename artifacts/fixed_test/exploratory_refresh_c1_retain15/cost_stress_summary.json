@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_refresh_c1_retain15",
+  "run_id": "exploratory_refresh_c1_retain15",
+  "attempt_id": "attempt_20260501_180653",
+  "generated_at": "2026-05-01T18:09:52.867727+08:00",
+  "candidate_scheme_id": "exploratory_refresh_c1_retain15",
+  "research_round_id": "rr_exploratory_refresh_rule_turnover_reduction_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.07809628479374386,
+  "pass_cost_stress_relative_return_floor": false
+}

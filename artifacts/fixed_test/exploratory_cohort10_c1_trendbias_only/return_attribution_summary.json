@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_cohort10_c1_trendbias_only",
+  "run_id": "exploratory_cohort10_c1_trendbias_only",
+  "attempt_id": "attempt_20260501_212955",
+  "generated_at": "2026-05-01T21:32:49.461646+08:00",
+  "candidate_scheme_id": "exploratory_cohort10_c1_trendbias_only",
+  "research_round_id": "rr_exploratory_cohort10_feasibility_20260501",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -1.632828953126894,
+  "selection_alpha_total": 1.5006322241342698,
+  "low_liquidity_contribution_total": -0.07220587651294798
+}

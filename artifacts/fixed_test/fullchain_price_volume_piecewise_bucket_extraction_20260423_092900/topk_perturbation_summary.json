@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_piecewise_bucket_extraction_20260423_092900",
+  "run_id": "fullchain_price_volume_piecewise_bucket_extraction_20260423_092900",
+  "attempt_id": "attempt_20260423_093400",
+  "generated_at": "2026-04-23T09:39:43.083216+08:00",
+  "candidate_scheme_id": "price_volume_v20_piecewise_bucket_extraction",
+  "research_round_id": "rr_price_volume_piecewise_bucket_extraction_family_20260423",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.047352433028297836,
+      "relative_ir": -0.4159756305135969
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.048850188245654236,
+      "relative_ir": -0.4301708855406178
+    }
+  ]
+}

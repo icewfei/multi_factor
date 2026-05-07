@@ -1,0 +1,33 @@
+{
+  "fixed_test_run_id": "diag_oracle_tradeable_constrained",
+  "run_id": "diag_oracle_tradeable_constrained",
+  "attempt_id": "attempt_20260502_002454",
+  "generated_at": "2026-05-02T00:27:33.549884+08:00",
+  "inputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/diag_oracle_tradeable_constrained/attempts/attempt_20260502_002454/holdings.csv",
+    "portfolio_daily_summary_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/diag_oracle_tradeable_constrained/attempts/attempt_20260502_002454/portfolio_daily_summary.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/diag_oracle_tradeable_constrained/attempts/attempt_20260502_002454/turnover_daily.csv",
+    "run_state_audit_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/diag_oracle_tradeable_constrained/attempts/attempt_20260502_002454/data_quality_audit.json",
+    "run_state_attempt_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/diag_oracle_tradeable_constrained/attempts/attempt_20260502_002454/run_state_attempt_manifest.json",
+    "portfolio_artifacts_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/diag_oracle_tradeable_constrained/attempts/attempt_20260502_002454/portfolio_artifacts_manifest.json"
+  },
+  "outputs": {
+    "backtest_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/backtest_daily.csv",
+    "metrics_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/metrics.json",
+    "trade_statistics_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/trade_statistics_summary.json",
+    "annual_return_table_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/annual_return_table.csv",
+    "holding_period_return_distribution_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/holding_period_return_distribution.csv",
+    "topk_perturbation_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/topk_perturbation_summary.json",
+    "data_contract_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/data_contract_summary.json",
+    "audit_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/audit_summary.json",
+    "cash_source_explanation_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/cash_source_explanation.csv",
+    "low_liquidity_exposure_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/low_liquidity_exposure_summary.json",
+    "cost_stress_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/cost_stress_summary.json",
+    "return_attribution_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/diag_oracle_tradeable_constrained/return_attribution_summary.json"
+  },
+  "notes": [
+    "Near-formal fixed-test skeleton.",
+    "Benchmark-relative metrics, annual return table, holding-period distribution, TopK perturbation summary, and audit-side summaries are included.",
+    "Daily PnL uses open-to-close on entry day, close-to-close on hold days, and actual sell price on exit day."
+  ]
+}

@@ -1,0 +1,519 @@
+{
+  "generated_at": "2026-05-06T12:33:49+08:00",
+  "baseline_run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "comparisons": {
+    "cord30_ew": {
+      "run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+      "high_level": {
+        "validation_annual_relative_return_delta": -0.020931530032809342,
+        "validation_relative_ir_delta": -0.10045219941358208,
+        "validation_max_drawdown_delta": 0.020746488173983946,
+        "validation_avg_turnover_daily_delta": -0.013926940639267957,
+        "validation_avg_invested_weight_delta": -0.028826103500757733,
+        "cost_stress_annual_relative_return_delta": 0.015020699054418607,
+        "low_liquidity_weight_share_delta": 0.013047760910043296,
+        "topk8_annual_relative_return_delta": 0.003448958890937659,
+        "topk12_annual_relative_return_delta": 0.0100072039579715
+      },
+      "attribution_decomposition": {
+        "selection_alpha_delta": 0.16671468801155287,
+        "cash_drag_delta": -0.04900313588981664,
+        "low_liquidity_contribution_delta": 0.08226181987445971
+      },
+      "top10_overlap": {
+        "avg_overlap_n": 1.3010146561443066,
+        "avg_overlap_share": 0.13010146561443056,
+        "min_overlap_n": 0,
+        "max_overlap_n": 7
+      },
+      "unique_name_liquidity_profile": {
+        "challenger_unique_avg_liquidity_rank": 0.558124751733222,
+        "challenger_unique_median_liquidity_rank": 0.58398671617111,
+        "baseline_unique_avg_liquidity_rank": 0.6299009376035385,
+        "baseline_unique_median_liquidity_rank": 0.6825095528970273,
+        "challenger_unique_rows": 46296,
+        "baseline_unique_rows": 46296
+      },
+      "top10_fill_profile": {
+        "baseline_fill_rate": 0.9808342728297632,
+        "challenger_fill_rate": 0.9806651634723788,
+        "baseline_top10_avg_liquidity_rank": 0.6228793463957653,
+        "challenger_top10_avg_liquidity_rank": 0.5604413475033927,
+        "baseline_top10_median_liquidity_rank": 0.6743799843763694,
+        "challenger_top10_median_liquidity_rank": 0.587400717148125
+      },
+      "daily_fill_count": {
+        "baseline_avg_filled_n": 9.808342728297632,
+        "challenger_avg_filled_n": 9.806651634723789,
+        "avg_filled_n_delta": -0.0016910935738444193
+      },
+      "yearly_validation_profile": {
+        "2005": {
+          "baseline_avg_relative_return_daily": 0.0006131223452369262,
+          "challenger_avg_relative_return_daily": 0.0006700136350055409,
+          "avg_relative_return_daily_delta": 5.689128976861466e-05,
+          "baseline_avg_invested_weight": 0.2533574380165292,
+          "challenger_avg_invested_weight": 0.22079889807162473,
+          "avg_invested_weight_delta": -0.03255853994490448,
+          "baseline_avg_turnover_daily": 0.11918904958677688,
+          "challenger_avg_turnover_daily": 0.10780532598714396,
+          "avg_turnover_daily_delta": -0.011383723599632927,
+          "n_days": 242
+        },
+        "2006": {
+          "baseline_avg_relative_return_daily": -0.0022041577286937768,
+          "challenger_avg_relative_return_daily": -0.002094175338224133,
+          "avg_relative_return_daily_delta": 0.00010998239046964387,
+          "baseline_avg_invested_weight": 0.28254668049792525,
+          "challenger_avg_invested_weight": 0.23948824343015188,
+          "avg_invested_weight_delta": -0.04305843706777337,
+          "baseline_avg_turnover_daily": 0.12040975103734435,
+          "challenger_avg_turnover_daily": 0.10756108805901321,
+          "avg_turnover_daily_delta": -0.012848662978331126,
+          "n_days": 241
+        },
+        "2007": {
+          "baseline_avg_relative_return_daily": -0.002325879923512588,
+          "challenger_avg_relative_return_daily": -0.0026044626875549046,
+          "avg_relative_return_daily_delta": -0.0002785827640423167,
+          "baseline_avg_invested_weight": 0.26962809917355357,
+          "challenger_avg_invested_weight": 0.23174931129476525,
+          "avg_invested_weight_delta": -0.03787878787878828,
+          "baseline_avg_turnover_daily": 0.12166838842975197,
+          "challenger_avg_turnover_daily": 0.10665748393021103,
+          "avg_turnover_daily_delta": -0.015010904499540933,
+          "n_days": 242
+        },
+        "2008": {
+          "baseline_avg_relative_return_daily": 0.0031236898487324474,
+          "challenger_avg_relative_return_daily": 0.003219598708611642,
+          "avg_relative_return_daily_delta": 9.590885987919496e-05,
+          "baseline_avg_invested_weight": 0.26524390243902457,
+          "challenger_avg_invested_weight": 0.2235546522131883,
+          "avg_invested_weight_delta": -0.04168925022583628,
+          "baseline_avg_turnover_daily": 0.12037601626016257,
+          "challenger_avg_turnover_daily": 0.10693315266485992,
+          "avg_turnover_daily_delta": -0.013442863595302659,
+          "n_days": 246
+        },
+        "2009": {
+          "baseline_avg_relative_return_daily": -0.001683345927967904,
+          "challenger_avg_relative_return_daily": -0.0017392290254299807,
+          "avg_relative_return_daily_delta": -5.588309746207663e-05,
+          "baseline_avg_invested_weight": 0.2625000000000006,
+          "challenger_avg_invested_weight": 0.23062386156648446,
+          "avg_invested_weight_delta": -0.03187613843351619,
+          "baseline_avg_turnover_daily": 0.12297643442622946,
+          "challenger_avg_turnover_daily": 0.10853825136612,
+          "avg_turnover_daily_delta": -0.014438183060109466,
+          "n_days": 244
+        },
+        "2010": {
+          "baseline_avg_relative_return_daily": 0.000644967476519243,
+          "challenger_avg_relative_return_daily": 0.0008149889186266271,
+          "avg_relative_return_daily_delta": 0.0001700214421073841,
+          "baseline_avg_invested_weight": 0.2680526859504129,
+          "challenger_avg_invested_weight": 0.2657713498622593,
+          "avg_invested_weight_delta": -0.0022813360881536043,
+          "baseline_avg_turnover_daily": 0.12262396694214871,
+          "challenger_avg_turnover_daily": 0.10964187327823674,
+          "avg_turnover_daily_delta": -0.012982093663911959,
+          "n_days": 242
+        },
+        "2011": {
+          "baseline_avg_relative_return_daily": 0.001110760208653874,
+          "challenger_avg_relative_return_daily": 0.001173840551066652,
+          "avg_relative_return_daily_delta": 6.308034241277797e-05,
+          "baseline_avg_invested_weight": 0.27359118852458963,
+          "challenger_avg_invested_weight": 0.24282786885245858,
+          "avg_invested_weight_delta": -0.030763319672131036,
+          "baseline_avg_turnover_daily": 0.1231813524590164,
+          "challenger_avg_turnover_daily": 0.1096994535519124,
+          "avg_turnover_daily_delta": -0.013481898907104013,
+          "n_days": 244
+        },
+        "2012": {
+          "baseline_avg_relative_return_daily": 0.00024228140253047448,
+          "challenger_avg_relative_return_daily": 8.825129696740187e-05,
+          "avg_relative_return_daily_delta": -0.00015403010556307262,
+          "baseline_avg_invested_weight": 0.26116255144032985,
+          "challenger_avg_invested_weight": 0.22775491540923523,
+          "avg_invested_weight_delta": -0.03340763603109461,
+          "baseline_avg_turnover_daily": 0.1237911522633745,
+          "challenger_avg_turnover_daily": 0.10996799268404184,
+          "avg_turnover_daily_delta": -0.01382315957933266,
+          "n_days": 243
+        },
+        "2013": {
+          "baseline_avg_relative_return_daily": 0.0003402968582396677,
+          "challenger_avg_relative_return_daily": 0.00041995330598063496,
+          "avg_relative_return_daily_delta": 7.965644774096722e-05,
+          "baseline_avg_invested_weight": 0.2588497899159667,
+          "challenger_avg_invested_weight": 0.22539682539682482,
+          "avg_invested_weight_delta": -0.03345296451914186,
+          "baseline_avg_turnover_daily": 0.12442226890756297,
+          "challenger_avg_turnover_daily": 0.11055088702147498,
+          "avg_turnover_daily_delta": -0.013871381886088,
+          "n_days": 238
+        },
+        "2014": {
+          "baseline_avg_relative_return_daily": -0.0009033597485647049,
+          "challenger_avg_relative_return_daily": -0.0009701878006097593,
+          "avg_relative_return_daily_delta": -6.682805204505451e-05,
+          "baseline_avg_invested_weight": 0.26926020408163287,
+          "challenger_avg_invested_weight": 0.2362585034013602,
+          "avg_invested_weight_delta": -0.033001700680272694,
+          "baseline_avg_turnover_daily": 0.12446428571428564,
+          "challenger_avg_turnover_daily": 0.1106122448979589,
+          "avg_turnover_daily_delta": -0.013852040816326737,
+          "n_days": 245
+        },
+        "2015": {
+          "baseline_avg_relative_return_daily": -0.0004683046291972712,
+          "challenger_avg_relative_return_daily": -0.00035922077361163313,
+          "avg_relative_return_daily_delta": 0.00010908385558563812,
+          "baseline_avg_invested_weight": 0.2757684426229508,
+          "challenger_avg_invested_weight": 0.24294171220400737,
+          "avg_invested_weight_delta": -0.03282673041894342,
+          "baseline_avg_turnover_daily": 0.12195184426229506,
+          "challenger_avg_turnover_daily": 0.10762750455373384,
+          "avg_turnover_daily_delta": -0.014324339708561222,
+          "n_days": 244
+        },
+        "2016": {
+          "baseline_avg_relative_return_daily": 0.0006294785467479612,
+          "challenger_avg_relative_return_daily": 0.0006880325065267605,
+          "avg_relative_return_daily_delta": 5.8553959778799365e-05,
+          "baseline_avg_invested_weight": 0.260399590163935,
+          "challenger_avg_invested_weight": 0.23239981785063699,
+          "avg_invested_weight_delta": -0.027999772313298015,
+          "baseline_avg_turnover_daily": 0.12482069672131146,
+          "challenger_avg_turnover_daily": 0.110769581056466,
+          "avg_turnover_daily_delta": -0.014051115664845465,
+          "n_days": 244
+        },
+        "2017": {
+          "baseline_avg_relative_return_daily": -0.0004010217568522943,
+          "challenger_avg_relative_return_daily": -7.139526223965471e-06,
+          "avg_relative_return_daily_delta": 0.0003938822306283289,
+          "baseline_avg_invested_weight": 0.2756147540983605,
+          "challenger_avg_invested_weight": 0.24016393442622916,
+          "avg_invested_weight_delta": -0.03545081967213132,
+          "baseline_avg_turnover_daily": 0.12453893442622951,
+          "challenger_avg_turnover_daily": 0.11045081967213093,
+          "avg_turnover_daily_delta": -0.014088114754098593,
+          "n_days": 244
+        },
+        "2018": {
+          "baseline_avg_relative_return_daily": 0.0009094170582774895,
+          "challenger_avg_relative_return_daily": 0.0011129819934552353,
+          "avg_relative_return_daily_delta": 0.00020356493517774564,
+          "baseline_avg_invested_weight": 0.2725308641975313,
+          "challenger_avg_invested_weight": 0.24245541838134432,
+          "avg_invested_weight_delta": -0.030075445816186982,
+          "baseline_avg_turnover_daily": 0.12453703703703703,
+          "challenger_avg_turnover_daily": 0.11072245084590737,
+          "avg_turnover_daily_delta": -0.013814586191129663,
+          "n_days": 243
+        },
+        "2019": {
+          "baseline_avg_relative_return_daily": -0.0009228195923554693,
+          "challenger_avg_relative_return_daily": -0.0009112791235191659,
+          "avg_relative_return_daily_delta": 1.1540468836303457e-05,
+          "baseline_avg_invested_weight": 0.25056352459016396,
+          "challenger_avg_invested_weight": 0.22192622950819613,
+          "avg_invested_weight_delta": -0.028637295081967815,
+          "baseline_avg_turnover_daily": 0.12476946721311474,
+          "challenger_avg_turnover_daily": 0.11074681238615636,
+          "avg_turnover_daily_delta": -0.014022654826958388,
+          "n_days": 244
+        },
+        "2020": {
+          "baseline_avg_relative_return_daily": -0.0009757986432845404,
+          "challenger_avg_relative_return_daily": -0.0008570338910478829,
+          "avg_relative_return_daily_delta": 0.00011876475223665745,
+          "baseline_avg_invested_weight": 0.25501543209876587,
+          "challenger_avg_invested_weight": 0.2234796524919976,
+          "avg_invested_weight_delta": -0.03153577960676825,
+          "baseline_avg_turnover_daily": 0.12479423868312757,
+          "challenger_avg_turnover_daily": 0.11076817558299012,
+          "avg_turnover_daily_delta": -0.014026063100137444,
+          "n_days": 243
+        },
+        "2021": {
+          "baseline_avg_relative_return_daily": 4.058329235661748e-05,
+          "challenger_avg_relative_return_daily": -0.0003913043179928759,
+          "avg_relative_return_daily_delta": -0.0004318876103494934,
+          "baseline_avg_invested_weight": 0.2474537037037037,
+          "challenger_avg_invested_weight": 0.22114769090077668,
+          "avg_invested_weight_delta": -0.02630601280292704,
+          "baseline_avg_turnover_daily": 0.12379115226337449,
+          "challenger_avg_turnover_daily": 0.11005944215820733,
+          "avg_turnover_daily_delta": -0.013731710105167164,
+          "n_days": 243
+        }
+      }
+    },
+    "corr30_ew": {
+      "run_id": "exploratory_reversal_p98_corr30_trainval_20260506",
+      "high_level": {
+        "validation_annual_relative_return_delta": -0.00750067163851198,
+        "validation_relative_ir_delta": 0.056592418119550736,
+        "validation_max_drawdown_delta": 0.030686284403390496,
+        "validation_avg_turnover_daily_delta": -0.034084682440845906,
+        "validation_avg_invested_weight_delta": -0.06888698630136733,
+        "cost_stress_annual_relative_return_delta": 0.00736857467932972,
+        "low_liquidity_weight_share_delta": -0.002588739919498262,
+        "topk8_annual_relative_return_delta": -0.0074310271036104325,
+        "topk12_annual_relative_return_delta": -0.007458654318458602
+      },
+      "attribution_decomposition": {
+        "selection_alpha_delta": -0.09173211678861226,
+        "cash_drag_delta": -0.10645949593396775,
+        "low_liquidity_contribution_delta": 0.07028511586353073
+      },
+      "top10_overlap": {
+        "avg_overlap_n": 1.5473506200676437,
+        "avg_overlap_share": 0.15473506200676376,
+        "min_overlap_n": 0,
+        "max_overlap_n": 8
+      },
+      "unique_name_liquidity_profile": {
+        "challenger_unique_avg_liquidity_rank": 0.5929761242793944,
+        "challenger_unique_median_liquidity_rank": 0.637012987012987,
+        "baseline_unique_avg_liquidity_rank": 0.6270477565943416,
+        "baseline_unique_median_liquidity_rank": 0.678835843757978,
+        "challenger_unique_rows": 44985,
+        "baseline_unique_rows": 44985
+      },
+      "top10_fill_profile": {
+        "baseline_fill_rate": 0.9808342728297632,
+        "challenger_fill_rate": 0.9799699361142428,
+        "baseline_top10_avg_liquidity_rank": 0.6228793463957644,
+        "challenger_top10_avg_liquidity_rank": 0.5940797902197443,
+        "baseline_top10_median_liquidity_rank": 0.6743799843763694,
+        "challenger_top10_median_liquidity_rank": 0.6389076202885104
+      },
+      "daily_fill_count": {
+        "baseline_avg_filled_n": 9.808342728297632,
+        "challenger_avg_filled_n": 9.799699361142428,
+        "avg_filled_n_delta": -0.00864336715520481
+      },
+      "yearly_validation_profile": {
+        "2005": {
+          "baseline_avg_relative_return_daily": 0.0006131223452369262,
+          "challenger_avg_relative_return_daily": 0.0005629488205958069,
+          "avg_relative_return_daily_delta": -5.017352464111935e-05,
+          "baseline_avg_invested_weight": 0.2533574380165292,
+          "challenger_avg_invested_weight": 0.18454169797145012,
+          "avg_invested_weight_delta": -0.06881574004507908,
+          "baseline_avg_turnover_daily": 0.11918904958677688,
+          "challenger_avg_turnover_daily": 0.0877723516153268,
+          "avg_turnover_daily_delta": -0.031416697971450094,
+          "n_days": 242
+        },
+        "2006": {
+          "baseline_avg_relative_return_daily": -0.0022041577286937768,
+          "challenger_avg_relative_return_daily": -0.0024026472945417147,
+          "avg_relative_return_daily_delta": -0.00019848956584793808,
+          "baseline_avg_invested_weight": 0.28254668049792525,
+          "challenger_avg_invested_weight": 0.20609204073934376,
+          "avg_invested_weight_delta": -0.07645463975858151,
+          "baseline_avg_turnover_daily": 0.12040975103734435,
+          "challenger_avg_turnover_daily": 0.0874575631837042,
+          "avg_turnover_daily_delta": -0.03295218785364014,
+          "n_days": 241
+        },
+        "2007": {
+          "baseline_avg_relative_return_daily": -0.002325879923512588,
+          "challenger_avg_relative_return_daily": -0.0028506344026828583,
+          "avg_relative_return_daily_delta": -0.0005247544791702706,
+          "baseline_avg_invested_weight": 0.26962809917355357,
+          "challenger_avg_invested_weight": 0.21066867017280252,
+          "avg_invested_weight_delta": -0.05895942900075101,
+          "baseline_avg_turnover_daily": 0.12166838842975197,
+          "challenger_avg_turnover_daily": 0.08730277986476327,
+          "avg_turnover_daily_delta": -0.0343656085649887,
+          "n_days": 242
+        },
+        "2008": {
+          "baseline_avg_relative_return_daily": 0.0031236898487324474,
+          "challenger_avg_relative_return_daily": 0.0033757397042582034,
+          "avg_relative_return_daily_delta": 0.00025204985552575583,
+          "baseline_avg_invested_weight": 0.26524390243902457,
+          "challenger_avg_invested_weight": 0.19033628972653377,
+          "avg_invested_weight_delta": -0.0749076127124908,
+          "baseline_avg_turnover_daily": 0.12037601626016257,
+          "challenger_avg_turnover_daily": 0.08730598669623056,
+          "avg_turnover_daily_delta": -0.033070029563932006,
+          "n_days": 246
+        },
+        "2009": {
+          "baseline_avg_relative_return_daily": -0.001683345927967904,
+          "challenger_avg_relative_return_daily": -0.0021322724204196324,
+          "avg_relative_return_daily_delta": -0.0004489264924517283,
+          "baseline_avg_invested_weight": 0.2625000000000006,
+          "challenger_avg_invested_weight": 0.1865126676602086,
+          "avg_invested_weight_delta": -0.07598733233979202,
+          "baseline_avg_turnover_daily": 0.12297643442622946,
+          "challenger_avg_turnover_daily": 0.08902757078986581,
+          "avg_turnover_daily_delta": -0.03394886363636366,
+          "n_days": 244
+        },
+        "2010": {
+          "baseline_avg_relative_return_daily": 0.000644967476519243,
+          "challenger_avg_relative_return_daily": 0.0005674882418949203,
+          "avg_relative_return_daily_delta": -7.747923462432262e-05,
+          "baseline_avg_invested_weight": 0.2680526859504129,
+          "challenger_avg_invested_weight": 0.1854620586025546,
+          "avg_invested_weight_delta": -0.0825906273478583,
+          "baseline_avg_turnover_daily": 0.12262396694214871,
+          "challenger_avg_turnover_daily": 0.08955672426746797,
+          "avg_turnover_daily_delta": -0.03306724267468074,
+          "n_days": 242
+        },
+        "2011": {
+          "baseline_avg_relative_return_daily": 0.001110760208653874,
+          "challenger_avg_relative_return_daily": 0.0012966174560265606,
+          "avg_relative_return_daily_delta": 0.00018585724737268664,
+          "baseline_avg_invested_weight": 0.27359118852458963,
+          "challenger_avg_invested_weight": 0.19005216095380015,
+          "avg_invested_weight_delta": -0.08353902757078946,
+          "baseline_avg_turnover_daily": 0.1231813524590164,
+          "challenger_avg_turnover_daily": 0.08979135618479875,
+          "avg_turnover_daily_delta": -0.03338999627421765,
+          "n_days": 244
+        },
+        "2012": {
+          "baseline_avg_relative_return_daily": 0.00024228140253047448,
+          "challenger_avg_relative_return_daily": 0.00011808448044794471,
+          "avg_relative_return_daily_delta": -0.00012419692208252977,
+          "baseline_avg_invested_weight": 0.26116255144032985,
+          "challenger_avg_invested_weight": 0.18540965207631882,
+          "avg_invested_weight_delta": -0.07575289936401103,
+          "baseline_avg_turnover_daily": 0.1237911522633745,
+          "challenger_avg_turnover_daily": 0.09002992891881771,
+          "avg_turnover_daily_delta": -0.03376122334455679,
+          "n_days": 243
+        },
+        "2013": {
+          "baseline_avg_relative_return_daily": 0.0003402968582396677,
+          "challenger_avg_relative_return_daily": 0.00016990410969982837,
+          "avg_relative_return_daily_delta": -0.00017039274853983936,
+          "baseline_avg_invested_weight": 0.2588497899159667,
+          "challenger_avg_invested_weight": 0.18571428571428591,
+          "avg_invested_weight_delta": -0.07313550420168076,
+          "baseline_avg_turnover_daily": 0.12442226890756297,
+          "challenger_avg_turnover_daily": 0.09035523300229185,
+          "avg_turnover_daily_delta": -0.03406703590527112,
+          "n_days": 238
+        },
+        "2014": {
+          "baseline_avg_relative_return_daily": -0.0009033597485647049,
+          "challenger_avg_relative_return_daily": -0.0011353093536295494,
+          "avg_relative_return_daily_delta": -0.0002319496050648446,
+          "baseline_avg_invested_weight": 0.26926020408163287,
+          "challenger_avg_invested_weight": 0.19207792207792188,
+          "avg_invested_weight_delta": -0.077182282003711,
+          "baseline_avg_turnover_daily": 0.12446428571428564,
+          "challenger_avg_turnover_daily": 0.09066790352504632,
+          "avg_turnover_daily_delta": -0.03379638218923932,
+          "n_days": 245
+        },
+        "2015": {
+          "baseline_avg_relative_return_daily": -0.0004683046291972712,
+          "challenger_avg_relative_return_daily": -0.00040422571223417905,
+          "avg_relative_return_daily_delta": 6.407891696309217e-05,
+          "baseline_avg_invested_weight": 0.2757684426229508,
+          "challenger_avg_invested_weight": 0.22334202682563348,
+          "avg_invested_weight_delta": -0.052426415797317306,
+          "baseline_avg_turnover_daily": 0.12195184426229506,
+          "challenger_avg_turnover_daily": 0.08910208643815191,
+          "avg_turnover_daily_delta": -0.03284975782414314,
+          "n_days": 244
+        },
+        "2016": {
+          "baseline_avg_relative_return_daily": 0.0006294785467479612,
+          "challenger_avg_relative_return_daily": 0.0007386101077757189,
+          "avg_relative_return_daily_delta": 0.00010913156102775773,
+          "baseline_avg_invested_weight": 0.260399590163935,
+          "challenger_avg_invested_weight": 0.1973546944858417,
+          "avg_invested_weight_delta": -0.06304489567809334,
+          "baseline_avg_turnover_daily": 0.12482069672131146,
+          "challenger_avg_turnover_daily": 0.09068554396423241,
+          "avg_turnover_daily_delta": -0.034135152757079054,
+          "n_days": 244
+        },
+        "2017": {
+          "baseline_avg_relative_return_daily": -0.0004010217568522943,
+          "challenger_avg_relative_return_daily": -5.922254750331767e-05,
+          "avg_relative_return_daily_delta": 0.0003417992093489767,
+          "baseline_avg_invested_weight": 0.2756147540983605,
+          "challenger_avg_invested_weight": 0.1990871833084952,
+          "avg_invested_weight_delta": -0.07652757078986529,
+          "baseline_avg_turnover_daily": 0.12453893442622951,
+          "challenger_avg_turnover_daily": 0.09010804769001483,
+          "avg_turnover_daily_delta": -0.03443088673621468,
+          "n_days": 244
+        },
+        "2018": {
+          "baseline_avg_relative_return_daily": 0.0009094170582774895,
+          "challenger_avg_relative_return_daily": 0.0010824472117309809,
+          "avg_relative_return_daily_delta": 0.00017303015345349128,
+          "baseline_avg_invested_weight": 0.2725308641975313,
+          "challenger_avg_invested_weight": 0.21715301159745568,
+          "avg_invested_weight_delta": -0.055377852600075626,
+          "baseline_avg_turnover_daily": 0.12453703703703703,
+          "challenger_avg_turnover_daily": 0.09049756827534595,
+          "avg_turnover_daily_delta": -0.03403946876169108,
+          "n_days": 243
+        },
+        "2019": {
+          "baseline_avg_relative_return_daily": -0.0009228195923554693,
+          "challenger_avg_relative_return_daily": -0.0009201008848644394,
+          "avg_relative_return_daily_delta": 2.7187074910299287e-06,
+          "baseline_avg_invested_weight": 0.25056352459016396,
+          "challenger_avg_invested_weight": 0.18161326378539494,
+          "avg_invested_weight_delta": -0.06895026080476901,
+          "baseline_avg_turnover_daily": 0.12476946721311474,
+          "challenger_avg_turnover_daily": 0.09059239940387478,
+          "avg_turnover_daily_delta": -0.03417706780923996,
+          "n_days": 244
+        },
+        "2020": {
+          "baseline_avg_relative_return_daily": -0.0009757986432845404,
+          "challenger_avg_relative_return_daily": -0.0008714760950099263,
+          "avg_relative_return_daily_delta": 0.00010432254827461407,
+          "baseline_avg_invested_weight": 0.25501543209876587,
+          "challenger_avg_invested_weight": 0.1835578002244666,
+          "avg_invested_weight_delta": -0.07145763187429925,
+          "baseline_avg_turnover_daily": 0.12479423868312757,
+          "challenger_avg_turnover_daily": 0.09049756827534598,
+          "avg_turnover_daily_delta": -0.03429667040778159,
+          "n_days": 243
+        },
+        "2021": {
+          "baseline_avg_relative_return_daily": 4.058329235661748e-05,
+          "challenger_avg_relative_return_daily": -0.0001917208216807067,
+          "avg_relative_return_daily_delta": -0.00023230411403732417,
+          "baseline_avg_invested_weight": 0.2474537037037037,
+          "challenger_avg_invested_weight": 0.18120089786756452,
+          "avg_invested_weight_delta": -0.06625280583613918,
+          "baseline_avg_turnover_daily": 0.12379115226337449,
+          "challenger_avg_turnover_daily": 0.0900112233445567,
+          "avg_turnover_daily_delta": -0.033779928918817786,
+          "n_days": 243
+        }
+      }
+    }
+  },
+  "common_failure_flags": {
+    "all_fail_validation_annual_relative_return": true,
+    "all_fail_topk8": false,
+    "all_fail_topk12": false,
+    "all_improve_drawdown": true,
+    "all_improve_turnover": true,
+    "all_improve_cost_stress": true
+  },
+  "verdict": "Composite partner line remains ambiguous; at least one challenger broke the common-failure pattern and may justify another targeted follow-up."
+}

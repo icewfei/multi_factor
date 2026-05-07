@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_universe_liquidity_guard_20260418_1635",
+  "run_id": "fullchain_baseline_universe_liquidity_guard_20260418_1635",
+  "attempt_id": "attempt_20260418_171330",
+  "generated_at": "2026-04-18T17:19:14.225816+08:00",
+  "candidate_scheme_id": "baseline_momentum_v8_universe_liquidity_guard",
+  "research_round_id": "rr_baseline_universe_liquidity_guard_20260418",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.08199613759429958,
+  "pass_cost_stress_relative_return_floor": false
+}

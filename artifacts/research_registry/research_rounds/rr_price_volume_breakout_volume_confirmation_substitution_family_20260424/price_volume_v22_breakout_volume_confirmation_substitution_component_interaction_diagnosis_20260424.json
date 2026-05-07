@@ -1,0 +1,74 @@
+{
+  "candidate_scheme_id": "price_volume_v22_breakout_volume_confirmation_substitution",
+  "research_round_id": "rr_price_volume_breakout_volume_confirmation_substitution_family_20260424",
+  "as_of_date": "20260424",
+  "diagnosis_question": "Why is breakout_volume_confirmation_20d_raw a positive single-signal keeper, but harmful after direct substitution into the frozen v18 family?",
+  "single_signal_readout": {
+    "full_sample_corr_ic": 0.007257518388412829,
+    "avg_daily_ic": 0.0110526029286499,
+    "positive_daily_ic_share": 0.5546112684922884,
+    "avg_label_top10": 0.004262577005232449,
+    "avg_label_rank11_20": 0.00197088763191809,
+    "avg_label_bottom10": -0.006743274854111533,
+    "top10_minus_rank11_20": 0.002291689373314359
+  },
+  "family_signal_edge_readout": {
+    "full_sample_corr_ic": 0.012079556583779443,
+    "avg_daily_ic": 0.017645666804903395,
+    "positive_daily_ic_share": 0.561715647339158,
+    "avg_label_top10": 0.004993292888008616,
+    "avg_label_rank11_20": 0.004326646435746434,
+    "avg_label_bottom10": -0.0023481353024252835,
+    "top10_minus_rank11_20": 0.0006666464522621825,
+    "avg_rank10_11_score_gap": 0.002843061090207209
+  },
+  "component_interaction": {
+    "component_rank_correlation_full": -0.002535160979952241,
+    "component_rank_correlation_avg_daily": -0.012908396044662266,
+    "component_rank_correlation_median_daily": -0.005481674222370406,
+    "component_rank_correlation_positive_daily_share": 0.48254522373849573,
+    "bucket_readout": {
+      "momentum_high_breakout_high": 0.004108304639618404,
+      "momentum_high_breakout_mid": 0.005327844314450204,
+      "momentum_high_breakout_low": 0.0018776652993041016,
+      "momentum_mid_breakout_high": 0.003283313371997442,
+      "momentum_mid_breakout_mid": 0.004672211699255184,
+      "momentum_mid_breakout_low": 0.002144284020859095,
+      "momentum_low_breakout_high": 0.002859871682469773
+    },
+    "family_top10_avg_label": 0.004993292888008615,
+    "both_high_cell_avg_label": 0.00410830463961842
+  },
+  "head_stability": {
+    "v18_avg_top10_overlap_next_day": 7.70845897476591,
+    "v22_avg_top10_overlap_next_day": 6.556102205999048,
+    "v18_median_top10_overlap_next_day": 8.0,
+    "v22_median_top10_overlap_next_day": 7.0,
+    "v18_avg_turnover_daily": 0.11104145726428083,
+    "v22_avg_turnover_daily": 0.12491758162485046
+  },
+  "realized_portfolio_effect": {
+    "v18_annual_relative_return": -0.04414228898711203,
+    "v22_annual_relative_return": -0.08030118174716394,
+    "v18_max_drawdown": -0.2772009864700842,
+    "v22_max_drawdown": -0.5170785117289425,
+    "v18_selection_alpha_total": 0.7175652194957152,
+    "v22_selection_alpha_total": -0.08039811967172679,
+    "v18_cash_drag_total": -2.229721948109997,
+    "v22_cash_drag_total": -2.2005759732019814,
+    "v18_low_liquidity_weight_share": 0.029557319223990304,
+    "v22_low_liquidity_weight_share": 0.05914497252801661,
+    "v18_low_liquidity_contribution_total": -0.015160344690571608,
+    "v22_low_liquidity_contribution_total": -0.15931863891951029
+  },
+  "judgement": {
+    "primary_conclusion": "The breakout-volume-confirmation signal is genuinely positive as a standalone ordering signal, but it is not additively monotone on top of momentum_60_5_raw under a simple equal-weight family average and the frozen v18 portfolio contract.",
+    "mechanism": [
+      "The new component is slightly negatively correlated with momentum, so the family score combines two partly conflicting cross-sectional orderings.",
+      "The best interaction cell is momentum-high plus breakout-mid, not momentum-high plus breakout-high, which means the breakout component is not a simple monotone enhancer of the momentum head.",
+      "The family still has positive signal_edge(信号边际优势), but head stability falls sharply relative to v18 and turnover rises.",
+      "Realized selection_alpha_total(选股超额贡献) flips from strongly positive in v18 to negative in v22, while low-liquidity exposure and low-liquidity contribution both worsen, so the live portfolio path becomes materially worse even though the static score diagnostic remains positive."
+    ],
+    "implication_for_next_step": "Do not directly substitute breakout_volume_confirmation_20d_raw for liquidity_trend_20_60_raw inside the frozen v18 family. If the breakout signal is used later, it should be tested as a constrained third signal, a gated overlay, or a conditional modifier rather than a simple equal-weight replacement."
+  }
+}

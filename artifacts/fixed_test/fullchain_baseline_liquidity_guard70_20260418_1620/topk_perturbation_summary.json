@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_liquidity_guard70_20260418_1620",
+  "run_id": "fullchain_baseline_liquidity_guard70_20260418_1620",
+  "attempt_id": "attempt_20260418_154945",
+  "generated_at": "2026-04-18T15:54:59.349475+08:00",
+  "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.05996040669064795,
+      "relative_ir": -0.4141446091080896
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.050391217947446276,
+      "relative_ir": -0.3751228745465581
+    }
+  ]
+}

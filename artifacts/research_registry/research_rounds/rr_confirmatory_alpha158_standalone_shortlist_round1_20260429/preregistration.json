@@ -1,0 +1,134 @@
+{
+  "registered_at": "2026-04-29T12:15:00+08:00",
+  "research_round_id": "rr_confirmatory_alpha158_standalone_shortlist_round1_20260429",
+  "research_tier": "confirmatory",
+  "run_type": "confirmatory",
+  "candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_cord30_v1",
+    "price_volume_single_signal_alpha158_vsumd60_v1",
+    "price_volume_single_signal_alpha158_imxd5_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_cord30_v1",
+    "price_volume_single_signal_alpha158_vsumd60_v1",
+    "price_volume_single_signal_alpha158_imxd5_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "On the trainval-only snapshot that excludes the frozen 2022-2025 test window by construction, which one of three orthogonal Alpha158 standalone keepers cord30, vsumd60, and imxd5 can beat the frozen v18 working reference under a predeclared validation window and a single fixed boolean promotion rule?",
+  "allowed_core_dimension": "atomic standalone signal choice only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_input_contract_path": "/Users/wy/MiscProject/multi_factor/contracts/run_input_contract.research_trainval_20211231.json",
+  "base_panels_run_id": "project_panels_research_trainval_20211231_20260429",
+  "execution_logic_version": "warehouse_execution_v3",
+  "data_contract_version": "multifactor_data_contract_v2",
+  "time_partition_plan": {
+    "train_window": {
+      "start_date": "20100101",
+      "end_date": "20181231"
+    },
+    "validation_window": {
+      "start_date": "20190101",
+      "end_date": "20211231"
+    },
+    "test_window_access": "forbidden",
+    "note": "The fixed test window 2022-01 to 2025-12 is excluded by construction through the trainval-only snapshot."
+  },
+  "confirmatory_shortlist_rationale": {
+    "selection_source": "restricted to Alpha158 exact standalone-positive keepers with lower redundancy on the trainval-only panels",
+    "orthogonality_checks": [
+      {
+        "pair": [
+          "price_volume_single_signal_alpha158_cord30_v1",
+          "price_volume_single_signal_alpha158_vsumd60_v1"
+        ],
+        "pooled_corr": 0.1702534499
+      },
+      {
+        "pair": [
+          "price_volume_single_signal_alpha158_cord30_v1",
+          "price_volume_single_signal_alpha158_imxd5_v1"
+        ],
+        "pooled_corr": 0.1149246199
+      },
+      {
+        "pair": [
+          "price_volume_single_signal_alpha158_vsumd60_v1",
+          "price_volume_single_signal_alpha158_imxd5_v1"
+        ],
+        "pooled_corr": 0.1951913565
+      }
+    ],
+    "excluded_close_substitutes": [
+      "corr cluster retained as reserve because corr20 vs cord30 pooled_corr=0.5100390670",
+      "vma/vstd cluster retained as reserve because vma60 vs vstd60 pooled_corr=0.9864553601"
+    ]
+  },
+  "candidate_contract": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "field": "alpha158_cord30_raw",
+      "feature_name": "CORD30",
+      "ranking_direction": "DESC",
+      "mechanism": "price_volume_change_corr",
+      "fixed_test_run_id": "confirmatory_fixed_test_cord30_trainval_20260429"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "field": "alpha158_vsumd60_raw",
+      "feature_name": "VSUMD60",
+      "ranking_direction": "DESC",
+      "mechanism": "volume_expansion_balance",
+      "fixed_test_run_id": "confirmatory_fixed_test_vsumd60_trainval_20260429"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_imxd5_v1",
+      "field": "alpha158_imxd5_raw",
+      "feature_name": "IMXD5",
+      "ranking_direction": "DESC",
+      "mechanism": "path_ordering_breakout",
+      "fixed_test_run_id": "confirmatory_fixed_test_imxd5_trainval_20260429"
+    }
+  ],
+  "reference_contract": {
+    "candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+    "run_id": "confirmatory_reference_v18_trainval_20260429",
+    "fixed_test_run_id": "confirmatory_fixed_test_reference_v18_trainval_20260429",
+    "score_family_rule": "Use the existing v18 working reference operational contract with the same underlying two-signal score family as price_volume_v16_remove_trend_consistency, then preserve the live v18 portfolio extraction and refresh semantics for this trainval-only confirmatory baseline run.",
+    "note": "The reference is executed only as a frozen comparator and is not part of the confirmatory shortlist count."
+  },
+  "decision_rule": {
+    "type": "boolean_promotion_gate",
+    "boolean_expression": "(validation_annual_relative_return - reference_validation_annual_relative_return > 0.005) AND (validation_relative_ir - reference_validation_relative_ir > 0.05) AND (validation_max_drawdown - reference_validation_max_drawdown >= -0.05) AND (validation_avg_turnover_daily - reference_validation_avg_turnover_daily <= 0.02) AND (validation_avg_invested_weight >= 0.15)",
+    "reference_window": "20190101-20211231",
+    "pass_interpretation": "A candidate passes only if it beats the frozen v18 reference on return and IR, does not materially worsen drawdown or turnover, and maintains minimum invested weight."
+  },
+  "frozen_dimensions": {
+    "score_family_cardinality": "single signal only for shortlisted candidates",
+    "portfolio_width_topk": 10,
+    "execution_semantics": "frozen",
+    "benchmark_contract": "frozen",
+    "cost_contract": "frozen",
+    "contract_path": "/Users/wy/MiscProject/multi_factor/contracts/run_input_contract.research_trainval_20211231.json"
+  },
+  "disallowed_changes": [
+    "Do not access or regenerate any snapshot that contains the 2022-2025 frozen test window.",
+    "Do not change the shortlist membership after registration.",
+    "Do not change candidate raw fields, ranking directions, or candidate names after registration.",
+    "Do not add overlays, family blends, or multi-signal combinations inside this round.",
+    "Do not change TopK width, benchmark, execution semantics, or cost semantics.",
+    "Do not change the validation window or the boolean promotion rule after registration."
+  ],
+  "expected_outputs": [
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_standalone_shortlist_round1_20260429/confirmatory_round1_results.json",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_standalone_shortlist_round1_20260429/confirmatory_round1_results.md"
+  ],
+  "code_hash": "9f1a8e917b36bbc309853c0af555d60c6e1bab6e754e34ea74c3663fe8da2481",
+  "governance_approver_id": "thread_user_approval_20260429",
+  "notes": [
+    "This is the first confirmatory round after rebuilding trainval-only research panels that exclude the frozen test window by construction.",
+    "The shortlist is intentionally capped at three candidates to respect confirmatory budget discipline.",
+    "The baseline reference run is allowed through registry guardrails only as the preregistered frozen comparator for this round."
+  ]
+}

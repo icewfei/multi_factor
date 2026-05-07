@@ -1,0 +1,193 @@
+{
+  "registered_at": "2026-04-28T18:02:43+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round10_alpha158_paper_whitelist_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_amihud_illiquidity_20d_v1",
+    "price_volume_single_signal_turnover_concentration_hhi_20d_v1",
+    "price_volume_single_signal_close_to_vwap_bias_20d_v1",
+    "price_volume_single_signal_intraday_range_skew_20d_v1",
+    "price_volume_single_signal_gap_reversal_intensity_20d_v1",
+    "price_volume_single_signal_signed_dollar_flow_persistence_20d_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Under the frozen v18 operational contract and whitelist-only source policy, which six Alpha158-style or literature-standardized atomic price-volume signals are most likely to pass composability hard-gate promotion?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "source_policy": {
+    "mode": "alpha158_paper_whitelist_only",
+    "whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json",
+    "notes": "Discovery intake is restricted to whitelist-approved literature/classic-definition sources."
+  },
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "This round is whitelist-only. Every candidate must map to an Alpha158-style atomic mechanism, a classic factor handbook definition, or a published academic paper mechanism, and must be implemented independently on this project's own data contracts.",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_amihud_illiquidity_20d_v1",
+        "field": "amihud_illiquidity_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower Amihud-style illiquidity indicates lower expected price impact per unit traded amount and potentially cleaner executable cross-sectional edge",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "Amihud2002:IlliquidityAndStockReturns",
+          "source_title": "Illiquidity and Stock Returns: Cross-Section and Time-Series Effects",
+          "source_locator": "Journal of Financial Markets (2002)",
+          "mechanism_mapping": "map return-to-amount price-impact intuition into a 20-day cross-sectional atomic illiquidity score",
+          "independent_implementation_note": "implemented with this project bars_daily_derived contracts only; no dependency on neighboring qlib adapters"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "liquidity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This encodes impact-per-flow efficiency rather than pure traded-amount level ranking.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_turnover_concentration_hhi_20d_v1",
+        "field": "turnover_concentration_hhi_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower turnover concentration implies more distributed participation across days and potentially more stable tradability quality",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:TurnoverDistribution:HHI20",
+          "source_title": "Alpha158-style turnover-distribution concentration extension",
+          "source_locator": "Alpha158 feature-family inspiration (distributional turnover atomics)",
+          "mechanism_mapping": "convert rolling turnover distribution concentration into a single 20-day atomic participation-stability signal",
+          "independent_implementation_note": "implemented independently in this project with native turnover fields; no external adapter dependency"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "turnover_stability_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Uses concentration structure (HHI-like) rather than simple dispersion level (stddev) over turnover.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_close_to_vwap_bias_20d_v1",
+        "field": "close_to_vwap_bias_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "persistent close-above-vwap tendency may capture session-end demand quality beyond simple close-location within daily range",
+        "source_provenance": {
+          "source_category": "classic_factor_handbook",
+          "source_id": "GrinoldKahn:ExecutionQuality:VWAPBias",
+          "source_title": "Active Portfolio Management execution-quality inspired price-volume signalization",
+          "source_locator": "Grinold and Kahn style execution-quality discussions",
+          "mechanism_mapping": "translate close-vs-vwap bias into a standardized rolling atomic quality signal",
+          "independent_implementation_note": "implemented with project-native OHLCV-derived proxies only; no qlib adapter usage"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Anchors to volume-weighted price benchmark, not intraday high-low close placement.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_intraday_range_skew_20d_v1",
+        "field": "intraday_range_skew_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower downside-skewed intraday range behavior may indicate healthier session microstructure and reduced downside dominance",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "MartensVanDijk2007:AsymmetricVolatilityMicrostructure",
+          "source_title": "Measuring Volatility with the Realized Range (asymmetry-oriented range intuition)",
+          "source_locator": "Journal of Econometrics (2007) range-based volatility literature",
+          "mechanism_mapping": "use asymmetric intraday range decomposition to derive a downside-vs-upside range skew atomic signal",
+          "independent_implementation_note": "implemented solely on this project price bars with rolling windows and no external adapters"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "upside_range_share_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Captures asymmetry/skew of range states rather than share of range contributed by up sessions.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_gap_reversal_intensity_20d_v1",
+        "field": "gap_reversal_intensity_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger post-gap reversal intensity may encode short-horizon mean-repair dynamics beyond simple gap-fill frequency",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "CooperCliffordGulen2008:OvernightReturnsAndReversals",
+          "source_title": "Return Differences Between Trading and Non-trading Hours (overnight/gap behavior literature)",
+          "source_locator": "Journal of Economics and Finance (overnight return decomposition literature)",
+          "mechanism_mapping": "map overnight gap behavior into a rolling intensity-of-repair signal rather than binary gap counts",
+          "independent_implementation_note": "implemented with project-native overnight/open-close path fields; no neighboring adapter stack involved"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "gap_fill_rate_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Focuses on magnitude/intensity of repair conditional on gaps, not fill frequency ratio alone.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_signed_dollar_flow_persistence_20d_v1",
+        "field": "signed_dollar_flow_persistence_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more persistent signed dollar-flow alignment may capture sustained participation pressure beyond one-window imbalance levels",
+        "source_provenance": {
+          "source_category": "classic_factor_handbook",
+          "source_id": "Hasbrouck2007:EmpiricalMarketMicrostructure:OrderFlowPersistence",
+          "source_title": "Empirical Market Microstructure order-flow persistence intuition",
+          "source_locator": "Market microstructure handbook/textbook treatment of signed flow persistence",
+          "mechanism_mapping": "translate signed flow serial dependence into a rolling 20-day persistence atomic signal",
+          "independent_implementation_note": "implemented independently from native amount/return series in this project; no external adapter linkage"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "signed_amount_imbalance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "Tests temporal persistence of signed flow rather than static net signed-flow ratio level.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later composability-screening or family-construction round.",
+    "non_promotion_rule": "A signal that shows negative or near-zero broad ordering, inverted decile structure, or clearly weaker head labels than both rank11_20 and tail labels should be rejected rather than rescued by later extraction or overlay tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, stability-cap, overlay, or family-composition changes inside this round."
+  ],
+  "notes": [
+    "This template is for future single-signal discovery rounds only.",
+    "Every signal_pool entry must include a dedup_note before preregistration may be considered valid.",
+    "This round is whitelist-only and every candidate must pass source_provenance intake checks."
+  ]
+}

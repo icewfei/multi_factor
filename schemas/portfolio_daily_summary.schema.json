@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/portfolio_daily_summary.schema.json",
+  "title": "Portfolio Daily Summary CSV",
+  "type": "object",
+  "required": [
+    "run_id",
+    "attempt_id",
+    "trade_date",
+    "cash_weight",
+    "invested_weight",
+    "max_single_name_weight",
+    "top3_weight",
+    "portfolio_herfindahl_index"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "trade_date": { "type": "string" },
+    "cash_weight": { "type": ["number", "null"] },
+    "invested_weight": { "type": ["number", "null"] },
+    "max_single_name_weight": { "type": ["number", "null"] },
+    "top3_weight": { "type": ["number", "null"] },
+    "portfolio_herfindahl_index": { "type": ["number", "null"] },
+    "industry_active_weight_max": { "type": ["number", "null"] }
+  }
+}

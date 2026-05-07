@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-04-18T23:29:34.690177+08:00",
+  "candidate_scheme_id": "baseline_momentum_v10_broadened_head_extraction",
+  "research_round_id": "rr_baseline_broadened_head_extraction_20260418",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "comparison_type": "v10_vs_recalibrated_v7",
+  "v7": {
+    "run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.06976572569304007,
+    "relative_ir": -0.5287021621315882,
+    "max_drawdown": -0.3968114993586318,
+    "avg_cash_weight": 0.7919965084907071,
+    "avg_invested_weight": 0.2080034915092814,
+    "avg_turnover_daily": 0.09811299793683326,
+    "low_liquidity_weight_share": 0.020450724262800736,
+    "low_liquidity_alpha_contribution_share": -0.10314096828107921,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "v10": {
+    "run_id": "fullchain_baseline_broadened_head_extraction_20260418_2315",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.07471328652425968,
+    "relative_ir": -0.5459650706492235,
+    "max_drawdown": -0.46671521676960637,
+    "avg_cash_weight": 0.7897164952171881,
+    "avg_invested_weight": 0.21028350478278765,
+    "avg_turnover_daily": 0.09800089451890538,
+    "low_liquidity_weight_share": 0.018468220594597382,
+    "low_liquidity_alpha_contribution_share": -0.21052369108344718,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "deltas": {
+    "annual_relative_return_delta": -0.004947560831219611,
+    "relative_ir_delta": -0.017262908517635345,
+    "max_drawdown_delta": -0.06990371741097456,
+    "avg_cash_weight_delta": -0.0022800132735190104,
+    "avg_invested_weight_delta": 0.002280013273506243,
+    "avg_turnover_daily_delta": -0.00011210341792787515,
+    "low_liquidity_weight_share_delta": -0.001982503668203354,
+    "low_liquidity_alpha_contribution_share_delta": -0.10738272280236796
+  },
+  "decision": {
+    "status": "weak_candidate",
+    "reason": "broadened-head rank-decay extraction worsened relative return, IR, drawdown, and cost-stress outcome while leaving perturbation and cost-stress audit gates unresolved"
+  }
+}

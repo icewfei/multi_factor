@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "exploratory_pr_mom_ind_neut_v1",
+  "run_id": "exploratory_pr_mom_ind_neut_v1",
+  "attempt_id": "attempt_20260507_114212",
+  "generated_at": "2026-05-07T11:44:27.292319+08:00",
+  "candidate_scheme_id": "pr_mom_ind_neut_v1",
+  "research_round_id": "rr_exploratory_neutralization_20260506",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.043256282617032626,
+      "relative_ir": -0.3931755507582717
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.04167428830358244,
+      "relative_ir": -0.3879302415596598
+    }
+  ]
+}

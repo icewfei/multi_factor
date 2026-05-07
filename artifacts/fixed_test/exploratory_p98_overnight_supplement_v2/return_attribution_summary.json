@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_p98_overnight_supplement_v2",
+  "run_id": "exploratory_p98_overnight_supplement_v2",
+  "attempt_id": "attempt_20260506_141738",
+  "generated_at": "2026-05-06T14:19:58.961431+08:00",
+  "candidate_scheme_id": "p98_overnight_supplement_v2",
+  "research_round_id": "rr_exploratory_overnight_intraday_decomposition_20260506",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -2.186231551560802,
+  "selection_alpha_total": 1.0909283252821755,
+  "low_liquidity_contribution_total": 0.17297975421291908
+}

@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_refresh_c1_retain15",
+  "run_id": "exploratory_refresh_c1_retain15",
+  "attempt_id": "attempt_20260501_180653",
+  "generated_at": "2026-05-01T18:09:53.083155+08:00",
+  "candidate_scheme_id": "exploratory_refresh_c1_retain15",
+  "research_round_id": "rr_exploratory_refresh_rule_turnover_reduction_20260501",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -0.58791793289467,
+  "selection_alpha_total": 3.07025814021009,
+  "low_liquidity_contribution_total": -0.2013601078924496
+}

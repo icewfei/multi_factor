@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "walk_forward_fixed_test_alpha158_vsumd60_v1_full_20260430",
+  "run_id": "walk_forward_alpha158_vsumd60_v1_full_20260430",
+  "attempt_id": "attempt_20260430_123709",
+  "generated_at": "2026-04-30T12:41:53.623727+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "research_round_id": "rr_walk_forward_alpha158_vsumd60_v1_20260430",
+  "benchmark_contribution_total": 2.7944407238618854,
+  "cash_drag_total": -2.3404400056427925,
+  "selection_alpha_total": 0.9464936910653542,
+  "low_liquidity_contribution_total": 0.03183591328593535
+}

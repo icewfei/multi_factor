@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "fullchain_challenger_momentum_only_20260418_1140",
+  "run_id": "fullchain_challenger_momentum_only_20260418_1140",
+  "attempt_id": "attempt_challenger_momentum_only_20260418_1145",
+  "generated_at": "2026-04-18T11:42:24.301349+08:00",
+  "candidate_scheme_id": "baseline_momentum_v4",
+  "research_round_id": "rr_baseline_challenger_drop_reversal_20260418",
+  "benchmark_contribution_total": 2.794440723861887,
+  "cash_drag_total": -2.467269619455159,
+  "selection_alpha_total": 0.16927952543418423,
+  "low_liquidity_contribution_total": 0.35792202143761076
+}

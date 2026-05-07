@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-18T16:00:00+08:00",
+  "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v6_liquidity_guard",
+  "challenger_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "engineering_comparison": {
+    "baseline_chunk_size": 10,
+    "challenger_chunk_size": 5,
+    "baseline_run_state_seconds": 283,
+    "challenger_run_state_seconds": 277,
+    "observation": "chunk=5 was slightly faster than chunk=10 on this hardware, but this remains an engineering-only observation."
+  },
+  "metric_comparison": {
+    "annual_relative_return": {
+      "baseline_v6": -0.059511790057631075,
+      "challenger_v7": -0.05294782486017935,
+      "delta_v7_minus_v6": 0.006563965197451727
+    },
+    "relative_ir": {
+      "baseline_v6": -0.4176218082797441,
+      "challenger_v7": -0.3851253891565567,
+      "delta_v7_minus_v6": 0.0324964191231874
+    },
+    "max_drawdown": {
+      "baseline_v6": -0.42557913557665905,
+      "challenger_v7": -0.4235167178426035,
+      "delta_v7_minus_v6": 0.002062417734055577
+    },
+    "avg_cash_weight": {
+      "baseline_v6": 0.8618652441240506,
+      "challenger_v7": 0.8626331713859813,
+      "delta_v7_minus_v6": 0.0007679272619306454
+    },
+    "avg_invested_weight": {
+      "baseline_v6": 0.1381347558759223,
+      "challenger_v7": 0.13736682861399285,
+      "delta_v7_minus_v6": -0.0007679272619294519
+    },
+    "low_liquidity_weight_share": {
+      "baseline_v6": 1.0,
+      "challenger_v7": 1.0,
+      "delta_v7_minus_v6": 0.0
+    },
+    "low_liquidity_alpha_contribution_share": {
+      "baseline_v6": 0.6718847934375032,
+      "challenger_v7": 0.5990868057974615,
+      "delta_v7_minus_v6": -0.07279798764004164
+    },
+    "cost_stress_annual_relative_return": {
+      "baseline_v6": -0.08839970720376789,
+      "challenger_v7": -0.08199613759429958,
+      "delta_v7_minus_v6": 0.006403569609468307
+    }
+  },
+  "audit_gate_comparison": {
+    "baseline_v6": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    },
+    "challenger_v7": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    }
+  },
+  "conclusion": [
+    "Stronger liquidity guard at 0.70 improved annual_relative_return, relative_ir, max_drawdown, and low_liquidity_alpha_contribution_share versus v6.",
+    "The stronger guard did not reduce low_liquidity_weight_share, which remained at 1.0.",
+    "The challenger still failed the low-liquidity, TopK perturbation, and cost stress audit gates, so it remains a weak_candidate.",
+    "This round does not justify promotion, but it supports continuing guard-line research over reverting to unrestricted v4-style ranking."
+  ]
+}

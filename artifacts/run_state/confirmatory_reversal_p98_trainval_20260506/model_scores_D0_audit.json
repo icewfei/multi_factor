@@ -1,0 +1,19 @@
+{
+  "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "score_builder": "build_reversal_tail_composite_model_scores.py",
+  "source_runs": {
+    "reversal_source_run_id": "exploratory_cross_horizon_c1_reversal_only",
+    "cord30_source_run_id": "confirmatory_cord30_trainval_20260429"
+  },
+  "tail_handling_rule": "negate reversal score; exclude rows with raw negated score strictly above daily p98",
+  "summary_counts": {
+    "total_rows": 11198074,
+    "ranking_eligible_rows": 10780956,
+    "scored_rows": 10558258
+  },
+  "score_distribution": {
+    "avg_score": 0.5000000000000007,
+    "min_score": 0.0,
+    "max_score": 1.0
+  }
+}

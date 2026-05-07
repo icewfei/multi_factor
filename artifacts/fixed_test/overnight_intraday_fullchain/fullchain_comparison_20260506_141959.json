@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-05-06T14:19:59+08:00",
+  "code_hash": "c685d42d69cb2a1705380a68420cde467d61fb9df3d2e46afc09cabd0c24a1fa",
+  "p98_baseline": {
+    "validation": {
+      "generated_at": "2026-05-06T11:51:07+08:00",
+      "fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+      "run_id": "confirmatory_reversal_p98_trainval_20260506",
+      "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+      "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+      "snapshot_id": "warehouse_20260429_trainval_20211231",
+      "window_name": "validation",
+      "validation_start": "20190101",
+      "validation_end": "20211231",
+      "n_days": 730,
+      "total_return": 7.97983908660302,
+      "annualized_return": 1.133406079643815,
+      "benchmark_total_return": 0.8229886126869008,
+      "annual_relative_return": -0.12930687130266572,
+      "effective_relative_days": 730,
+      "positive_relative_days": 337,
+      "relative_ir": -1.0938458513364646,
+      "daily_volatility": 0.005254267938294381,
+      "annualized_volatility": 0.08340891771856203,
+      "sharpe_ratio": 13.588547971191144,
+      "max_drawdown": -0.08670322630336491,
+      "avg_cash_weight": 0.7489897260273958,
+      "avg_invested_weight": 0.25101027397260206,
+      "avg_turnover_daily": 0.12445205479452054,
+      "rebalance_days": 730
+    },
+    "cost_stress": {
+      "fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+      "run_id": "confirmatory_reversal_p98_trainval_20260506",
+      "attempt_id": "attempt_20260506_114831",
+      "generated_at": "2026-05-06T11:51:06.989436+08:00",
+      "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+      "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+      "stress_open_bp": 20.0,
+      "stress_close_bp": 20.0,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.06099311114942729,
+      "pass_cost_stress_relative_return_floor": false
+    }
+  },
+  "candidates": {
+    "exploratory_overnight_intraday_mom_ew_v2": {
+      "scheme_id": "overnight_intraday_mom_ew_v2",
+      "description": "Overnight+Intraday momentum equal-weight, no tail handling",
+      "annual_relative_return": -0.2525150513589546,
+      "max_drawdown": -0.2960442843360809,
+      "sharpe_ratio": 2.2438003886600515,
+      "relative_ir": -1.9442461881276452,
+      "avg_turnover_daily": 0.09035491905354996,
+      "avg_invested_weight": 0.18803860523038687,
+      "total_return": 0.5278185228646184,
+      "cost_stress_annual_relative_return": -0.13176845170558715
+    },
+    "exploratory_intraday_mom_5d_v1": {
+      "scheme_id": "intraday_mom_5d_v1",
+      "description": "Pure intraday momentum 5d, no tail handling",
+      "annual_relative_return": -0.22818399136459655,
+      "max_drawdown": -0.1930538289666308,
+      "sharpe_ratio": 3.079887439980542,
+      "relative_ir": -1.7500674627783706,
+      "avg_turnover_daily": 0.0903860523038614,
+      "avg_invested_weight": 0.18855541718555427,
+      "total_return": 0.7441530373024785,
+      "cost_stress_annual_relative_return": -0.12331294468845866
+    },
+    "exploratory_p98_overnight_supplement_v2": {
+      "scheme_id": "p98_overnight_supplement_v2",
+      "description": "p98 + 10% overnight momentum (closest to p98 IC)",
+      "annual_relative_return": -0.1694591241319623,
+      "max_drawdown": -0.08946753308891287,
+      "sharpe_ratio": 10.378278080289666,
+      "relative_ir": -1.3311023493019596,
+      "avg_turnover_daily": 0.10468637346791766,
+      "avg_invested_weight": 0.21209084354722543,
+      "total_return": 3.8954812933293406,
+      "cost_stress_annual_relative_return": -0.0822344233349267
+    }
+  }
+}

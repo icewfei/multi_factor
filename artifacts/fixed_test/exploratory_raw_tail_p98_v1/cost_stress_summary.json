@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_raw_tail_p98_v1",
+  "run_id": "exploratory_raw_tail_p98_v1",
+  "attempt_id": "attempt_20260507_120236",
+  "generated_at": "2026-05-07T12:05:11.957335+08:00",
+  "candidate_scheme_id": "raw_tail_p98_v1",
+  "research_round_id": "rr_exploratory_neut_tail_combo_20260506",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.06099311114942729,
+  "pass_cost_stress_relative_return_floor": false
+}

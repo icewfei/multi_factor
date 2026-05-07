@@ -1,0 +1,50 @@
+{
+  "as_of_date": "20260428",
+  "policy_mode": "alpha158_paper_whitelist_only",
+  "pool_id": "alpha158_atomic_pool_v1",
+  "status": "historical_superseded_boundary",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "tested_round_ids": [
+    "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+    "rr_price_volume_single_signal_discovery_v18_round10_alpha158_paper_whitelist_20260428"
+  ],
+  "tested_candidate_scheme_ids": [
+    "price_volume_single_signal_price_volume_corr_20d_v1",
+    "price_volume_single_signal_turnover_mean_reversion_gap_5_20_v1",
+    "price_volume_single_signal_volume_momentum_5_20_v1",
+    "price_volume_single_signal_close_to_high_ratio_20d_v1",
+    "price_volume_single_signal_upper_shadow_pressure_20d_v1",
+    "price_volume_single_signal_path_efficiency_60d_v1",
+    "price_volume_single_signal_breakout_distance_20d_v1",
+    "price_volume_single_signal_breakdown_distance_20d_v1",
+    "price_volume_single_signal_range_compression_5_20_v1",
+    "price_volume_single_signal_downside_recovery_strength_10d_v1",
+    "price_volume_single_signal_amihud_illiquidity_20d_v1",
+    "price_volume_single_signal_turnover_concentration_hhi_20d_v1",
+    "price_volume_single_signal_close_to_vwap_bias_20d_v1",
+    "price_volume_single_signal_intraday_range_skew_20d_v1",
+    "price_volume_single_signal_gap_reversal_intensity_20d_v1",
+    "price_volume_single_signal_signed_dollar_flow_persistence_20d_v1"
+  ],
+  "remaining_untested_candidate_scheme_ids_assigned_to_round11": [
+    "price_volume_single_signal_price_volume_beta_20d_v1",
+    "price_volume_single_signal_price_volume_rank_corr_20d_v1",
+    "price_volume_single_signal_turnover_entropy_20d_v1",
+    "price_volume_single_signal_candle_body_efficiency_20d_v1",
+    "price_volume_single_signal_upper_lower_shadow_asymmetry_20d_v1",
+    "price_volume_single_signal_gap_to_range_ratio_20d_v1",
+    "price_volume_single_signal_close_position_stability_20d_v1",
+    "price_volume_single_signal_rolling_vwap_distance_20d_v1",
+    "price_volume_single_signal_downside_range_convexity_20d_v1",
+    "price_volume_single_signal_updown_volume_balance_persistence_20d_v1",
+    "price_volume_single_signal_intraday_path_curvature_20d_v1",
+    "price_volume_single_signal_liquidity_shock_recovery_ratio_20d_v1"
+  ],
+  "counts": {
+    "tested": 16,
+    "remaining_assigned_to_round11_under_old_boundary": 12,
+    "total_pool_v1": 28
+  },
+  "superseded_by_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+  "note": "This file is preserved only as a historical record of the earlier alpha158_atomic_pool_v1 governance boundary. It is no longer the active definition of 'full Alpha158' for round11/11b."
+}

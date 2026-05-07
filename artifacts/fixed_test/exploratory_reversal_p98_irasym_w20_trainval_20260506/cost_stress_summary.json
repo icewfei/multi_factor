@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_irasym_w20_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_irasym_w20_trainval_20260506",
+  "attempt_id": "attempt_20260506_130137",
+  "generated_at": "2026-05-06T13:04:24.563349+08:00",
+  "candidate_scheme_id": "reversal_p98_intraday_reversal_asymmetry_w20_v1",
+  "research_round_id": "rr_exploratory_reversal_irasym_w20_20260506",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.04339224125223251,
+  "pass_cost_stress_relative_return_floor": false
+}

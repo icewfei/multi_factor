@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_cohort5_c1_trendbias_only",
+  "run_id": "exploratory_cohort5_c1_trendbias_only",
+  "attempt_id": "attempt_20260501_125655",
+  "generated_at": "2026-05-01T12:59:56.271366+08:00",
+  "candidate_scheme_id": "exploratory_cohort5_c1_trendbias_only",
+  "research_round_id": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+  "low_liquidity_holding_count": 6195,
+  "low_liquidity_weight_total": 123.89999999999799,
+  "low_liquidity_weight_share": 0.11933886844791548,
+  "low_liquidity_contribution_total": -0.14441175302589676,
+  "low_liquidity_contribution_share_of_strategy": -0.029449046919493647,
+  "low_liquidity_alpha_contribution_share": -0.003691691592791885,
+  "flag_high_low_liquidity_exposure": false
+}

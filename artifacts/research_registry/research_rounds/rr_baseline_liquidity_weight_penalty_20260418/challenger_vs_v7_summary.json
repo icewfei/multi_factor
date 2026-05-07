@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-18T17:50:00+08:00",
+  "research_round_id": "rr_baseline_liquidity_weight_penalty_20260418",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "challenger_candidate_scheme_id": "baseline_momentum_v9_liquidity_weight_penalty",
+  "engineering_comparison": {
+    "baseline_chunk_size": 5,
+    "challenger_chunk_size": 5,
+    "baseline_run_state_seconds": 277,
+    "challenger_run_state_seconds": 276,
+    "observation": "chunk=5 remained a stable engineering baseline. The v9 run-state timing was essentially the same as v7, so this round did not add any new engineering advantage."
+  },
+  "metric_comparison": {
+    "annual_relative_return": {
+      "baseline_v7": -0.05294782486017935,
+      "challenger_v9": -0.05414005662956023,
+      "delta_v9_minus_v7": -0.00119223176938088
+    },
+    "relative_ir": {
+      "baseline_v7": -0.3851253891565567,
+      "challenger_v9": -0.3902817392130901,
+      "delta_v9_minus_v7": -0.005156350056533424
+    },
+    "max_drawdown": {
+      "baseline_v7": -0.4235167178426035,
+      "challenger_v9": -0.43893863837641633,
+      "delta_v9_minus_v7": -0.015421920533812843
+    },
+    "avg_cash_weight": {
+      "baseline_v7": 0.8626331713859813,
+      "challenger_v9": 0.8626722213458028,
+      "delta_v9_minus_v7": 3.904995982156302e-05
+    },
+    "avg_invested_weight": {
+      "baseline_v7": 0.13736682861399285,
+      "challenger_v9": 0.13732777865418724,
+      "delta_v9_minus_v7": -3.904995980560291e-05
+    },
+    "low_liquidity_weight_share": {
+      "baseline_v7": 1.0,
+      "challenger_v9": 1.0,
+      "delta_v9_minus_v7": 0.0
+    },
+    "low_liquidity_alpha_contribution_share": {
+      "baseline_v7": 0.5990868057974615,
+      "challenger_v9": 0.6079734162653377,
+      "delta_v9_minus_v7": 0.0088866104678762
+    },
+    "cost_stress_annual_relative_return": {
+      "baseline_v7": -0.08199613759429958,
+      "challenger_v9": -0.08312228533102628,
+      "delta_v9_minus_v7": -0.0011261477367267032
+    }
+  },
+  "audit_gate_comparison": {
+    "baseline_v7": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    },
+    "challenger_v9": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    }
+  },
+  "conclusion": [
+    "Applying one fixed liquidity-sensitive weight penalty on top of the frozen v7 selection contract did not solve the core audit failures.",
+    "The challenger slightly worsened annual_relative_return, relative_ir, drawdown, and low-liquidity alpha contribution share versus v7.",
+    "low_liquidity_weight_share remained at 1.0, which indicates that reweighting inside the same TopK did not materially change the strategy's dependence on low-liquidity names.",
+    "Because chunk size stayed at 5 in both runs, this round should be interpreted purely as a strategy comparison, not as a new engineering benchmark."
+  ]
+}

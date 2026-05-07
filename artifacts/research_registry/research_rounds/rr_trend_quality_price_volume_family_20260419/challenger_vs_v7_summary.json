@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-04-19T11:10:46.209228+08:00",
+  "candidate_scheme_id": "trend_quality_price_volume_v14_core",
+  "research_round_id": "rr_trend_quality_price_volume_family_20260419",
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "comparison_type": "v14_vs_recalibrated_v7",
+  "v7": {
+    "run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.06976572569304007,
+    "relative_ir": -0.5287021621315882,
+    "max_drawdown": -0.3968114993586318,
+    "avg_cash_weight": 0.7919965084907071,
+    "avg_invested_weight": 0.2080034915092814,
+    "avg_turnover_daily": 0.09811299793683326,
+    "low_liquidity_weight_share": 0.020450724262800736,
+    "low_liquidity_alpha_contribution_share": -0.10314096828107921,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "v14": {
+    "run_id": "fullchain_trend_quality_price_volume_core_20260419_1100",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.07463742598103296,
+    "relative_ir": -0.5548687053768694,
+    "max_drawdown": -0.34604420978449535,
+    "avg_cash_weight": 0.8105474556889495,
+    "avg_invested_weight": 0.1894525443110353,
+    "avg_turnover_daily": 0.08908018867924695,
+    "low_liquidity_weight_share": 0.02116300322254499,
+    "low_liquidity_alpha_contribution_share": -0.06091791666049554,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "deltas": {
+    "annual_relative_return_delta": -0.004871700287992886,
+    "relative_ir_delta": -0.026166543245281226,
+    "max_drawdown_delta": 0.050767289574136454,
+    "avg_cash_weight_delta": 0.01855094719824235,
+    "avg_invested_weight_delta": -0.0185509471982461,
+    "avg_turnover_daily_delta": -0.009032809257586302,
+    "low_liquidity_weight_share_delta": 0.000712278959744253,
+    "low_liquidity_alpha_contribution_share_delta": 0.04222305162058367
+  },
+  "decision": {
+    "status": "weak_candidate",
+    "reason": "trend-quality price/volume core modestly improved drawdown and turnover but still worsened annual relative return and relative IR versus recalibrated v7 while perturbation and cost-stress gates remained failing"
+  }
+}

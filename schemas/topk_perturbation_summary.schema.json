@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/topk_perturbation_summary.schema.json",
+  "title": "TopK Perturbation Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "perturbations"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "benchmark_code": { "type": ["string", "null"] },
+    "benchmark_name": { "type": ["string", "null"] },
+    "statistics_definition": { "type": "string" },
+    "perturbations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "topk",
+          "effective_relative_days",
+          "annual_relative_return",
+          "relative_ir"
+        ],
+        "properties": {
+          "topk": { "type": "integer" },
+          "effective_relative_days": { "type": "integer" },
+          "annual_relative_return": { "type": ["number", "null"] },
+          "relative_ir": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_broadened_head_extraction_20260418_2315",
+  "run_id": "fullchain_baseline_broadened_head_extraction_20260418_2315",
+  "attempt_id": "attempt_20260418_232405",
+  "generated_at": "2026-04-18T23:29:37.988736+08:00",
+  "candidate_scheme_id": "baseline_momentum_v10_broadened_head_extraction",
+  "research_round_id": "rr_baseline_broadened_head_extraction_20260418",
+  "benchmark_contribution_total": 2.794440723861887,
+  "cash_drag_total": -2.3248895388600683,
+  "selection_alpha_total": 0.14407310407546797,
+  "low_liquidity_contribution_total": -0.04137846445231089
+}

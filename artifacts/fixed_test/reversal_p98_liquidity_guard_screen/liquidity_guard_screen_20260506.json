@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-05-06T12:46:45+08:00",
+  "results": [
+    {
+      "liquidity_threshold": 0.55,
+      "median_daily_ic": 0.042475405486994675,
+      "mean_daily_ic": 0.045878228701963765,
+      "n_days": 5322,
+      "top10_avg_label": 0.006461994862677225,
+      "bot10_avg_label": -0.0020727855586403407,
+      "top10_bot10_spread": 0.008534780421317566,
+      "top10_avg_liquidity_rank": 0.7974781107101054,
+      "avg_daily_rows": 868.4545283727922
+    },
+    {
+      "liquidity_threshold": 0.6,
+      "median_daily_ic": 0.04236784100929537,
+      "mean_daily_ic": 0.045552782396480876,
+      "n_days": 5322,
+      "top10_avg_label": 0.006408312468644325,
+      "bot10_avg_label": -0.0018750817478063657,
+      "top10_bot10_spread": 0.00828339421645069,
+      "top10_avg_liquidity_rank": 0.8174271847242954,
+      "avg_daily_rows": 770.9607290492296
+    },
+    {
+      "liquidity_threshold": 0.65,
+      "median_daily_ic": 0.042802602254600745,
+      "mean_daily_ic": 0.04549009811137852,
+      "n_days": 5322,
+      "top10_avg_label": 0.006252381630105689,
+      "bot10_avg_label": -0.001997378286993847,
+      "top10_bot10_spread": 0.008249759917099536,
+      "top10_avg_liquidity_rank": 0.837830156145933,
+      "avg_daily_rows": 673.5886884629839
+    },
+    {
+      "liquidity_threshold": 0.7,
+      "median_daily_ic": 0.04342567729732291,
+      "mean_daily_ic": 0.04574721848118539,
+      "n_days": 5322,
+      "top10_avg_label": 0.006066206331826989,
+      "bot10_avg_label": -0.0017780366494248672,
+      "top10_bot10_spread": 0.007844242981251855,
+      "top10_avg_liquidity_rank": 0.8588023384903488,
+      "avg_daily_rows": 576.5095828635851
+    }
+  ],
+  "preferred_followup": null
+}

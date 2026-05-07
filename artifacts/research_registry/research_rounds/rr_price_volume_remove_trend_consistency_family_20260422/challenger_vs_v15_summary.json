@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-04-22T14:05:20+08:00",
+  "reference_candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+  "challenger_candidate_scheme_id": "price_volume_v16_remove_trend_consistency",
+  "reference_run_id": "fullchain_price_volume_trend_liquidity_improvement_core_20260422_100611",
+  "challenger_run_id": "fullchain_price_volume_remove_trend_consistency_20260422_135614",
+  "summary_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.05491140825491203,
+      "challenger": -0.05889061355032099,
+      "delta": -0.003979205295408961
+    },
+    "relative_ir": {
+      "reference": -0.41193817996353127,
+      "challenger": -0.4267481179417596,
+      "delta": -0.014809937978228327
+    },
+    "max_drawdown": {
+      "reference": -0.48751594951872457,
+      "challenger": -0.40370233923872245,
+      "delta": 0.08381361028000212
+    },
+    "avg_cash_weight": {
+      "reference": 0.8119678152377275,
+      "challenger": 0.841918254733673,
+      "delta": 0.029950439495945447
+    },
+    "avg_invested_weight": {
+      "reference": 0.18803218476225964,
+      "challenger": 0.15808174526631844,
+      "delta": -0.0299504394959412
+    },
+    "avg_turnover_daily": {
+      "reference": 0.08846736505123712,
+      "challenger": 0.07405234822311478,
+      "delta": -0.014415016828122337
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.1593236714975641,
+      "challenger": 0.1501594293415469,
+      "delta": -0.009164242156017188
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    }
+  },
+  "conclusion": "Removing trend_consistency_20d_raw improved annual_relative_return, relative_ir, max_drawdown, turnover, and low_liquidity_weight_share versus v15, but the two-signal family still failed both TopK perturbation and cost-stress audit gates, so it remains a weak_candidate."
+}

@@ -1,0 +1,27 @@
+{
+  "as_of_date": "20260428",
+  "controller_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+  "policy": {
+    "serial_only": true,
+    "family_reopen_blocked": true
+  },
+  "batch_progress": {
+    "completed_batches": [
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428"
+    ],
+    "completed_candidate_count": 36,
+    "remaining_candidate_count": 106
+  },
+  "batch03_summary": {
+    "signal_edge_positive_count": 1,
+    "signal_edge_mixed_count": 6,
+    "signal_edge_negative_count": 5,
+    "new_clean_positive_keepers": [
+      "price_volume_single_signal_alpha158_full_019_v1"
+    ],
+    "note": "Despite positives, controller policy keeps family reopening blocked until serial-only full158 execution stage criteria are met."
+  },
+  "next_step": "open and run round11b batch04 under the same whitelist-only serial policy"
+}

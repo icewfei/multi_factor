@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_amount_shock_gated_overlay_20260424_2345",
+  "run_id": "fullchain_price_volume_amount_shock_gated_overlay_20260424_2345",
+  "attempt_id": "attempt_20260424_235042",
+  "generated_at": "2026-04-24T23:56:35.199356+08:00",
+  "candidate_scheme_id": "price_volume_v23_amount_shock_gated_overlay",
+  "research_round_id": "rr_price_volume_amount_shock_gated_overlay_family_20260424",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.08949613420654645,
+  "pass_cost_stress_relative_return_floor": false
+}

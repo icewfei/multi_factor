@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_pr_mom_raw_v1",
+  "run_id": "exploratory_pr_mom_raw_v1",
+  "attempt_id": "attempt_20260507_114717",
+  "generated_at": "2026-05-07T11:50:02.456085+08:00",
+  "candidate_scheme_id": "pr_mom_raw_v1",
+  "research_round_id": "rr_exploratory_neutralization_20260506",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.34555397768589,
+  "selection_alpha_total": -1.1112278875135637,
+  "low_liquidity_contribution_total": -0.8544633998265927
+}

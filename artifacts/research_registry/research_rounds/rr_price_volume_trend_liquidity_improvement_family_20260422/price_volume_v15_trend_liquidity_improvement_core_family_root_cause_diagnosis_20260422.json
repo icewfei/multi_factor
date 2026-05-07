@@ -1,0 +1,206 @@
+{
+  "generated_at": "2026-04-22T13:37:49.105023+08:00",
+  "candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+  "reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_round_id": "rr_price_volume_trend_liquidity_improvement_family_20260422",
+  "as_of_date": "20260422",
+  "signal_layer": {
+    "challenger": {
+      "candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+      "research_round_id": "rr_price_volume_trend_liquidity_improvement_family_20260422",
+      "as_of_date": "2026-04-22",
+      "coverage": {
+        "ranking_eligible_rows": 15233701,
+        "null_score_rows": 0,
+        "null_score_share": 0.0,
+        "scored_with_label_rows": 15022019
+      },
+      "ic_readout": {
+        "full_sample_corr_ic": 0.011768924640879877,
+        "avg_daily_ic": 0.018551461136000705,
+        "median_daily_ic": 0.01768748990928796,
+        "positive_daily_ic_share": 0.555153422501967
+      },
+      "decile_monotonicity": {
+        "1": 0.004873098891666331,
+        "2": 0.004427875133623909,
+        "3": 0.0042215664825502805,
+        "4": 0.004223981933053738,
+        "5": 0.004229956991671383,
+        "6": 0.004194446437908319,
+        "7": 0.0038346100883551197,
+        "8": 0.003533841167259388,
+        "9": 0.0031863175327558036,
+        "10": 0.0013862575555069442
+      },
+      "top_slice_readout": {
+        "avg_label_top10": 0.00498648837645828,
+        "avg_label_rank11_20": 0.005825694982035691,
+        "avg_label_bottom10": -0.0014227158336980706,
+        "top10_minus_rank11_20": -0.0008392066055774106,
+        "top10_minus_bottom10": 0.006409204210156351
+      },
+      "cutoff_gap": {
+        "avg_rank10_11_score_gap": 0.0029281322773605655,
+        "median_rank10_11_score_gap": 0.0019386578028099954,
+        "days_with_both_ranks": 6362,
+        "days_gap_lt_0_005": 5219,
+        "days_gap_lt_0_001": 1891
+      }
+    },
+    "reference": {
+      "generated_at": "2026-04-18T23:05:00+08:00",
+      "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+      "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+      "diagnosis_scope": "recalibrated momentum-only score edge diagnosis",
+      "score_coverage": {
+        "ranking_eligible_rows": 15233701,
+        "null_score_rows": 135887,
+        "null_score_share": 0.008920156697312097,
+        "score_min": 0.0,
+        "score_max": 1.0,
+        "score_avg": 0.5000000000000008,
+        "score_std": 0.2887956797226698
+      },
+      "signal_quality": {
+        "full_sample_corr_ic": 0.009757764048797732,
+        "avg_daily_ic": 0.013398272056083634,
+        "median_daily_ic": 0.007709789498289401,
+        "positive_daily_ic_share": 0.5235901509134233
+      },
+      "decile_monotonicity": {
+        "avg_label_by_decile_desc": {
+          "1": 0.0047239707558488,
+          "2": 0.004350692934385826,
+          "3": 0.004217785148202268,
+          "4": 0.004079258568130087,
+          "5": 0.003996898569728819,
+          "6": 0.003952909391310392,
+          "7": 0.003710839085062981,
+          "8": 0.003496632028356796,
+          "9": 0.0028843536960032057,
+          "10": 0.0020916209814684883
+        },
+        "interpretation": "there is broad monotonic decline from top decile to bottom decile, so the score is not random; however the slope is shallow"
+      },
+      "top_bucket_readout": {
+        "avg_label_top10": 0.004281878956130948,
+        "avg_label_rank11_20": 0.0054826373536042425,
+        "avg_label_bottom10": 0.0018203998202666303,
+        "top10_minus_rank11_20": -0.001200758397473294,
+        "top10_minus_bottom10": 0.002461479135864317,
+        "interpretation": "the top 10 names beat the bottom 10, but the next 10 names outperform the top 10; this points to weak edge concentration and noisy cutoff behavior at the extreme head of the ranking"
+      },
+      "conclusion": [
+        "The calibrated momentum-only score still has a real but weak positive signal, as shown by positive IC and decile monotonicity.",
+        "The edge is not concentrated cleanly in the top 10 names; rank 11-20 performs better on average than rank 1-10.",
+        "This supports the view that the strategy is failing because the gross edge is thin and the current TopK mapping is extracting a noisy extreme slice of the score rather than a robust high-conviction bucket.",
+        "Future candidate design should prefer one-dimensional tests that change score-to-portfolio mapping or top-of-book selection geometry, not more liquidity-guard tweaks."
+      ]
+    },
+    "judgement": "challenger signal edge is stronger than calibrated v7 at broad ordering level, but the top slice remains fragile because rank 11-20 still beats rank 1-10."
+  },
+  "selection_layer": {
+    "topk_overlap_with_reference": {
+      "signal_dates": 6362,
+      "avg_overlap_count": 0.6042125117887457,
+      "median_overlap_count": 0.0,
+      "avg_overlap_share_of_smaller_topk": 0.060996509044747814,
+      "zero_overlap_days": 3661,
+      "zero_overlap_day_share": 0.5754479723357435
+    },
+    "challenger_topk_cutoff_gap": {
+      "avg_rank10_11_score_gap": 0.0029281322773605655,
+      "median_rank10_11_score_gap": 0.0019386578028099954,
+      "days_with_both_ranks": 6362,
+      "days_gap_lt_0_005": 5219,
+      "days_gap_lt_0_001": 1891
+    },
+    "reference_topk_cutoff_gap": {},
+    "judgement": "The challenger materially changes the selected basket relative to v7 while still operating in a thin-cutoff regime; this helps explain why relative return can improve yet perturbation robustness still fails."
+  },
+  "fixed_test_layer": {
+    "challenger_metrics": {
+      "annual_relative_return": -0.05491140825491203,
+      "relative_ir": -0.41193817996353127,
+      "max_drawdown": -0.48751594951872457,
+      "avg_cash_weight": 0.8119678152377275,
+      "avg_invested_weight": 0.18803218476225964,
+      "avg_turnover_daily": 0.08846736505123712
+    },
+    "reference_metrics": {
+      "annual_relative_return": -0.06976572569304007,
+      "relative_ir": -0.5287021621315882,
+      "max_drawdown": -0.3968114993586318,
+      "avg_cash_weight": 0.7919965084907071,
+      "avg_invested_weight": 0.2080034915092814,
+      "avg_turnover_daily": 0.09811299793683326
+    },
+    "challenger_low_liquidity": {
+      "fixed_test_run_id": "fullchain_price_volume_trend_liquidity_improvement_core_20260422_100611",
+      "run_id": "fullchain_price_volume_trend_liquidity_improvement_core_20260422_100611",
+      "attempt_id": "attempt_20260422_100724",
+      "generated_at": "2026-04-22T10:13:19.827457+08:00",
+      "candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+      "research_round_id": "rr_price_volume_trend_liquidity_improvement_family_20260422",
+      "low_liquidity_holding_count": 9894,
+      "low_liquidity_weight_total": 44.972727272728186,
+      "low_liquidity_weight_share": 0.1593236714975641,
+      "low_liquidity_contribution_total": -0.23636080873332985,
+      "low_liquidity_contribution_share_of_strategy": -0.22346227769573465,
+      "low_liquidity_alpha_contribution_share": -0.14260360061850189,
+      "flag_high_low_liquidity_exposure": false
+    },
+    "reference_low_liquidity": {
+      "fixed_test_run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+      "run_id": "fullchain_baseline_liquidity_guard70_recalibrated_20260418_1915",
+      "attempt_id": "attempt_20260418_224927",
+      "generated_at": "2026-04-18T22:55:18.623112+08:00",
+      "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+      "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+      "low_liquidity_holding_count": 1265,
+      "low_liquidity_weight_total": 6.324999999999983,
+      "low_liquidity_weight_share": 0.020450724262800736,
+      "low_liquidity_contribution_total": -0.04112613341329168,
+      "low_liquidity_contribution_share_of_strategy": -0.0938670203775196,
+      "low_liquidity_alpha_contribution_share": -0.10314096828107921,
+      "flag_high_low_liquidity_exposure": false
+    },
+    "challenger_audit_flags": {
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false,
+      "low_liquidity_flag_high": false
+    },
+    "reference_audit_flags": {
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false,
+      "low_liquidity_flag_high": false
+    },
+    "cost_drag_delta_annual_relative_return": -0.04133719378048595,
+    "judgement": "v15 improves annual_relative_return and relative_ir and lowers turnover versus v7, but drawdown becomes worse and cost stress still pushes annual_relative_return materially lower."
+  },
+  "holdings_tail_layer": {
+    "challenger": {
+      "holdings_count": 61723,
+      "avg_execution_delayed_realized_return": 0.005035654331098796,
+      "median_execution_delayed_realized_return": 0.0017838030681411876,
+      "p10_execution_delayed_realized_return": -0.07271092625998635,
+      "p05_execution_delayed_realized_return": -0.10588235294117643,
+      "p90_execution_delayed_realized_return": 0.08571428571428585
+    },
+    "reference": {
+      "holdings_count": 61806,
+      "avg_execution_delayed_realized_return": 0.002216872625923998,
+      "median_execution_delayed_realized_return": -0.0026899281762404748,
+      "p10_execution_delayed_realized_return": -0.08763395684871966,
+      "p05_execution_delayed_realized_return": -0.11945310737173034,
+      "p90_execution_delayed_realized_return": 0.09692299600252474
+    },
+    "judgement": "The challenger improves average holding return and also improves single-position left-tail quantiles versus v7. This suggests the worse portfolio-level drawdown is more likely driven by path dependence, basket concentration, or synchronized losses rather than by worse single-name tails."
+  },
+  "conclusion": [
+    "The first constructed family is directionally more promising than several earlier mixed-family attempts because its broad signal edge is stronger than calibrated v7 and that improvement does survive into annual_relative_return and relative_ir.",
+    "The main blocker is no longer gross edge absence. The blocker is that the family still extracts a fragile top slice, fails TopK perturbation, and converts some of its new edge into worse downside outcomes and higher low-liquidity share.",
+    "This means the next best research action is not to discard the family outright, but to diagnose which retained atomic signal is driving the worse drawdown and liquidity share inside the mixed family."
+  ]
+}

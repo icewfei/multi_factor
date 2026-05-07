@@ -1,0 +1,14 @@
+{
+  "registered_at": "2026-05-07T10:00:00+08:00",
+  "research_round_id": "rr_exploratory_neut_tail_combo_20260506",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "neut_tail_combo",
+  "research_question": "Does combining industry neutralization with p98 tail exclusion improve full-chain performance over p98 alone?",
+  "changed_dimension": "factor_preprocessing_neutralization",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": ["ind_neut_tail_p98_v1", "raw_tail_p98_v1"],
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "execution_logic_version": "warehouse_execution_v3"
+}

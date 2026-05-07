@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-04-19T10:45:29.657994+08:00",
+  "candidate_scheme_id": "price_volume_multisignal_v13_core",
+  "research_round_id": "rr_price_volume_multisignal_family_20260419",
+  "diagnosis_scope": "price/volume multisignal signal edge diagnosis",
+  "score_coverage": {
+    "scored_with_label_rows": 15017521,
+    "score_min": 0.013711998729983665,
+    "score_max": 0.9996487119437939,
+    "score_avg": 0.49995024326440146,
+    "score_std": 0.14173650069479354,
+    "full_sample_corr_ic": -0.021984352262190657,
+    "ranking_eligible_rows": 15233701,
+    "scored_rows": 15229163,
+    "null_score_rows": 4538,
+    "null_score_share": 0.0002978921537189157
+  },
+  "signal_quality": {
+    "full_sample_corr_ic": -0.021984352262190657,
+    "avg_daily_ic": -0.038413696771623165,
+    "median_daily_ic": -0.042238521414760796,
+    "positive_daily_ic_share": 0.355748031496063,
+    "daily_ic_observation_days": 6350
+  },
+  "decile_monotonicity": {
+    "avg_label_by_decile_desc": {
+      "1": 0.0003818247145478945,
+      "2": 0.0017641636795368342,
+      "3": 0.0030137356718144925,
+      "4": 0.003651125769726789,
+      "5": 0.004079084446333593,
+      "6": 0.004322039779836102,
+      "7": 0.00476310697312345,
+      "8": 0.005030072219370204,
+      "9": 0.005410857516196329,
+      "10": 0.005784799730651136
+    },
+    "interpretation": "top-to-bottom decile ordering indicates whether the price/volume multisignal score carries broad monotonic information before portfolio extraction"
+  },
+  "top_bucket_readout": {
+    "avg_label_top10": -0.002341491147404593,
+    "avg_label_rank11_20": -0.0015123154803030631,
+    "avg_label_bottom10": 0.0070230771989912705,
+    "top10_minus_rank11_20": -0.00082917566710153,
+    "top10_minus_bottom10": -0.009364568346395864,
+    "interpretation": "compare the extreme head bucket against the next 10 names and the bottom tail to see whether TopK=10 is extracting a robust edge or a noisy slice"
+  },
+  "cutoff_gap_readout": {
+    "avg_rank10_11_score_gap": 0.004039927987806146,
+    "median_rank10_11_score_gap": 0.0027834751498476695,
+    "days_with_both_ranks_present": 6357,
+    "days_gap_lt_0_005": 4548,
+    "days_gap_lt_0_001": 1399
+  },
+  "conclusion": [
+    "The price/volume multisignal score does not show convincing positive full-sample IC, so the family likely lacks usable gross edge in its current fixed form.",
+    "Ranks 11-20 outperform the top 10 on average, which suggests the current TopK=10 extraction is cutting too aggressively or too noisily at the head.",
+    "Decile ordering is weak or inverted, which suggests the family may not carry stable cross-sectional ordering information.",
+    "Use this diagnosis before deciding whether to continue the price/volume multisignal family or switch to a different score family."
+  ]
+}

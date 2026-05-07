@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "ft_confirmatory_c1_equal_weighted_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_123350",
+  "generated_at": "2026-04-29T13:46:07.513440+08:00",
+  "candidate_scheme_id": "confirmatory_baseline_v1_equally_weighted_5sig",
+  "research_round_id": "rr_confirmatory_baseline_v1_5sig_20260429",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -0.9521937662912405,
+  "selection_alpha_total": 5.131635196692201,
+  "low_liquidity_contribution_total": 0.7312413921231748
+}

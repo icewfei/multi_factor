@@ -1,0 +1,33 @@
+{
+  "fixed_test_run_id": "exploratory_cross_horizon_c2_momentum_only",
+  "run_id": "exploratory_cross_horizon_c2_momentum_only",
+  "attempt_id": "attempt_20260501_152109",
+  "generated_at": "2026-05-01T15:24:23.449508+08:00",
+  "inputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/exploratory_cross_horizon_c2_momentum_only/attempts/attempt_20260501_152109/holdings.csv",
+    "portfolio_daily_summary_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/exploratory_cross_horizon_c2_momentum_only/attempts/attempt_20260501_152109/portfolio_daily_summary.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/exploratory_cross_horizon_c2_momentum_only/attempts/attempt_20260501_152109/turnover_daily.csv",
+    "run_state_audit_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/exploratory_cross_horizon_c2_momentum_only/attempts/attempt_20260501_152109/data_quality_audit.json",
+    "run_state_attempt_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/exploratory_cross_horizon_c2_momentum_only/attempts/attempt_20260501_152109/run_state_attempt_manifest.json",
+    "portfolio_artifacts_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/exploratory_cross_horizon_c2_momentum_only/attempts/attempt_20260501_152109/portfolio_artifacts_manifest.json"
+  },
+  "outputs": {
+    "backtest_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/backtest_daily.csv",
+    "metrics_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/metrics.json",
+    "trade_statistics_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/trade_statistics_summary.json",
+    "annual_return_table_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/annual_return_table.csv",
+    "holding_period_return_distribution_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/holding_period_return_distribution.csv",
+    "topk_perturbation_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/topk_perturbation_summary.json",
+    "data_contract_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/data_contract_summary.json",
+    "audit_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/audit_summary.json",
+    "cash_source_explanation_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/cash_source_explanation.csv",
+    "low_liquidity_exposure_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/low_liquidity_exposure_summary.json",
+    "cost_stress_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/cost_stress_summary.json",
+    "return_attribution_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/exploratory_cross_horizon_c2_momentum_only/return_attribution_summary.json"
+  },
+  "notes": [
+    "Near-formal fixed-test skeleton.",
+    "Benchmark-relative metrics, annual return table, holding-period distribution, TopK perturbation summary, and audit-side summaries are included.",
+    "Daily PnL uses open-to-close on entry day, close-to-close on hold days, and actual sell price on exit day."
+  ]
+}

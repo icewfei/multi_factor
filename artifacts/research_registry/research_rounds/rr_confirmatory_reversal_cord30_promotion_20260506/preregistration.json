@@ -1,0 +1,89 @@
+{
+  "registered_at": "2026-05-06T11:50:00+08:00",
+  "research_round_id": "rr_confirmatory_reversal_cord30_promotion_20260506",
+  "research_phase": "signal_learnability",
+  "research_tier": "confirmatory",
+  "status": "preregistered",
+  "round_type": "baseline_promotion_check",
+  "research_question": "Under the frozen trainval-only contract and execution semantics, does reversal_p98_cord30_ew_v1 outperform reversal_tail_exclude_p98_v1 at the fixed-test / validation layer without introducing new robustness failures?",
+  "allowed_core_dimension": "score family composition only",
+  "changed_dimension": "score_family_composition",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "Single frozen challenger only: add cord30 to the p98 tail-handled reversal baseline through equal-weight percentile-rank averaging. No contract change, no refresh-rule change, no new data, no weight optimization, no second candidate.",
+  "primary_baseline": {
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "name": "p98 tail-handled reversal",
+    "source_round": "rr_exploratory_reversal_tail_handling_20260502",
+    "diagnostic_median_ic": 0.0459,
+    "diagnostic_top10_bot10_spread": 0.0049
+  },
+  "secondary_reference": {
+    "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+    "name": "alpha158_cord30",
+    "source_fixed_test_run_id": "confirmatory_cord30_trainval_20260429",
+    "role": "aspirational external reference only"
+  },
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "candidate_scheme_ids": [
+    "reversal_p98_cord30_ew_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "reversal_p98_cord30_ew_v1"
+  ],
+  "candidates": {
+    "reversal_p98_cord30_ew_v1": {
+      "name": "p98 reversal + cord30 equal-weight rank composite",
+      "formula": "0.5 × PERCENT_RANK(p98_reversal_score) + 0.5 × PERCENT_RANK(cord30_score)",
+      "frozen_construction": {
+        "step_1": "Negate reversal raw score and apply daily p98 exclusion exactly as in the previous round",
+        "step_2": "Join with cord30 score under the same sample universe",
+        "step_3": "Per signal_date compute PERCENT_RANK for p98 reversal and cord30 separately",
+        "step_4": "Average the two rank scores equally",
+        "step_5": "Use the composite score for standard TopK=10 run-state ranking"
+      }
+    }
+  },
+  "artifact_inputs": {
+    "shared_panels_run_id": "project_panels_research_trainval_20211231_20260429",
+    "reversal_source_run_id": "exploratory_cross_horizon_c1_reversal_only",
+    "cord30_source_run_id": "confirmatory_cord30_trainval_20260429"
+  },
+  "time_partition_plan": {
+    "validation_window": {
+      "start_date": "20190101",
+      "end_date": "20211231"
+    },
+    "test_window_access": "forbidden"
+  },
+  "success_rules": {
+    "validation_edge": {
+      "validation_annual_relative_return_delta_vs_p98": "> 0",
+      "validation_relative_ir_delta_vs_p98": "> 0",
+      "validation_max_drawdown_delta_vs_p98": ">= 0"
+    },
+    "robustness_pipeline": {
+      "cost_stress_annual_relative_return_delta_vs_p98": ">= 0",
+      "topk8_annual_relative_return_delta_vs_p98": "> 0",
+      "topk12_annual_relative_return_delta_vs_p98": "> 0",
+      "validation_avg_turnover_daily_delta_vs_p98": "<= 0.02",
+      "low_liquidity_weight_share_delta_vs_p98": "<= 0.00",
+      "candidate_avg_invested_weight": ">= 0.18"
+    },
+    "core_pass_condition": "All 9 rules must pass."
+  },
+  "disallowed_changes": [
+    "Do not add a second composite candidate.",
+    "Do not change the p98 exclusion rule.",
+    "Do not retune component weights.",
+    "Do not change TopK, contract, execution semantics, or cost stress assumptions.",
+    "Do not reopen data acquisition during this round."
+  ],
+  "expected_outputs": [
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_reversal_cord30_promotion_20260506/promotion_results.json",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_reversal_cord30_promotion_20260506/promotion_results.md"
+  ],
+  "serial_rule": "Only one challenger is allowed. Run the formal baseline and the challenger under the same frozen contract, then make a single promote / reject decision."
+}

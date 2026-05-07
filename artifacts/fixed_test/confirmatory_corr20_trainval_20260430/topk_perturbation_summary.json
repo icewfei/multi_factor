@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_corr20_trainval_20260430",
+  "run_id": "confirmatory_corr20_trainval_20260430",
+  "attempt_id": "attempt_20260430_143125",
+  "generated_at": "2026-04-30T14:34:30.565283+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_corr20_v1",
+  "research_round_id": "rr_confirmatory_alpha158_head_extraction_shortlist_round2_20260430",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.07277461192015677,
+      "relative_ir": -0.48312289442758116
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.06967582051592192,
+      "relative_ir": -0.4722249625772096
+    }
+  ]
+}

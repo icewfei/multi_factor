@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_cord30_seed_refresh_hysteresis15_trainval_20260430",
+  "run_id": "confirmatory_cord30_seed_refresh_hysteresis15_trainval_20260430",
+  "attempt_id": "attempt_20260430_162803",
+  "generated_at": "2026-04-30T16:30:51.117346+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_cord30_seed_refresh_hysteresis15_v1",
+  "research_round_id": "rr_confirmatory_alpha158_cord30_turnover_control_seed_20260430",
+  "low_liquidity_holding_count": 7729,
+  "low_liquidity_weight_total": 38.68507936507871,
+  "low_liquidity_weight_share": 0.14529607273268613,
+  "low_liquidity_contribution_total": 0.18186922889929497,
+  "low_liquidity_contribution_share_of_strategy": 0.1024058550669112,
+  "low_liquidity_alpha_contribution_share": 0.03995267965140877,
+  "flag_high_low_liquidity_exposure": false
+}

@@ -1,0 +1,30 @@
+{
+  "registered_at": "2026-04-29T12:00:00+08:00",
+  "research_round_id": "rr_confirmatory_c1_weighting_20260429",
+  "research_tier": "confirmatory",
+  "research_question": "Does IC-weighted combination (weights from training-set 2010-2018 IC only) outperform equal-weighted?",
+  "allowed_core_dimension": "combination_weighting_scheme",
+  "changed_dimension": "combination_weighting",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "confirmatory_baseline_v1_equally_weighted_5sig",
+    "confirmatory_baseline_v1_ic_weighted_5sig"
+  ],
+  "baseline_reference_candidate_scheme_id": "confirmatory_baseline_v1_equally_weighted_5sig",
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "execution_logic_version": "warehouse_execution_v3",
+    "topk": 10,
+    "holding_cohort_count": 5
+  },
+  "pass_criteria": {
+    "boolean_expression": "annual_relative_return > 0.01 AND sharpe_ratio > 0.5 AND avg_invested_weight > 0.60"
+  },
+  "disallowed_changes": [
+    "Do not change signal set.",
+    "Do not change snapshot_id.",
+    "Do not change TopK or execution logic.",
+    "Do not derive weights from validation/test data."
+  ],
+  "notes": ["First confirmatory round: equal-weight vs IC-weight. Weights from training set only."]
+}

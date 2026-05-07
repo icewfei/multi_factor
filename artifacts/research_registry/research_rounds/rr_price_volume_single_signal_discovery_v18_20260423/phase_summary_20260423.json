@@ -1,0 +1,50 @@
+{
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_20260423",
+  "as_of_date": "20260423",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "batch_status": "completed_phase_summary",
+  "candidate_outcomes": {
+    "price_volume_single_signal_reversal_5d_followthrough_v1": {
+      "status": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.021761563902636172,
+      "avg_daily_ic": 0.041576525002080415,
+      "positive_daily_ic_share": 0.6280314960629921,
+      "avg_label_top10": -0.0014093934334875673,
+      "avg_label_rank11_20": 0.004951091957397327,
+      "decision": "do_not_promote_to_family_pool"
+    },
+    "price_volume_single_signal_liquidity_60d_v1": {
+      "status": "signal_edge_negative",
+      "full_sample_corr_ic": -0.02156458895807672,
+      "avg_daily_ic": -0.03129653178418446,
+      "positive_daily_ic_share": 0.3760818253343824,
+      "avg_label_top10": 0.001830072963880382,
+      "avg_label_rank11_20": 0.0008436258793763857,
+      "decision": "reject_from_family_pool"
+    },
+    "price_volume_single_signal_vol_regime_20_60_inverse_v1": {
+      "status": "signal_edge_mixed",
+      "full_sample_corr_ic": 0.004308136587624181,
+      "avg_daily_ic": 0.003898535112629092,
+      "positive_daily_ic_share": 0.5267548001259049,
+      "avg_label_top10": 0.0029255089148566334,
+      "avg_label_rank11_20": 0.0032960879685869295,
+      "decision": "do_not_promote_to_family_pool"
+    },
+    "price_volume_single_signal_volatility_60d_v1": {
+      "status": "signal_edge_negative",
+      "full_sample_corr_ic": -0.004016783265869996,
+      "avg_daily_ic": -0.004901634992381365,
+      "positive_daily_ic_share": 0.48677998111425874,
+      "avg_label_top10": 0.002521575228353358,
+      "avg_label_rank11_20": 0.002897872019643219,
+      "decision": "reject_from_family_pool"
+    }
+  },
+  "round_level_decision": {
+    "new_clean_positive_keepers_count": 0,
+    "recommended_next_step": "continue_single_signal_discovery",
+    "do_not_open_new_family_yet": true,
+    "reason": "No new clean positive atomic signal was discovered in round 2, so reconstructing another mixed family now would mainly remix already-known retained signals plus weaker mixed candidates and would add overfitting risk with limited information gain."
+  }
+}

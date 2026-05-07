@@ -1,0 +1,27 @@
+{
+  "as_of": "20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "ic_baseline": 0.017757570425643826,
+  "avg_daily_ic": 0.02952653240170365,
+  "positive_daily_share": 0.5894499718415619,
+  "shuffle_label": {
+    "mean_ic": 5.4041310894200114e-05,
+    "max_abs_ic": 0.00043159191225093315,
+    "pass": true
+  },
+  "shuffle_score": {
+    "mean_ic": 0.0002881677566836461,
+    "max_abs_ic": 0.0010887269489331314,
+    "pass": true
+  },
+  "pit_breach": true,
+  "sub_period_consistency": 1.0,
+  "low_liq_dependent": false,
+  "benchmark_available": true,
+  "overall": {
+    "passed": 7,
+    "total": 7,
+    "failed": 0
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "registered_at": "2026-05-01T23:00:00+08:00",
+  "research_round_id": "rr_framework_d10_holding_period_20260501",
+  "research_tier": "framework_redesign",
+  "status": "preregistered",
+  "round_type": "framework_redesign",
+  "research_question": "在保持 TopK(10)、执行语义（D0信号→D1开盘买入）、成本模型、benchmark、10-cohort full refresh 不变的前提下，仅将 holding period 从 D5 延长到 D10，是否能显著缓解当前 framework 的 primary bottleneck：execution-feasibility gap（entry limit-up + exit limit-up → delayed exit → mean reversion）？",
+  "changed_dimension": "holding_period",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "框架层改动：holding period 从 D5 改为 D10（总纲 3.1 执行语义修改）。planned_exit_date = signal_date + 10 trading days。Delayed exit、terminal event、non-tradeable exit 规则与 D5 完全一致。不引入补位。不改 TopK(10)。不改 cost model。不改 benchmark。不改 signal family。",
+  "anchor_signal": "intraday_trend_bias (single_signal_intraday_trend_bias) — only signal this round",
+  "formal_baseline": "exploratory_cohort10_c1_trendbias_only (D5 + 10-cohort + full refresh, same signal)",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "contract_params": {"holding_cohort_count": 10, "holding_period_days": 10},
+  "candidate_scheme_ids": ["framework_d10_c1_trendbias"],
+  "planned_candidate_scheme_ids": ["framework_d10_c1_trendbias"],
+  "exit_semantics": {
+    "planned_exit_date": "signal_date + 10 trading days",
+    "delayed_exit": "same as D5 (close_at_down_limit → retry next open)",
+    "terminal_event": "same as D5",
+    "non_tradeable_exit": "same as D5",
+    "replacement": "no replacement (unfilled slots remain cash)",
+    "TopK": 10,
+    "cost_model": "unchanged"
+  },
+  "success_layers": {
+    "layer_A_framework_feasibility": {
+      "description": "验证 D10 是否显著缓解 execution-feasibility gap",
+      "metrics": ["avg_turnover_daily", "avg_invested_weight", "delayed_exit_ratio", "cost_stress_direction"]
+    },
+    "layer_B_strategy_viability": {
+      "description": "在 Layer A 通过后评估策略整体 viability",
+      "metrics": ["annual_relative_return", "relative_ir", "max_drawdown", "topk_8", "topk_12", "cost_stress"]
+    }
+  },
+  "forbidden": [
+    "不能同时改 TopK",
+    "不能改 cost model",
+    "不能改 signal family",
+    "不能改 refresh rule",
+    "不能引入补位"
+  ],
+  "notes": "Framework redesign: D10 holding period. This is the first round that directly addresses the execution-feasibility gap identified by Probe A (perfect foresight under tradeable constraints still produces total loss). Single candidate, single anchor signal."
+}

@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "diag_oracle_5d_return",
+  "run_id": "diag_oracle_5d_return",
+  "attempt_id": "attempt_20260502_002223",
+  "generated_at": "2026-05-02T00:24:54.361697+08:00",
+  "candidate_scheme_id": "diag_oracle_5d_return",
+  "research_round_id": "diag_perfect_foresight_stress_probe_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": 332.3026587359042,
+  "pass_cost_stress_relative_return_floor": true
+}

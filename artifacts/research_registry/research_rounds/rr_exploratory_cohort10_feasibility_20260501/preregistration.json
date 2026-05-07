@@ -1,0 +1,49 @@
+{
+  "registered_at": "2026-05-01T19:00:00+08:00",
+  "research_round_id": "rr_exploratory_cohort10_feasibility_20260501",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "contract_feasibility_investigation",
+  "research_question": "将 holding_cohort_count 从 5 改为 10，是否能将 turnover floor 从 0.324 压缩到 ~0.20-0.25 的可达区间？同时保持 invested_weight 不崩溃（>= 0.30）？",
+  "changed_dimension": "portfolio_contract_parameter",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "唯一变化：holding_cohort_count 5 → 10（cohort_capital_fraction 从 1/5 变为 1/10）。不改变：score family、TopK(10)、执行语义、成本合同、基准、持仓提取规则、refresh rule(保留 full refresh)、purge gap、样本资格矩阵、流动性 guard。",
+  "anchor_signal": "intraday_trend_bias (single_signal_intraday_trend_bias)",
+  "formal_comparison_baseline": "exploratory_cohort5_c1_trendbias_only (5-cohort, same signal, full refresh)",
+  "contract_matched_reference": "exploratory_cohort10_c1_trendbias_only (本轮新建 — 10-cohort, same signal, full refresh)",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "contract_params": {"holding_cohort_count": 10},
+  "candidate_scheme_ids": ["exploratory_cohort10_c1_trendbias_only"],
+  "planned_candidate_scheme_ids": ["exploratory_cohort10_c1_trendbias_only"],
+  "success_rules": {
+    "layer_A_contract_feasibility": {
+      "description": "验证 10-cohort 是否将 turnover 压到可达区间且 inv_wt 不崩溃",
+      "pass_turnover_reduction": "avg_turnover_daily <= 0.25",
+      "pass_invested_weight_not_collapsed": "avg_invested_weight >= 0.30"
+    },
+    "layer_B_strategy_viability": {
+      "description": "完整 8 道 strategy gates。原 9 道中仅 turnover gate 替换为 ≤ 0.25。",
+      "pass_annual_relative_return": "annual_relative_return >= 0.01",
+      "pass_relative_ir": "relative_ir >= 0.30",
+      "pass_not_worse_than_5cohort": "annual_relative_return_delta_vs_5cohort_full_refresh >= -0.01",
+      "pass_avg_invested_weight": "avg_invested_weight >= 0.15",
+      "pass_max_drawdown_not_worse": "max_drawdown_delta_vs_5cohort_full_refresh >= -0.05",
+      "pass_topk_perturbation": "topk_8_relative_return >= 0.00 AND topk_12_relative_return >= 0.00",
+      "pass_cost_stress": "cost_stress_annual_relative_return >= 0.00",
+      "pass_turnover_absolute": "avg_turnover_daily <= 0.25",
+      "core_pass_condition": "all 8 gates must pass"
+    },
+    "verdict": {
+      "feasibility_pass": "both layer_A gates pass",
+      "strategy_pass": "all 8 layer_B gates pass"
+    }
+  },
+  "forbidden": [
+    "不能同时改 refresh rule",
+    "不能改 score family",
+    "不能改 TopK、holding period、execution semantics"
+  ],
+  "notes": "Contract-feasibility round. Tests whether holding_cohort_count=10 alone reduces turnover to target range. If yes, subsequent round may add retention on 10-cohort baseline. Formal comparison baseline: exploratory_cohort5_c1_trendbias_only (5-cohort). Contract-matched reference: exploratory_cohort10_c1_trendbias_only (to be built this round)."
+}

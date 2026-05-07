@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_multisignal_core_20260419_1008",
+  "run_id": "fullchain_price_volume_multisignal_core_20260419_1008",
+  "attempt_id": "attempt_20260419_100950",
+  "generated_at": "2026-04-19T10:15:07.596616+08:00",
+  "candidate_scheme_id": "price_volume_multisignal_v13_core",
+  "research_round_id": "rr_price_volume_multisignal_family_20260419",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.16306432232471757,
+  "pass_cost_stress_relative_return_floor": false
+}

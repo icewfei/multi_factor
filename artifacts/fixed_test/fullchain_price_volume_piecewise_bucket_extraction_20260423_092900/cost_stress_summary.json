@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_piecewise_bucket_extraction_20260423_092900",
+  "run_id": "fullchain_price_volume_piecewise_bucket_extraction_20260423_092900",
+  "attempt_id": "attempt_20260423_093400",
+  "generated_at": "2026-04-23T09:39:45.561076+08:00",
+  "candidate_scheme_id": "price_volume_v20_piecewise_bucket_extraction",
+  "research_round_id": "rr_price_volume_piecewise_bucket_extraction_family_20260423",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.09584193557515464,
+  "pass_cost_stress_relative_return_floor": false
+}

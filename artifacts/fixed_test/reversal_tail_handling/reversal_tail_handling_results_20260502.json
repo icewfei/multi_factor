@@ -1,0 +1,105 @@
+{
+  "as_of_date": "20260502",
+  "research_round_id": "rr_exploratory_reversal_tail_handling_20260502",
+  "baselines": {
+    "raw_negated_reversal": {
+      "median_daily_ic": 0.04418187833021832,
+      "median_ci_low": 0.04047043950623341,
+      "median_ci_high": 0.04791717652694445,
+      "top10_avg_label": -0.0018316057672217551,
+      "top10_bot10_spread": -0.0045210217414572715
+    },
+    "cord30": {
+      "median_daily_ic": 0.032510819100776134,
+      "median_ci_low": 0.02998391755976437,
+      "median_ci_high": 0.03464856779568037,
+      "top10_avg_label": 0.0075803522775418205,
+      "top10_bot10_spread": 0.009775397815736183
+    }
+  },
+  "candidates": {
+    "reversal_tail_exclude_p99_v1": {
+      "metrics": {
+        "full_sample_corr": 0.026796938354881634,
+        "mean_daily_ic": 0.04811449274403582,
+        "median_daily_ic": 0.04701751024560877,
+        "std_daily_ic": 0.12818964201576577,
+        "n_days": 5322,
+        "positive_daily_share": 0.6501315295001879,
+        "median_ci_low": 0.04287715409317115,
+        "median_ci_high": 0.050388764751610846,
+        "mean_ci_low": 0.04462413670617898,
+        "mean_ci_high": 0.0515430891176968,
+        "top10_avg_label": 0.006722720799777109,
+        "bottom10_avg_label": 0.002689415974235519,
+        "top10_bot10_spread": 0.00403330482554159,
+        "decile_labels": {
+          "1": 0.006028048287463032,
+          "2": 0.005855774581919987,
+          "3": 0.005618014996828065,
+          "4": 0.00547889507824088,
+          "5": 0.0050671147910564774,
+          "6": 0.004806378614956656,
+          "7": 0.0041995608466021735,
+          "8": 0.003394340969455877,
+          "9": 0.0019535646878763475,
+          "10": -0.0007116293811867058
+        }
+      },
+      "evaluation": {
+        "learnability_ic_ge_040": true,
+        "learnability_ci_excludes_zero": true,
+        "pipeline_top10_gt_0": true,
+        "pipeline_spread_gt_0003": true,
+        "all_pass": true
+      }
+    },
+    "reversal_tail_exclude_p98_v1": {
+      "metrics": {
+        "full_sample_corr": 0.026928518362396403,
+        "mean_daily_ic": 0.0480723456901659,
+        "median_daily_ic": 0.04593296218096314,
+        "std_daily_ic": 0.127223678765893,
+        "n_days": 5322,
+        "positive_daily_share": 0.6505073280721533,
+        "median_ci_low": 0.04224105770177993,
+        "median_ci_high": 0.049948934740828344,
+        "mean_ci_low": 0.0445977871380539,
+        "mean_ci_high": 0.05145712709959922,
+        "top10_avg_label": 0.007624616784893473,
+        "bottom10_avg_label": 0.002689415974235515,
+        "top10_bot10_spread": 0.004935200810657958,
+        "decile_labels": {
+          "1": 0.0060660368626294725,
+          "2": 0.005811054732131395,
+          "3": 0.00559099042699975,
+          "4": 0.005449358556828118,
+          "5": 0.005060629276569084,
+          "6": 0.0047980083176635616,
+          "7": 0.004162938837451382,
+          "8": 0.003370715446064201,
+          "9": 0.0019270379351654105,
+          "10": -0.0007245974773623308
+        }
+      },
+      "evaluation": {
+        "learnability_ic_ge_040": true,
+        "learnability_ci_excludes_zero": true,
+        "pipeline_top10_gt_0": true,
+        "pipeline_spread_gt_0003": true,
+        "all_pass": true
+      }
+    }
+  },
+  "success_rules": {
+    "learnability": [
+      "median_daily_ic >= 0.040",
+      "bootstrap 95% CI excludes zero"
+    ],
+    "pipeline_compatibility": [
+      "top10_avg_label > 0",
+      "top10_bot10_spread > 0.003"
+    ]
+  },
+  "round_verdict": "reversal tail handling validated"
+}

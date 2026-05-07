@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_intraday_mom_5d_v1",
+  "run_id": "exploratory_intraday_mom_5d_v1",
+  "attempt_id": "attempt_20260506_141513",
+  "generated_at": "2026-05-06T14:17:37.666120+08:00",
+  "candidate_scheme_id": "intraday_mom_5d_v1",
+  "research_round_id": "rr_exploratory_overnight_intraday_decomposition_20260506",
+  "low_liquidity_holding_count": 4609,
+  "low_liquidity_weight_total": 20.94999999999989,
+  "low_liquidity_weight_share": 0.08905075641942427,
+  "low_liquidity_contribution_total": -0.048500500361876794,
+  "low_liquidity_contribution_share_of_strategy": -0.07910466425388368,
+  "low_liquidity_alpha_contribution_share": -0.06517543829114632,
+  "flag_high_low_liquidity_exposure": false
+}

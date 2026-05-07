@@ -1,0 +1,17 @@
+{
+  "registered_at": "2026-05-06T16:00:00+08:00",
+  "research_round_id": "rr_exploratory_neutralization_20260506",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "factor_neutralization",
+  "research_question": "Does size (log_mkt_cap) and/or industry (SW L1) neutralization of reversal_5d PERCENT_RANK improve IC and full-chain performance over un-neutralized baseline and p98?",
+  "changed_dimension": "factor_preprocessing_neutralization",
+  "candidate_scheme_ids": ["pr_mom_ind_neut_v1", "pr_mom_size_ind_neut_v1", "pr_mom_raw_v1"],
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "change_control_rule": "single_dimension_only",
+  "execution_logic_version": "warehouse_execution_v3",
+  "success_rules": {
+    "core_pass_condition": "At least one neutralized candidate shows validation IC >= p98 validation IC (0.012) AND full-chain annual_relative_return >= p98 (-0.129)"
+  }
+}

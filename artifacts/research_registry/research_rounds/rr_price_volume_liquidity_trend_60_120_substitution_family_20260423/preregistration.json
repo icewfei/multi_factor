@@ -1,0 +1,108 @@
+{
+  "registered_at": "2026-04-23T15:57:00+08:00",
+  "research_round_id": "rr_price_volume_liquidity_trend_60_120_substitution_family_20260423",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_v21_liquidity_trend_60_120_substitution"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Under the frozen v18 operational contract, does replacing liquidity_trend_20_60_raw with the newly retained liquidity_trend_60_120_raw produce a cleaner and more robust mixed price-volume family than the current retained two-signal baseline line?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "score_family_contract": {
+    "family_name": "price_volume_liquidity_trend_60_120_substitution_v1",
+    "builder_name": "build_baseline_model_scores.py",
+    "feature_source": "bars_daily_derived",
+    "feature_set": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger medium-term momentum should rank higher"
+      },
+      {
+        "field": "liquidity_trend_60_120_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "improving medium-vs-long-horizon liquidity should rank higher"
+      }
+    ],
+    "score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_60_120_raw DESC)); require min_feature_count >= 2",
+    "missing_data_rule": "Only score rows with at least 2 non-null ranked features; otherwise emit null model_score_D0 and preserve the row for audit."
+  },
+  "guard_contract": {
+    "guard_name": "liquidity_guard_v2_recalibrated",
+    "guard_application_stage": "ranking_eligibility_guard",
+    "guard_definition": "Freeze the calibrated v18 ranking guard: only rows that are already ranking_eligible_D0 and whose 20-day average amount cross-sectional liquidity rank is >= 0.70 on the same signal_date may enter the ranking universe.",
+    "liquidity_field": "liquidity_20d_raw",
+    "liquidity_rank_direction": "higher_liquidity_means_higher_rank",
+    "liquidity_min_percentile": 0.70,
+    "treatment_of_rows_below_guard": "Remain in audit tables but must be excluded from ranking_state_daily eligibility."
+  },
+  "substitution_contract": {
+    "source_family_reference": "price_volume_v16_remove_trend_consistency",
+    "removed_signal": "liquidity_trend_20_60_raw",
+    "added_signal": "liquidity_trend_60_120_raw",
+    "reason": "Round 3 single-signal discovery found liquidity_trend_60_120_raw to be a clean positive keeper, while no other round-3 candidate qualified as a clean new keeper."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation and same portfolio-extraction rule as the working reference",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "portfolio_extraction_contract_frozen": {
+    "extraction_name": "head_extraction_smoothing_v1",
+    "extraction_definition": "Freeze the v17/v18 extraction rule: allocate capital only to ranks 1-10 on each signal_date, apply a deterministic linear rank-decay multiplier, and renormalize selected head weights to sum to 1.0 before cohort scaling.",
+    "rank_field": "rank_position",
+    "head_size": 10,
+    "weight_formula": "linear_rank_decay",
+    "weight_formula_detail": "raw_multiplier(rank) = 1.00 - ((rank - 1) * (0.90 / 9)); rank 1 gets 1.00, rank 10 gets 0.10, ranks > 10 get 0.00",
+    "normalization": "same_signal_date_selected_head_sum_to_1",
+    "treatment_of_ranks_above_head_size": "Set target weight to 0.0.",
+    "treatment_of_missing_rank": "Set target weight to 0.0."
+  },
+  "portfolio_refresh_contract_frozen": {
+    "refresh_rule_name": "refresh_hysteresis_top15_v1",
+    "refresh_definition": "Freeze the v18 refresh rule: retain an incumbent holding if it still has rank_position <= 15 on the new signal_date and still satisfies the frozen guard plus tradability requirements. Only vacated slots may be refilled from the highest-ranked non-held eligible names until 10 names are held.",
+    "reference_rank_field": "rank_position",
+    "retain_if_rank_leq": 15,
+    "retain_if_guard_still_passes": true,
+    "retain_if_entry_tradeable": true,
+    "replacement_rule": "Fill remaining slots with highest-ranked non-held eligible names in ascending rank order until 10 names are held.",
+    "max_holdings": 10,
+    "target_weight_rule": "Equal-weight across currently held names after refresh; unfilled slots remain cash."
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_turnover_daily",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "low_liquidity_weight_share",
+    "topk_perturbation_pass",
+    "cost_stress_pass"
+  ],
+  "disallowed_changes": [
+    "Do not reintroduce trend_consistency_20d_raw.",
+    "Do not add any round-2 mixed candidates into this family.",
+    "Do not add momentum_20_5_raw, momentum_250_20_raw, or trend_consistency_60d_raw into this family.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change portfolio extraction inside this round.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not sweep multiple family compositions or aggregation formulas inside this round."
+  ],
+  "notes": [
+    "This round is opened only after round 3 completed with one new clean positive keeper: liquidity_trend_60_120_raw.",
+    "The goal is not to remix many retained signals, but to perform one disciplined substitution test under the frozen v18 operational contract.",
+    "If this direct substitution does not materially improve the family profile, the project should avoid further price-volume family remixing without new atomic discoveries."
+  ]
+}

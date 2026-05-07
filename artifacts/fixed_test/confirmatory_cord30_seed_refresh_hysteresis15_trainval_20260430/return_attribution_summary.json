@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_cord30_seed_refresh_hysteresis15_trainval_20260430",
+  "run_id": "confirmatory_cord30_seed_refresh_hysteresis15_trainval_20260430",
+  "attempt_id": "attempt_20260430_162803",
+  "generated_at": "2026-04-30T16:30:51.540641+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_cord30_seed_refresh_hysteresis15_v1",
+  "research_round_id": "rr_confirmatory_alpha158_cord30_turnover_control_seed_20260430",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.1352556907178,
+  "selection_alpha_total": 1.0141627788495768,
+  "low_liquidity_contribution_total": 0.18186922889929497
+}

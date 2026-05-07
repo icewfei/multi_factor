@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_fixed_test_alpha158_corr30_cord30_dual_signal_family_trainval_20260430",
+  "run_id": "exploratory_alpha158_corr30_cord30_dual_signal_family_trainval_20260430",
+  "attempt_id": "attempt_20260430_172624",
+  "generated_at": "2026-04-30T17:34:57.073261+08:00",
+  "candidate_scheme_id": "alpha158_corr30_cord30_dual_signal_family_v1",
+  "research_round_id": "rr_alpha158_corr30_cord30_dual_signal_family_20260430",
+  "low_liquidity_holding_count": 5615,
+  "low_liquidity_weight_total": 22.459999999999958,
+  "low_liquidity_weight_share": 0.10929440389293472,
+  "low_liquidity_contribution_total": 0.17215239018428088,
+  "low_liquidity_contribution_share_of_strategy": 0.12334227263603394,
+  "low_liquidity_alpha_contribution_share": 0.05947908746408452,
+  "flag_high_low_liquidity_exposure": false
+}

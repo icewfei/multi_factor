@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "exploratory_trend_bias_volume_gated_v1",
+  "run_id": "exploratory_trend_bias_volume_gated_v1",
+  "attempt_id": "attempt_20260501_145346",
+  "generated_at": "2026-05-01T14:56:26.635336+08:00",
+  "candidate_scheme_id": "exploratory_trend_bias_volume_gated_v1",
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 0.061977224847239,
+      "relative_ir": 0.45420254697034756
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 0.07429787035708513,
+      "relative_ir": 0.5311184614011475
+    }
+  ]
+}

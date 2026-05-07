@@ -1,0 +1,109 @@
+{
+  "candidate_scheme_id": "price_volume_screen_alpha158_corr20_composability_v1",
+  "research_round_id": "rr_alpha158_exact_keeper_composability_screen_20260428",
+  "as_of_date": "20260428",
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "standalone_candidate_scheme_id": "price_volume_single_signal_alpha158_corr20_v1",
+  "diagnosis_question": "Relative to the frozen v18 core two-signal family, does alpha158_corr20_raw look compositionally compatible enough to justify a later overlay or restrained family-level promotion?",
+  "single_signal_readout": {
+    "full_sample_corr_ic": 0.018514259076396204,
+    "avg_daily_ic": 0.030448131324432484,
+    "median_daily_ic": 0.03069237964390681,
+    "positive_daily_ic_share": 0.6422725841989299,
+    "avg_label_top10": 0.010246211000155908,
+    "avg_label_rank11_20": 0.007490020219413092,
+    "avg_label_bottom10": -0.002653545183741519,
+    "top10_minus_rank11_20": 0.0027561907807428163
+  },
+  "reference_family_signal_edge_readout": {
+    "full_sample_corr_ic": 0.013345465999259405,
+    "avg_daily_ic": 0.02065751031288895,
+    "median_daily_ic": 0.017744140849193193,
+    "positive_daily_ic_share": 0.558220810166799,
+    "avg_label_top10": 0.00681384675284021,
+    "avg_label_rank11_20": 0.006294745429802948,
+    "avg_label_bottom10": 0.05380876238753477,
+    "top10_minus_rank11_20": 0.000519101323037262,
+    "avg_rank10_11_score_gap": 0.002021238786301137,
+    "median_rank10_11_score_gap": 0.0012864493996569415,
+    "days_with_both_ranks": 6295,
+    "avg_top10_liquidity_rank_mean": 0.4422973406518769
+  },
+  "screen_family_signal_edge_readout": {
+    "full_sample_corr_ic": 0.019526959345236978,
+    "avg_daily_ic": 0.031982352200255054,
+    "median_daily_ic": 0.029903414824981413,
+    "positive_daily_ic_share": 0.6011119936457506,
+    "avg_label_top10": 0.010991643909271442,
+    "avg_label_rank11_20": 0.00791818400929029,
+    "avg_label_bottom10": 0.026556420307538242,
+    "top10_minus_rank11_20": 0.003073459899981151,
+    "avg_rank10_11_score_gap": 0.0030922525392253607,
+    "median_rank10_11_score_gap": 0.002079619726678583,
+    "days_with_both_ranks": 6295,
+    "avg_top10_liquidity_rank_mean": 0.41292303180879814
+  },
+  "pairwise_component_correlation": {
+    "momentum_vs_screen_signal": {
+      "corr_full": 0.10659485902555223,
+      "corr_avg_daily": 0.07555059797482429,
+      "corr_median_daily": 0.08300339033574479,
+      "corr_positive_daily_share": 0.645668041891463
+    },
+    "liquidity_trend_vs_screen_signal": {
+      "corr_full": 0.17567144058196607,
+      "corr_avg_daily": 0.14545842879142507,
+      "corr_median_daily": 0.16076475162671158,
+      "corr_positive_daily_share": 0.8064769690300267
+    },
+    "core_v18_vs_screen_signal": {
+      "corr_full": 0.17100113561495878,
+      "corr_avg_daily": 0.134161671005679,
+      "corr_median_daily": 0.15837602778346366,
+      "corr_positive_daily_share": 0.7373849571564582
+    }
+  },
+  "component_interaction": {
+    "bucket_readout": {
+      "core_high_signal_high": 0.005375031937661811,
+      "core_high_signal_mid": 0.0046644729680146305,
+      "core_high_signal_low": 0.003350869330823232,
+      "core_mid_signal_high": 0.005087056071826221,
+      "core_mid_signal_mid": 0.004240923645006129,
+      "core_mid_signal_low": 0.0025224028500109214,
+      "core_low_signal_high": 0.004197772822780384,
+      "core_low_signal_mid": 0.0031952511397456023,
+      "core_low_signal_low": 0.0013220565204346202
+    }
+  },
+  "head_stability": {
+    "reference_avg_top10_overlap_next_day": 7.223070739549839,
+    "screen_avg_top10_overlap_next_day": 6.876406752411576,
+    "reference_median_top10_overlap_next_day": 7.0,
+    "screen_median_top10_overlap_next_day": 7.0,
+    "avg_top10_overlap_same_day_vs_reference": 2.7134016973125883,
+    "median_top10_overlap_same_day_vs_reference": 2.0,
+    "screen_avg_top10_overlap_next_day_drop_tolerance": 0.2
+  },
+  "coverage": {
+    "total_rows": 15818326,
+    "ranking_eligible_rows": 15233701,
+    "reference_scored_rows": 15097814,
+    "screen_scored_rows": 15097814
+  },
+  "judgement": {
+    "primary_conclusion": "alpha158_corr20_raw is a real standalone keeper, but its additive fit with the frozen v18 core family is mixed rather than clean. It improves some static ordering diagnostics, but at least one of additive monotonicity, head stability, or liquidity/head proxy behavior remains questionable.",
+    "mechanism": [
+      "Pairwise momentum-vs-screen-signal rank correlation is 0.075551 on average by day.",
+      "Core-family-vs-screen-signal rank correlation is 0.134162 on average by day.",
+      "In the high-core region, core_high+signal_high average label is 0.005375 versus core_high+signal_mid 0.004664.",
+      "Head stability proxy changes from reference avg next-day top10 overlap 7.223071 to screen 6.876407."
+    ],
+    "implication_for_next_step": "Do not promote alpha158_corr20_raw into a direct family overlay yet. Keep it as a standalone keeper or later reserve-candidate only.",
+    "classification": "composability_screen_mixed",
+    "hard_gate": {
+      "screen_avg_top10_overlap_next_day_drop_tolerance": 0.2,
+      "head_stability_not_worse": false
+    }
+  }
+}

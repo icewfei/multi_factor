@@ -1,0 +1,39 @@
+{
+  "fixed_test_run_id": "exploratory_fundamental_c3_roe_roa",
+  "run_id": "exploratory_fundamental_c3_roe_roa",
+  "attempt_id": "attempt_20260501_171725",
+  "generated_at": "2026-05-01T17:20:31.978221+08:00",
+  "candidate_scheme_id": "exploratory_fundamental_c3_roe_roa",
+  "research_round_id": "rr_exploratory_fundamental_quality_profitability_20260501",
+  "holdings_count": 48723,
+  "unique_instruments": 455,
+  "signal_dates_with_positions": 5074,
+  "avg_exit_delay_days": 0.7262715876577263,
+  "delayed_exit_positions": 2287,
+  "terminal_event_positions": 121,
+  "total_entry_fill_weight": 974.4599999999837,
+  "avg_turnover_daily": 0.38323749507683386,
+  "median_turnover_daily": 0.4,
+  "max_turnover_daily": 0.7000000000000003,
+  "rebalance_days": 5078,
+  "run_state_summary_counts": {
+    "ranking_state_rows": 11198074,
+    "execution_state_rows": 11198074,
+    "ranking_anomaly_rows": 3984387,
+    "rankable_rows": 6796569,
+    "null_model_score_rows": 4401505,
+    "nonfinite_model_score_rows": 0,
+    "topk_frozen_rows": 50121,
+    "execution_attempt_rows": 50121,
+    "entry_filled_rows": 48723,
+    "backtest_executable_rows": 48723,
+    "unfilled_topk_count": 1398,
+    "unfilled_topk_weight": 139.8,
+    "topk_per_signal_breach_count": 0,
+    "topk_default_used": 10
+  },
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": []
+}

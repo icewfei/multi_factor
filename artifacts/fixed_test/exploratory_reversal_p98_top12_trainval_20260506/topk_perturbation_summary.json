@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_top12_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_top12_trainval_20260506",
+  "attempt_id": "attempt_20260506_124943",
+  "generated_at": "2026-05-06T12:52:24.887780+08:00",
+  "candidate_scheme_id": "reversal_tail_exclude_p98_top12_v1",
+  "research_round_id": "rr_exploratory_reversal_p98_top12_20260506",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.014440659222928698,
+      "relative_ir": -0.2458503507543484
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.013706374213540706,
+      "relative_ir": -0.24214850008102146
+    }
+  ]
+}

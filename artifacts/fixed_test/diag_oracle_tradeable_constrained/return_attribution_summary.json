@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "diag_oracle_tradeable_constrained",
+  "run_id": "diag_oracle_tradeable_constrained",
+  "attempt_id": "attempt_20260502_002454",
+  "generated_at": "2026-05-02T00:27:33.519951+08:00",
+  "candidate_scheme_id": "diag_oracle_tradeable_constrained",
+  "research_round_id": "diag_perfect_foresight_stress_probe_20260501",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -1.5677916278598996,
+  "selection_alpha_total": 104.63485966337039,
+  "low_liquidity_contribution_total": 10.112188223105695
+}

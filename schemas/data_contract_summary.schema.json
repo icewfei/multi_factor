@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/data_contract_summary.schema.json",
+  "title": "Data Contract Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "snapshot_id",
+    "etl_code_hash",
+    "execution_logic_version",
+    "data_contract_version",
+    "runtime_environment",
+    "source_views",
+    "benchmark_status"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "snapshot_id": { "type": "string" },
+    "etl_code_hash": { "type": "string" },
+    "execution_logic_version": { "type": "string" },
+    "data_contract_version": { "type": "string" },
+    "runtime_environment": { "type": "object" },
+    "source_views": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "shared_source_degraded_flags": { "type": "object" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "benchmark_status": { "type": "object" }
+  }
+}

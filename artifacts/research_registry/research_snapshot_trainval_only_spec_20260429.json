@@ -1,0 +1,129 @@
+{
+  "spec_version": "research_snapshot_trainval_only_v1",
+  "generated_at": "2026-04-29T00:00:00+08:00",
+  "source_snapshot_id": "warehouse_20260418_181408",
+  "proposed_snapshot_id": "warehouse_20260429_trainval_20211231",
+  "purpose": "trainval_only_research_snapshot",
+  "governance_reason": "exclude frozen test window 2022-01 to 2025-12 from all future confirmatory research inputs",
+  "time_boundaries": {
+    "train_start": "20100101",
+    "train_end": "20181231",
+    "validation_start": "20190101",
+    "validation_end": "20211231",
+    "test_start": "20220101",
+    "test_end": "20251231",
+    "observation_start": "20260101",
+    "source_market_cutoff_date": "20211231",
+    "signal_cutoff_rule": "max(trade_date where next_trade_date_5 <= source_market_cutoff_date)",
+    "expected_last_signal_date_with_full_D5_horizon": "20211224"
+  },
+  "table_cut_policy": {
+    "serving.vw_calendar": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_bars_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_benchmark_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_benchmark_aux_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_limit_rules_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_tradability_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_instrument_status_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_terminal_event_daily": {
+      "date_column": "trade_date",
+      "max_date": "20211231"
+    },
+    "serving.vw_labels_daily": {
+      "date_column": "trade_date",
+      "max_date_rule": "signal_cutoff_rule",
+      "required_constraints": [
+        "planned_exit_date_D5 <= 20211231"
+      ]
+    },
+    "serving.vw_execution_path_daily": {
+      "date_column": "trade_date",
+      "max_date_rule": "signal_cutoff_rule",
+      "required_constraints": [
+        "planned_exit_date_D5 <= 20211231",
+        "actual_exit_date IS NULL OR actual_exit_date <= 20211231"
+      ]
+    },
+    "serving.vw_sample_eligibility_daily": {
+      "date_column": "trade_date",
+      "max_date_rule": "signal_cutoff_rule"
+    }
+  },
+  "acceptance_checks": [
+    {
+      "name": "calendar_max_trade_date",
+      "sql": "select max(trade_date) as value from serving.vw_calendar",
+      "expected_max": "20211231"
+    },
+    {
+      "name": "bars_max_trade_date",
+      "sql": "select max(trade_date) as value from serving.vw_bars_daily",
+      "expected_max": "20211231"
+    },
+    {
+      "name": "labels_max_trade_date",
+      "sql": "select max(trade_date) as value from serving.vw_labels_daily",
+      "expected_max": "20211224"
+    },
+    {
+      "name": "labels_max_planned_exit_date_D5",
+      "sql": "select max(planned_exit_date_D5) as value from serving.vw_labels_daily",
+      "expected_max": "20211231"
+    },
+    {
+      "name": "execution_max_trade_date",
+      "sql": "select max(trade_date) as value from serving.vw_execution_path_daily",
+      "expected_max": "20211224"
+    },
+    {
+      "name": "execution_max_actual_exit_date",
+      "sql": "select max(actual_exit_date) as value from serving.vw_execution_path_daily where actual_exit_date is not null",
+      "expected_max": "20211231"
+    },
+    {
+      "name": "eligibility_max_trade_date",
+      "sql": "select max(trade_date) as value from serving.vw_sample_eligibility_daily",
+      "expected_max": "20211224"
+    }
+  ],
+  "project_side_contract_plan": {
+    "new_contract_filename": "run_input_contract.research_trainval_20211231.json",
+    "required_fields_to_update": [
+      "generated_at",
+      "snapshot_id",
+      "source_root.snapshot_path",
+      "notes"
+    ],
+    "required_notes": [
+      "trainval_only research snapshot",
+      "test window 2022-01 to 2025-12 excluded by construction",
+      "not eligible to be overwritten by current full snapshot contract"
+    ]
+  },
+  "post_build_actions": [
+    "validate snapshot against this spec",
+    "rebuild project panels under the new run input contract",
+    "freeze exploratory expansion before confirmatory shortlist selection"
+  ]
+}

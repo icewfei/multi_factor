@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "exploratory_cohort10_retain50_c1",
+  "run_id": "exploratory_cohort10_retain50_c1",
+  "attempt_id": "attempt_20260501_214911",
+  "generated_at": "2026-05-01T21:52:08.789712+08:00",
+  "candidate_scheme_id": "exploratory_cohort10_retain50_c1",
+  "research_round_id": "rr_exploratory_retain50_10cohort_20260501",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 0.004980161272521766,
+      "relative_ir": -0.10262662749673522
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": 0.011240161882358768,
+      "relative_ir": -0.06797943782705317
+    }
+  ]
+}

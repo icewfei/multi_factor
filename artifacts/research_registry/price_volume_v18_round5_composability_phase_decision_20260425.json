@@ -1,0 +1,82 @@
+{
+  "decided_at": "2026-04-25T08:26:00+08:00",
+  "working_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "working_reference_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "evidence_scope": {
+    "working_reference": {
+      "candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+      "annual_relative_return": -0.04414228898711203,
+      "relative_ir": -0.4024807492034419,
+      "max_drawdown": -0.2772009864700842,
+      "avg_turnover_daily": 0.11104145726428083,
+      "low_liquidity_weight_share": 0.029557319223990304,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    },
+    "round5_clean_positive_keepers": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_turnover_acceleration_5_20_v1",
+        "field": "turnover_acceleration_5_20_raw",
+        "full_sample_corr_ic": 0.0063151940256665606,
+        "avg_daily_ic": 0.011074698288562229,
+        "positive_daily_ic_share": 0.5611329661683714,
+        "avg_label_top10": 0.0028164151421286167,
+        "avg_label_rank11_20": 0.0023742105869113297
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_volume_price_synchronicity_20d_v1",
+        "field": "volume_price_synchronicity_20d_raw",
+        "full_sample_corr_ic": 0.01666107975975777,
+        "avg_daily_ic": 0.0299661139051484,
+        "positive_daily_ic_share": 0.6367642429965377,
+        "avg_label_top10": 0.007764347893009496,
+        "avg_label_rank11_20": 0.006708834568243159
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_up_amount_persistence_20d_v1",
+        "field": "up_amount_persistence_20d_raw",
+        "full_sample_corr_ic": 0.009374022500886993,
+        "avg_daily_ic": 0.013587209870727162,
+        "positive_daily_ic_share": 0.5491738788355626,
+        "avg_label_top10": 0.006376701628353629,
+        "avg_label_rank11_20": 0.005612870648944578
+      }
+    ],
+    "composability_screen_results": [
+      {
+        "candidate_scheme_id": "price_volume_screen_volume_price_synchronicity_20d_composability_v1",
+        "classification": "composability_screen_mixed",
+        "screen_full_sample_corr_ic": 0.01784380212973922,
+        "screen_avg_daily_ic": 0.03038855149606766,
+        "screen_top10_minus_rank11_20": 0.0034727015538401863,
+        "core_high_signal_high_avg_label": 0.004937435101076692,
+        "core_high_signal_mid_avg_label": 0.004791607443501421,
+        "reference_avg_top10_overlap_next_day": 7.223070739549839,
+        "screen_avg_top10_overlap_next_day": 6.875954965822276,
+        "reference_avg_top10_liquidity_rank_mean": 0.44229734065187665,
+        "screen_avg_top10_liquidity_rank_mean": 0.3941571417031508
+      },
+      {
+        "candidate_scheme_id": "price_volume_screen_up_amount_persistence_20d_composability_v1",
+        "classification": "composability_screen_mixed",
+        "screen_full_sample_corr_ic": 0.013726679500777097,
+        "screen_avg_daily_ic": 0.02114917646455594,
+        "screen_top10_minus_rank11_20": 0.0011296418761840956,
+        "core_high_signal_high_avg_label": 0.004275218433363252,
+        "core_high_signal_mid_avg_label": 0.004661666981452268,
+        "reference_avg_top10_overlap_next_day": 7.223070739549839,
+        "screen_avg_top10_overlap_next_day": 6.940313504823151,
+        "reference_avg_top10_liquidity_rank_mean": 0.44229734065187665,
+        "screen_avg_top10_liquidity_rank_mean": 0.4272640319506873
+      }
+    ]
+  },
+  "decision": {
+    "pause_current_price_volume_family_tuning_line": true,
+    "advance_single_keeper_to_constrained_next_stage": false,
+    "retain_watchlist_candidate_scheme_id": "price_volume_single_signal_volume_price_synchronicity_20d_v1",
+    "retain_watchlist_only": true
+  },
+  "decision_reason": "Round 5 did produce three new clean positive atomic keepers, and volume_price_synchronicity_20d_raw was the strongest of them. However, both subsequent composability screens still returned mixed rather than cleanly promotable verdicts. The strongest screen, volume_price_synchronicity_20d_raw, materially improved static score-layer diagnostics and passed the high-core additive monotonicity check, but it still weakened next-day top10 overlap and pushed the top10 liquidity proxy in the wrong direction. The second screen, up_amount_persistence_20d_raw, was weaker and additionally failed the key high-core additive-monotonicity check. Taken together with the earlier v22 direct substitution failure and the v23 gated-overlay failure, the current evidence is not yet strong enough to justify another price-volume family micro-tuning round. The disciplined choice is to pause this tuning line, keep volume_price_synchronicity_20d_raw only as the leading watchlist keeper for a future revisit, and avoid opening a new family or overlay round right now.",
+  "next_stage_recommendation": "Pause the current price-volume family tuning line. Keep only volume_price_synchronicity_20d_raw as a watchlist keeper for future constrained design, but do not promote it into a new family or overlay round yet. Redirect active research effort to a fresh atomic single-signal discovery batch or a different research direction."
+}

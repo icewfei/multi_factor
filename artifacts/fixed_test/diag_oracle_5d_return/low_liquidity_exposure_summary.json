@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "diag_oracle_5d_return",
+  "run_id": "diag_oracle_5d_return",
+  "attempt_id": "attempt_20260502_002223",
+  "generated_at": "2026-05-02T00:24:54.143017+08:00",
+  "candidate_scheme_id": "diag_oracle_5d_return",
+  "research_round_id": "diag_perfect_foresight_stress_probe_20260501",
+  "low_liquidity_holding_count": 6570,
+  "low_liquidity_weight_total": 65.69999999999895,
+  "low_liquidity_weight_share": 0.13020730112172715,
+  "low_liquidity_contribution_total": 9.780462323036236,
+  "low_liquidity_contribution_share_of_strategy": 0.08395359800108196,
+  "low_liquidity_alpha_contribution_share": 1.179327350358374e-49,
+  "flag_high_low_liquidity_exposure": false
+}

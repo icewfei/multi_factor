@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "ft_c3_drop_intraday_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_145020",
+  "generated_at": "2026-04-29T15:02:03.347285+08:00",
+  "candidate_scheme_id": "confirmatory_ablation_drop_intraday_trend_3sig",
+  "research_round_id": "rr_confirmatory_c3_ablation_mid_20260429",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -0.9486386798748998,
+  "selection_alpha_total": 4.587666972874586,
+  "low_liquidity_contribution_total": 0.5238445405104919
+}

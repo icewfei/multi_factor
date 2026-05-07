@@ -1,0 +1,133 @@
+{
+  "as_of_date": "20260425",
+  "working_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "decision": {
+    "purpose": "deduplicate current atomic keepers, define canonical names, and prevent naming variants from being treated as fresh alpha discoveries",
+    "price_volume_family_tuning_line_status": "paused"
+  },
+  "core_canonical_keepers": [
+    {
+      "canonical_field": "momentum_60_5_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_momentum_60_5_v1",
+      "role": "baseline trend-strength anchor",
+      "current_status": "active_keeper"
+    },
+    {
+      "canonical_field": "liquidity_trend_20_60_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_liquidity_trend_20_60_v1",
+      "role": "short-to-medium liquidity improvement",
+      "current_status": "active_keeper"
+    },
+    {
+      "canonical_field": "liquidity_trend_60_120_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_liquidity_trend_60_120_v1",
+      "role": "slower liquidity improvement",
+      "current_status": "active_keeper_but_not_promotable_partner"
+    },
+    {
+      "canonical_field": "turnover_acceleration_5_20_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_turnover_acceleration_5_20_v1",
+      "role": "participation shock",
+      "current_status": "active_keeper"
+    },
+    {
+      "canonical_field": "amount_shock_5_20_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_amount_shock_5_20_v1",
+      "role": "short-horizon amount surge",
+      "current_status": "active_keeper_composability_mixed"
+    },
+    {
+      "canonical_field": "volume_price_synchronicity_20d_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_volume_price_synchronicity_20d_v1",
+      "role": "price-volume confirmation",
+      "current_status": "watchlist_keeper_composability_mixed"
+    },
+    {
+      "canonical_field": "up_amount_persistence_20d_raw",
+      "canonical_candidate_scheme_id": "price_volume_single_signal_up_amount_persistence_20d_v1",
+      "role": "persistent amount support on up days",
+      "current_status": "secondary_watchlist_keeper_composability_mixed"
+    }
+  ],
+  "historical_positive_but_not_active": [
+    {
+      "field": "breakout_volume_confirmation_20d_raw",
+      "candidate_scheme_id": "price_volume_single_signal_breakout_volume_confirmation_20d_v1",
+      "reason": "single-signal positive, but direct family substitution failed badly in v22"
+    },
+    {
+      "field": "trend_consistency_20d_raw",
+      "candidate_scheme_id": "price_volume_single_signal_trend_consistency_20d_v1",
+      "reason": "single-signal positive historically, but later ablation and v16 showed removing it improved the family line"
+    }
+  ],
+  "dedup_aliases": [
+    {
+      "alias_field": "price_volume_corr_20d_raw",
+      "canonical_field": "volume_price_synchronicity_20d_raw",
+      "relationship": "near_equivalent_standardization_alias"
+    },
+    {
+      "alias_field": "volume_momentum_5_20_raw",
+      "canonical_field": "amount_shock_5_20_raw",
+      "relationship": "near_equivalent_standardization_alias"
+    },
+    {
+      "alias_field": "turnover_mean_reversion_gap_5_20_raw",
+      "canonical_field": "turnover_acceleration_5_20_raw",
+      "relationship": "inverse_direction_duplicate"
+    },
+    {
+      "alias_field": "breakout_distance_20d_raw",
+      "canonical_field": "breakout_proximity_20d_raw",
+      "relationship": "near_equivalent_structural_alias"
+    },
+    {
+      "alias_field": "close_to_high_ratio_20d_raw",
+      "canonical_field": "close_location_value_20d_raw",
+      "relationship": "near_equivalent_range_position_alias"
+    },
+    {
+      "alias_field": "upper_shadow_pressure_20d_raw",
+      "canonical_field": "upper_shadow_ratio_20d_raw",
+      "relationship": "near_equivalent_upper_shadow_alias"
+    }
+  ],
+  "mechanism_clusters": [
+    {
+      "cluster_name": "momentum_family",
+      "canonical_active_field": "momentum_60_5_raw",
+      "related_fields": [
+        "momentum_20_5_raw",
+        "momentum_120_20_raw",
+        "momentum_250_20_raw"
+      ]
+    },
+    {
+      "cluster_name": "liquidity_improvement_family",
+      "canonical_active_fields": [
+        "liquidity_trend_20_60_raw",
+        "liquidity_trend_60_120_raw"
+      ],
+      "related_fields": []
+    },
+    {
+      "cluster_name": "price_volume_confirmation_family",
+      "canonical_active_fields": [
+        "amount_shock_5_20_raw",
+        "volume_price_synchronicity_20d_raw",
+        "up_amount_persistence_20d_raw"
+      ],
+      "related_fields": [
+        "price_volume_corr_20d_raw",
+        "volume_momentum_5_20_raw",
+        "breakout_volume_confirmation_20d_raw"
+      ]
+    }
+  ],
+  "future_rule": {
+    "screen_before_promote": true,
+    "treat_alias_as_new_alpha": false,
+    "note": "Only genuinely orthogonal mechanisms should consume future exploration budget."
+  }
+}

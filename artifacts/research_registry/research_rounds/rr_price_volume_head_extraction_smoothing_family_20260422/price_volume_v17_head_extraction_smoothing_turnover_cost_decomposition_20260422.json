@@ -1,0 +1,60 @@
+{
+  "candidate_scheme_id": "price_volume_v17_head_extraction_smoothing",
+  "research_round_id": "rr_price_volume_head_extraction_smoothing_family_20260422",
+  "run_id": "fullchain_price_volume_head_extraction_smoothing_20260422_141534",
+  "attempt_id": "attempt_20260422_141812",
+  "as_of_date": "20260422",
+  "inputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_head_extraction_smoothing_20260422_141534/attempts/attempt_20260422_141812/holdings.csv",
+    "portfolio_weights_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_head_extraction_smoothing_20260422_141534/attempts/attempt_20260422_141812/portfolio_weights_daily.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_head_extraction_smoothing_20260422_141534/attempts/attempt_20260422_141812/turnover_daily.csv",
+    "metrics_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_head_extraction_smoothing_20260422_141534/metrics.json",
+    "audit_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_head_extraction_smoothing_20260422_141534/audit_summary.json",
+    "trade_statistics_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_head_extraction_smoothing_20260422_141534/trade_statistics_summary.json",
+    "cost_stress_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_head_extraction_smoothing_20260422_141534/cost_stress_summary.json"
+  },
+  "headline_metrics": {
+    "annual_relative_return": -0.047056072967004314,
+    "relative_ir": -0.40956655842046624,
+    "max_drawdown": -0.28266206166931773,
+    "avg_turnover_daily": 0.10935766168269097,
+    "cost_stress_annual_relative_return": -0.09838463806010256,
+    "annual_relative_cost_drag": -0.051328565093098244
+  },
+  "turnover_decomposition": {
+    "total_turnover": 689.0626262626259,
+    "total_buy_notional": 344.59696969696927,
+    "total_sell_notional": 344.46565656565616,
+    "total_gross_flow_notional": 689.0626262626254,
+    "replacement_turnover_component_total": 71.23939393939328,
+    "incumbent_resize_component_total": 283.48181818181797,
+    "replacement_share_of_component_flow": 0.20083206615523794,
+    "incumbent_resize_share_of_component_flow": 0.7991679338447621,
+    "post_warmup_replacement_share_of_component_flow": 0.20085762901549536,
+    "post_warmup_incumbent_resize_share_of_component_flow": 0.7991423709845046,
+    "holding_cohort_count": 18,
+    "warmup_days_excluded_from_post_warmup_view": 18
+  },
+  "daily_pattern_summary": {
+    "rebalance_days": 6299,
+    "entry_only_days": 1,
+    "exit_only_days": 1,
+    "mixed_replacement_days": 4562,
+    "resize_active_days": 6297,
+    "median_turnover_daily": 0.11111111111111109,
+    "max_turnover_daily": 0.16666666666666666,
+    "p90_turnover_daily": 0.1121212121212121,
+    "p99_turnover_daily": 0.1333333333333333
+  },
+  "cost_drag_interpretation": {
+    "annualized_turnover_proxy": 27.558130744038124,
+    "drag_per_1x_annual_turnover": 0.001862556120726823,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "diagnosis": {
+    "main_turnover_source": "incumbent_resize",
+    "post_warmup_main_turnover_source": "incumbent_resize",
+    "summary": "Turnover is dominated by incumbent resize flow rather than pure entry/exit replacement flow."
+  }
+}

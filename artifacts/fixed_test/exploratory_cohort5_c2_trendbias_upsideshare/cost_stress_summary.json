@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_cohort5_c2_trendbias_upsideshare",
+  "run_id": "exploratory_cohort5_c2_trendbias_upsideshare",
+  "attempt_id": "attempt_20260501_131040",
+  "generated_at": "2026-05-01T13:13:39.845610+08:00",
+  "candidate_scheme_id": "exploratory_cohort5_c2_trendbias_upsideshare",
+  "research_round_id": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.11995808838960609,
+  "pass_cost_stress_relative_return_floor": false
+}

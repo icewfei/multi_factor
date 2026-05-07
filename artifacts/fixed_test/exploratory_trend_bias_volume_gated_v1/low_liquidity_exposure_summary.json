@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_trend_bias_volume_gated_v1",
+  "run_id": "exploratory_trend_bias_volume_gated_v1",
+  "attempt_id": "attempt_20260501_145346",
+  "generated_at": "2026-05-01T14:56:28.231652+08:00",
+  "candidate_scheme_id": "exploratory_trend_bias_volume_gated_v1",
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "low_liquidity_holding_count": 4028,
+  "low_liquidity_weight_total": 80.55999999999891,
+  "low_liquidity_weight_share": 0.07736186067950686,
+  "low_liquidity_contribution_total": 0.09667480604929062,
+  "low_liquidity_contribution_share_of_strategy": 0.022683635212751675,
+  "low_liquidity_alpha_contribution_share": 0.004239605614472745,
+  "flag_high_low_liquidity_exposure": false
+}

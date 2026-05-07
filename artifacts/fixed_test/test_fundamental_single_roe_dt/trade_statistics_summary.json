@@ -1,0 +1,39 @@
+{
+  "fixed_test_run_id": "test_fundamental_single_roe_dt",
+  "run_id": "test_fundamental_single_roe_dt",
+  "attempt_id": "attempt_20260501_162543",
+  "generated_at": "2026-05-01T16:28:40.330044+08:00",
+  "candidate_scheme_id": "test_fundamental_single_roe_dt",
+  "research_round_id": "plumbing_validation_fundamental_20260501",
+  "holdings_count": 48318,
+  "unique_instruments": 305,
+  "signal_dates_with_positions": 5067,
+  "avg_exit_delay_days": 0.8612009620967073,
+  "delayed_exit_positions": 2265,
+  "terminal_event_positions": 77,
+  "total_entry_fill_weight": 966.3599999999622,
+  "avg_turnover_daily": 0.38025206774323606,
+  "median_turnover_daily": 0.4,
+  "max_turnover_daily": 0.6400000000000002,
+  "rebalance_days": 5075,
+  "run_state_summary_counts": {
+    "ranking_state_rows": 11198074,
+    "execution_state_rows": 11198074,
+    "ranking_anomaly_rows": 4073964,
+    "rankable_rows": 6706992,
+    "null_model_score_rows": 4491082,
+    "nonfinite_model_score_rows": 0,
+    "topk_frozen_rows": 49705,
+    "execution_attempt_rows": 49705,
+    "entry_filled_rows": 48318,
+    "backtest_executable_rows": 48318,
+    "unfilled_topk_count": 1387,
+    "unfilled_topk_weight": 138.70000000000002,
+    "topk_per_signal_breach_count": 0,
+    "topk_default_used": 10
+  },
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": []
+}

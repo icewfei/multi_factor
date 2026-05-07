@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_universe_liquidity_guard_20260418_1635",
+  "run_id": "fullchain_baseline_universe_liquidity_guard_20260418_1635",
+  "attempt_id": "attempt_20260418_171330",
+  "generated_at": "2026-04-18T17:19:14.469479+08:00",
+  "candidate_scheme_id": "baseline_momentum_v8_universe_liquidity_guard",
+  "research_round_id": "rr_baseline_universe_liquidity_guard_20260418",
+  "benchmark_contribution_total": 2.794440723861887,
+  "cash_drag_total": -2.436099319511283,
+  "selection_alpha_total": 0.6663247292188801,
+  "low_liquidity_contribution_total": 1.0582030629488601
+}

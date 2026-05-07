@@ -1,0 +1,33 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "attempt_id": "attempt_20260423_153416",
+  "generated_at": "2026-04-23T15:40:27.623851+08:00",
+  "inputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/attempts/attempt_20260423_153416/holdings.csv",
+    "portfolio_daily_summary_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/attempts/attempt_20260423_153416/portfolio_daily_summary.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/attempts/attempt_20260423_153416/turnover_daily.csv",
+    "run_state_audit_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/attempts/attempt_20260423_153416/data_quality_audit.json",
+    "run_state_attempt_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/attempts/attempt_20260423_153416/run_state_attempt_manifest.json",
+    "portfolio_artifacts_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/attempts/attempt_20260423_153416/portfolio_artifacts_manifest.json"
+  },
+  "outputs": {
+    "backtest_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/backtest_daily.csv",
+    "metrics_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/metrics.json",
+    "trade_statistics_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/trade_statistics_summary.json",
+    "annual_return_table_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/annual_return_table.csv",
+    "holding_period_return_distribution_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/holding_period_return_distribution.csv",
+    "topk_perturbation_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/topk_perturbation_summary.json",
+    "data_contract_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/data_contract_summary.json",
+    "audit_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/audit_summary.json",
+    "cash_source_explanation_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/cash_source_explanation.csv",
+    "low_liquidity_exposure_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/low_liquidity_exposure_summary.json",
+    "cost_stress_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/cost_stress_summary.json",
+    "return_attribution_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129/return_attribution_summary.json"
+  },
+  "notes": [
+    "Near-formal fixed-test skeleton.",
+    "Benchmark-relative metrics, annual return table, holding-period distribution, TopK perturbation summary, and audit-side summaries are included.",
+    "Daily PnL uses open-to-close on entry day, close-to-close on hold days, and actual sell price on exit day."
+  ]
+}

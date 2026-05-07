@@ -1,0 +1,93 @@
+{
+  "registered_at": "2026-05-02T14:00:00+08:00",
+  "research_round_id": "rr_exploratory_reversal_tail_handling_20260502",
+  "research_phase": "signal_learnability",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "tail_handling_structural_fix",
+  "round_note": "Signal/learnability phase. Validates that the strongest known signal (negated reversal, IC 0.044) can be made pipeline-compatible with a minimal per-day score-tail truncation. Not feature engineering. Not composite. Not data acquisition.",
+  "research_question": "对 negated reversal 做每日 cross-sectional 极值尾部截断（排除 top 1% / top 2% 再重排），是否能同时保留 >= 0.040 的高 IC 并恢复 Top10 label 方向为正？",
+  "changed_dimension": "score_tail_truncation",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "在 negated reversal score 上新增 per-day tail exclusion 预处理步骤。每个 signal_date: (1) 按 negated reversal raw score 降序排列所有股票, (2) 计算该日 score 的 p99/p98 横截面阈值, (3) 排除 raw score 严格超过该阈值的股票, (4) 在剩余股票中重新按 score 降序排列, (5) 从重排后的 universe 取 TopK=10。阈值基于 raw negated reversal score 计算(非 rank score, 非 composite), 按每个 signal_date 横截面独立计算(非全局统一阈值)。排除后不补位。不改变: oracle label 定义, 数据源, snapshot, contract, TopK, 执行语义, 成本模型, portfolio refresh rule。",
+  "baseline_reference_candidate_scheme_id": null,
+  "baseline_primary": {
+    "name": "raw negated reversal (no tail handling)",
+    "source": "exploratory_cross_horizon_c1_reversal_only/model_scores_D0.parquet (score × -1)",
+    "median_daily_ic": 0.0442,
+    "median_ci": [0.0405, 0.0479],
+    "top10_avg_label": -0.0018,
+    "top10_bot10_spread": -0.0045
+  },
+  "baseline_secondary": {
+    "name": "alpha158_cord30",
+    "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+    "median_daily_ic": 0.0325,
+    "median_ci": [0.0300, 0.0346],
+    "top10_avg_label": 0.0076,
+    "top10_bot10_spread": 0.0098
+  },
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "candidate_scheme_ids": ["reversal_tail_exclude_p99_v1", "reversal_tail_exclude_p98_v1"],
+  "planned_candidate_scheme_ids": ["reversal_tail_exclude_p99_v1", "reversal_tail_exclude_p98_v1"],
+  "candidates": {
+    "reversal_tail_exclude_p99_v1": {
+      "method": "exclude_top_1pct",
+      "name": "Negated reversal with top 1% exclusion",
+      "implementation": {
+        "step_1": "Per signal_date, rank all stocks by negated reversal raw score descending",
+        "step_2": "Compute 99th percentile of raw scores for that signal_date (cross-sectional)",
+        "step_3": "Exclude all stocks with raw score strictly above daily p99 from eligible pool",
+        "step_4": "Re-rank remaining stocks by negated reversal raw score descending",
+        "step_5": "Select TopK=10 from re-ranked remaining universe",
+        "threshold_type": "per signal_date cross-sectional percentile on raw negated reversal score",
+        "threshold_value": "p99 (99th percentile)",
+        "exclusion_scope": "excluded stocks removed from pool entirely for that date; no gap-filling"
+      },
+      "diagnosis_estimate": {"median_ic": 0.0470, "top10_bot10_spread": 0.0040}
+    },
+    "reversal_tail_exclude_p98_v1": {
+      "method": "exclude_top_2pct",
+      "name": "Negated reversal with top 2% exclusion",
+      "implementation": {
+        "step_1": "Same as p99 variant",
+        "step_2": "Compute 98th percentile of raw scores for that signal_date (cross-sectional)",
+        "step_3": "Exclude all stocks with raw score strictly above daily p98 from eligible pool",
+        "step_4": "Re-rank remaining stocks by negated reversal raw score descending",
+        "step_5": "Select TopK=10 from re-ranked remaining universe",
+        "threshold_type": "per signal_date cross-sectional percentile on raw negated reversal score",
+        "threshold_value": "p98 (98th percentile)",
+        "exclusion_scope": "excluded stocks removed from pool entirely for that date; no gap-filling"
+      },
+      "diagnosis_estimate": {"median_ic": 0.0459, "top10_bot10_spread": 0.0049}
+    }
+  },
+  "success_rules": {
+    "dimension_a_learnability": {
+      "median_daily_ic": ">= 0.040",
+      "bootstrap_95ci": "excludes zero"
+    },
+    "dimension_b_pipeline_compatibility": {
+      "top10_avg_label": "> 0",
+      "top10_bot10_spread": "> 0.003"
+    },
+    "core_pass_condition": "At least one candidate passes all 4 criteria (2 learnability + 2 pipeline). If both pass, the candidate with higher Top10-Bot10 spread is preferred.",
+    "stop_condition": "Neither candidate passes all 4 criteria — reversal cannot be salvaged with simple tail truncation alone. Either accept reversal as ranking-only signal, or defer to later phase with more sophisticated tail modeling.",
+    "ic_computation_method": "Spearman rank correlation (CORR of score vs oracle label_5d_next_open_close). Daily IC aggregated over all trading days in trainval snapshot where >= 20 stocks have non-null scores and labels. Bootstrap CI: 10,000 resamples, seed=42."
+  },
+  "exclusions": {
+    "winsorization": "Excluded from formal candidates. Diagnosis showed it restores direction but with weaker spread (+0.0015 vs +0.0040+ for exclusion).",
+    "exclude_top_5pct": "Excluded. Over-kill — spread degrades relative to 2% exclusion.",
+    "per_year_or_regime_conditional_thresholds": "Excluded. Adds complexity without clear benefit for a first validation.",
+    "reversal_composite_with_cord30": "Excluded. First prove tail-handled reversal works standalone.",
+    "new_data_sources": "Excluded.",
+    "contract_changes": "Excluded.",
+    "D10_holding_period": "Excluded."
+  },
+  "design_document": "项目总纲及计划/design_reversal_tail_handling_round.md",
+  "tail_diagnosis_reference": "scripts/run_reversal_tail_diagnosis.py (this session)",
+  "learnability_diagnostic_reference": "artifacts/fixed_test/learnability_diagnostic/learnability_diagnostic_20260502.md",
+  "serial_rule": "如果通过，下一阶段主线改为 tail-aware signal construction within existing feature space。如果不过，reversal 降级为 ranking-only signal 或延后处理，同时重开 data acquisition 讨论。"
+}

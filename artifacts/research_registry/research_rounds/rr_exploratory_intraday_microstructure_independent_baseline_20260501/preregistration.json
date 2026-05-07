@@ -1,0 +1,79 @@
+{
+  "registered_at": "2026-05-01T10:00:00+08:00",
+  "research_round_id": "rr_exploratory_intraday_microstructure_independent_baseline_20260501",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "family_construction",
+  "research_question": "在 D1-D5 短持有系统 + TopK + 现金保留 + 不补位合同下，以完全不包含 momentum 或 liquidity-trend 信号的日内微观结构信号 (intraday_trend_bias, upside_range_share, intraday_reversal_asymmetry) 构建的独立基线，能否在验证集（2019-2021）上通过 success rules？",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "v18_reference": {
+    "source": "fixed_test/confirmatory_reference_v18_trainval_20260429/validation_readout.json",
+    "window": "validation (2019-01 to 2021-12)",
+    "n_days": 730,
+    "annual_relative_return": -0.2748423962666595,
+    "relative_ir": -1.9033763095541587,
+    "max_drawdown": -0.3987887619659869,
+    "avg_turnover_daily": 0.07567966280295155,
+    "avg_invested_weight": 0.15543730242360554,
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "contract_path": "run_input_contract.research_trainval_20211231.json",
+    "note": "Validation-readout 而非 metrics.json（metrics.json 为全量窗口 n_days=5271，相对收益指标与该轮验证集窗口不匹配）。"
+  },
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "score_builder": "build_baseline_model_scores.py (需新增 feature_preset & SQL 计算)",
+  "registration_convention": "spec-first, implementation-second: feature_preset 与 score_rule 已在注册时冻结，builder 的 SQL 实现尚待补齐后验证一致性。补齐前不跑实验。",
+  "allowed_core_dimension": "score_family",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "change_control_detail": "完全替换 score family：从 v18 的 [momentum + liquidity_trend] 替换为 intraday microstructure signals。不允许改变：TopK(10)、执行语义、成本合同、基准、持仓提取规则、组合刷新规则 (refresh hysteresis)、purge gap、样本资格矩阵、流动性 guard (0.70 ranking eligibility guard)。",
+  "candidate_scheme_ids": [
+    "exploratory_intraday_c1_trendbias_only",
+    "exploratory_intraday_c2_trendbias_upsideshare",
+    "exploratory_intraday_c3_trendbias_upsideshare_reversalasym"
+  ],
+  "planned_candidate_scheme_ids": [
+    "exploratory_intraday_c1_trendbias_only",
+    "exploratory_intraday_c2_trendbias_upsideshare",
+    "exploratory_intraday_c3_trendbias_upsideshare_reversalasym"
+  ],
+  "preprocess_contract": {
+    "missing_imputation": "none",
+    "winsor_method": "mad_clip",
+    "winsor_param": 5.0,
+    "standardization": "cross_sectional_robust_zscore",
+    "neutralization": "none"
+  },
+  "success_rules": {
+    "pass_validation_annual_relative_return": "annual_relative_return >= 0.01",
+    "pass_validation_relative_ir": "relative_ir >= 0.30",
+    "pass_not_worse_than_baseline_return": "annual_relative_return_delta_vs_v18 >= -0.005",
+    "pass_avg_invested_weight": "avg_invested_weight >= 0.15",
+    "pass_max_drawdown_not_worse": "max_drawdown_delta_vs_v18 >= -0.05",
+    "pass_topk_perturbation": "topk_8_relative_return >= 0.00 AND topk_12_relative_return >= 0.00",
+    "pass_cost_stress": "cost_stress_annual_relative_return >= 0.00",
+    "pass_turnover_not_materially_worse": "avg_turnover_daily_delta_vs_v18 <= 0.04",
+    "core_pass_condition": "all of the above must pass"
+  },
+  "verdict_rules": {
+    "pass": "mark as reasonable_candidate",
+    "fail_all_3": "archive as completed_intraday_family_not_viable",
+    "candidate_relationship": "parallel, not cascading"
+  },
+  "forbidden": [
+    "不能新增第四个候选方案",
+    "中途不能更换候选名单",
+    "不能查看 2022-2025 测试集结果",
+    "不能将 intraday 信号与 v18 信号（momentum, liquidity_trend）组合",
+    "不能调整 v18 的 portfolio refresh hysteresis",
+    "不能改变信号预处理合同",
+    "不能新增中性化"
+  ],
+  "supersedes": [
+    {
+      "research_round_id": "rr_confirmatory_pv_microstructure_baseline_20260501",
+      "reason": "invalidated_due_to_reference_mismatch"
+    }
+  ]
+}

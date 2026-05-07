@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/backtest_daily.schema.json",
+  "title": "Backtest Daily CSV",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "trade_date",
+    "portfolio_daily_return",
+    "total_equity",
+    "cumulative_return",
+    "cash_weight",
+    "invested_weight"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "trade_date": { "type": "string" },
+    "portfolio_daily_return": { "type": ["number", "null"] },
+    "total_equity": { "type": ["number", "null"] },
+    "cumulative_return": { "type": ["number", "null"] },
+    "cash_weight": { "type": ["number", "null"] },
+    "invested_weight": { "type": ["number", "null"] },
+    "max_single_name_weight": { "type": ["number", "null"] },
+    "top3_weight": { "type": ["number", "null"] },
+    "portfolio_herfindahl_index": { "type": ["number", "null"] },
+    "buy_notional_daily": { "type": ["number", "null"] },
+    "sell_notional_daily": { "type": ["number", "null"] },
+    "turnover_daily": { "type": ["number", "null"] },
+    "rebalance_event_flag": { "type": "boolean" }
+  }
+}

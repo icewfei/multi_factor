@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/model_scores_D0.schema.json",
+  "title": "Model Scores D0",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "candidate_scheme_id",
+    "model_score_D0"
+  ],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "instrument": { "type": "string" },
+    "signal_date": { "type": "string" },
+    "candidate_scheme_id": { "type": "string" },
+    "model_score_D0": { "type": ["number", "null"] },
+    "score_component_count": { "type": ["integer", "null"] },
+    "reversal_rank": { "type": ["number", "null"] },
+    "momentum_rank": { "type": ["number", "null"] },
+    "lowvol_rank": { "type": ["number", "null"] },
+    "liquidity_rank": { "type": ["number", "null"] }
+  }
+}

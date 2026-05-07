@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_corr30_trainval_20260430",
+  "run_id": "confirmatory_corr30_trainval_20260430",
+  "attempt_id": "attempt_20260430_143439",
+  "generated_at": "2026-04-30T14:38:08.161432+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+  "research_round_id": "rr_confirmatory_alpha158_head_extraction_shortlist_round2_20260430",
+  "low_liquidity_holding_count": 4344,
+  "low_liquidity_weight_total": 18.886956521739283,
+  "low_liquidity_weight_share": 0.08627092725359439,
+  "low_liquidity_contribution_total": 0.08947624180786934,
+  "low_liquidity_contribution_share_of_strategy": 0.08516933508478167,
+  "low_liquidity_alpha_contribution_share": 0.05155923659730765,
+  "flag_high_low_liquidity_exposure": false
+}

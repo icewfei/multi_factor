@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-05-06T12:18:35+08:00",
+  "screen_results": [
+    {
+      "partner": "cord30",
+      "partner_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "median_daily_ic": 0.05441169242732293,
+      "median_daily_ic_ci_low": 0.050740051694899674,
+      "median_daily_ic_ci_high": 0.05788515127979891,
+      "top10_avg_label": 0.009713560093308758,
+      "bottom10_avg_label": -0.004127722069144675,
+      "top10_bot10_spread": 0.013841282162453433,
+      "top10_avg_liquidity_rank": 0.5605491372615234,
+      "top10_median_liquidity_rank": 0.5874572771974611,
+      "cross_signal_rank_corr": 0.11286708285906821
+    },
+    {
+      "partner": "corr30",
+      "partner_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+      "median_daily_ic": 0.05221616921056764,
+      "median_daily_ic_ci_low": 0.04870388755211557,
+      "median_daily_ic_ci_high": 0.055965812771125424,
+      "top10_avg_label": 0.009847651104596601,
+      "bottom10_avg_label": -0.006394051579031734,
+      "top10_bot10_spread": 0.016241702683628335,
+      "top10_avg_liquidity_rank": 0.5935846941480489,
+      "top10_median_liquidity_rank": 0.6384667773091901,
+      "cross_signal_rank_corr": 0.06641658055457954
+    },
+    {
+      "partner": "imxd5",
+      "partner_scheme_id": "price_volume_single_signal_alpha158_imxd5_v1",
+      "median_daily_ic": 0.044080063709776185,
+      "median_daily_ic_ci_low": 0.03910761472826442,
+      "median_daily_ic_ci_high": 0.04860013049573517,
+      "top10_avg_label": 0.006851035264873998,
+      "bottom10_avg_label": -0.0015551717640923952,
+      "top10_bot10_spread": 0.008406207028966392,
+      "top10_avg_liquidity_rank": 0.5955858372887243,
+      "top10_median_liquidity_rank": 0.6379468377635197,
+      "cross_signal_rank_corr": 0.6413429963785665
+    }
+  ]
+}

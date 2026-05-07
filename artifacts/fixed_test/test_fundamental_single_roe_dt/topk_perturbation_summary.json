@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "test_fundamental_single_roe_dt",
+  "run_id": "test_fundamental_single_roe_dt",
+  "attempt_id": "attempt_20260501_162543",
+  "generated_at": "2026-05-01T16:28:40.830162+08:00",
+  "candidate_scheme_id": "test_fundamental_single_roe_dt",
+  "research_round_id": "plumbing_validation_fundamental_20260501",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.03179228257208078,
+      "relative_ir": -0.02382242702804781
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.003443945394764336,
+      "relative_ir": 0.08639531297032692
+    }
+  ]
+}

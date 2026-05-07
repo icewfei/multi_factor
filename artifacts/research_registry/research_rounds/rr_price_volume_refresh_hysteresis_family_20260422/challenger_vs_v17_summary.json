@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-04-22T14:42:38+08:00",
+  "reference_candidate_scheme_id": "price_volume_v17_head_extraction_smoothing",
+  "challenger_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "reference_run_id": "fullchain_price_volume_head_extraction_smoothing_20260422_141534",
+  "challenger_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "summary_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.047056072967004314,
+      "challenger": -0.04414228898711203,
+      "delta": 0.0029137839798922816
+    },
+    "relative_ir": {
+      "reference": -0.40956655842046624,
+      "challenger": -0.4024807492034419,
+      "delta": 0.007085809217024341
+    },
+    "max_drawdown": {
+      "reference": -0.28266206166931773,
+      "challenger": -0.2772009864700842,
+      "delta": 0.005461075199233556
+    },
+    "avg_cash_weight": {
+      "reference": 0.7701280380379064,
+      "challenger": 0.7678748817060334,
+      "delta": -0.002253156331873063
+    },
+    "avg_invested_weight": {
+      "reference": 0.22987196196210838,
+      "challenger": 0.23212511829398338,
+      "delta": 0.002253156331875006
+    },
+    "avg_turnover_daily": {
+      "reference": 0.10935766168269097,
+      "challenger": 0.11104145726428083,
+      "delta": 0.0016837955815898614
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.030185107586274962,
+      "challenger": 0.029557319223990304,
+      "delta": -0.0006277883622846578
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    }
+  },
+  "conclusion": "Refresh hysteresis slightly improved annual_relative_return, relative_ir, max_drawdown, and low_liquidity_weight_share versus v17, but it did not reduce turnover and both TopK perturbation plus cost-stress audit gates still failed, so it remains a weak_candidate."
+}

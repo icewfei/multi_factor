@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-04-22T14:25:09+08:00",
+  "reference_candidate_scheme_id": "price_volume_v16_remove_trend_consistency",
+  "challenger_candidate_scheme_id": "price_volume_v17_head_extraction_smoothing",
+  "reference_run_id": "fullchain_price_volume_remove_trend_consistency_20260422_135614",
+  "challenger_run_id": "fullchain_price_volume_head_extraction_smoothing_20260422_141534",
+  "summary_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.05889061355032099,
+      "challenger": -0.047056072967004314,
+      "delta": 0.011834540583316677
+    },
+    "relative_ir": {
+      "reference": -0.4267481179417596,
+      "challenger": -0.40956655842046624,
+      "delta": 0.017181559521293355
+    },
+    "max_drawdown": {
+      "reference": -0.40370233923872245,
+      "challenger": -0.28266206166931773,
+      "delta": 0.12104027756940472
+    },
+    "avg_cash_weight": {
+      "reference": 0.841918254733673,
+      "challenger": 0.7701280380379064,
+      "delta": -0.07179021669576657
+    },
+    "avg_invested_weight": {
+      "reference": 0.15808174526631844,
+      "challenger": 0.22987196196210838,
+      "delta": 0.07179021669578994
+    },
+    "avg_turnover_daily": {
+      "reference": 0.07405234822311478,
+      "challenger": 0.10935766168269097,
+      "delta": 0.03530531345957619
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.1501594293415469,
+      "challenger": 0.030185107586274962,
+      "delta": -0.11997432175527195
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    }
+  },
+  "conclusion": "Head-extraction smoothing materially improved annual_relative_return, relative_ir, max_drawdown, and low_liquidity_weight_share versus v16, but it also increased turnover and still failed both TopK perturbation and cost-stress audit gates, so it remains a weak_candidate."
+}

@@ -1,0 +1,111 @@
+{
+  "registered_at": "2026-04-29T15:35:00+08:00",
+  "research_round_id": "rr_confirmatory_alpha158_vsumd60_family_seed_liquidity_guard_20260429",
+  "research_tier": "confirmatory",
+  "run_type": "confirmatory_family_seed",
+  "candidate_scheme_ids": [
+    "confirmatory_alpha158_vsumd60_seed_liquidity_guard70_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "confirmatory_alpha158_vsumd60_seed_liquidity_guard70_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "external_anchor_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After VSUMD60 passed confirmatory rounds 1 and 2 as a standalone Alpha158 atomic winner, can one restrained family seed that changes only the ranking eligibility guard improve tradability and cost robustness without giving back the confirmed standalone edge?",
+  "allowed_core_dimension": "ranking eligibility guard only",
+  "changed_dimension": "ranking_eligibility_guard",
+  "change_control_rule": "single_dimension_only",
+  "based_on_round_ids": [
+    "rr_confirmatory_alpha158_standalone_shortlist_round1_20260429",
+    "rr_confirmatory_alpha158_vsumd60_round2_strict_recheck_20260429"
+  ],
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_input_contract_path": "/Users/wy/MiscProject/multi_factor/contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "data_contract_version": "multifactor_data_contract_v2",
+  "time_partition_plan": {
+    "train_window": {
+      "start_date": "20100101",
+      "end_date": "20181231"
+    },
+    "validation_window": {
+      "start_date": "20190101",
+      "end_date": "20211231"
+    },
+    "test_window_access": "forbidden",
+    "note": "The frozen 2022-2025 test window remains excluded by construction through the trainval-only snapshot."
+  },
+  "seed_promotion_context": {
+    "promoted_atomic_winner": "price_volume_single_signal_alpha158_vsumd60_v1",
+    "round1_decision": "KEEP",
+    "round2_decision": "KEEP",
+    "family_seed_permission": "yes_with_restraint",
+    "governance_closeout_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/vsumd60_confirmatory_round1_round2_closeout_and_family_seed_decision_20260429.md"
+  },
+  "score_contract_frozen": {
+    "score_builder": "build_alpha158_standalone_model_scores.py",
+    "feature_set": [
+      "alpha158_vsumd60_raw"
+    ],
+    "feature_name": "VSUMD60",
+    "ranking_direction": "DESC",
+    "score_rule": "percentile_rank(alpha158_vsumd60_raw DESC); require min_feature_count >= 1",
+    "family_seed_type": "standalone_to_family_transition"
+  },
+  "guard_contract": {
+    "guard_name": "alpha158_vsumd60_liquidity_guard70_v1",
+    "guard_application_stage": "ranking_eligibility_guard",
+    "guard_definition": "Keep the VSUMD60 score unchanged. Only rows that are already ranking_eligible_D0 and whose 20-day average amount cross-sectional percentile is >= 0.70 on the same signal_date may enter the ranking universe.",
+    "liquidity_field": "liquidity_20d_raw",
+    "liquidity_rank_direction": "higher_liquidity_means_higher_rank",
+    "liquidity_min_percentile": 0.70,
+    "treatment_of_rows_below_guard": "Remain in audit tables but must be excluded from ranking_state_daily eligibility."
+  },
+  "constants_frozen": {
+    "topk": 10,
+    "portfolio_extraction_rule": "inherit current equal-weight standalone extraction from the confirmatory VSUMD60 reference unless explicitly superseded in a later seed round",
+    "portfolio_refresh_rule": "inherit current full daily refresh from the standalone confirmatory reference unless explicitly superseded in a later seed round",
+    "execution_semantics": "frozen",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "decision_rule": {
+    "type": "confirmatory_family_seed_boolean_gate",
+    "boolean_expression": "(validation_annual_relative_return_delta_vs_vsumd60 >= -0.02) AND (validation_relative_ir_delta_vs_vsumd60 >= -0.10) AND (validation_max_drawdown_delta_vs_vsumd60 >= 0.00) AND (validation_avg_turnover_daily_delta_vs_vsumd60 <= -0.01) AND (validation_low_liquidity_weight_share_delta_vs_vsumd60 <= 0.00) AND (validation_cost_stress_annual_relative_return_delta_vs_vsumd60 >= 0.00)",
+    "interpretation": "The seed is allowed to trade a small amount of standalone edge only if it clearly improves tradability and cost robustness; otherwise the standalone VSUMD60 reference remains the promoted object."
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_turnover_daily",
+    "avg_invested_weight",
+    "low_liquidity_weight_share",
+    "cost_stress_annual_relative_return",
+    "topk_perturbation_pass"
+  ],
+  "design_constraints": [
+    "Only the ranking eligibility guard may change in this seed round.",
+    "Do not reopen the failed Alpha158-to-v18 direct overlay path.",
+    "Do not add any second atomic signal.",
+    "Do not change TopK width, extraction geometry, refresh hysteresis, benchmark, or execution semantics in this round."
+  ],
+  "disallowed_changes": [
+    "Do not change the VSUMD60 score field or ranking direction.",
+    "Do not add multi-signal blends or overlays.",
+    "Do not change the snapshot, contract, or validation window after registration.",
+    "Do not change the guard threshold or guard stage after registration.",
+    "Do not compare only to v18; the primary reference for this round must be the confirmatory standalone VSUMD60 winner."
+  ],
+  "expected_outputs": [
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_vsumd60_family_seed_liquidity_guard_20260429/challenger_vs_vsumd60_summary.json",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_vsumd60_family_seed_liquidity_guard_20260429/challenger_vs_vsumd60_summary.md"
+  ],
+  "code_hash": "483879c38ed6e495524e98ca0777a3abc9694c331f160ada4453d554c082760e",
+  "governance_approver_id": "thread_user_approval_20260429",
+  "notes": [
+    "This prereg defines the first restrained family-seed transition from the confirmed standalone VSUMD60 winner.",
+    "The seed is intentionally minimal: keep the score fixed, add only a ranking liquidity guard, and judge it primarily against standalone VSUMD60 rather than against v18."
+  ]
+}

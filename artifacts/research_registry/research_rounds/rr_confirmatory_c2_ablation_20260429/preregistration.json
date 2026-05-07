@@ -1,0 +1,26 @@
+{
+  "registered_at": "2026-04-29T14:23:09.859772+08:00",
+  "research_round_id": "rr_confirmatory_c2_ablation_20260429",
+  "research_tier": "confirmatory",
+  "research_question": "Does removing the strongest signal (price_volume_beta) or the weakest signal (upside_range_share) from the 5-signal baseline degrade portfolio performance?",
+  "changed_dimension": "signal_set_membership",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "confirmatory_baseline_v1_equally_weighted_5sig",
+    "confirmatory_ablation_drop_price_volume_beta_4sig",
+    "confirmatory_ablation_drop_upside_range_share_4sig"
+  ],
+  "baseline_reference_candidate_scheme_id": "confirmatory_baseline_v1_equally_weighted_5sig",
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "topk": 10,
+    "holding_cohort_count": 5,
+    "combination_rule": "equal_weighted_percentile_ranks"
+  },
+  "pass_criteria": {
+    "boolean_expression": "annual_relative_return > 0.01 AND sharpe_ratio > 0.5 AND avg_invested_weight > 0.60"
+  },
+  "disallowed_changes": [
+    "Do not change snapshot, TopK, execution logic, or combination rule."
+  ]
+}

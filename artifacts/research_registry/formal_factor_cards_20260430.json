@@ -1,0 +1,1554 @@
+{
+  "as_of_date": "20260430",
+  "total_cards": 54,
+  "base_source_json": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/formal_factor_cards_20260429.json",
+  "supplement_source_markdown": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/formal_factor_cards_20260430.md",
+  "cards": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord10_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_cord10_raw",
+      "ranking_direction": "DESC (stronger 10-day rolling correlation between price change ratio and volume change ratio)",
+      "formula": "Qlib 原式: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 10)\n本系统实现: 同 CORD5，窗口改 10 日",
+      "economic_explanation": [
+        "Measures the correlation between daily price change ratio (close/prev_close) and daily volume change ratio over 10 days — a price-volume first-difference correlation.",
+        "Unlike CORR (level-level), CORD correlates change with change, isolating the co-movement of innovations.",
+        "Positive correlation indicates that positive price-change days also see disproportionate volume increases, a signature of flow-driven momentum."
+      ],
+      "pit_rule": "D0 及之前 10 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.013113,
+        "avg_daily_ic": 0.024033,
+        "positive_daily_ic_share": 0.623957,
+        "coverage_scored_with_label": 15020211,
+        "null_score_share": 0.00012,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005906,
+        "top10_minus_rank11_20": 0.000126,
+        "top10_minus_bottom10": 0.007534
+      },
+      "memo": "IC=0.013113。量价滚动相关(alpha158)。Top10-Bottom10=0.007534。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord20_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_cord20_raw",
+      "ranking_direction": "DESC (stronger 20-day rolling correlation between price change ratio and volume change ratio)",
+      "formula": "Qlib 原式: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 20)\n本系统实现: 同 CORD5，窗口改 20 日",
+      "economic_explanation": [
+        "Measures the correlation between daily price change ratio (close/prev_close) and daily volume change ratio over 20 days — a price-volume first-difference correlation.",
+        "Unlike CORR (level-level), CORD correlates change with change, isolating the co-movement of innovations.",
+        "Positive correlation indicates that positive price-change days also see disproportionate volume increases, a signature of flow-driven momentum."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.016534,
+        "avg_daily_ic": 0.029667,
+        "positive_daily_ic_share": 0.6392260000000001,
+        "coverage_scored_with_label": 15020216,
+        "null_score_share": 0.000119,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006332,
+        "top10_minus_rank11_20": 0.000311,
+        "top10_minus_bottom10": 0.008273
+      },
+      "memo": "IC=0.016534。量价滚动相关(alpha158)。Top10-Bottom10=0.008273。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_cord30_raw",
+      "ranking_direction": "DESC (stronger 30-day rolling correlation between price change ratio and volume change ratio)",
+      "formula": "Qlib 原式: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 30)\n本系统实现: 同 CORD5，窗口改 30 日",
+      "economic_explanation": [
+        "Measures the correlation between daily price change ratio (close/prev_close) and daily volume change ratio over 30 days — a price-volume first-difference correlation.",
+        "Unlike CORR (level-level), CORD correlates change with change, isolating the co-movement of innovations.",
+        "Positive correlation indicates that positive price-change days also see disproportionate volume increases, a signature of flow-driven momentum."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.016812,
+        "avg_daily_ic": 0.031407,
+        "positive_daily_ic_share": 0.6401699999999999,
+        "coverage_scored_with_label": 15020216,
+        "null_score_share": 0.000119,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006834,
+        "top10_minus_rank11_20": 0.000807,
+        "top10_minus_bottom10": 0.009034
+      },
+      "memo": "IC=0.016812。量价滚动相关(alpha158)。Top10-Bottom10=0.009034。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord5_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_cord5_raw",
+      "ranking_direction": "DESC (stronger 5-day rolling correlation between price change ratio and volume change ratio)",
+      "formula": "Qlib 原式: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 5)\n本系统实现: CORR(adj_close/LAG(adj_close,1) OVER w, LN(GREATEST(amount,0)+1)-LN(GREATEST(LAG(amount,1) OVER w,0)+1)) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 4 PRECEDING AND CURRENT ROW)",
+      "economic_explanation": [
+        "Measures the correlation between daily price change ratio (close/prev_close) and daily volume change ratio over 5 days — a price-volume first-difference correlation.",
+        "Unlike CORR (level-level), CORD correlates change with change, isolating the co-movement of innovations.",
+        "Positive correlation indicates that positive price-change days also see disproportionate volume increases, a signature of flow-driven momentum."
+      ],
+      "pit_rule": "D0 及之前 5 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.014893,
+        "avg_daily_ic": 0.029532,
+        "positive_daily_ic_share": 0.653864,
+        "coverage_scored_with_label": 15020082,
+        "null_score_share": 0.000129,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006649,
+        "top10_minus_rank11_20": 0.00026,
+        "top10_minus_bottom10": 0.007191
+      },
+      "memo": "IC=0.014893。量价滚动相关(alpha158)。Top10-Bottom10=0.007191。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord60_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_cord60_raw",
+      "ranking_direction": "DESC (stronger 60-day rolling correlation between price change ratio and volume change ratio)",
+      "formula": "Qlib 原式: Corr($close/Ref($close,1), Log($volume/Ref($volume, 1)+1), 60)\n本系统实现: 同 CORD5，窗口改 60 日",
+      "economic_explanation": [
+        "Measures the correlation between daily price change ratio (close/prev_close) and daily volume change ratio over 60 days — a price-volume first-difference correlation.",
+        "Unlike CORR (level-level), CORD correlates change with change, isolating the co-movement of innovations.",
+        "Positive correlation indicates that positive price-change days also see disproportionate volume increases, a signature of flow-driven momentum."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.013683,
+        "avg_daily_ic": 0.02612,
+        "positive_daily_ic_share": 0.625216,
+        "coverage_scored_with_label": 15020216,
+        "null_score_share": 0.000119,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.00604,
+        "top10_minus_rank11_20": 0.000203,
+        "top10_minus_bottom10": 0.006436
+      },
+      "memo": "IC=0.013683。量价滚动相关(alpha158)。Top10-Bottom10=0.006436。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr10_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_corr10_raw",
+      "ranking_direction": "DESC (stronger 10-day rolling correlation between close and log volume)",
+      "formula": "Qlib 原式: Corr($close, Log($volume+1), 10)\n本系统实现: CORR(close, LN(GREATEST(amount, 0)+1)) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW)",
+      "economic_explanation": [
+        "Measures the Pearson correlation between close price and log-volume over 10 trading days — a rolling price-volume co-movement intensity metric.",
+        "Higher positive correlation suggests that price increases are accompanied by volume expansion, consistent with informed or momentum-driven flow.",
+        "Over 10 days, this captures medium-frequency price-volume synchronicity that tends to persist into the next holding period."
+      ],
+      "pit_rule": "D0 及之前 10 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01824,
+        "avg_daily_ic": 0.029058,
+        "positive_daily_ic_share": 0.641486,
+        "coverage_scored_with_label": 15021085,
+        "null_score_share": 6.2e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.010792,
+        "top10_minus_rank11_20": 0.002866,
+        "top10_minus_bottom10": 0.012868
+      },
+      "memo": "IC=0.018240。量价滚动相关(alpha158)。Top10-Bottom10=0.012868。 该类信号 IC 为全池最高。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr20_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_corr20_raw",
+      "ranking_direction": "DESC (stronger 20-day rolling correlation between close and log volume)",
+      "formula": "Qlib 原式: Corr($close, Log($volume+1), 20)\n本系统实现: CORR(close, LN(GREATEST(amount, 0)+1)) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 19 PRECEDING AND CURRENT ROW)",
+      "economic_explanation": [
+        "Measures the Pearson correlation between close price and log-volume over 20 trading days — a rolling price-volume co-movement intensity metric.",
+        "Higher positive correlation suggests that price increases are accompanied by volume expansion, consistent with informed or momentum-driven flow.",
+        "Over 20 days, this captures medium-frequency price-volume synchronicity that tends to persist into the next holding period."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.018514,
+        "avg_daily_ic": 0.030448,
+        "positive_daily_ic_share": 0.642273,
+        "coverage_scored_with_label": 15021085,
+        "null_score_share": 6.2e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.010246,
+        "top10_minus_rank11_20": 0.002756,
+        "top10_minus_bottom10": 0.0129
+      },
+      "memo": "IC=0.018514。量价滚动相关(alpha158)。Top10-Bottom10=0.012900。 该类信号 IC 为全池最高。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_corr30_raw",
+      "ranking_direction": "DESC (stronger 30-day rolling correlation between close and log volume)",
+      "formula": "Qlib 原式: Corr($close, Log($volume+1), 30)\n本系统实现: CORR(close, LN(GREATEST(amount, 0)+1)) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW)",
+      "economic_explanation": [
+        "Measures the Pearson correlation between close price and log-volume over 30 trading days — a rolling price-volume co-movement intensity metric.",
+        "Higher positive correlation suggests that price increases are accompanied by volume expansion, consistent with informed or momentum-driven flow.",
+        "Over 30 days, this captures medium-frequency price-volume synchronicity that tends to persist into the next holding period."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.015796,
+        "avg_daily_ic": 0.026934,
+        "positive_daily_ic_share": 0.626062,
+        "coverage_scored_with_label": 15021085,
+        "null_score_share": 6.2e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.009138,
+        "top10_minus_rank11_20": 0.002432,
+        "top10_minus_bottom10": 0.011129
+      },
+      "memo": "IC=0.015796。量价滚动相关(alpha158)。Top10-Bottom10=0.011129。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr5_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_corr5_raw",
+      "ranking_direction": "DESC (stronger 5-day rolling correlation between close and log volume)",
+      "formula": "Qlib 原式: Corr($close, Log($volume+1), 5)\n本系统实现: CORR(close, LN(GREATEST(amount, 0)+1)) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 4 PRECEDING AND CURRENT ROW)",
+      "economic_explanation": [
+        "Measures the Pearson correlation between close price and log-volume over 5 trading days — a rolling price-volume co-movement intensity metric.",
+        "Higher positive correlation suggests that price increases are accompanied by volume expansion, consistent with informed or momentum-driven flow.",
+        "Over 5 days, this captures medium-frequency price-volume synchronicity that tends to persist into the next holding period."
+      ],
+      "pit_rule": "D0 及之前 5 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.016252,
+        "avg_daily_ic": 0.027261,
+        "positive_daily_ic_share": 0.647151,
+        "coverage_scored_with_label": 15020717,
+        "null_score_share": 8.7e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.007483,
+        "top10_minus_rank11_20": 0.000454,
+        "top10_minus_bottom10": 0.008377
+      },
+      "memo": "IC=0.016252。量价滚动相关(alpha158)。Top10-Bottom10=0.008377。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr60_v1",
+      "family": "量价滚动相关(alpha158)",
+      "field_name": "alpha158_corr60_raw",
+      "ranking_direction": "DESC (stronger 60-day rolling correlation between close and log volume)",
+      "formula": "Qlib 原式: Corr($close, Log($volume+1), 60)\n本系统实现: CORR(close, LN(GREATEST(amount, 0)+1)) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 59 PRECEDING AND CURRENT ROW)",
+      "economic_explanation": [
+        "Measures the Pearson correlation between close price and log-volume over 60 trading days — a rolling price-volume co-movement intensity metric.",
+        "Higher positive correlation suggests that price increases are accompanied by volume expansion, consistent with informed or momentum-driven flow.",
+        "Over 60 days, this captures medium-frequency price-volume synchronicity that tends to persist into the next holding period."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内有效配对观测 < 3 个，则信号值为 NULL",
+      "expected_failure_mode": [
+        "低波动/低成交环境，相关系数不可靠",
+        "分红/除权日附近价格调整可能导致相关性失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.00821,
+        "avg_daily_ic": 0.015454,
+        "positive_daily_ic_share": 0.581366,
+        "coverage_scored_with_label": 15021085,
+        "null_score_share": 6.2e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.00678,
+        "top10_minus_rank11_20": 0.00095,
+        "top10_minus_bottom10": 0.005522
+      },
+      "memo": "IC=0.008210。量价滚动相关(alpha158)。Top10-Bottom10=0.005522。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_003_v1",
+      "family": "alpha158 -> full",
+      "field_name": "alpha158 全集 003",
+      "ranking_direction": "DESC",
+      "formula": "见 alpha158 qlib 全集清单",
+      "economic_explanation": [
+        "alpha158 全集中表现较强的因子之一。",
+        "具体含义需查 alpha158 特征字典。"
+      ],
+      "pit_rule": "D0 及之前",
+      "missing_handling": "标准 alpha158 规则",
+      "expected_failure_mode": "需单独验证独立性，避免与其它信号高度冗余",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01116032435642103,
+        "avg_daily_ic": 0.019319089631253582,
+        "positive_daily_ic_share": 0.5908089392508656,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 5.9539044385865264e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004795889285570261,
+        "top10_minus_rank11_20": 0.0005000211449887361,
+        "top10_minus_bottom10": 0.00821064943147462
+      },
+      "memo": "IC=0.0112。与 036 属于同批次。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_004_v1",
+      "family": "alpha158 -> full",
+      "field_name": "alpha158 全集 004",
+      "ranking_direction": "DESC",
+      "formula": "见 alpha158 qlib 全集清单",
+      "economic_explanation": [
+        "alpha158 全集中表现较强的因子之一。",
+        "具体含义需查 alpha158 特征字典。"
+      ],
+      "pit_rule": "D0 及之前",
+      "missing_handling": "标准 alpha158 规则",
+      "expected_failure_mode": "需验证与其它 alpha158 信号的冗余程度",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.009716580004049668,
+        "avg_daily_ic": 0.017430377018558024,
+        "positive_daily_ic_share": 0.5879760780610639,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 5.9539044385865264e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.00432087753417114,
+        "top10_minus_rank11_20": 0.00012180787584820368,
+        "top10_minus_bottom10": 0.007888219252216116
+      },
+      "memo": "IC=0.0097。alpha158 系列。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_019_v1",
+      "family": "alpha158 -> full",
+      "field_name": "alpha158 全集 019",
+      "ranking_direction": "DESC",
+      "formula": "见 alpha158 qlib 全集清单",
+      "economic_explanation": [
+        "alpha158 全集中表现较强的因子之一。",
+        "具体含义需查 alpha158 特征字典。"
+      ],
+      "pit_rule": "D0 及之前",
+      "missing_handling": "标准 alpha158 规则",
+      "expected_failure_mode": "需验证独立性",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.00642757744620405,
+        "avg_daily_ic": 0.01117101871094452,
+        "positive_daily_ic_share": 0.556726986624705,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004857969440723643,
+        "top10_minus_rank11_20": 0.0019603872045900208,
+        "top10_minus_bottom10": 0.010865009679049294
+      },
+      "memo": "IC=0.0064。alpha158 系列。Top10-Bottom10 差值较大(0.0109)"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_027_v1",
+      "family": "alpha158 -> full",
+      "field_name": "alpha158 全集 027",
+      "ranking_direction": "DESC",
+      "formula": "见 alpha158 qlib 全集清单",
+      "economic_explanation": [
+        "alpha158 全集中表现较强的因子之一。",
+        "具体含义需查 alpha158 特征字典。"
+      ],
+      "pit_rule": "D0 及之前",
+      "missing_handling": "标准 alpha158 规则",
+      "expected_failure_mode": "需单独验证独立性",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.010886435732098857,
+        "avg_daily_ic": 0.018941656070205683,
+        "positive_daily_ic_share": 0.5951219512195122,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.00625340409299724,
+        "top10_minus_rank11_20": 0.0007772433648758834,
+        "top10_minus_bottom10": 0.007637965740994434
+      },
+      "memo": "IC=0.0109。alpha158 系列。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_full_036_v1",
+      "family": "alpha158 -> full",
+      "field_name": "alpha158 全集中编号 036 的信号",
+      "ranking_direction": "DESC",
+      "formula": "alpha158 全集定义，见 /Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+      "economic_explanation": [
+        "alpha158 全因子集中表现最好的之一，属于 price-volume 量价派生类。",
+        "具体经济含义需映射回 qlib Alpha158 特征定义。"
+      ],
+      "pit_rule": "D0 及之前可见的行情数据",
+      "missing_handling": "alpha158 标准缺失处理规则",
+      "expected_failure_mode": "alpha158 全集中部分因子在 A 股特定时期可能过拟合",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.011240118969749264,
+        "avg_daily_ic": 0.019715264024202886,
+        "positive_daily_ic_share": 0.5930763178599527,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.007207988921719944,
+        "top10_minus_rank11_20": 0.0010239125702312417,
+        "top10_minus_bottom10": 0.008815207199037525
+      },
+      "memo": "IC=0.0112。alpha158_full 系列中 Top 正向信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_imax20_v1",
+      "family": "滚动价格(alpha158)",
+      "field_name": "alpha158_imax20_raw",
+      "ranking_direction": "DESC (more recent 20-day rolling high occurrence)",
+      "formula": "Qlib 原式: IdxMax($high, 20)/20\n本系统实现: MAX(adj_high) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 19 PRECEDING AND CURRENT ROW) / 20 — 判断最近 20 日最高价出现在多久以前",
+      "economic_explanation": [
+        "Index of when the 20-day rolling high occurred: 1 = today, 20 = 20 days ago.",
+        "Recent high (lower number, ranked higher under DESC) signals bullish momentum persistence.",
+        "Fresh 20-day highs attract momentum capital, can be self-reinforcing over 5 days."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足（次新股），则信号为 NULL",
+      "expected_failure_mode": [
+        "震荡区间 20 日新高频繁出现，IMAX20 可能长期在 1-3 区间"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.008608,
+        "avg_daily_ic": 0.013915,
+        "positive_daily_ic_share": 0.557042,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.003867,
+        "top10_minus_rank11_20": 0.000235,
+        "top10_minus_bottom10": 0.004652
+      },
+      "memo": "IC=0.008608。滚动价格(alpha158)。Top10-Bottom10=0.004652。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_imxd5_v1",
+      "family": "滚动价格(alpha158)",
+      "field_name": "alpha158_imxd5_raw",
+      "ranking_direction": "DESC (5-day rolling high occurs after rolling low)",
+      "formula": "Qlib 原式: (IdxMax($high, 5)-IdxMin($low, 5))/5\n本系统实现: (MAX(adj_high) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 4 PRECEDING AND CURRENT ROW) - MIN(adj_low) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 4 PRECEDING AND CURRENT ROW)) / 5 — 5日最高价到最低价的时间跨度",
+      "economic_explanation": [
+        "Time lag between 5-day high and 5-day low occurrence. 'V-shaped' recovery (low first, high later) signals bullish reversal momentum.",
+        "Stocks showing this path-dependence tend to have better short-term forward returns."
+      ],
+      "pit_rule": "D0 及之前 5 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足（次新股），则信号为 NULL",
+      "expected_failure_mode": [
+        "单边下跌中 high 长期远早于 low（突破失败信号）"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.016256,
+        "avg_daily_ic": 0.031425,
+        "positive_daily_ic_share": 0.620456,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004913,
+        "top10_minus_rank11_20": 0.00028,
+        "top10_minus_bottom10": 0.006634
+      },
+      "memo": "IC=0.016256。滚动价格(alpha158)。Top10-Bottom10=0.006634。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_low0_v1",
+      "family": "alpha158 -> named",
+      "field_name": "alpha158_low0_raw",
+      "ranking_direction": "DESC",
+      "formula": "qlib Alpha158 定义: (low - vwap) / (close + vwap) 的 20 日变体或其等价公式",
+      "economic_explanation": [
+        "alpha158 因子体系中以最低价(low)为核心的定价偏离类因子。",
+        "衡量日内低价相对于成交量加权均价(vwap)的偏离程度，反映日内吸收卖压的能力。",
+        "较低的偏离(价格在 vwap 附近获得支撑)预示后续正向收益。"
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 low, close, amount, vwap",
+      "missing_handling": "任一核心字段缺失则该值为 NULL",
+      "expected_failure_mode": "极端行情下 low 价格可能失真；需注意 qlib 实现与该项目的口径差异",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.011783137309113574,
+        "avg_daily_ic": 0.019262070959651177,
+        "positive_daily_ic_share": 0.5996852871754524,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006667060105837879,
+        "top10_minus_rank11_20": 0.0019485310695493393,
+        "top10_minus_bottom10": 0.013717017285788684
+      },
+      "memo": "IC=0.0118。alpha158 体系中入围 strongest positive 的命名信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_rsqr10_v1",
+      "family": "滚动价格(alpha158)",
+      "field_name": "alpha158_rsqr10_raw",
+      "ranking_direction": "DESC (higher 10-day linear-trend fit quality)",
+      "formula": "Qlib 原式: Rsquare($close, 10)\n本系统实现: REGR_R2(adj_close, ROW_NUMBER() OVER w) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) — 滚动 10 日线性回归拟合优度",
+      "economic_explanation": [
+        "10-day rolling R-squared of close price against a linear time trend — trend strength/fit quality.",
+        "Higher R-squared means the price path is more linear/trend-like with less noise.",
+        "Stocks in clean linear trends tend to persist over the near term."
+      ],
+      "pit_rule": "D0 及之前 10 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足（次新股），则信号为 NULL",
+      "expected_failure_mode": [
+        "非线性趋势中 R-squared 偏高但线性拟合不准确",
+        "次新股不可用"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.004196,
+        "avg_daily_ic": 0.006838,
+        "positive_daily_ic_share": 0.552565,
+        "coverage_scored_with_label": 15021085,
+        "null_score_share": 6.2e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004447,
+        "top10_minus_rank11_20": 0.000143,
+        "top10_minus_bottom10": 0.00234
+      },
+      "memo": "IC=0.004196。滚动价格(alpha158)。Top10-Bottom10=0.002340。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma10_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vma10_raw",
+      "ranking_direction": "ASC (current volume above its 10-day average)",
+      "formula": "Qlib 原式: Mean($volume, 10)/($volume+1e-12)\n本系统实现: 同 VMA5，窗口改 10 日",
+      "economic_explanation": [
+        "Ratio of current-day trading volume to its 10-day rolling average — a volume level vs normal comparison.",
+        "Higher ratio (lower under ASC ranking) means current volume is elevated relative to recent norms.",
+        "Stocks at below-normal volume tend to have more predictable, less noisy return distributions."
+      ],
+      "pit_rule": "D0 及之前 10 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "持续放量/缩量趋势中，VMA 长期偏离 1，失去均值回复特性"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.008574,
+        "avg_daily_ic": 0.015808,
+        "positive_daily_ic_share": 0.583635,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004719,
+        "top10_minus_rank11_20": 0.00113,
+        "top10_minus_bottom10": 0.010681
+      },
+      "memo": "IC=0.008574。成交量滚动(alpha158)。Top10-Bottom10=0.010681。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma20_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vma20_raw",
+      "ranking_direction": "ASC (current volume above its 20-day average)",
+      "formula": "Qlib 原式: Mean($volume, 20)/($volume+1e-12)\n本系统实现: 同 VMA5，窗口改 20 日",
+      "economic_explanation": [
+        "Ratio of current-day trading volume to its 20-day rolling average — a volume level vs normal comparison.",
+        "Higher ratio (lower under ASC ranking) means current volume is elevated relative to recent norms.",
+        "Stocks at below-normal volume tend to have more predictable, less noisy return distributions."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "持续放量/缩量趋势中，VMA 长期偏离 1，失去均值回复特性"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.008139,
+        "avg_daily_ic": 0.014107,
+        "positive_daily_ic_share": 0.569001,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004944,
+        "top10_minus_rank11_20": 0.001492,
+        "top10_minus_bottom10": 0.011979
+      },
+      "memo": "IC=0.008139。成交量滚动(alpha158)。Top10-Bottom10=0.011979。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma30_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vma30_raw",
+      "ranking_direction": "ASC (current volume above its 30-day average)",
+      "formula": "Qlib 原式: Mean($volume, 30)/($volume+1e-12)\n本系统实现: 同 VMA5，窗口改 30 日",
+      "economic_explanation": [
+        "Ratio of current-day trading volume to its 30-day rolling average — a volume level vs normal comparison.",
+        "Higher ratio (lower under ASC ranking) means current volume is elevated relative to recent norms.",
+        "Stocks at below-normal volume tend to have more predictable, less noisy return distributions."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "持续放量/缩量趋势中，VMA 长期偏离 1，失去均值回复特性"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.009701,
+        "avg_daily_ic": 0.016449,
+        "positive_daily_ic_share": 0.575767,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005752,
+        "top10_minus_rank11_20": 0.00129,
+        "top10_minus_bottom10": 0.013021
+      },
+      "memo": "IC=0.009701。成交量滚动(alpha158)。Top10-Bottom10=0.013021。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma5_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vma5_raw",
+      "ranking_direction": "ASC (current volume above its 5-day average)",
+      "formula": "Qlib 原式: Mean($volume, 5)/($volume+1e-12)\n本系统实现: AVG(amount) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 4 PRECEDING AND CURRENT ROW) / GREATEST(amount, 1e-12)",
+      "economic_explanation": [
+        "Ratio of current-day trading volume to its 5-day rolling average — a volume level vs normal comparison.",
+        "Higher ratio (lower under ASC ranking) means current volume is elevated relative to recent norms.",
+        "Stocks at below-normal volume tend to have more predictable, less noisy return distributions."
+      ],
+      "pit_rule": "D0 及之前 5 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "持续放量/缩量趋势中，VMA 长期偏离 1，失去均值回复特性"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.007469,
+        "avg_daily_ic": 0.012777,
+        "positive_daily_ic_share": 0.577498,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.003571,
+        "top10_minus_rank11_20": 0.001184,
+        "top10_minus_bottom10": 0.007411
+      },
+      "memo": "IC=0.007469。成交量滚动(alpha158)。Top10-Bottom10=0.007411。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma60_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vma60_raw",
+      "ranking_direction": "ASC (current volume above its 60-day average)",
+      "formula": "Qlib 原式: Mean($volume, 60)/($volume+1e-12)\n本系统实现: 同 VMA5，窗口改 60 日",
+      "economic_explanation": [
+        "Ratio of current-day trading volume to its 60-day rolling average — a volume level vs normal comparison.",
+        "Higher ratio (lower under ASC ranking) means current volume is elevated relative to recent norms.",
+        "Stocks at below-normal volume tend to have more predictable, less noisy return distributions."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "持续放量/缩量趋势中，VMA 长期偏离 1，失去均值回复特性"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.012987,
+        "avg_daily_ic": 0.022111,
+        "positive_daily_ic_share": 0.59229,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006174,
+        "top10_minus_rank11_20": 0.001034,
+        "top10_minus_bottom10": 0.01381
+      },
+      "memo": "IC=0.012987。成交量滚动(alpha158)。Top10-Bottom10=0.013810。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vstd30_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vstd30_raw",
+      "ranking_direction": "ASC (lower 30-day volume volatility relative to current volume)",
+      "formula": "Qlib 原式: Std($volume, 30)/($volume+1e-12)\n本系统实现: STDDEV_SAMP(amount) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) / GREATEST(amount, 1e-12)",
+      "economic_explanation": [
+        "Rolling 30-day standard deviation of volume divided by current volume — normalized volume volatility.",
+        "Lower volume volatility (higher under ASC) indicates more consistent trading activity, predicting lower future transaction costs."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "量能极端异常日（如复牌），std 可能被巨大变化主导"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.002992,
+        "avg_daily_ic": 0.00484,
+        "positive_daily_ic_share": 0.524394,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005973,
+        "top10_minus_rank11_20": 0.001231,
+        "top10_minus_bottom10": 0.005786
+      },
+      "memo": "IC=0.002992。成交量滚动(alpha158)。Top10-Bottom10=0.005786。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vstd60_v1",
+      "family": "成交量滚动(alpha158)",
+      "field_name": "alpha158_vstd60_raw",
+      "ranking_direction": "ASC (lower 60-day volume volatility relative to current volume)",
+      "formula": "Qlib 原式: Std($volume, 60)/($volume+1e-12)\n本系统实现: 同 VSTD30，窗口改 60 日",
+      "economic_explanation": [
+        "Rolling 60-day standard deviation of volume divided by current volume — normalized volume volatility.",
+        "Lower volume volatility (higher under ASC) indicates more consistent trading activity, predicting lower future transaction costs."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "量能极端异常日（如复牌），std 可能被巨大变化主导"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.009688,
+        "avg_daily_ic": 0.015409,
+        "positive_daily_ic_share": 0.571136,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.00645,
+        "top10_minus_rank11_20": 0.000993,
+        "top10_minus_bottom10": 0.008924
+      },
+      "memo": "IC=0.009688。成交量滚动(alpha158)。Top10-Bottom10=0.008924。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd20_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsumd20_raw",
+      "ranking_direction": "DESC (higher 20-day positive-minus-negative volume change share)",
+      "formula": "Qlib 原式: (Sum(Greater($volume-Ref($volume, 1), 0), 20)-Sum(Greater(Ref($volume, 1)-$volume, 0), 20))/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)\n本系统实现: (VSUMP20的结果 - VSUMN20的结果) — 上涨量能日占比减去下跌量能日占比",
+      "economic_explanation": [
+        "Net difference between positive and negative volume-change shares over 20 days — 'volume momentum' at the daily-change level.",
+        "Positive values indicate net volume expansion, attracting continued trading interest and price appreciation."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.010995,
+        "avg_daily_ic": 0.017574,
+        "positive_daily_ic_share": 0.587347,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005347,
+        "top10_minus_rank11_20": 0.0005,
+        "top10_minus_bottom10": 0.012561
+      },
+      "memo": "IC=0.010995。成交量路径(alpha158)。Top10-Bottom10=0.012561。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd30_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsumd30_raw",
+      "ranking_direction": "DESC (higher 30-day positive-minus-negative volume change share)",
+      "formula": "Qlib 原式: (Sum(Greater($volume-Ref($volume, 1), 0), 30)-Sum(Greater(Ref($volume, 1)-$volume, 0), 30))/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)\n本系统实现: 同 VSUMD20，窗口改 30 日",
+      "economic_explanation": [
+        "Net difference between positive and negative volume-change shares over 30 days — 'volume momentum' at the daily-change level.",
+        "Positive values indicate net volume expansion, attracting continued trading interest and price appreciation."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.013641,
+        "avg_daily_ic": 0.022346,
+        "positive_daily_ic_share": 0.610324,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006593,
+        "top10_minus_rank11_20": 0.001045,
+        "top10_minus_bottom10": 0.013912
+      },
+      "memo": "IC=0.013641。成交量路径(alpha158)。Top10-Bottom10=0.013912。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsumd60_raw",
+      "ranking_direction": "DESC (higher 60-day positive-minus-negative volume change share)",
+      "formula": "Qlib 原式: (Sum(Greater($volume-Ref($volume, 1), 0), 60)-Sum(Greater(Ref($volume, 1)-$volume, 0), 60))/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)\n本系统实现: 同 VSUMD20，窗口改 60 日",
+      "economic_explanation": [
+        "Net difference between positive and negative volume-change shares over 60 days — 'volume momentum' at the daily-change level.",
+        "Positive values indicate net volume expansion, attracting continued trading interest and price appreciation."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.014043,
+        "avg_daily_ic": 0.023207,
+        "positive_daily_ic_share": 0.618508,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005517,
+        "top10_minus_rank11_20": 0.000583,
+        "top10_minus_bottom10": 0.013535
+      },
+      "memo": "IC=0.014043。成交量路径(alpha158)。Top10-Bottom10=0.013535。\n\n---"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn20_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsumn20_raw",
+      "ranking_direction": "ASC (lower 20-day share of negative volume change magnitude)",
+      "formula": "Qlib 原式: Sum(Greater(Ref($volume, 1)-$volume, 0), 20)/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)\n本系统实现: SUM(CASE WHEN LAG(amount,1) OVER w-amount>0 THEN 1 ELSE 0 END) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 19 PRECEDING AND CURRENT ROW)/GREATEST(COUNT(*) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 19 PRECEDING AND CURRENT ROW),1)",
+      "economic_explanation": [
+        "Fraction of 20-day volume-change days that are negative — share of days where volume contracted.",
+        "Lower value (higher under ASC) means fewer volume contraction days."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.010994,
+        "avg_daily_ic": 0.017571,
+        "positive_daily_ic_share": 0.587504,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005347,
+        "top10_minus_rank11_20": 0.0005,
+        "top10_minus_bottom10": 0.012551
+      },
+      "memo": "IC=0.010994。成交量路径(alpha158)。Top10-Bottom10=0.012551。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn30_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsumn30_raw",
+      "ranking_direction": "ASC (lower 30-day share of negative volume change magnitude)",
+      "formula": "Qlib 原式: Sum(Greater(Ref($volume, 1)-$volume, 0), 30)/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)\n本系统实现: 同 VSUMN20，窗口改 30 日",
+      "economic_explanation": [
+        "Fraction of 30-day volume-change days that are negative — share of days where volume contracted.",
+        "Lower value (higher under ASC) means fewer volume contraction days."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01364,
+        "avg_daily_ic": 0.022342,
+        "positive_daily_ic_share": 0.610482,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006593,
+        "top10_minus_rank11_20": 0.001045,
+        "top10_minus_bottom10": 0.013902
+      },
+      "memo": "IC=0.013640。成交量路径(alpha158)。Top10-Bottom10=0.013902。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumn60_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsumn60_raw",
+      "ranking_direction": "ASC (lower 60-day share of negative volume change magnitude)",
+      "formula": "Qlib 原式: Sum(Greater(Ref($volume, 1)-$volume, 0), 60)/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)\n本系统实现: 同 VSUMN20，窗口改 60 日",
+      "economic_explanation": [
+        "Fraction of 60-day volume-change days that are negative — share of days where volume contracted.",
+        "Lower value (higher under ASC) means fewer volume contraction days."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.014042,
+        "avg_daily_ic": 0.023203,
+        "positive_daily_ic_share": 0.618665,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005517,
+        "top10_minus_rank11_20": 0.000583,
+        "top10_minus_bottom10": 0.013525
+      },
+      "memo": "IC=0.014042。成交量路径(alpha158)。Top10-Bottom10=0.013525。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsump20_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsump20_raw",
+      "ranking_direction": "DESC (higher 20-day share of positive volume change magnitude)",
+      "formula": "Qlib 原式: Sum(Greater($volume-Ref($volume, 1), 0), 20)/(Sum(Abs($volume-Ref($volume, 1)), 20)+1e-12)\n本系统实现: SUM(CASE WHEN amount-LAG(amount,1) OVER w>0 THEN 1 ELSE 0 END) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 19 PRECEDING AND CURRENT ROW)/GREATEST(COUNT(*) OVER (PARTITION BY instrument ORDER BY trade_date ROWS BETWEEN 19 PRECEDING AND CURRENT ROW),1)",
+      "economic_explanation": [
+        "Fraction of 20-day volume-change days that are positive — share of days where volume expanded.",
+        "Higher value means volume is more frequently expanding than contracting, indicating net increasing trading interest.",
+        "Persistent volume expansion tends to precede positive price moves."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.010994,
+        "avg_daily_ic": 0.017573,
+        "positive_daily_ic_share": 0.587347,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005333,
+        "top10_minus_rank11_20": 0.000483,
+        "top10_minus_bottom10": 0.012547
+      },
+      "memo": "IC=0.010994。成交量路径(alpha158)。Top10-Bottom10=0.012547。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsump30_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsump30_raw",
+      "ranking_direction": "DESC (higher 30-day share of positive volume change magnitude)",
+      "formula": "Qlib 原式: Sum(Greater($volume-Ref($volume, 1), 0), 30)/(Sum(Abs($volume-Ref($volume, 1)), 30)+1e-12)\n本系统实现: 同 VSUMP20，窗口改 30 日",
+      "economic_explanation": [
+        "Fraction of 30-day volume-change days that are positive — share of days where volume expanded.",
+        "Higher value means volume is more frequently expanding than contracting, indicating net increasing trading interest.",
+        "Persistent volume expansion tends to precede positive price moves."
+      ],
+      "pit_rule": "D0 及之前 30 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01364,
+        "avg_daily_ic": 0.022344,
+        "positive_daily_ic_share": 0.610324,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006578,
+        "top10_minus_rank11_20": 0.001027,
+        "top10_minus_bottom10": 0.013898
+      },
+      "memo": "IC=0.013640。成交量路径(alpha158)。Top10-Bottom10=0.013898。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsump60_v1",
+      "family": "成交量路径(alpha158)",
+      "field_name": "alpha158_vsump60_raw",
+      "ranking_direction": "DESC (higher 60-day share of positive volume change magnitude)",
+      "formula": "Qlib 原式: Sum(Greater($volume-Ref($volume, 1), 0), 60)/(Sum(Abs($volume-Ref($volume, 1)), 60)+1e-12)\n本系统实现: 同 VSUMP20，窗口改 60 日",
+      "economic_explanation": [
+        "Fraction of 60-day volume-change days that are positive — share of days where volume expanded.",
+        "Higher value means volume is more frequently expanding than contracting, indicating net increasing trading interest.",
+        "Persistent volume expansion tends to precede positive price moves."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的行情数据(adj_close/adj_high/adj_low/amount)；不含 future 信息",
+      "missing_handling": "若窗口期内 lookback 不足或 amount 大面积缺失，则信号为 NULL",
+      "expected_failure_mode": [
+        "连续放量/缩量极端行情中，方向占比接近 1 或 0，失去区分度"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.014042,
+        "avg_daily_ic": 0.023205,
+        "positive_daily_ic_share": 0.618508,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 6e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005502,
+        "top10_minus_rank11_20": 0.000566,
+        "top10_minus_bottom10": 0.01352
+      },
+      "memo": "IC=0.014042。成交量路径(alpha158)。Top10-Bottom10=0.013520。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_amount_shock_5_20_v1",
+      "family": "liquidity -> shock",
+      "field_name": "amount_shock_5_20_raw",
+      "ranking_direction": "DESC",
+      "formula": "AVG(LN(amount)) OVER 5d - AVG(LN(amount)) OVER 20d",
+      "economic_explanation": [
+        "Identical formula to volume_momentum_5_20_raw — a 5/20-day log-amount ratio measuring short-term volume surge.",
+        "Positive value = recent volume is above normal (a 'shock' relative to recent history).",
+        "Volume shocks often precede increased price movement."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 amount",
+      "missing_handling": "lookback 不足则为 NULL",
+      "expected_failure_mode": "与 volume_momentum_5_20 完全等价，选其一即可",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.007194320175548632,
+        "avg_daily_ic": 0.011315643184657212,
+        "positive_daily_ic_share": 0.5578284815106216,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.003593268162263327,
+        "top10_minus_rank11_20": 0.0004642957780627145,
+        "top10_minus_bottom10": 0.009069423527015945
+      },
+      "memo": "IC=0.0072。与 volume_momentum_5_20 等价。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_breakout_volume_confirmation_20d_v1",
+      "family": "breakout -> failure",
+      "field_name": "breakout_volume_confirmation_20d_raw",
+      "ranking_direction": "DESC",
+      "formula": "breakout_proximity_20d_raw * amount_shock_5_20_raw, 其中 breakout_proximity = adj_close / MAX(adj_close) OVER 20d_prev, amount_shock = AVG(LN(amount)) OVER 5d - AVG(LN(amount)) OVER 20d",
+      "economic_explanation": [
+        "Combines price proximity to recent high (breakout proximity) with a short-term volume surge (amount shock).",
+        "A stock near its 20-day high that simultaneously experiences a volume surge is showing breakout confirmation — the price move is backed by volume.",
+        "Breakouts confirmed by volume shocks tend to be more genuine and have better forward returns."
+      ],
+      "pit_rule": "D0 及之前的 adj_close 和 amount",
+      "missing_handling": "若 breakout_proximity 或 amount_shock 任一 NULL，则乘积为 NULL",
+      "expected_failure_mode": [
+        "在持续上涨末期可能产生假突破信号(volume-confirmed false breakout)",
+        "次新股缺乏 20 日 lookback 不可用"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.007257518388412829,
+        "avg_daily_ic": 0.0110526029286499,
+        "positive_daily_ic_share": 0.5546112684922884,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 5.9539044385865264e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004262577005232449,
+        "top10_minus_rank11_20": 0.002291689373314359,
+        "top10_minus_bottom10": 0.011005851859343982
+      },
+      "memo": "IC=0.0073。突破确认类信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_downside_range_convexity_20d_v1",
+      "family": "downside -> risk",
+      "field_name": "downside_range_convexity_20d_raw",
+      "ranking_direction": "ASC (lower convexity ranks higher)",
+      "formula": "AVG(POWER(downside_range_pressure_daily, 2)) OVER 20d / AVG(downside_range_pressure_daily) OVER 20d (convexity measure of downside tail shape)",
+      "economic_explanation": [
+        "Measures the convexity/nonlinearity of downside range pressure — a tail-shape proxy for downside risk.",
+        "Lower convexity means downside range is more linear and predictable, less prone to tail events.",
+        "Stocks with less convex downside tails (more 'normal' downside behavior) tend to have better forward returns, as extreme tail risk is penalized."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日",
+      "missing_handling": "若 AVG(downside_range_pressure) <= 1e-12 则为 NULL",
+      "expected_failure_mode": [
+        "在长期横盘期间，range convexity 接近 0，信号失去区分度",
+        "凸度指标对极端事件敏感，可能受少数交易日主导"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.00208130442916937,
+        "avg_daily_ic": 0.004594234342297365,
+        "positive_daily_ic_share": 0.5250983477576712,
+        "coverage_scored_with_label": 15019007,
+        "null_score_share": 0.00024314511621305944,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.0036316215065071698,
+        "top10_minus_rank11_20": 0.00014104657384939262,
+        "top10_minus_bottom10": 0.0016290090937542724
+      },
+      "memo": "IC=0.0021。下行尾部风险类。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_high_open_hold_ratio_20d_v1",
+      "family": "intraday -> structure",
+      "field_name": "high_open_hold_ratio_20d_raw",
+      "ranking_direction": "DESC",
+      "formula": "AVG(hold_quality_part) OVER 20d",
+      "economic_explanation": [
+        "Measures whether stocks tend to open high and sustain those gains (rather than fade) — a proxy for 'high open hold' quality.",
+        "A high ratio suggests the opening price is a fair reflection of informed demand, not just an overnight gap that fades.",
+        "Stocks that hold their open levels intraday tend to have better short-term forward returns."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 adj_open, adj_high, adj_low, adj_close",
+      "missing_handling": "若日内 range 为 0 则不计入该日",
+      "expected_failure_mode": "在开盘跳空巨大的事件日(财报/政策)可能失真",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.00502737020902327,
+        "avg_daily_ic": 0.0070987693033637694,
+        "positive_daily_ic_share": 0.5462700661000944,
+        "coverage_scored_with_label": 14995985,
+        "null_score_share": 0.0017441592164635501,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004374277169644881,
+        "top10_minus_rank11_20": 4.22484084129475e-06,
+        "top10_minus_bottom10": 0.0019162608365221189
+      },
+      "memo": "IC=0.0050。开盘质量类信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_intraday_reversal_asymmetry_20d_v1",
+      "family": "intraday -> bias",
+      "field_name": "intraday_reversal_asymmetry_20d_raw",
+      "ranking_direction": "DESC",
+      "formula": "AVG(down_recovery_part) OVER 20d - AVG(up_fade_part) OVER 20d",
+      "economic_explanation": [
+        "Measures the asymmetry between how much a stock recovers from intraday dips vs how much it fades from intraday highs.",
+        "A positive value means the stock tends to recover from intraday weakness more than it gives back intraday gains — a bullish intraday resilience pattern.",
+        "This intraday reversal asymmetry captures the balance of buying vs selling pressure within the trading day."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 1 分钟或日频 OHLC",
+      "missing_handling": "若 intraday high/low 数据不可得，则为 NULL",
+      "expected_failure_mode": "在趋势非常强劲的单边市，日内反转可能不频繁，导致信号趋近于 0",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.005549989733530554,
+        "avg_daily_ic": 0.007619619988652491,
+        "positive_daily_ic_share": 0.5341517154548316,
+        "coverage_scored_with_label": 15019043,
+        "null_score_share": 0.00024202916940538612,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004404606900569083,
+        "top10_minus_rank11_20": 0.00020785844362783065,
+        "top10_minus_bottom10": 0.00298676571863012
+      },
+      "memo": "IC=0.0055。K 线日内结构类。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_intraday_trend_bias_20d_v1",
+      "family": "intraday -> bias",
+      "field_name": "intraday_trend_bias_20d_raw",
+      "ranking_direction": "DESC (stronger intraday uptrend ranks higher)",
+      "formula": "AVG(close/open - 1.0) OVER 20d",
+      "economic_explanation": [
+        "Measures the average intraday return (close vs open) over the past 20 days — the typical direction of intraday price drift.",
+        "A positive bias means the stock tends to drift higher during the day, which may reflect persistent order-flow imbalance or informed accumulation.",
+        "Stocks with stronger intraday uptrend bias show subsequent outperformance, consistent with intraday momentum spilling over to the next holding period."
+      ],
+      "pit_rule": "D0 可见的开盘价和收盘价",
+      "missing_handling": "若开/收盘价任一缺失，该日不计入；全部缺失则信号为 NULL",
+      "expected_failure_mode": [
+        "跳空开盘日 intraday return 可能被开盘跳空扭曲",
+        "在趋势反转时点，positive bias 可能变为负向预测"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01473966497428755,
+        "avg_daily_ic": 0.019716401640396605,
+        "positive_daily_ic_share": 0.5559402045633359,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005909236337901781,
+        "top10_minus_rank11_20": 0.00030845484035844223,
+        "top10_minus_bottom10": 0.009348244793477272
+      },
+      "memo": "IC=0.0147。简洁且解释清晰的日内信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_20_60_v1",
+      "family": "liquidity -> trend",
+      "field_name": "liquidity_trend_20_60_raw",
+      "ranking_direction": "DESC (improving liquidity ranks higher)",
+      "formula": "AVG(LN(amount+1)) OVER 20d - AVG(LN(amount+1)) OVER 60d",
+      "economic_explanation": [
+        "Measures the recent 20-day average log-amount minus the longer 60-day average — a liquidity momentum/gradient proxy.",
+        "A positive value indicates liquidity (trading activity) is improving relative to its recent history, which tends to attract more trading interest and reduce execution costs.",
+        "Stocks with improving liquidity profiles have better subsequent returns, possibly reflecting increasing investor attention or improving information environment."
+      ],
+      "pit_rule": "D0 及之前 60 个交易日的 amount；以千元为单位(同 tushare daily.amount)",
+      "missing_handling": "若 60 日 lookback 不足(如次新股)，则信号为 NULL",
+      "expected_failure_mode": [
+        "次新股或长期停牌后复牌初期，lookback 不足导致信号不可用",
+        "流动性趋势可能在市场整体缩量时大面积转负"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.0121592981078272,
+        "avg_daily_ic": 0.01866538195634834,
+        "positive_daily_ic_share": 0.5792289535798584,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005773789276196157,
+        "top10_minus_rank11_20": 0.00017442089403788517,
+        "top10_minus_bottom10": 0.007167626322291123
+      },
+      "memo": "IC=0.0122。核心 baseline 变量，流动性趋势类。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_60_120_v1",
+      "family": "liquidity -> trend",
+      "field_name": "liquidity_trend_60_120_raw",
+      "ranking_direction": "DESC (improving liquidity ranks higher)",
+      "formula": "AVG(LN(amount+1)) OVER 60d - AVG(LN(amount+1)) OVER 120d",
+      "economic_explanation": [
+        "Longer-horizon version of liquidity trend, comparing 60-day to 120-day average log-amount.",
+        "Captures persistent shifts in liquidity regime rather than short-term fluctuations.",
+        "A positive value indicates a structural improvement in trading activity."
+      ],
+      "pit_rule": "D0 及之前 120 个交易日的 amount",
+      "missing_handling": "若 120 日 lookback 不足则为 NULL",
+      "expected_failure_mode": "更长的 lookback 意味着对近期变化反应更慢，可能在流动性拐点处滞后",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.008324338703899713,
+        "avg_daily_ic": 0.013665530780982413,
+        "positive_daily_ic_share": 0.555153422501967,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006166502617103923,
+        "top10_minus_rank11_20": 0.0004408297546824999,
+        "top10_minus_bottom10": 0.005172326074433894
+      },
+      "memo": "IC=0.0083。流动性趋势的长期版本。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_lower_shadow_support_20d_v1",
+      "family": "kline -> shadow",
+      "field_name": "lower_shadow_support_20d_raw",
+      "ranking_direction": "DESC",
+      "formula": "AVG(CASE WHEN (high-low) > 1e-12 AND pct_ret < 0 THEN (close - low) / (high - low) ELSE NULL END) OVER 20d",
+      "economic_explanation": [
+        "On down-days, measures where the close sits within the daily range: a higher value means the close is near the high despite a negative return — indicating buying support during the session.",
+        "This 'lower shadow support' reflects the ability of buyers to lift prices off the intraday low.",
+        "Stocks that show consistent buying support on down-days tend to have better forward returns."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 adj_high/adj_low/adj_close 和 pct_chg",
+      "missing_handling": "若非下跌日或无 range 数据则该日不计入；全部缺失则为 NULL",
+      "expected_failure_mode": [
+        "在连续涨停/跌停日(range 极窄)可能不可定义",
+        "仅以下跌日为条件，样本量可能不足"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.006151118798989937,
+        "avg_daily_ic": 0.010726264953400693,
+        "positive_daily_ic_share": 0.5455546813532651,
+        "coverage_scored_with_label": 15021902,
+        "null_score_share": 5.048018206475235e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005563151123125364,
+        "top10_minus_rank11_20": 0.0005426935380662377,
+        "top10_minus_bottom10": 0.004426982578341312
+      },
+      "memo": "IC=0.0062。K 线形态类。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_momentum_60_5_v1",
+      "family": "momentum -> medium_term",
+      "field_name": "momentum_60_5_raw",
+      "ranking_direction": "DESC (stronger momentum ranks higher)",
+      "formula": "adj_close(D-5) / adj_close(D-60) - 1.0",
+      "economic_explanation": [
+        "Classic medium-term momentum: cumulative base-adjusted return from 60 trading days ago to 5 trading days ago (skipping the most recent week to avoid short-term reversal contamination).",
+        "The 5-day skip separates momentum from the short-term reversal effect.",
+        "Stocks with stronger 60-5 day momentum tend to continue outperforming over the next 5-day holding period."
+      ],
+      "pit_rule": "D0 可见的 adj_close；D-60 和 D-5 的复权价格",
+      "missing_handling": "若 D-5 或 D-60 的 adj_close 缺失，则为 NULL",
+      "expected_failure_mode": [
+        "在市场剧烈反转时期(如 2015 年股灾)，momentum 可能大幅回撤",
+        "次新股 lookback 不足导致信号不可用"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.009757764048797187,
+        "avg_daily_ic": 0.013398272056083639,
+        "positive_daily_ic_share": 0.5235901509134233,
+        "coverage_scored_with_label": 14888004,
+        "null_score_share": 0.008920156697312097,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.004281878956130944,
+        "top10_minus_rank11_20": -0.0012007583974732988,
+        "top10_minus_bottom10": 0.0024614791358643154
+      },
+      "memo": "IC=0.0098。标准中期动量因子。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_beta_20d_v1",
+      "family": "price_volume -> beta",
+      "field_name": "price_volume_beta_20d_raw",
+      "ranking_direction": "DESC (higher beta ranks higher)",
+      "formula": "COVAR_SAMP(pct_ret, dlog_amount) OVER 20d / VAR_SAMP(dlog_amount) OVER 20d, where dlog_amount = LN(amount) - LAG(LN(amount))",
+      "economic_explanation": [
+        "Measures the sensitivity of daily return to daily log-amount change over a 20-day window — a price-volume slope beta.",
+        "Stocks where returns are more sensitive to volume changes tend to have stronger subsequent short-term performance, consistent with informed trading amplification.",
+        "Higher values indicate the stock's return moves more per unit of volume innovation, which may signal the presence of informed or momentum-driven capital."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日可见的 pct_chg 和 amount；不含 future 信息",
+      "missing_handling": "若 VAR_SAMP(dlog_amount) <= 1e-12 或任一输入缺失，则该信号值为 NULL",
+      "expected_failure_mode": [
+        "在低成交或一字板时期，dlog_amount 接近 0，beta 不可定义",
+        "极端 outlier 期间 beta 可能被少数日子的量价关系主导"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.017161435940561378,
+        "avg_daily_ic": 0.028287089846564008,
+        "positive_daily_ic_share": 0.6080591846371793,
+        "coverage_scored_with_label": 15020218,
+        "null_score_share": 0.00011907808877173053,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.008462447859769535,
+        "top10_minus_rank11_20": 0.0007367196282329963,
+        "top10_minus_bottom10": 0.0077789582798327905
+      },
+      "memo": "正向信号中 IC 最高 (0.0172)。属于量价关系类。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_corr_20d_v1",
+      "family": "price_volume -> correlation",
+      "field_name": "price_volume_corr_20d_raw",
+      "ranking_direction": "DESC",
+      "formula": "CORR(pct_ret, dlog_amount) OVER 20d, where dlog_amount = LN(amount) - LAG(LN(amount))",
+      "economic_explanation": [
+        "Pearson correlation between daily return and log-amount first-difference over 20 days.",
+        "Lower-level alternative to volume_price_synchronicity; empirically nearly equivalent.",
+        "Positive correlation suggests volume-confirmed price moves that may persist."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 pct_chg 和 amount",
+      "missing_handling": "少于 3 个有效配对时为 NULL",
+      "expected_failure_mode": "极低成交环境不稳定；与 synchronicity 存在共线性",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.016661079759757717,
+        "avg_daily_ic": 0.0299661139051484,
+        "positive_daily_ic_share": 0.6367642429965377,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 5.9539044385865264e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.007764347893009484,
+        "top10_minus_rank11_20": 0.0010555133247663146,
+        "top10_minus_bottom10": 0.009378729058656173
+      },
+      "memo": "IC=0.0167。与 volume_price_synchronicity 几乎重复，选其一即可。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_price_volume_rank_corr_20d_v1",
+      "family": "price_volume -> correlation",
+      "field_name": "price_volume_rank_corr_20d_raw",
+      "ranking_direction": "DESC (stronger rank correlation ranks higher)",
+      "formula": "CORR(SIGN(pct_ret), SIGN(dlog_amount)) OVER 20d, where dlog_amount = LN(amount) - LAG(LN(amount))",
+      "economic_explanation": [
+        "Rank-based (sign-level) correlation between return direction and volume-surprise direction over 20 days.",
+        "Reduces the impact of magnitude outliers compared to Pearson-based price-volume correlations.",
+        "Positive sign-correlation means return and volume-surprise tend to move in the same direction — a robust indicator of directional flow."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 pct_chg 和 amount",
+      "missing_handling": "少于 5 个有效日则为 NULL",
+      "expected_failure_mode": "在大量一字板交易日，所有 SIGN 为 0，相关系数不可定义",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01139426628034502,
+        "avg_daily_ic": 0.020215685860868957,
+        "positive_daily_ic_share": 0.6268492288322317,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 5.9539044385865264e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.005890333772154922,
+        "top10_minus_rank11_20": 0.0001314164532052898,
+        "top10_minus_bottom10": 0.005600793461997286
+      },
+      "memo": "IC=0.0114。量价类信号的稳健版本。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_trend_consistency_20d_v1",
+      "family": "trend -> consistency",
+      "field_name": "trend_consistency_20d_raw",
+      "ranking_direction": "DESC (more consistent up-days ranks higher)",
+      "formula": "AVG(CASE WHEN pct_ret > 0 THEN 1.0 ELSE 0.0 END) OVER 20d",
+      "economic_explanation": [
+        "The simplest trend measure: the fraction of up-days over the past 20 trading days.",
+        "A value above 0.5 means more days were positive than negative — a consistent short-term uptrend without requiring the magnitude to be large.",
+        "Directional consistency is a robust trend indicator that is less sensitive to outliers than cumulative return."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 pct_chg",
+      "missing_handling": "若交易日不足 20 日，则基于实际可用天数计算",
+      "expected_failure_mode": [
+        "在低波动窄幅震荡期，>0.5 的胜率可能是随机波动而非真实趋势",
+        "在市场快速反转时可能提供延迟信号"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.003251478491108207,
+        "avg_daily_ic": 0.005854450111846067,
+        "positive_daily_ic_share": 0.5148701809598741,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.0021425785677706894,
+        "top10_minus_rank11_20": -0.0012371656240005554,
+        "top10_minus_bottom10": 0.00014912980205207668
+      },
+      "memo": "IC=0.0033。最简洁的趋势信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_turnover_acceleration_5_20_v1",
+      "family": "turnover -> level",
+      "field_name": "turnover_acceleration_5_20_raw",
+      "ranking_direction": "DESC",
+      "formula": "AVG(LN(turnover_rate+1)) OVER 5d - AVG(LN(turnover_rate+1)) OVER 20d",
+      "economic_explanation": [
+        "Turnover rate acceleration: the 5-day average log-turnover relative to the 20-day average.",
+        "Instead of raw amount, uses turnover_rate which normalizes for free-float shares — a cleaner measure of trading intensity per unit of outstanding equity.",
+        "Rising turnover rate suggests increasing speculative interest or distribution activity."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 turnover_rate",
+      "missing_handling": "lookback 不足则为 NULL",
+      "expected_failure_mode": "换手率在机构大额交易时可能失真(大宗交易不计入换手率)",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.0063151940256665606,
+        "avg_daily_ic": 0.011074698288562229,
+        "positive_daily_ic_share": 0.5611329661683714,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.0028164151421286167,
+        "top10_minus_rank11_20": 0.00044220455521728694,
+        "top10_minus_bottom10": 0.009273757899393595
+      },
+      "memo": "IC=0.0063。金额的替代指标。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_up_amount_persistence_20d_v1",
+      "family": "volume -> persistence",
+      "field_name": "up_amount_persistence_20d_raw",
+      "ranking_direction": "DESC (more persistent up-volume ranks higher)",
+      "formula": "AVG(CASE WHEN pct_ret > 0 AND amount > AVG(amount) OVER 20d THEN 1.0 ELSE 0.0 END) OVER 20d",
+      "economic_explanation": [
+        "Measures the frequency of up-days that are accompanied by above-average trading volume — up-volume persistence.",
+        "Consistent up-volume suggests that buying pressure is not only present but sustained with conviction (high participation).",
+        "Stocks where up-days reliably coincide with above-average volume tend to have better subsequent performance."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 pct_chg 和 amount",
+      "missing_handling": "若金额数据大面积缺失，则为 NULL",
+      "expected_failure_mode": [
+        "在低成交环境，amount > 20d 均值的条件可能过于宽松",
+        "在持续放量下跌中可能产生反向信号(放量下跌也被计入)"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.009374022500886993,
+        "avg_daily_ic": 0.013587209870727162,
+        "positive_daily_ic_share": 0.5491738788355626,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.006376701628353629,
+        "top10_minus_rank11_20": 0.0007638309794090513,
+        "top10_minus_bottom10": 0.006922238202507665
+      },
+      "memo": "IC=0.0094。量价确认类信号。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_upside_range_share_20d_v1",
+      "family": "intraday -> structure",
+      "field_name": "upside_range_share_20d_raw",
+      "ranking_direction": "DESC (higher upside share ranks higher)",
+      "formula": "SUM(upside_range_daily) OVER 20d / SUM((high-low)/close) OVER 20d, where upside_range_daily = CASE WHEN pct_ret > 0 AND adj_close > 0 THEN (adj_high - adj_low) / adj_close ELSE 0 END",
+      "economic_explanation": [
+        "Measures the fraction of total 20-day range that occurred on up-days — the upside participation share.",
+        "A higher share indicates that the stock's price range expansion happens disproportionately on up-days, suggesting bullish price discovery.",
+        "Stocks with higher upside range share tend to have higher forward returns, consistent with the idea that up-day volatility is information-rich."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 adj_open/adj_high/adj_low/adj_close",
+      "missing_handling": "若 20 日总 range 为 0，则为 NULL",
+      "expected_failure_mode": [
+        "在横盘震荡期，upside_range_share 可能失去区分度",
+        "除权日附近 adj_price 可能导致 range 计算短暂失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.010328916674693878,
+        "avg_daily_ic": 0.015721060287016583,
+        "positive_daily_ic_share": 0.5515342250196695,
+        "coverage_scored_with_label": 15021902,
+        "null_score_share": 5.048018206475235e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.00409556978058864,
+        "top10_minus_rank11_20": 0.00013104669840702157,
+        "top10_minus_bottom10": 0.005402867737376261
+      },
+      "memo": "IC=0.0103。日内结构类。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_volume_momentum_5_20_v1",
+      "family": "turnover -> level",
+      "field_name": "volume_momentum_5_20_raw",
+      "ranking_direction": "DESC",
+      "formula": "AVG(LN(amount)) OVER 5d - AVG(LN(amount)) OVER 20d",
+      "economic_explanation": [
+        "Short-term volume momentum: the 5-day average log-amount relative to the 20-day average.",
+        "A positive value means volume has accelerated in the past week relative to the past month.",
+        "Volume acceleration often precedes increased volatility and directional price moves."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日的 amount",
+      "missing_handling": "lookback 不足则为 NULL",
+      "expected_failure_mode": "在量能均值回归期可能产生反向信号",
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.007194320175549876,
+        "avg_daily_ic": 0.011315643184657213,
+        "positive_daily_ic_share": 0.5578284815106216,
+        "coverage_scored_with_label": 15022019,
+        "null_score_share": 0.0,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.003593268162263328,
+        "top10_minus_rank11_20": 0.0004642957780627223,
+        "top10_minus_bottom10": 0.009069423527015941
+      },
+      "memo": "IC=0.0072。与 amount_shock_5_20 几乎等价。"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_volume_price_synchronicity_20d_v1",
+      "family": "price_volume -> correlation",
+      "field_name": "volume_price_synchronicity_20d_raw",
+      "ranking_direction": "DESC (higher synchronicity ranks higher)",
+      "formula": "CORR(pct_ret, log_amount - prev_log_amount) OVER 20d, where prev_log_amount = LAG(LN(amount))",
+      "economic_explanation": [
+        "Captures the correlation between daily return and the log-amount innovation (deviation from prior day's log amount) over 20 days.",
+        "High positive correlation means returns and volume-surprise move together — a signature of informed-flow-driven price moves.",
+        "Stocks with stronger return-volume co-movement tend to have higher subsequent returns, consistent with information-flow theory."
+      ],
+      "pit_rule": "D0 及之前 20 个交易日可见的 pct_chg 和 amount",
+      "missing_handling": "若 CORR 的输入序列 < 3 个有效配对观测，则为 NULL",
+      "expected_failure_mode": [
+        "在低波动环境中，pct_ret 和 amount 变化都极小，相关性不稳定",
+        "分红/除权日前后若调整因子不一致可能导致量价关系失真"
+      ],
+      "diagnostic_summary": {
+        "full_sample_corr_ic": 0.01666107975975777,
+        "avg_daily_ic": 0.0299661139051484,
+        "positive_daily_ic_share": 0.6367642429965377,
+        "coverage_scored_with_label": 15021120,
+        "null_score_share": 5.9539044385865264e-05,
+        "decile_monotonic_ok": true,
+        "top10_avg_label": 0.007764347893009496,
+        "top10_minus_rank11_20": 0.0010555133247663372,
+        "top10_minus_bottom10": 0.009378729058656186
+      },
+      "memo": "IC=0.0167，与 price_volume_corr 几乎等价(同一机制)"
+    }
+  ]
+}

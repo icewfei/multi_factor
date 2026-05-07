@@ -1,0 +1,68 @@
+version: multifactor_project_primary_keys_v1
+updated_at: "2026-04-14"
+
+global_keys:
+  - snapshot_id
+  - code_hash
+  - execution_logic_version
+
+run_keys:
+  - run_id
+  - run_type
+
+entity_keys:
+  - instrument
+  - signal_date
+  - entry_date
+  - planned_exit_date
+
+table_primary_keys:
+  project_label_panel:
+    - snapshot_id
+    - instrument
+    - signal_date
+  project_sample_panel:
+    - snapshot_id
+    - instrument
+    - signal_date
+  project_execution_panel:
+    - snapshot_id
+    - instrument
+    - signal_date
+  ranking_state_daily:
+    - run_id
+    - attempt_id
+    - instrument
+    - signal_date
+  execution_state_daily:
+    - run_id
+    - attempt_id
+    - instrument
+    - signal_date
+  holdings_csv:
+    - run_id
+    - attempt_id
+    - position_id
+  portfolio_weights_daily:
+    - run_id
+    - attempt_id
+    - trade_date
+    - instrument
+  portfolio_daily_summary:
+    - run_id
+    - attempt_id
+    - trade_date
+  turnover_daily:
+    - run_id
+    - attempt_id
+    - trade_date
+  dataset_split_daily:
+    - split_version
+    - instrument
+    - signal_date
+
+join_rules:
+  - "Project-side normalized panels join on snapshot_id + instrument + signal_date."
+  - "Run-state tables join to project-side panels on instrument + signal_date, inherit snapshot_id from run_input_contract, and are isolated by attempt_id."
+  - "Portfolio-layer artifacts consume run-state outputs plus project_execution_panel and remain isolated by attempt_id."
+  - "entry_date and planned_exit_date are descriptive secondary keys and should not replace signal_date."

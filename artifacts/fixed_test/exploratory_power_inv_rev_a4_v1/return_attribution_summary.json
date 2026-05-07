@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_power_inv_rev_a4_v1",
+  "run_id": "exploratory_power_inv_rev_a4_v1",
+  "attempt_id": "attempt_20260506_153253",
+  "generated_at": "2026-05-06T15:35:16.807428+08:00",
+  "candidate_scheme_id": "power_inv_rev_a4_v1",
+  "research_round_id": "rr_exploratory_power_transform_reversal_20260506",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.270035011503619,
+  "selection_alpha_total": -0.7798118261767328,
+  "low_liquidity_contribution_total": -0.590317365408141
+}

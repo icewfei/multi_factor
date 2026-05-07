@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_cord30_liqguard60_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_cord30_liqguard60_trainval_20260506",
+  "attempt_id": "attempt_20260506_120904",
+  "generated_at": "2026-05-06T12:13:38.430613+08:00",
+  "candidate_scheme_id": "reversal_p98_cord30_liqguard60_v1",
+  "research_round_id": "rr_exploratory_reversal_cord30_liquidity_guard60_20260506",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.060938955924168314,
+  "pass_cost_stress_relative_return_floor": false
+}

@@ -1,0 +1,26 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_liquidity_guard70_20260418_1620",
+  "run_id": "fullchain_baseline_liquidity_guard70_20260418_1620",
+  "attempt_id": "attempt_20260418_154945",
+  "generated_at": "2026-04-18T15:55:01.790322+08:00",
+  "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+  "warnings": [
+    "ranking_eligibility_guard excluded rows from the ranking universe before TopK freeze.",
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 135887,
+  "unfilled_topk_count": 2494,
+  "terminal_event_degraded_rows": null,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": true,
+  "topk_perturbation_pass": false,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.08199613759429958,
+  "exposure_driven_or_liquidity_driven": true,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution."
+  ]
+}

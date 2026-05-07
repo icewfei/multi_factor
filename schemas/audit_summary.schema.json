@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/audit_summary.schema.json",
+  "title": "Audit Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "warnings",
+    "fatal_blockers"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fatal_blockers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ranking_anomaly_rows": { "type": ["integer", "null"] },
+    "unfilled_topk_count": { "type": ["integer", "null"] },
+    "terminal_event_degraded_rows": { "type": ["integer", "null"] },
+    "benchmark_fallback_triggered": { "type": "boolean" },
+    "low_liquidity_flag_high": { "type": "boolean" },
+    "topk_perturbation_pass": { "type": "boolean" },
+    "cost_stress_pass": { "type": "boolean" },
+    "cost_stress_annual_relative_return": { "type": ["number", "null"] },
+    "exposure_driven_or_liquidity_driven": { "type": "boolean" },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

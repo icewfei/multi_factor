@@ -1,0 +1,84 @@
+{
+  "registered_at": "2026-04-22T15:05:00+08:00",
+  "research_round_id": "rr_price_volume_extraction_stability_cap_family_20260422",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_v19_extraction_stability_cap"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v17_head_extraction_smoothing",
+  "research_question": "Can a portfolio-extraction-only challenger keep the v17 two-signal family and the v17 head-extraction geometry fixed, but add one deterministic cross-date target-weight stability cap that reduces incumbent resize flow enough to improve cost robustness without giving back the extraction gains?",
+  "allowed_core_dimension": "portfolio extraction only",
+  "changed_dimension": "portfolio_extraction",
+  "change_control_rule": "single_dimension_only",
+  "score_contract_frozen": {
+    "feature_preset": "price_volume_v16_remove_trend_consistency",
+    "feature_set": [
+      "momentum_60_5_raw",
+      "liquidity_trend_20_60_raw"
+    ],
+    "score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2"
+  },
+  "guard_contract": {
+    "guard_name": "liquidity_guard_v2_recalibrated",
+    "guard_application_stage": "ranking_eligibility_guard",
+    "guard_definition": "Freeze the calibrated v7 / v17 ranking guard: only rows that are already ranking_eligible_D0 and whose 20-day average amount cross-sectional liquidity rank is >= 0.70 on the same signal_date may enter the ranking universe.",
+    "liquidity_field": "liquidity_20d_raw",
+    "liquidity_rank_direction": "higher_liquidity_means_higher_rank",
+    "liquidity_min_percentile": 0.70,
+    "treatment_of_rows_below_guard": "Remain in audit tables but must be excluded from ranking_state_daily eligibility."
+  },
+  "portfolio_extraction_contract": {
+    "extraction_name": "head_extraction_smoothing_stability_cap_v1",
+    "extraction_definition": "Freeze the v17 selected head and linear rank-decay geometry. On each signal_date, compute the same raw smoothed head weights as v17, then apply one deterministic absolute per-instrument daily target-weight change cap relative to the previous signal_date's mapped target weight before renormalizing selected-head weights to sum to 1.0.",
+    "rank_field": "rank_position",
+    "head_size": 10,
+    "weight_formula": "linear_rank_decay",
+    "weight_formula_detail": "raw_multiplier(rank) = 1.00 - ((rank - 1) * (0.90 / 9)); rank 1 gets 1.00, rank 10 gets 0.10, ranks > 10 get 0.00",
+    "normalization": "same_signal_date_selected_head_sum_to_1",
+    "treatment_of_ranks_above_head_size": "Set target weight to 0.0.",
+    "treatment_of_missing_rank": "Set target weight to 0.0.",
+    "stability_cap_type": "absolute_daily_weight_change_cap",
+    "max_daily_weight_change_per_instrument": 0.10,
+    "previous_weight_reference": "previous_signal_date_mapped_target_weight"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "selection_contract": "same v17 score family and same calibrated 0.70 ranking liquidity guard",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "avg_turnover_daily",
+    "topk_perturbation_pass",
+    "cost_stress_pass",
+    "low_liquidity_weight_share"
+  ],
+  "motivation_from_v17_turnover_cost_decomposition": [
+    "The v17 turnover/cost decomposition showed that incumbent_resize_share_of_component_flow(存量调权换手占组件流量比) is about 0.80, so most turnover comes from resizing existing holdings rather than pure replacement flow.",
+    "The round exists to test whether one deterministic extraction stability cap can preserve the v17 extraction gains while directly reducing incumbent resize flow."
+  ],
+  "disallowed_changes": [
+    "Do not change score features or score weights.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or its stage.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not change sample labels or return definitions.",
+    "Do not sweep multiple stability-cap thresholds.",
+    "Do not sweep multiple extraction formulas.",
+    "Do not combine this round with refresh-rule, weight-penalty, or score-family changes."
+  ],
+  "notes": [
+    "This round changes exactly one core dimension: portfolio extraction.",
+    "The purpose is to keep the productive v17 head geometry but suppress avoidable cross-date target-weight jumps that currently dominate turnover."
+  ]
+}

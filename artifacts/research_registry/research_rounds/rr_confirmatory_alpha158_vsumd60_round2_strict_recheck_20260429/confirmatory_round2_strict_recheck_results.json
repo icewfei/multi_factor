@@ -1,0 +1,103 @@
+{
+  "research_round_id": "rr_confirmatory_alpha158_vsumd60_round2_strict_recheck_20260429",
+  "generated_at": "2026-04-29T15:05:51+08:00",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "based_on_round_id": "rr_confirmatory_alpha158_standalone_shortlist_round1_20260429",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "code_hash": "73c9f5858b568aad0b568e243b1c06a5c38fce3147d779346d910207a2543382",
+  "validation_deltas": {
+    "annual_relative_return_delta": 0.15189470122719595,
+    "relative_ir_delta": 0.993774890485643,
+    "max_drawdown_delta": 0.3480972211871858,
+    "avg_turnover_daily_delta": 0.0191148577449939,
+    "candidate_avg_invested_weight": 0.1898695368558387
+  },
+  "subperiod_rechecks": [
+    {
+      "period_name": "validation_h1_2019_2020h1",
+      "reference": {
+        "start_date": "20190101",
+        "end_date": "20200630",
+        "n_days": 361,
+        "annual_relative_return": -0.3805076553243527,
+        "relative_ir": -2.0174015314263287,
+        "max_drawdown": -0.21079709058798812,
+        "avg_turnover_daily": 0.07590027700831013,
+        "avg_invested_weight": 0.15688259109311697,
+        "positive_relative_days": 159
+      },
+      "candidate": {
+        "start_date": "20190101",
+        "end_date": "20200630",
+        "n_days": 361,
+        "annual_relative_return": -0.21864997156877775,
+        "relative_ir": -1.2156210337258029,
+        "max_drawdown": -0.050691540778801225,
+        "avg_turnover_daily": 0.09492151431209579,
+        "avg_invested_weight": 0.19044980873235673,
+        "positive_relative_days": 164
+      },
+      "annual_relative_return_delta": 0.16185768375557497,
+      "relative_ir_delta": 0.8017804977005258
+    },
+    {
+      "period_name": "validation_h2_2020h2_2021",
+      "reference": {
+        "start_date": "20200701",
+        "end_date": "20211231",
+        "n_days": 369,
+        "annual_relative_return": -0.2988310524650837,
+        "relative_ir": -1.7835752239158005,
+        "max_drawdown": -0.23820448345541412,
+        "avg_turnover_daily": 0.0754638315613924,
+        "avg_invested_weight": 0.1540233479257866,
+        "positive_relative_days": 169
+      },
+      "candidate": {
+        "start_date": "20200701",
+        "end_date": "20211231",
+        "n_days": 369,
+        "annual_relative_return": -0.08751402769116945,
+        "relative_ir": -0.5844323730311399,
+        "max_drawdown": -0.03582914498263401,
+        "avg_turnover_daily": 0.09467028003613348,
+        "avg_invested_weight": 0.18930184539940592,
+        "positive_relative_days": 172
+      },
+      "annual_relative_return_delta": 0.21131702477391423,
+      "relative_ir_delta": 1.1991428508846607
+    }
+  ],
+  "cost_stress_recheck": {
+    "candidate_annual_relative_return": -0.09643125145847498,
+    "reference_annual_relative_return": -0.1094836042638242,
+    "annual_relative_return_delta": 0.013052352805349221
+  },
+  "low_liquidity_recheck": {
+    "candidate_low_liquidity_weight_share": 0.13678685007085592,
+    "reference_low_liquidity_weight_share": 0.17695546462666845,
+    "low_liquidity_weight_share_delta": -0.040168614555812526
+  },
+  "topk_perturbation_recheck": {
+    "8": {
+      "candidate_annual_relative_return": -0.05339876416980893,
+      "reference_annual_relative_return": -0.07992586119078626,
+      "annual_relative_return_delta": 0.02652709702097733,
+      "candidate_relative_ir": -0.4222532839229691,
+      "reference_relative_ir": -0.508800790022354,
+      "relative_ir_delta": 0.08654750609938489
+    },
+    "12": {
+      "candidate_annual_relative_return": -0.056333809860720896,
+      "reference_annual_relative_return": -0.07198067332818825,
+      "annual_relative_return_delta": 0.015646863467467353,
+      "candidate_relative_ir": -0.4401607748343424,
+      "reference_relative_ir": -0.486301492203858,
+      "relative_ir_delta": 0.04614071736951558
+    }
+  },
+  "strict_boolean_expression": "(validation_annual_relative_return_delta > 0.10) AND (validation_relative_ir_delta > 0.50) AND (validation_max_drawdown_delta >= 0.10) AND (validation_avg_turnover_daily_delta <= 0.02) AND (candidate_avg_invested_weight >= 0.18) AND (validation_h1_annual_relative_return_delta > 0) AND (validation_h1_relative_ir_delta > 0) AND (validation_h2_annual_relative_return_delta > 0) AND (validation_h2_relative_ir_delta > 0) AND (cost_stress_annual_relative_return_delta > 0) AND (low_liquidity_weight_share_delta <= 0) AND (topk8_annual_relative_return_delta > 0) AND (topk12_annual_relative_return_delta > 0)",
+  "pass_boolean": true,
+  "round_decision": "KEEP"
+}

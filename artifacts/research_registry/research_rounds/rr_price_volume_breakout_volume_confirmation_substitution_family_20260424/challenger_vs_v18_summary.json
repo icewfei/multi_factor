@@ -1,0 +1,54 @@
+{
+  "candidate_scheme_id": "price_volume_v22_breakout_volume_confirmation_substitution",
+  "research_round_id": "rr_price_volume_breakout_volume_confirmation_substitution_family_20260424",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "run_id": "fullchain_price_volume_breakout_volume_confirmation_substitution_20260424_0015",
+  "attempt_id": "attempt_20260424_223424",
+  "outcome": "weak_candidate",
+  "comparison_vs_v18": {
+    "annual_relative_return": {
+      "reference": -0.04414228898711203,
+      "challenger": -0.08030118174716394
+    },
+    "relative_ir": {
+      "reference": -0.4024807492034419,
+      "challenger": -0.6401095568057718
+    },
+    "max_drawdown": {
+      "reference": -0.2772009864700842,
+      "challenger": -0.5170785117289425
+    },
+    "avg_turnover_daily": {
+      "reference": 0.11104145726428083,
+      "challenger": 0.12491758162485046
+    },
+    "avg_cash_weight": {
+      "reference": 0.7678748817060334,
+      "challenger": 0.742565213313903
+    },
+    "avg_invested_weight": {
+      "reference": 0.23212511829398338,
+      "challenger": 0.25743478668609465
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.029557319223990304,
+      "challenger": 0.05914497252801661
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_annual_relative_return": {
+      "reference": -0.09617269729063371,
+      "challenger": -0.1364306631898623
+    }
+  },
+  "run_state_acceptance_overall_passed": true,
+  "run_state_started_at": "2026-04-24T22:34:24.018554+08:00",
+  "run_state_completed_at": "2026-04-24T22:39:01.772480+08:00",
+  "weakness_reason": "Replacing liquidity_trend_20_60_raw with breakout_volume_confirmation_20d_raw materially worsened annual_relative_return, relative_ir, max_drawdown, cash usage, turnover, and audit flags versus v18; both TopK perturbation and cost stress still failed, so the candidate remains non-promotable."
+}

@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_corr30_trainval_20260430",
+  "run_id": "confirmatory_corr30_trainval_20260430",
+  "attempt_id": "attempt_20260430_143439",
+  "generated_at": "2026-04-30T14:38:08.595716+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_corr30_v1",
+  "research_round_id": "rr_confirmatory_alpha158_head_extraction_shortlist_round2_20260430",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.256770163979622,
+  "selection_alpha_total": 0.5627226132859702,
+  "low_liquidity_contribution_total": 0.08947624180786934
+}

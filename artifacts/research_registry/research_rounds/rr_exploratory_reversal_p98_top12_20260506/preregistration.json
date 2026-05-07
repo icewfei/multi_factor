@@ -1,0 +1,46 @@
+{
+  "registered_at": "2026-05-06T12:50:00+08:00",
+  "research_round_id": "rr_exploratory_reversal_p98_top12_20260506",
+  "research_phase": "signal_learnability",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "portfolio_extraction_followup",
+  "research_question": "Can reversal_tail_exclude_p98_top12_v1 beat the live p98 Top10 baseline at the fixed-test / validation layer by widening extraction from TopK=10 to TopK=12 while keeping the signal definition unchanged?",
+  "allowed_core_dimension": "topk parameter only",
+  "changed_dimension": "topk_parameter",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "Signal definition is unchanged. Only build_run_state topk changes from 10 to 12. No new liquidity guard, no new partner, no score retuning, no contract refresh-rule change.",
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "frozen_reference_fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "baseline_diagnosis_reference": "artifacts/fixed_test/reversal_p98_baseline_diagnosis/reversal_p98_baseline_diagnosis_20260506.json",
+  "liquidity_guard_screen_reference": "artifacts/fixed_test/reversal_p98_liquidity_guard_screen/liquidity_guard_screen_20260506.json",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "candidate_scheme_ids": [
+    "reversal_tail_exclude_p98_top12_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "reversal_tail_exclude_p98_top12_v1"
+  ],
+  "success_rules": {
+    "validation_edge": {
+      "validation_annual_relative_return_delta_vs_p98_top10": "> 0",
+      "validation_relative_ir_delta_vs_p98_top10": "> 0",
+      "validation_max_drawdown_delta_vs_p98_top10": ">= 0"
+    },
+    "deployment_robustness": {
+      "cost_stress_annual_relative_return_delta_vs_p98_top10": ">= 0",
+      "low_liquidity_weight_share_delta_vs_p98_top10": "<= 0.00",
+      "validation_avg_turnover_daily_delta_vs_p98_top10": "<= 0.02",
+      "validation_avg_invested_weight_delta_vs_p98_top10": ">= 0.00"
+    },
+    "core_pass_condition": "All 7 rules must pass."
+  },
+  "disallowed_changes": [
+    "Do not change the p98 score definition.",
+    "Do not add a liquidity guard in this round.",
+    "Do not add a partner composite in this round.",
+    "Do not test multiple TopK values inside this round."
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "registered_at": "2026-04-28T19:08:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_price_volume_beta_20d_v1",
+    "price_volume_single_signal_price_volume_rank_corr_20d_v1",
+    "price_volume_single_signal_turnover_entropy_20d_v1",
+    "price_volume_single_signal_candle_body_efficiency_20d_v1",
+    "price_volume_single_signal_upper_lower_shadow_asymmetry_20d_v1",
+    "price_volume_single_signal_gap_to_range_ratio_20d_v1",
+    "price_volume_single_signal_close_position_stability_20d_v1",
+    "price_volume_single_signal_rolling_vwap_distance_20d_v1",
+    "price_volume_single_signal_downside_range_convexity_20d_v1",
+    "price_volume_single_signal_updown_volume_balance_persistence_20d_v1",
+    "price_volume_single_signal_intraday_path_curvature_20d_v1",
+    "price_volume_single_signal_liquidity_shock_recovery_ratio_20d_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Round11b batch01: run the first executable whitelist-only subset from the full158 remaining queue under frozen v18 contract.",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "source_policy": {
+    "mode": "alpha158_paper_whitelist_only",
+    "whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json",
+    "notes": "Batch01 follows the same full158 whitelist-only governance."
+  },
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "Alpha158/academic/classic whitelist only.",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_price_volume_beta_20d_v1",
+        "field": "price_volume_beta_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher return-volume slope sensitivity.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:PriceVolume:Beta20",
+          "source_title": "Alpha158 style rolling price-volume beta",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "rolling price-volume sensitivity",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "volume_price_synchronicity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "slope sensitivity is distinct from correlation.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_price_volume_rank_corr_20d_v1",
+        "field": "price_volume_rank_corr_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher rank-based price-volume dependence.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:PriceVolume:RankCorr20",
+          "source_title": "Alpha158 style rank-correlation price-volume",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "rank-correlation dependency",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "volume_price_synchronicity_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "nonlinear rank relation differs from linear co-movement.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_turnover_entropy_20d_v1",
+        "field": "turnover_entropy_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more distributed turnover over time.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Turnover:Entropy20",
+          "source_title": "Alpha158 style turnover entropy",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "distributional participation quality",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "turnover_stability_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "entropy differs from variance/stability.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_candle_body_efficiency_20d_v1",
+        "field": "candle_body_efficiency_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher body-to-range efficiency.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Kline:BodyEfficiency20",
+          "source_title": "Alpha158 style body efficiency",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "path-quality proxy",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "body efficiency differs from close location level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_upper_lower_shadow_asymmetry_20d_v1",
+        "field": "upper_lower_shadow_asymmetry_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "less upper-vs-lower shadow imbalance.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Kline:ShadowAsymmetry20",
+          "source_title": "Alpha158 style shadow asymmetry",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "rejection-vs-support imbalance",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "lower_shadow_support_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "joint asymmetry differs from one-sided support.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_gap_to_range_ratio_20d_v1",
+        "field": "gap_to_range_ratio_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "smaller overnight gap relative to intraday range.",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "GapIntradayDecomposition:Classic",
+          "source_title": "Overnight/intraday decomposition literature",
+          "source_locator": "classic decomposition papers",
+          "mechanism_mapping": "open dislocation normalized by realized range",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "gap_fill_rate_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "pre-repair ratio differs from post-gap repair metrics.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_close_position_stability_20d_v1",
+        "field": "close_position_stability_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more stable close positioning in bar.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Kline:ClosePositionStability20",
+          "source_title": "Alpha158 style close-position stability",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "stability of close location",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "temporal stability differs from level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_rolling_vwap_distance_20d_v1",
+        "field": "rolling_vwap_distance_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "smaller distance to rolling vwap anchor.",
+        "source_provenance": {
+          "source_category": "classic_factor_handbook",
+          "source_id": "ExecutionAnchors:VWAPDistance20",
+          "source_title": "Execution-anchor VWAP distance",
+          "source_locator": "execution quality references",
+          "mechanism_mapping": "distance-to-anchor stability",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "close_to_vwap_bias_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "distance and signed bias capture different structures.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_downside_range_convexity_20d_v1",
+        "field": "downside_range_convexity_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower downside range nonlinearity.",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "RangeAsymmetry:Convexity20",
+          "source_title": "Range-based asymmetry literature",
+          "source_locator": "range volatility papers",
+          "mechanism_mapping": "tail-shape proxy from downside range",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_absorption_ratio_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "nonlinear shape differs from recovery location.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_updown_volume_balance_persistence_20d_v1",
+        "field": "updown_volume_balance_persistence_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more persistent up/down flow balance.",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "TradingActivityPersistence:FlowBalance",
+          "source_title": "Trading-activity persistence intuition",
+          "source_locator": "trading activity literature",
+          "mechanism_mapping": "serial persistence of signed participation balance",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "signed_amount_imbalance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "persistence differs from static imbalance level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_intraday_path_curvature_20d_v1",
+        "field": "intraday_path_curvature_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "straighter intraday path geometry.",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:PathGeometry:Curvature20",
+          "source_title": "Alpha158 path-geometry curvature",
+          "source_locator": "Alpha158 feature family",
+          "mechanism_mapping": "geometry-driven path roughness proxy",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_efficiency_60d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "curvature differs from long-horizon directional efficiency ratio.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_liquidity_shock_recovery_ratio_20d_v1",
+        "field": "liquidity_shock_recovery_ratio_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "faster liquidity normalization after shocks.",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "LiquidityRiskRecovery:Shock20",
+          "source_title": "Liquidity-shock recovery intuition",
+          "source_locator": "liquidity risk literature",
+          "mechanism_mapping": "recovery dynamics after liquidity dislocation",
+          "independent_implementation_note": "project-native implementation only"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "amount_shock_5_20_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "recovery ratio differs from shock level.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later composability-screening round.",
+    "non_promotion_rule": "A signal that remains weaker at the head slice should be rejected rather than rescued by family tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, stability-cap, overlay, or family-composition changes inside this round."
+  ],
+  "notes": [
+    "Round11b batch01 is executed serial-only.",
+    "This batch is part of the full158 remaining queue under whitelist-only governance."
+  ]
+}

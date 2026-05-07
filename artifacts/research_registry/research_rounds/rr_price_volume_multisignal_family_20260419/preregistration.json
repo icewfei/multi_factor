@@ -1,0 +1,79 @@
+{
+  "registered_at": "2026-04-19T10:02:00+08:00",
+  "research_round_id": "rr_price_volume_multisignal_family_20260419",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_multisignal_v13_core"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_question": "Can we keep the calibrated v7 operational contract fixed, but replace the weak single-signal momentum score family with one fixed price/volume multisignal family, so that the resulting cross-sectional signal has thicker gross edge and better fixed-test robustness?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "score_family_contract": {
+    "family_name": "price_volume_multisignal_core_v1",
+    "builder_name": "build_price_volume_multisignal_model_scores.py",
+    "source_table": "bars_daily_derived",
+    "feature_set": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger medium-term momentum is better"
+      },
+      {
+        "field": "reversal_5d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "more negative short-term move is better for mean-reversion support"
+      },
+      {
+        "field": "volatility_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower recent volatility is better"
+      },
+      {
+        "field": "liquidity_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher recent traded amount is better"
+      }
+    ],
+    "score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(reversal_5d_raw ASC), percentile_rank(volatility_20d_raw ASC), percentile_rank(liquidity_20d_raw DESC)); require min_feature_count >= 3",
+    "missing_data_rule": "Only score rows with at least 3 non-null ranked features; otherwise emit null model_score_D0 and preserve the row for audit."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated v7 0.70 ranking liquidity guard and same TopK=10 width",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same equal-weight daily Top10 extraction used by calibrated v7",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "avg_turnover_daily",
+    "topk_perturbation_pass",
+    "cost_stress_pass",
+    "low_liquidity_weight_share"
+  ],
+  "disallowed_changes": [
+    "Do not change the calibrated v7 liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not combine this round with weight-penalty, extraction, refresh-rule, or turnover-suppression changes.",
+    "Do not sweep multiple price-volume feature sets inside this round.",
+    "Do not sweep multiple score aggregation formulas inside this round.",
+    "Do not mix PIT quality, value, or investment features into this family scaffold round."
+  ],
+  "notes": [
+    "This round changes exactly one core dimension: the score family.",
+    "The purpose is to re-center research on the most mature and complete part of the shared data source: price-volume-derived signals.",
+    "This registration freezes the family definition and governance boundary first; it does not yet imply implementation or full-chain execution."
+  ]
+}

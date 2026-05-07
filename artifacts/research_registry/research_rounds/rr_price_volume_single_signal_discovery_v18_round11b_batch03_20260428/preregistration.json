@@ -1,0 +1,318 @@
+{
+  "registered_at": "2026-04-28T20:25:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_alpha158_full_013_v1",
+    "price_volume_single_signal_alpha158_full_014_v1",
+    "price_volume_single_signal_alpha158_full_015_v1",
+    "price_volume_single_signal_alpha158_full_016_v1",
+    "price_volume_single_signal_alpha158_full_017_v1",
+    "price_volume_single_signal_alpha158_full_018_v1",
+    "price_volume_single_signal_alpha158_full_019_v1",
+    "price_volume_single_signal_alpha158_full_020_v1",
+    "price_volume_single_signal_alpha158_full_021_v1",
+    "price_volume_single_signal_alpha158_full_022_v1",
+    "price_volume_single_signal_alpha158_full_023_v1",
+    "price_volume_single_signal_alpha158_full_024_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Round11b batch03: continue serial-only execution for the full158 remaining queue with the next 12 Alpha158-style atomic candidates.",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "source_policy": {
+    "mode": "alpha158_paper_whitelist_only",
+    "whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json",
+    "notes": "Batch03 follows the same whitelist-only governance."
+  },
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "Alpha158/academic/classic whitelist only.",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_013_v1",
+        "field": "alpha158_full_013_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher 20-day return skewness",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:ReturnShape:Skewness20",
+          "source_title": "Alpha158 style return skewness",
+          "source_locator": "Alpha158 return distribution family",
+          "mechanism_mapping": "capture asymmetry of short-horizon return distribution",
+          "independent_implementation_note": "implemented with project-native pct_ret rolling skewness"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "volatility_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "distribution asymmetry channel differs from dispersion level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_014_v1",
+        "field": "alpha158_full_014_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower 20-day return kurtosis pressure",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:ReturnShape:Kurtosis20",
+          "source_title": "Alpha158 style return kurtosis",
+          "source_locator": "Alpha158 return distribution family",
+          "mechanism_mapping": "measure tail-heaviness of short-horizon return distribution",
+          "independent_implementation_note": "implemented with project-native pct_ret rolling kurtosis"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_semivol_ratio_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "tail-shape statistic differs from downside-volatility share.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_015_v1",
+        "field": "alpha158_full_015_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower short-vs-medium overnight volatility ratio",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:OvernightVol:Std5Over20",
+          "source_title": "Alpha158 style overnight volatility ratio",
+          "source_locator": "Alpha158 overnight/open family",
+          "mechanism_mapping": "compare short-window gap-return volatility to medium-window baseline",
+          "independent_implementation_note": "implemented from project-native gap_ret rolling std windows"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "overnight_gap_stability_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "volatility-ratio form differs from direct stability level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_016_v1",
+        "field": "alpha158_full_016_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower short-vs-medium intraday volatility ratio",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:IntradayVol:Std5Over20",
+          "source_title": "Alpha158 style intraday volatility ratio",
+          "source_locator": "Alpha158 intraday family",
+          "mechanism_mapping": "compare short-window intraday return volatility to medium-window baseline",
+          "independent_implementation_note": "implemented from project-native intraday_ret rolling std windows"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "intraday_range_efficiency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "intraday vol-ratio regime differs from path-efficiency construction.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_017_v1",
+        "field": "alpha158_full_017_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "close premium to 20-day moving average",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Trend:CloseOverMA20",
+          "source_title": "Alpha158 style close-to-MA20 premium",
+          "source_locator": "Alpha158 trend family",
+          "mechanism_mapping": "position close relative to rolling MA anchor",
+          "independent_implementation_note": "implemented with project-native adj_close rolling average"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "price-to-average anchor differs from return-horizon momentum.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_018_v1",
+        "field": "alpha158_full_018_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher short-vs-medium moving-average spread",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Trend:MA5OverMA20",
+          "source_title": "Alpha158 style MA spread",
+          "source_locator": "Alpha158 trend family",
+          "mechanism_mapping": "compare short-window mean close to medium-window baseline",
+          "independent_implementation_note": "implemented with project-native rolling mean close windows"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_20_5_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "mean-price spread differs from direct return-ratio construction.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_019_v1",
+        "field": "alpha158_full_019_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher short-vs-medium turnover trend",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Turnover:Mean5Over20",
+          "source_title": "Alpha158 style turnover trend ratio",
+          "source_locator": "Alpha158 turnover family",
+          "mechanism_mapping": "compare short-window turnover mean to medium-window baseline",
+          "independent_implementation_note": "implemented with project-native turnover_rate rolling means"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "liquidity_trend_20_60_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "turnover-ratio regime differs from prior liquidity trend form.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_020_v1",
+        "field": "alpha158_full_020_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower 20-day amount coefficient of variation",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Amount:CV20",
+          "source_title": "Alpha158 style amount CV",
+          "source_locator": "Alpha158 volume stability family",
+          "mechanism_mapping": "normalize amount dispersion by rolling amount level",
+          "independent_implementation_note": "implemented from project-native log_amount rolling mean/std"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "amount_entropy_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "coefficient-of-variation channel differs from entropy structure.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_021_v1",
+        "field": "alpha158_full_021_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower short-vs-medium range ratio",
+        "source_provenance": {
+          "source_category": "alpha158_style",
+          "source_id": "Alpha158:Range:Mean5Over20",
+          "source_title": "Alpha158 style range compression ratio",
+          "source_locator": "Alpha158 range family",
+          "mechanism_mapping": "compare short-window normalized range to medium-window baseline",
+          "independent_implementation_note": "implemented from project-native daily range ratio rolling means"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "range_compression_5_20_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "raw range-ratio baseline differs from prior compression variant mapping.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_022_v1",
+        "field": "alpha158_full_022_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger gap-to-intraday continuation alignment",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "OpenToCloseContinuation:GapIntradayCorr20",
+          "source_title": "Gap continuation microstructure intuition",
+          "source_locator": "open-to-close continuation literature",
+          "mechanism_mapping": "correlation between gap returns and intraday returns",
+          "independent_implementation_note": "implemented from project-native gap_ret and intraday_ret correlation"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "overnight_intraday_consistency_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "correlation form differs from sign-share consistency formulation.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_023_v1",
+        "field": "alpha158_full_023_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "higher average close-location value in bar range",
+        "source_provenance": {
+          "source_category": "classic_factor_handbook",
+          "source_id": "CLV:AverageCloseLocation20",
+          "source_title": "Classic close location value",
+          "source_locator": "technical analysis factor handbooks",
+          "mechanism_mapping": "measure where close sits within daily high-low range",
+          "independent_implementation_note": "implemented from project-native OHLC close-location decomposition"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "average close-location channel differs from prior event-conditional close-position constructs.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_alpha158_full_024_v1",
+        "field": "alpha158_full_024_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower short-vs-medium signed-flow volatility ratio",
+        "source_provenance": {
+          "source_category": "academic_paper",
+          "source_id": "OrderFlowNoise:SignedAmountVol5Over20",
+          "source_title": "Order-flow noise ratio intuition",
+          "source_locator": "market microstructure references",
+          "mechanism_mapping": "compare short-window signed-flow volatility to medium-window baseline",
+          "independent_implementation_note": "implemented from project-native signed_amount_daily rolling std windows"
+        },
+        "dedup_note": {
+          "nearest_canonical_signal": "signed_dollar_flow_persistence_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "volatility-ratio channel differs from persistence/autocorrelation channel.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later composability-screening round.",
+    "non_promotion_rule": "A signal that remains weaker at the head slice should be rejected rather than rescued by family tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, stability-cap, overlay, or family-composition changes inside this round."
+  ],
+  "notes": [
+    "Round11b batch03 is executed serial-only.",
+    "This batch continues the full158 remaining queue under whitelist-only governance."
+  ]
+}

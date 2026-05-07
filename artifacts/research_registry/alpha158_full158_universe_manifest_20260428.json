@@ -1,0 +1,42 @@
+{
+  "as_of_date": "20260428",
+  "universe_id": "qlib_alpha158_exact_158",
+  "scope_status": "canonical_scope_complete",
+  "policy_mode": "alpha158_paper_whitelist_only",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "canonical_definition_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+  "counts": {
+    "exact_total": 158,
+    "exact_executed_under_canonical_governance": 158,
+    "exact_remaining_under_canonical_governance": 0,
+    "historical_noncanonical_alpha158_style_candidates_executed": 64,
+    "historical_noncanonical_round11b_slot_candidates_executed": 48
+  },
+  "canonical_execution_rule": {
+    "candidate_scheme_id_pattern": "price_volume_single_signal_alpha158_<qlib_feature_name_lower>_v1",
+    "project_field_pattern": "alpha158_<qlib_feature_name_lower>_raw",
+    "serial_only": true,
+    "family_reopen_blocked_until_exact_scope_complete": true
+  },
+  "historical_reconciliation": {
+    "superseded_boundary_manifest_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_atomic_pool_v1_round11_manifest_20260428.json",
+    "legacy_round_ids_not_counted_as_exact_completion": [
+      "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+      "rr_price_volume_single_signal_discovery_v18_round10_alpha158_paper_whitelist_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428"
+    ],
+    "note": "Previous alpha158-style standardized candidates and slot-numbered alpha158_full_001~036 runs are retained as historical exploratory pilots only. They do not reduce the remaining count for exact qlib Alpha158 full-definition execution."
+  },
+  "round11_scope_round_id": "rr_price_volume_single_signal_discovery_v18_round11_alpha158_remaining_all_20260428",
+  "round11b_controller_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+  "note": "This manifest supersedes the earlier mixed-scope interpretation. From this point forward, 'full Alpha158' means the exact 158-feature canonical set returned by local qlib Alpha158DL.get_feature_config(), implemented independently under project-native data semantics.",
+  "latest_canonical_execution": {
+    "latest_completed_batch_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428",
+    "latest_completed_at": "2026-04-28T23:11:19+08:00",
+    "exact_executed_candidate_count": 158,
+    "exact_remaining_candidate_count": 0
+  }
+}

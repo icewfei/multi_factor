@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_breakout_volume_confirmation_substitution_20260424_0015",
+  "run_id": "fullchain_price_volume_breakout_volume_confirmation_substitution_20260424_0015",
+  "attempt_id": "attempt_20260424_223424",
+  "generated_at": "2026-04-24T22:39:54.940149+08:00",
+  "candidate_scheme_id": "price_volume_v22_breakout_volume_confirmation_substitution",
+  "research_round_id": "rr_price_volume_breakout_volume_confirmation_substitution_family_20260424",
+  "low_liquidity_holding_count": 3509,
+  "low_liquidity_weight_total": 23.288332932905305,
+  "low_liquidity_weight_share": 0.05914497252801661,
+  "low_liquidity_contribution_total": -0.15931863891951029,
+  "low_liquidity_contribution_share_of_strategy": -1.076267378692529,
+  "low_liquidity_alpha_contribution_share": -26.808509386358264,
+  "flag_high_low_liquidity_exposure": true
+}

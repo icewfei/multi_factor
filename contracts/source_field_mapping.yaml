@@ -1,0 +1,311 @@
+version: multifactor_project_field_mapping_v1
+updated_at: "2026-04-14"
+
+common_keys:
+  snapshot_id:
+    source_field: snapshot_id
+    local_field: snapshot_id
+  instrument:
+    source_field: ts_code
+    local_field: instrument
+  signal_date:
+    source_field: trade_date
+    local_field: signal_date
+
+calendar:
+  trade_date:
+    source_field: trade_date
+    local_field: trade_date
+  entry_date:
+    source_field: next_trade_date_1
+    local_field: entry_date
+  planned_exit_date:
+    source_field: next_trade_date_5
+    local_field: planned_exit_date
+
+bars_daily:
+  open:
+    source_field: open
+    local_field: open
+  high:
+    source_field: high
+    local_field: high
+  low:
+    source_field: low
+    local_field: low
+  close:
+    source_field: close
+    local_field: close
+  volume:
+    source_field: vol
+    local_field: volume
+  amount:
+    source_field: amount
+    local_field: amount
+  adj_factor:
+    source_field: adj_factor
+    local_field: adj_factor
+
+limit_rules_daily:
+  up_limit_price:
+    source_field: up_limit_price_t
+    local_field: up_limit_price
+  down_limit_price:
+    source_field: down_limit_price_t
+    local_field: down_limit_price
+  price_tick:
+    source_field: price_tick_quantize_t
+    local_field: price_tick_quantize
+
+tradability_daily:
+  is_listed:
+    source_field: is_listed_t
+    local_field: is_listed
+  is_suspended:
+    source_field: is_suspended_t
+    local_field: is_suspended
+  is_st:
+    source_field: is_st_t
+    local_field: is_st
+  no_trade:
+    source_field: no_trade_t
+    local_field: no_trade
+  low_liquidity_flag:
+    source_field: low_liquidity_flag_t
+    local_field: low_liquidity_flag
+  open_at_up_limit:
+    source_field: open_at_up_limit_t
+    local_field: open_at_up_limit
+  open_at_down_limit:
+    source_field: open_at_down_limit_t
+    local_field: open_at_down_limit
+  close_at_down_limit:
+    source_field: close_at_down_limit_t
+    local_field: close_at_down_limit
+  one_word_up_limit:
+    source_field: one_word_up_limit_t
+    local_field: one_word_up_limit
+  one_word_down_limit:
+    source_field: one_word_down_limit_t
+    local_field: one_word_down_limit
+  entry_tradeable:
+    source_field: entry_buyable_D1_open
+    local_field: entry_tradeable
+  planned_exit_tradeable:
+    source_field: exit_sellable_D5_close
+    local_field: planned_exit_tradeable
+  sellable_retry_next_open:
+    source_field: sellable_retry_next_open
+    local_field: sellable_retry_next_open
+  tradability_rule_complete_flag:
+    source_field: tradability_rule_complete_flag
+    local_field: tradability_rule_complete_flag
+  tradability_degraded_flag:
+    source_field: tradability_degraded_flag
+    local_field: tradability_degraded_flag
+  tradability_degraded_reason:
+    source_field: tradability_degraded_reason
+    local_field: tradability_degraded_reason
+
+instrument_status_daily:
+  is_listed:
+    source_field: is_listed_t
+    local_field: is_listed
+  is_suspended:
+    source_field: is_suspended_t
+    local_field: is_suspended
+  is_st:
+    source_field: is_st_t
+    local_field: is_st
+  delisting_flag:
+    source_field: null
+    local_field: delisting_flag
+    derivation: "derive from (not is_listed) or terminal_event presence"
+
+terminal_event_daily:
+  terminal_event_flag:
+    source_field: terminal_event_flag
+    local_field: terminal_event_flag
+  terminal_event_type:
+    source_field: terminal_event_type
+    local_field: terminal_event_type
+  terminal_event_date:
+    source_field: event_date
+    local_field: terminal_event_date
+  last_tradable_date:
+    source_field: last_trade_date
+    local_field: last_tradable_date
+  cash_settlement_available:
+    source_field: cash_settlement_flag
+    local_field: cash_settlement_available
+  cash_settlement_amount:
+    source_field: null
+    local_field: cash_settlement_amount
+    derivation: "not available in shared source v2; default null"
+  zero_recovery_recommended:
+    source_field: contract_degraded_flag
+    local_field: zero_recovery_recommended
+    derivation: "project conservative fallback when no settlement amount is available"
+
+labels_daily:
+  entry_date:
+    source_field: entry_date_D1
+    local_field: entry_date
+  planned_exit_date:
+    source_field: planned_exit_date_D5
+    local_field: planned_exit_date
+  open_D1:
+    source_field: open_D1
+    local_field: open_D1
+  close_D5:
+    source_field: close_D5
+    local_field: close_D5
+  adj_factor_D1:
+    source_field: adj_factor_D1
+    local_field: adj_factor_D1
+  adj_factor_D5:
+    source_field: adj_factor_D5
+    local_field: adj_factor_D5
+  adj_open_base_D1:
+    source_field: adj_open_base_D1
+    local_field: adj_open_base_D1
+  adj_close_base_D5:
+    source_field: adj_close_base_D5
+    local_field: adj_close_base_D5
+  label:
+    source_field: label_5d_next_open_close
+    local_field: label_5d_next_open_close
+  label_raw:
+    source_field: label_5d_next_open_close_raw
+    local_field: label_5d_next_open_close_raw
+  label_defined:
+    source_field: label_defined
+    local_field: label_defined
+  label_masked_reason:
+    source_field: label_masked_reason
+    local_field: label_masked_reason
+
+execution_path_daily:
+  entry_date:
+    source_field: entry_date_D1
+    local_field: entry_date
+  planned_exit_date:
+    source_field: planned_exit_date_D5
+    local_field: planned_exit_date
+  actual_exit_date:
+    source_field: actual_exit_date
+    local_field: actual_exit_date
+  actual_exit_event_type:
+    source_field: actual_exit_event_type
+    local_field: actual_exit_event_type
+  actual_exit_price_field:
+    source_field: actual_exit_price_field
+    local_field: actual_exit_price_field
+  actual_sell_price:
+    source_field: actual_sell_price
+    local_field: actual_sell_price
+  exit_delay_days:
+    source_field: exit_delay_days
+    local_field: exit_delay_days
+  terminal_exit_pricing_method:
+    source_field: terminal_exit_pricing_method
+    local_field: terminal_exit_pricing_method
+  execution_path_status:
+    source_field: execution_path_status
+    local_field: execution_path_status
+  execution_delayed_realized_return:
+    source_field: execution_delayed_realized_return
+    local_field: execution_delayed_realized_return
+  terminal_event_flag:
+    source_field: terminal_event_flag
+    local_field: terminal_event_flag
+  terminal_event_type:
+    source_field: terminal_event_type
+    local_field: terminal_event_type
+  terminal_event_date:
+    source_field: terminal_event_date
+    local_field: terminal_event_date
+  terminal_exit_approximation_flag:
+    source_field: terminal_exit_approximation_flag
+    local_field: terminal_exit_approximation_flag
+  terminal_exit_conservative_flag:
+    source_field: terminal_exit_conservative_flag
+    local_field: terminal_exit_conservative_flag
+
+sample_eligibility_daily:
+  entry_date:
+    source_field: entry_date
+    local_field: entry_date
+  planned_exit_date:
+    source_field: planned_exit_date
+    local_field: planned_exit_date
+  entry_tradeable:
+    source_field: entry_tradeable
+    local_field: entry_tradeable
+  planned_exit_tradeable:
+    source_field: planned_exit_tradeable
+    local_field: planned_exit_tradeable
+  actually_exited:
+    source_field: actually_exited
+    local_field: actually_exited
+  feature_ready_D0:
+    source_field: feature_ready_D0
+    local_field: feature_ready_D0
+  price_window_ready_D0:
+    source_field: price_window_ready_D0
+    local_field: price_window_ready_D0
+  core_features_complete_D0:
+    source_field: core_features_complete_D0
+    local_field: core_features_complete_D0
+  pit_state_complete_D0:
+    source_field: pit_state_complete_D0
+    local_field: pit_state_complete_D0
+  base_universe_member_D0:
+    source_field: base_universe_member_D0
+    local_field: base_universe_member_D0
+  rules_filter_pass_D0:
+    source_field: rules_filter_pass_D0
+    local_field: rules_filter_pass_D0
+  state_filter_pass_D0:
+    source_field: state_filter_pass_D0
+    local_field: state_filter_pass_D0
+  universe_eligible_D0:
+    source_field: universe_eligible_D0
+    local_field: universe_eligible_D0
+  signal_emittable:
+    source_field: signal_emittable
+    local_field: signal_emittable
+  ranking_eligible_D0:
+    source_field: ranking_eligible_D0
+    local_field: ranking_eligible_D0
+  train_mask_v1:
+    source_field: train_mask_v1
+    local_field: train_mask_v1
+  eval_mask_v1:
+    source_field: eval_mask_v1
+    local_field: eval_mask_v1
+  train_mask_conservative:
+    source_field: train_mask_conservative
+    local_field: train_mask_conservative
+  eval_mask_conservative:
+    source_field: eval_mask_conservative
+    local_field: eval_mask_conservative
+  mask_reason_json:
+    source_field: mask_reason_json
+    local_field: mask_reason_json
+  entry_filled_D1:
+    source_field: entry_filled_D1
+    local_field: entry_filled_D1_shared_proxy
+  backtest_executable:
+    source_field: backtest_executable
+    local_field: backtest_executable_shared_proxy
+
+project_owned_fields:
+  - run_id
+  - attempt_id
+  - model_score_D0
+  - topk_frozen_D0
+  - execution_attempt_D1
+  - entry_filled_D1
+  - backtest_executable
+  - target_weight_D0

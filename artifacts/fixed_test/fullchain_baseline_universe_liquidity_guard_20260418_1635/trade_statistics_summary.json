@@ -1,0 +1,41 @@
+{
+  "fixed_test_run_id": "fullchain_baseline_universe_liquidity_guard_20260418_1635",
+  "run_id": "fullchain_baseline_universe_liquidity_guard_20260418_1635",
+  "attempt_id": "attempt_20260418_171330",
+  "generated_at": "2026-04-18T17:19:11.458692+08:00",
+  "candidate_scheme_id": "baseline_momentum_v8_universe_liquidity_guard",
+  "research_round_id": "rr_baseline_universe_liquidity_guard_20260418",
+  "holdings_count": 60526,
+  "unique_instruments": 3295,
+  "signal_dates_with_positions": 6299,
+  "avg_exit_delay_days": 0.7066804453630242,
+  "delayed_exit_positions": 2278,
+  "terminal_event_positions": 273,
+  "total_entry_fill_weight": 195.24516129027884,
+  "avg_turnover_daily": 0.06169118061137231,
+  "median_turnover_daily": 0.06451612903225806,
+  "max_turnover_daily": 0.12903225806451613,
+  "rebalance_days": 6299,
+  "run_state_summary_counts": {
+    "ranking_state_rows": 15818326,
+    "execution_state_rows": 15818326,
+    "ranking_anomaly_rows": 135887,
+    "rankable_rows": 4542190,
+    "null_model_score_rows": 720512,
+    "nonfinite_model_score_rows": 0,
+    "topk_frozen_rows": 63020,
+    "execution_attempt_rows": 63020,
+    "entry_filled_rows": 60526,
+    "backtest_executable_rows": 60526,
+    "unfilled_topk_count": 2494,
+    "unfilled_topk_weight": 249.4,
+    "topk_per_signal_breach_count": 0,
+    "topk_default_used": 10,
+    "liquidity_guard_excluded_rows": 10661994
+  },
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK.",
+    "universe_eligibility_guard excluded rows from the effective universe before TopK freeze."
+  ],
+  "fatal_blockers": []
+}

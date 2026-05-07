@@ -1,0 +1,79 @@
+{
+  "as_of_date": "20260502",
+  "research_round_id": "rr_exploratory_pv_corr_family_engineering_20260502",
+  "baseline": {
+    "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+    "median_daily_ic": 0.032510819100776134,
+    "median_ci_low": 0.02998391755976437,
+    "median_ci_high": 0.03464856779568037,
+    "mean_daily_ic": 0.03578488717603624,
+    "n_days": 5325
+  },
+  "candidates": {
+    "pv_corr_ensemble_v1": {
+      "full_sample_corr": 0.022057592567549893,
+      "mean_daily_ic": 0.037528163976732684,
+      "median_daily_ic": 0.03404523137938098,
+      "std_daily_ic": 0.0889526685577422,
+      "n_days": 5325,
+      "positive_daily_share": 0.6668544600938967,
+      "median_ci_low": 0.031375214601863294,
+      "median_ci_high": 0.037287537975243895,
+      "mean_ci_low": 0.03511647303789422,
+      "mean_ci_high": 0.039913001552424394,
+      "median_ic_delta_vs_cord30": 0.0015344122786048464,
+      "top10_bot10_spread": 0.008847618050636653,
+      "top10_avg_label": 0.007731872428689237,
+      "bottom10_avg_label": -0.0011157456219474157,
+      "decile_labels": {
+        "1": 0.006220583876852973,
+        "2": 0.005711531077144385,
+        "3": 0.005299701655126875,
+        "4": 0.004907896590664263,
+        "5": 0.004650956576851797,
+        "6": 0.004126142858887924,
+        "7": 0.0037432626941286693,
+        "8": 0.0031533049736812385,
+        "9": 0.002571735432132374,
+        "10": 0.0008387097087764155
+      },
+      "tier1_pass": false,
+      "tier2_pass": false
+    },
+    "pv_corr_delta_v1": {
+      "full_sample_corr": -0.0011836316212541003,
+      "mean_daily_ic": -0.0025303617617938377,
+      "median_daily_ic": -0.00032325011321165633,
+      "std_daily_ic": 0.06920130788106535,
+      "n_days": 5316,
+      "positive_daily_share": 0.49774266365688485,
+      "median_ci_low": -0.0025865560623313678,
+      "median_ci_high": 0.0016950202401284828,
+      "mean_ci_low": -0.004409213048686447,
+      "mean_ci_high": -0.0006876673660956771,
+      "median_ic_delta_vs_cord30": -0.03283406921398779,
+      "top10_bot10_spread": 0.0016027439872142737,
+      "top10_avg_label": 0.004266293104462813,
+      "bottom10_avg_label": 0.0026635491172485397,
+      "decile_labels": {
+        "1": 0.003838328440776718,
+        "2": 0.004087567824997943,
+        "3": 0.004132410701442918,
+        "4": 0.004104168380989321,
+        "5": 0.004020949028047909,
+        "6": 0.004181810783260207,
+        "7": 0.004249995472623462,
+        "8": 0.004356693121619955,
+        "9": 0.004315212136925476,
+        "10": 0.003959129992335977
+      },
+      "tier1_pass": false,
+      "tier2_pass": false
+    }
+  },
+  "success_rules": {
+    "tier_1": "median_daily_ic >= 0.040 AND 95% CI excludes zero",
+    "tier_2": "median_ic_delta_vs_cord30 >= +0.005"
+  },
+  "family_verdict": "pv-corr family near saturation; reopen data acquisition discussion"
+}

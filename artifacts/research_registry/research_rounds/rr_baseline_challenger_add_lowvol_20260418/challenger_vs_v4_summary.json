@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-04-18T14:40:00+08:00",
+  "comparison_title": "baseline_momentum_lowvol_v5 vs baseline_momentum_v4",
+  "reference_candidate_scheme_id": "baseline_momentum_v4",
+  "challenger_candidate_scheme_id": "baseline_momentum_lowvol_v5",
+  "reference_run_id": "fullchain_challenger_momentum_only_20260418_1140",
+  "reference_attempt_id": "attempt_challenger_momentum_only_20260418_1145",
+  "challenger_run_id": "fullchain_challenger_momentum_lowvol_20260418_1155",
+  "challenger_attempt_id": "attempt_challenger_momentum_lowvol_20260418_1200",
+  "changed_dimension": "baseline_score_composition",
+  "change_summary": "Added volatility_20d_raw back on top of the v4 momentum-only challenger.",
+  "engineering_note": {
+    "signal_date_chunk_size_reference": 100,
+    "signal_date_chunk_size_challenger": 50,
+    "reference_run_state_seconds": 975.767149,
+    "challenger_run_state_seconds": 510.417845,
+    "note": "Chunk-size findings are engineering-only and must not be interpreted as strategy alpha."
+  },
+  "metric_comparison": {
+    "annual_relative_return": {
+      "reference": -0.07749029299584442,
+      "challenger": -0.10158015190118408,
+      "delta_challenger_minus_reference": -0.024089858905339656
+    },
+    "avg_cash_weight": {
+      "reference": 0.861396296542766,
+      "challenger": 0.8154405505619451,
+      "delta_challenger_minus_reference": -0.04595574598082092
+    },
+    "avg_invested_weight": {
+      "reference": 0.13860370345720757,
+      "challenger": 0.18455944943804145,
+      "delta_challenger_minus_reference": 0.04595574598083387
+    },
+    "max_drawdown": {
+      "reference": -0.4468203700607709,
+      "challenger": -0.60664923206046,
+      "delta_challenger_minus_reference": -0.15982886199968908
+    },
+    "relative_ir": {
+      "reference": -0.5072810084781046,
+      "challenger": -0.6804410400902299,
+      "delta_challenger_minus_reference": -0.1731600316121253
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.999109983023751,
+      "challenger": 0.9988373058716046,
+      "delta_challenger_minus_reference": -0.00027267715214640516
+    },
+    "low_liquidity_alpha_contribution_share": {
+      "reference": 1.0038539270934508,
+      "challenger": 0.8231938505469207,
+      "delta_challenger_minus_reference": -0.18066007654653007
+    }
+  },
+  "audit_flags": {
+    "reference": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    },
+    "challenger": {
+      "low_liquidity_flag_high": true,
+      "topk_perturbation_pass": false,
+      "cost_stress_pass": false
+    }
+  },
+  "decision": {
+    "classification": "weak_candidate",
+    "rationale": [
+      "Adding low-volatility back increased invested weight but worsened relative return, drawdown, and relative IR versus v4.",
+      "Low-liquidity exposure remained flagged high and both TopK perturbation plus cost stress checks still failed.",
+      "The scheme therefore remains non-promotable under current fixed-test governance."
+    ]
+  }
+}

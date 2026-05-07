@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_fundamental_c1_roe_dt",
+  "run_id": "exploratory_fundamental_c1_roe_dt",
+  "attempt_id": "attempt_20260501_170511",
+  "generated_at": "2026-05-01T17:08:14.132855+08:00",
+  "candidate_scheme_id": "exploratory_fundamental_c1_roe_dt",
+  "research_round_id": "rr_exploratory_fundamental_quality_profitability_20260501",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -0.6192178160059758,
+  "selection_alpha_total": 1.353578699380947,
+  "low_liquidity_contribution_total": -2.011478989440465
+}

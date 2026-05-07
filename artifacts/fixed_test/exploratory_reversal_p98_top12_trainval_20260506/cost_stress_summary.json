@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_top12_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_top12_trainval_20260506",
+  "attempt_id": "attempt_20260506_124943",
+  "generated_at": "2026-05-06T12:52:26.892828+08:00",
+  "candidate_scheme_id": "reversal_tail_exclude_p98_top12_v1",
+  "research_round_id": "rr_exploratory_reversal_p98_top12_20260506",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.0666004298851185,
+  "pass_cost_stress_relative_return_floor": false
+}

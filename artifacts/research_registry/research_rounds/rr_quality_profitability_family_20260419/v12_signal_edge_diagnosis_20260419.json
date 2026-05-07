@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-04-19T09:51:22.150169+08:00",
+  "candidate_scheme_id": "quality_profitability_v12_core",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "diagnosis_scope": "quality/profitability signal edge diagnosis",
+  "score_coverage": {
+    "scored_with_label_rows": 11024607,
+    "score_min": 0.0,
+    "score_max": 1.0,
+    "score_avg": 0.49976627800188433,
+    "score_std": 0.2693738368506583,
+    "full_sample_corr_ic": 0.0024844460811503945,
+    "ranking_eligible_rows": 15233701,
+    "scored_rows": 11119551,
+    "null_score_rows": 4114150,
+    "null_score_share": 0.2700689740464251
+  },
+  "signal_quality": {
+    "full_sample_corr_ic": 0.0024844460811503945,
+    "avg_daily_ic": -0.008693589978969626,
+    "median_daily_ic": 0.0044184759536492375,
+    "positive_daily_ic_share": 0.5131788430921634,
+    "daily_ic_observation_days": 5653
+  },
+  "decile_monotonicity": {
+    "avg_label_by_decile_desc": {
+      "1": 0.004126762554330757,
+      "2": 0.004024097387523,
+      "3": 0.00392311070496914,
+      "4": 0.0040442031648225615,
+      "5": 0.00400491825630198,
+      "6": 0.003715899649432143,
+      "7": 0.003899735866079156,
+      "8": 0.0038743931350186033,
+      "9": 0.003768902976542437,
+      "10": 0.0034150196484557436
+    },
+    "interpretation": "top-to-bottom decile ordering indicates whether the quality/profitability score carries broad monotonic information before portfolio extraction"
+  },
+  "top_bucket_readout": {
+    "avg_label_top10": 0.0038721496925226543,
+    "avg_label_rank11_20": 0.003928273832730333,
+    "avg_label_bottom10": 0.0040453477779103485,
+    "top10_minus_rank11_20": -5.6124140207678645e-05,
+    "top10_minus_bottom10": -0.00017319808538769415,
+    "interpretation": "compare the extreme head bucket against the next 10 names and the bottom tail to see whether TopK=10 is extracting a robust edge or a noisy slice"
+  },
+  "cutoff_gap_readout": {
+    "avg_rank10_11_score_gap": 0.011295245235782403,
+    "median_rank10_11_score_gap": 0.0008672543498701724,
+    "days_with_both_ranks_present": 5684,
+    "days_gap_lt_0_005": 3710,
+    "days_gap_lt_0_001": 2988
+  },
+  "conclusion": [
+    "The quality/profitability score has positive but weak full-sample IC, so it is not random, but the gross edge is thin.",
+    "Ranks 11-20 outperform the top 10 on average, which suggests the current TopK=10 extraction is cutting too aggressively or too noisily at the head.",
+    "Broad decile ordering remains positive from top to bottom, which implies some ordering information survives before costs and extraction.",
+    "Use this diagnosis before deciding whether to continue the quality/profitability family or switch to a different score family."
+  ]
+}

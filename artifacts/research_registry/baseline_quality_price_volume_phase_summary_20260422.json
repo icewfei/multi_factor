@@ -1,0 +1,63 @@
+{
+  "as_of_date": "2026-04-22",
+  "scope": [
+    "baseline_family_v7_to_v11",
+    "quality_profitability_family_v12",
+    "price_volume_families_v13_to_v14"
+  ],
+  "active_reference": {
+    "candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+    "research_round_id": "rr_baseline_liquidity_guard70_20260418",
+    "snapshot_id": "warehouse_20260418_181408",
+    "annual_relative_return": -0.06976572569304007,
+    "relative_ir": -0.5287021621315882,
+    "max_drawdown": -0.3968114993586318,
+    "avg_cash_weight": 0.7919965084907071,
+    "avg_invested_weight": 0.2080034915092814,
+    "avg_turnover_daily": 0.09811299793683326,
+    "low_liquidity_weight_share": 0.020450724262800736,
+    "topk_perturbation_pass": false,
+    "cost_stress_pass": false
+  },
+  "family_assessment": {
+    "baseline_family_v7_to_v11": {
+      "status": "stop_tuning",
+      "summary": "Weak positive edge exists in recalibrated v7, but guard, universe, weight penalty, extraction, and refresh-rule micro-tuning did not promote the family.",
+      "recommended_action": "Keep recalibrated v7 as operational reference only; do not continue local micro-tuning."
+    },
+    "quality_profitability_family_v12": {
+      "status": "not_priority",
+      "summary": "Signal is not fully random, but edge is very shallow and head extraction is poor; turnover and drawdown improved but return did not.",
+      "recommended_action": "Do not continue family-level extraction tuning until stronger single-signal evidence exists."
+    },
+    "price_volume_multisignal_family_v13": {
+      "status": "stop",
+      "summary": "Current fixed multisignal price/volume family shows negative edge and inverted decile direction.",
+      "recommended_action": "Do not continue this family."
+    },
+    "trend_quality_price_volume_family_v14": {
+      "status": "stop",
+      "summary": "Cleaner trend-quality construction still shows negative edge and inverted decile behavior.",
+      "recommended_action": "Do not continue this family."
+    }
+  },
+  "next_stage_direction": {
+    "strategy": "single_signal_discovery_before_new_family",
+    "why": [
+      "Recent mixed-family attempts either have very weak edge or negative score direction.",
+      "Directly opening another mixed score family would add research freedom without enough new information.",
+      "Single-signal screening can identify which atomic signals have genuine positive edge before recombining."
+    ],
+    "priority_order": [
+      "price_volume_single_signal_discovery",
+      "value_investment_single_signal_discovery",
+      "quality_profitability_single_signal_discovery"
+    ],
+    "avoid_now": [
+      "further baseline family micro-tuning",
+      "quality family extraction tuning",
+      "more mixed price-volume family variants",
+      "simultaneous score-family and portfolio-rule changes"
+    ]
+  }
+}

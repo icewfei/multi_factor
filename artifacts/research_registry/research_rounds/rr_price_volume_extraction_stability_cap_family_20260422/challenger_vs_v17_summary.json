@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-04-22T15:10:25.448970+08:00",
+  "reference_candidate_scheme_id": "price_volume_v17_head_extraction_smoothing",
+  "challenger_candidate_scheme_id": "price_volume_v19_extraction_stability_cap",
+  "reference_run_id": "fullchain_price_volume_head_extraction_smoothing_20260422_141534",
+  "challenger_run_id": "fullchain_price_volume_extraction_stability_cap_20260422_150500",
+  "summary_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.047056072967004314,
+      "challenger": -0.04719813982369314,
+      "delta": -0.00014206685668882724
+    },
+    "relative_ir": {
+      "reference": -0.40956655842046624,
+      "challenger": -0.4128537596166241,
+      "delta": -0.003287201196157885
+    },
+    "max_drawdown": {
+      "reference": -0.28266206166931773,
+      "challenger": -0.28115114563953414,
+      "delta": 0.0015109160297835933
+    },
+    "avg_cash_weight": {
+      "reference": 0.7701280380379064,
+      "challenger": 0.7708170105412404,
+      "delta": 0.0006889725033339955
+    },
+    "avg_invested_weight": {
+      "reference": 0.22987196196210838,
+      "challenger": 0.22918298945877238,
+      "delta": -0.0006889725033359939
+    },
+    "avg_turnover_daily": {
+      "reference": 0.10935766168269097,
+      "challenger": 0.1093770433908671,
+      "delta": 1.938170817612772e-05
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.030185107586274962,
+      "challenger": 0.030132090567729884,
+      "delta": -5.301701854507762e-05
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    }
+  },
+  "conclusion": "Extraction stability cap preserved the v17 profile and slightly improved max_drawdown plus low_liquidity_weight_share, but it did not reduce avg_turnover_daily, slightly worsened annual_relative_return and relative_ir, and still failed both TopK perturbation plus cost-stress audit gates, so it remains a weak_candidate."
+}

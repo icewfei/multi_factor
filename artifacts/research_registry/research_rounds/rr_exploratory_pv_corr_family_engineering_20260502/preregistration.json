@@ -1,0 +1,59 @@
+{
+  "registered_at": "2026-05-02T12:00:00+08:00",
+  "research_round_id": "rr_exploratory_pv_corr_family_engineering_20260502",
+  "research_phase": "signal_learnability",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "feature_engineering_within_existing_family",
+  "round_note": "Signal/learnability phase, round 1. First feature engineering round after learnability diagnostic phase transition. Narrow scope: price-volume correlation family only.",
+  "research_question": "在当前已有特征空间内，针对 learnability diagnostic 确认含有弱 oracle-related information 的 price-volume correlation 家族做定向特征工程，是否能把 median daily IC 从 0.0325 明显抬升到 >= 0.040？",
+  "changed_dimension": "feature_engineering_within_existing_family",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "在 price-volume correlation 家族上新增 2 个结构性特征方向。A: Window-Ensemble Correlation (多窗口 cord rank ensemble)。B: Cross-Horizon Correlation Delta (跨窗口 cord rank 差异)。不改变: score family 以外合约、TopK、执行语义、成本合同、基准、portfolio refresh rule、holding_cohort_count、snapshot、数据源。不引入新数据源。不修改合约参数。不碰 D10。",
+  "baseline_reference_candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+  "baseline_metrics": {
+    "median_daily_ic_vs_oracle": 0.0325,
+    "median_daily_ic_95ci_low": 0.0300,
+    "median_daily_ic_95ci_high": 0.0346,
+    "source": "learnability_diagnostic_20260502_frozen"
+  },
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "candidate_scheme_ids": ["pv_corr_ensemble_v1", "pv_corr_delta_v1"],
+  "planned_candidate_scheme_ids": ["pv_corr_ensemble_v1", "pv_corr_delta_v1"],
+  "candidates": {
+    "pv_corr_ensemble_v1": {
+      "direction": "A",
+      "name": "Window-Ensemble Correlation",
+      "hypothesis": "Oracle label is sensitive to price-volume co-movement at multiple time scales simultaneously. A single 30d window discards horizon-specific information recoverable by combining short, medium, and long windows.",
+      "method": "Compute cord (change-correlation) at 3 windows (10d, 30d, 60d). Rank-normalize each cross-sectionally. Output: mean(cord_rank_10d, cord_rank_30d, cord_rank_60d).",
+      "expected_relationship_to_baseline": "Extension of cord30. Adds horizon diversity to the single-window baseline."
+    },
+    "pv_corr_delta_v1": {
+      "direction": "B",
+      "name": "Cross-Horizon Correlation Delta",
+      "hypothesis": "The change in price-volume correlation across time scales captures regime acceleration/deceleration structurally absent from all current family members.",
+      "method": "cord_delta_short = cord_rank_10d - cord_rank_30d. cord_delta_long = cord_rank_20d - cord_rank_60d. Output: mean(cord_delta_short, cord_delta_long).",
+      "expected_relationship_to_baseline": "Orthogonal to cord30. Measures change rate rather than correlation level."
+    }
+  },
+  "success_rules": {
+    "tier_1_absolute": "At least one candidate achieves median daily IC >= 0.040 with bootstrap 95% CI (10k resamples, seed=42) excluding zero.",
+    "tier_2_relative": "The same candidate shows median daily IC delta >= +0.005 over baseline cord30 (candidate_median - 0.0325 >= 0.005).",
+    "core_pass_condition": "Both Tier 1 AND Tier 2 must be met by at least one candidate.",
+    "stop_condition": "If both candidates have median IC <= 0.035 AND neither clears +0.005 delta over cord30, the family is considered saturated. Do NOT expand to Direction C or more cord variants. Re-open data acquisition discussion.",
+    "ic_computation_method": "Spearman rank correlation (CORR of cross-sectional percent-rank scores vs oracle label_5d_next_open_close). Daily IC aggregated over all trading days in trainval snapshot where >= 20 stocks have non-null scores and labels."
+  },
+  "exclusions": {
+    "reversal_sign_flip": "Deferred to post-round standalone check. Not included in this round.",
+    "new_data_sources": "Excluded. Current data modalities first.",
+    "composite_optimization": "Excluded. First find better components.",
+    "contract_changes": "Excluded. All contract parameters unchanged.",
+    "D10_holding_period": "Excluded. Not a signal problem.",
+    "direction_c_correlation_quality": "Held for possible round 2, only if round 1 passes."
+  },
+  "design_document": "项目总纲及计划/design_signal_learnability_round1_pv_corr_family.md",
+  "learnability_diagnostic_reference": "artifacts/fixed_test/learnability_diagnostic/learnability_diagnostic_20260502.md",
+  "serial_rule": "Signal/learnability phase 第一轮。如果两个候选都不达标，pv-corr family 视为饱和，重开 data acquisition 讨论。如果任一候选达标，进入 round 2 (Direction C + family composite)。"
+}

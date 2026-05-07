@@ -1,0 +1,43 @@
+{
+  "fixed_test_run_id": "exploratory_pr_mom_ind_neut_v1",
+  "run_id": "exploratory_pr_mom_ind_neut_v1",
+  "attempt_id": "attempt_20260507_114212",
+  "generated_at": "2026-05-07T11:44:29.342091+08:00",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "etl_code_hash": "3f18a0f38ad6c09b530b5db4db8ca379a47f43509a453693135de513e452d1a4",
+  "execution_logic_version": "warehouse_execution_v3",
+  "data_contract_version": "multifactor_data_contract_v2",
+  "runtime_environment": {
+    "python_env_path": "/opt/anaconda3/envs/quant_trade",
+    "python_executable": "/opt/anaconda3/envs/quant_trade/bin/python"
+  },
+  "source_views": [
+    "serving.vw_calendar",
+    "serving.vw_instruments_main_chinext",
+    "serving.vw_bars_daily",
+    "serving.vw_limit_rules_daily",
+    "serving.vw_tradability_daily",
+    "serving.vw_instrument_status_daily",
+    "serving.vw_terminal_event_daily",
+    "serving.vw_labels_daily",
+    "serving.vw_execution_path_daily",
+    "serving.vw_sample_eligibility_daily"
+  ],
+  "shared_source_degraded_flags": {
+    "terminal_event_daily": "shared source currently covers delist-only terminal events and should be treated as degraded truth for terminal pricing."
+  },
+  "candidate_scheme_id": "pr_mom_ind_neut_v1",
+  "research_round_id": "rr_exploratory_neutralization_20260506",
+  "benchmark_status": {
+    "primary_benchmark_code": "CSI_ALL_SHARE_TR",
+    "primary_benchmark_name": "中证全指全收益指数",
+    "primary_is_total_return": true,
+    "auxiliary_benchmark_code": "CSI_300_TR",
+    "auxiliary_benchmark_name": "沪深300全收益指数",
+    "auxiliary_is_total_return": true,
+    "relative_metrics_available": true,
+    "fallback_triggered": false,
+    "promotion_eligible_relative_metrics": true,
+    "notes": "Primary and auxiliary benchmark series are both total-return series from the shared source."
+  }
+}

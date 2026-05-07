@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "attempt_id": "attempt_20260419_091919",
+  "generated_at": "2026-04-19T09:29:11.379909+08:00",
+  "candidate_scheme_id": "quality_profitability_v12_core",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.0987986613808548,
+  "pass_cost_stress_relative_return_floor": false
+}

@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "ft_c3_drop_momentum_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_145400",
+  "generated_at": "2026-04-29T15:02:13.148114+08:00",
+  "candidate_scheme_id": "confirmatory_ablation_drop_momentum_3sig",
+  "research_round_id": "rr_confirmatory_c3_ablation_mid_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": 0.0017538943457149347,
+  "pass_cost_stress_relative_return_floor": true
+}

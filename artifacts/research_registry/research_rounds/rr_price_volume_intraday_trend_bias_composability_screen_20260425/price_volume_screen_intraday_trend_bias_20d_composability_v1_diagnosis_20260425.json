@@ -1,0 +1,102 @@
+{
+  "candidate_scheme_id": "price_volume_screen_intraday_trend_bias_20d_composability_v1",
+  "research_round_id": "rr_price_volume_intraday_trend_bias_composability_screen_20260425",
+  "as_of_date": "20260425",
+  "diagnosis_question": "Relative to the frozen v18 core two-signal family, does intraday_trend_bias_20d_raw look compositionally compatible enough to justify a later family-level promotion?",
+  "single_signal_readout": {
+    "full_sample_corr_ic": 0.01473966497428755,
+    "avg_daily_ic": 0.019716401640396605,
+    "median_daily_ic": 0.01679770761122253,
+    "positive_daily_ic_share": 0.5559402045633359,
+    "avg_label_top10": 0.005909236337901781,
+    "avg_label_rank11_20": 0.005600781497543339,
+    "avg_label_bottom10": -0.0034390084555754913,
+    "top10_minus_rank11_20": 0.00030845484035844223
+  },
+  "reference_family_signal_edge_readout": {
+    "full_sample_corr_ic": 0.01334546599925933,
+    "avg_daily_ic": 0.02065751031288892,
+    "median_daily_ic": 0.017744140849193117,
+    "positive_daily_ic_share": 0.558220810166799,
+    "avg_label_top10": 0.0068138467528402,
+    "avg_label_rank11_20": 0.006294745429802954,
+    "avg_label_bottom10": -0.0036259365084192917,
+    "top10_minus_rank11_20": 0.0005191013230372464,
+    "avg_rank10_11_score_gap": 0.0020212387863011365,
+    "median_rank10_11_score_gap": 0.0012864493996569415,
+    "days_with_both_ranks": 6295,
+    "avg_top10_liquidity_rank_mean": 0.4422973406518766
+  },
+  "screen_family_signal_edge_readout": {
+    "full_sample_corr_ic": 0.01601549226160432,
+    "avg_daily_ic": 0.02385602584542026,
+    "median_daily_ic": 0.023054756922705172,
+    "positive_daily_ic_share": 0.5667990468625893,
+    "avg_label_top10": 0.007802082583819268,
+    "avg_label_rank11_20": 0.006949133867455193,
+    "avg_label_bottom10": 0.031462470665769945,
+    "top10_minus_rank11_20": 0.0008529487163640749,
+    "avg_rank10_11_score_gap": 0.0025413374643114927,
+    "median_rank10_11_score_gap": 0.0017177072990131048,
+    "days_with_both_ranks": 6295,
+    "avg_top10_liquidity_rank_mean": 0.47082250458273617
+  },
+  "pairwise_component_correlation": {
+    "momentum_vs_intraday_trend_bias": {
+      "corr_full": 0.3509030444217186,
+      "corr_avg_daily": 0.34053694096988907,
+      "corr_median_daily": 0.36272535546153206,
+      "corr_positive_daily_share": 0.9662012059663598
+    },
+    "liquidity_trend_vs_intraday_trend_bias": {
+      "corr_full": 0.4121048719678209,
+      "corr_avg_daily": 0.396479745022467,
+      "corr_median_daily": 0.40845774776742955,
+      "corr_positive_daily_share": 0.9995284501729016
+    },
+    "core_v18_vs_intraday_trend_bias": {
+      "corr_full": 0.4617254077069034,
+      "corr_avg_daily": 0.4493983283478938,
+      "corr_median_daily": 0.4643164958711614,
+      "corr_positive_daily_share": 0.9931767692795938
+    }
+  },
+  "component_interaction": {
+    "bucket_readout": {
+      "core_high_bias_high": 0.004798686981223775,
+      "core_high_bias_mid": 0.004796661003056764,
+      "core_high_bias_low": 0.003479435505890866,
+      "core_mid_bias_high": 0.004267780989550199,
+      "core_mid_bias_mid": 0.004405643422762629,
+      "core_mid_bias_low": 0.0029933853088551132,
+      "core_low_bias_high": 0.00377839991995228,
+      "core_low_bias_mid": 0.003793106314014489,
+      "core_low_bias_low": 0.0018760449546783358
+    }
+  },
+  "head_stability": {
+    "reference_avg_top10_overlap_next_day": 7.223070739549839,
+    "screen_avg_top10_overlap_next_day": 6.663585209003215,
+    "reference_median_top10_overlap_next_day": 7.0,
+    "screen_median_top10_overlap_next_day": 7.0,
+    "avg_top10_overlap_same_day_vs_reference": 3.6553791315618924,
+    "median_top10_overlap_same_day_vs_reference": 4.0
+  },
+  "coverage": {
+    "total_rows": 15818326,
+    "ranking_eligible_rows": 15233701,
+    "reference_scored_rows": 15097814,
+    "screen_scored_rows": 15097814
+  },
+  "judgement": {
+    "primary_conclusion": "intraday_trend_bias_20d_raw is a real standalone keeper, but its additive fit with the frozen v18 core family is mixed rather than clean. It improves some static ordering diagnostics, but at least one of additive monotonicity, head stability, or liquidity/head proxy behavior remains questionable.",
+    "mechanism": [
+      "Pairwise momentum-vs-intraday-trend-bias rank correlation is 0.340537 on average by day, which indicates the new signal is not simply duplicating momentum.",
+      "Core-family-vs-intraday-trend-bias rank correlation is 0.449398 on average by day, so the candidate contributes partially orthogonal ordering information.",
+      "In the high-core region, core_high+bias_high average label is 0.004799 versus core_high+bias_mid 0.004797, which is the key additive-monotonicity check.",
+      "Head stability proxy changes from reference avg next-day top10 overlap 7.223071 to screen 6.663585."
+    ],
+    "implication_for_next_step": "Do not promote intraday_trend_bias_20d_raw into a direct equal-weight family replacement yet. If used later, prefer a constrained third-signal test or gated modifier design.",
+    "classification": "composability_screen_mixed"
+  }
+}

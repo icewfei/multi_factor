@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_cord30_w10_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_cord30_w10_trainval_20260506",
+  "attempt_id": "attempt_20260506_124016",
+  "generated_at": "2026-05-06T12:42:52.959165+08:00",
+  "candidate_scheme_id": "reversal_p98_cord30_w10_v1",
+  "research_round_id": "rr_exploratory_reversal_cord30_weight10_20260506",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.093130667030177,
+  "selection_alpha_total": 1.9108287438655531,
+  "low_liquidity_contribution_total": 0.3038605021080563
+}

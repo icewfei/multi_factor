@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "run_id": "fullchain_price_volume_liquidity_trend_60_120_substitution_20260423_153129",
+  "attempt_id": "attempt_20260423_153416",
+  "generated_at": "2026-04-23T15:40:27.062290+08:00",
+  "candidate_scheme_id": "price_volume_v21_liquidity_trend_60_120_substitution",
+  "research_round_id": "rr_price_volume_liquidity_trend_60_120_substitution_family_20260423",
+  "low_liquidity_holding_count": 1961,
+  "low_liquidity_weight_total": 9.765568181818178,
+  "low_liquidity_weight_share": 0.03100180375180495,
+  "low_liquidity_contribution_total": -0.014211451761928007,
+  "low_liquidity_contribution_share_of_strategy": -0.014871726142278814,
+  "low_liquidity_alpha_contribution_share": -0.010400544327247232,
+  "flag_high_low_liquidity_exposure": false
+}

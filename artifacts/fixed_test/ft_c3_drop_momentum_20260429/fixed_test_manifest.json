@@ -1,0 +1,33 @@
+{
+  "fixed_test_run_id": "ft_c3_drop_momentum_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_145400",
+  "generated_at": "2026-04-29T15:02:13.380219+08:00",
+  "inputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/attempts/attempt_20260429_145400/holdings.csv",
+    "portfolio_daily_summary_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/attempts/attempt_20260429_145400/portfolio_daily_summary.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/attempts/attempt_20260429_145400/turnover_daily.csv",
+    "run_state_audit_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/attempts/attempt_20260429_145400/data_quality_audit.json",
+    "run_state_attempt_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/attempts/attempt_20260429_145400/run_state_attempt_manifest.json",
+    "portfolio_artifacts_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/attempts/attempt_20260429_145400/portfolio_artifacts_manifest.json"
+  },
+  "outputs": {
+    "backtest_daily_csv": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/backtest_daily.csv",
+    "metrics_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/metrics.json",
+    "trade_statistics_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/trade_statistics_summary.json",
+    "annual_return_table_csv": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/annual_return_table.csv",
+    "holding_period_return_distribution_csv": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/holding_period_return_distribution.csv",
+    "topk_perturbation_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/topk_perturbation_summary.json",
+    "data_contract_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/data_contract_summary.json",
+    "audit_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/audit_summary.json",
+    "cash_source_explanation_csv": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/cash_source_explanation.csv",
+    "low_liquidity_exposure_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/low_liquidity_exposure_summary.json",
+    "cost_stress_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/cost_stress_summary.json",
+    "return_attribution_summary_json": "artifacts/fixed_test/ft_c3_drop_momentum_20260429/return_attribution_summary.json"
+  },
+  "notes": [
+    "Near-formal fixed-test skeleton.",
+    "Benchmark-relative metrics, annual return table, holding-period distribution, TopK perturbation summary, and audit-side summaries are included.",
+    "Daily PnL uses open-to-close on entry day, close-to-close on hold days, and actual sell price on exit day."
+  ]
+}

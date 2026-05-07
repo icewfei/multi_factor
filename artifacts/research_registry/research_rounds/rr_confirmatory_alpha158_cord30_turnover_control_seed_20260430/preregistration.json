@@ -1,0 +1,116 @@
+{
+  "registered_at": "2026-04-30T16:00:19+08:00",
+  "research_round_id": "rr_confirmatory_alpha158_cord30_turnover_control_seed_20260430",
+  "research_tier": "confirmatory",
+  "run_type": "confirmatory_family_seed",
+  "candidate_scheme_ids": [
+    "confirmatory_alpha158_cord30_seed_refresh_hysteresis15_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "confirmatory_alpha158_cord30_seed_refresh_hysteresis15_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+  "external_anchor_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After Alpha158 CORD30 passed the higher-invested-weight confirmatory shortlist but failed strict recheck only because validation_avg_turnover_daily_delta remained above 0.02, can one turnover-control-only seed that changes only the cross-date portfolio refresh rule compress turnover back into the strict gate range without materially giving back CORD30's validated return, IR, drawdown, and invested-weight edge?",
+  "allowed_core_dimension": "turnover control / portfolio refresh rule only",
+  "changed_dimension": "portfolio_refresh_rule",
+  "change_control_rule": "single_dimension_only",
+  "based_on_round_ids": [
+    "rr_confirmatory_alpha158_high_invested_weight_head_extraction_shortlist_round4_20260430",
+    "rr_confirmatory_alpha158_cord30_round5_strict_recheck_20260430"
+  ],
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_input_contract_path": "/Users/wy/MiscProject/multi_factor/contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "data_contract_version": "multifactor_data_contract_v2",
+  "time_partition_plan": {
+    "train_window": {
+      "start_date": "20100101",
+      "end_date": "20181231"
+    },
+    "validation_window": {
+      "start_date": "20190101",
+      "end_date": "20211231"
+    },
+    "test_window_access": "forbidden",
+    "note": "The frozen 2022-2025 test window remains excluded by construction through the trainval-only snapshot."
+  },
+  "seed_promotion_context": {
+    "promoted_atomic_reference": "price_volume_single_signal_alpha158_cord30_v1",
+    "round4_decision": "KEEP",
+    "round5_decision": "REJECT",
+    "strict_recheck_failure_reason": "validation_avg_turnover_daily_delta remained above the 0.02 strict gate threshold versus the frozen v18 reference.",
+    "governance_closeout_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_cord30_strict_recheck_closeout_and_next_decision_20260430.md"
+  },
+  "score_contract_frozen": {
+    "score_builder": "build_alpha158_standalone_model_scores.py",
+    "feature_set": [
+      "alpha158_cord30_raw"
+    ],
+    "feature_name": "CORD30",
+    "ranking_direction": "DESC",
+    "score_rule": "percentile_rank(alpha158_cord30_raw DESC); require min_feature_count >= 1",
+    "family_seed_type": "reserve_to_turnover_control_transition"
+  },
+  "portfolio_refresh_contract": {
+    "refresh_rule_name": "alpha158_cord30_refresh_hysteresis15_v1",
+    "refresh_definition": "Keep the CORD30 score, ranking eligibility, TopK width, and equal-weight extraction unchanged. Replace full daily Top10 refresh with one fixed mild turnover-control rule: retain any currently held name on the next signal_date if it still satisfies tradability and ranking eligibility requirements and remains rank_position <= 15; only refill vacated slots from the highest-ranked non-held eligible names until 10 names are held.",
+    "reference_rank_field": "rank_position",
+    "retain_if_rank_leq": 15,
+    "retain_if_guard_still_passes": true,
+    "retain_if_entry_tradeable": true,
+    "max_holdings": 10,
+    "target_weight_rule": "Equal-weight across currently held names after refresh; unfilled slots remain cash.",
+    "incumbent_retention_condition": "held_name AND ranking_eligible_D0 AND tradable_on_signal_date AND rank_position <= 15",
+    "refill_priority_rule": "highest_ranked_non_held_eligible_names_first",
+    "over_capacity_resolution_rule": "if retained incumbents exceed portfolio width, keep the highest-ranked retained incumbents only",
+    "under_capacity_resolution_rule": "if retained incumbents are fewer than portfolio width, refill remaining slots in descending score rank order"
+  },
+  "constants_frozen": {
+    "topk": 10,
+    "ranking_eligibility_guard": "inherit standalone confirmatory CORD30 reference with no additional liquidity guard",
+    "portfolio_extraction_rule": "inherit standalone confirmatory CORD30 equal-weight TopK extraction",
+    "weight_mapping_rule": "inherit standalone confirmatory CORD30 equal-weight mapping",
+    "execution_semantics": "frozen",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "decision_rule": {
+    "type": "confirmatory_family_seed_boolean_gate",
+    "boolean_expression": "(validation_annual_relative_return_delta_vs_cord30 >= -0.02) AND (validation_relative_ir_delta_vs_cord30 >= -0.10) AND (validation_max_drawdown_delta_vs_cord30 >= -0.02) AND (validation_avg_turnover_daily_delta_vs_cord30 <= -0.01) AND (validation_cost_stress_annual_relative_return_delta_vs_cord30 >= -0.02) AND (validation_low_liquidity_weight_share_delta_vs_cord30 <= 0.00) AND (validation_annual_relative_return_delta_vs_v18 > 0.10) AND (validation_relative_ir_delta_vs_v18 > 0.50) AND (validation_max_drawdown_delta_vs_v18 >= 0.10) AND (validation_avg_turnover_daily_delta_vs_v18 <= 0.02) AND (candidate_avg_invested_weight >= 0.18)",
+    "interpretation": "This turnover-control-only seed is allowed only if it reduces turnover enough to satisfy the strict v18 gate while preserving most of standalone CORD30's validated edge and keeping invested capital deployment above the stricter floor."
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_turnover_daily",
+    "avg_invested_weight",
+    "low_liquidity_weight_share",
+    "cost_stress_annual_relative_return",
+    "topk_perturbation_pass"
+  ],
+  "design_constraints": [
+    "Only the portfolio refresh rule may change in this seed round.",
+    "Do not change the CORD30 score field, ranking direction, or single-signal structure.",
+    "Do not add a second atomic signal, overlay, or family blend.",
+    "Do not change TopK width, extraction geometry, weight mapping, benchmark, or execution semantics in this round."
+  ],
+  "disallowed_changes": [
+    "Do not change the snapshot, contract, or validation window after registration.",
+    "Do not widen or tighten the incumbent keep band after registration.",
+    "Do not add ranking guards, liquidity tilts, or extraction changes in this round.",
+    "Do not compare only to v18; the primary reference must remain standalone CORD30 while v18 stays the strict external anchor."
+  ],
+  "expected_outputs": [
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_cord30_turnover_control_seed_20260430/challenger_vs_cord30_summary.json",
+    "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_confirmatory_alpha158_cord30_turnover_control_seed_20260430/challenger_vs_cord30_summary.md"
+  ],
+  "code_hash": "31b879949e4529b1aa6d59528afce52aa4a5ef9a849a62c9e1fbdcccb2182eb5",
+  "governance_approver_id": "thread_user_direction_20260430",
+  "notes": [
+    "This prereg defines the one allowed turnover-control-only follow-up line after the CORD30 strict recheck closeout.",
+    "The seed is intentionally minimal: keep the CORD30 atomic signal fixed and change only the cross-date refresh rule via a rank-15 incumbent hold band."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "as_of_date": "20260428",
+  "controller_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+  "scope_status": "canonical_governance_reconciled",
+  "policy": {
+    "serial_only": true,
+    "family_reopen_blocked": true
+  },
+  "canonical_progress": {
+    "exact_total_candidate_count": 158,
+    "exact_executed_candidate_count": 0,
+    "exact_remaining_candidate_count": 158,
+    "executed_canonical_batch_count": 0
+  },
+  "historical_noncanonical_batches": {
+    "round_ids": [
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_batch04_20260428"
+    ],
+    "candidate_count": 48,
+    "treatment": "preserved_as_historical_alpha158_style_pilots_not_counted_toward_exact_completion"
+  },
+  "next_step": "open canonical batch01 using qlib feature-name-based candidate ids and fields from alpha158_qlib_full_definition_manifest_20260428.json"
+}

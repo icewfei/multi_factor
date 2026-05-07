@@ -1,0 +1,34 @@
+{
+  "registered_at": "2026-04-18T07:45:00+08:00",
+  "research_round_id": "rr_baseline_challenger_drop_lowvol_20260418",
+  "research_tier": "exploratory",
+  "research_question": "Test whether removing the low-volatility component from the weak v2 challenger improves low-liquidity dependence and fixed-test stability while keeping reversal and momentum unchanged.",
+  "allowed_core_dimension": "baseline score composition only",
+  "changed_dimension": "baseline_score_composition",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "baseline_reversal_momentum_v3"
+  ],
+  "candidate_factor_list": [
+    "reversal_5d_raw",
+    "momentum_60_5_raw"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_reversal_momentum_lowvol_v2",
+  "result_interpretation_rule": "Exploratory challenger round: compare fixed-test audit outputs against the v2 weak scheme without making a promotion claim.",
+  "time_partition_plan": "Reuse the current fullchain exploratory snapshot and project panels; no validation-budget consumption claimed.",
+  "fixed_test_run_id": null,
+  "code_hash": null,
+  "snapshot_id": "warehouse_20260413_165753",
+  "execution_logic_version": "warehouse_execution_v3",
+  "topk": 10,
+  "benchmark_rule": "inherit_current_formal_default",
+  "cost_rule": "inherit_current_formal_default",
+  "engineering_experiment": {
+    "signal_date_chunk_size": 300
+  },
+  "notes": [
+    "This challenger changes exactly one core dimension: remove volatility_20d_raw from the v2 score composition.",
+    "TopK, entry_tradeable timing, execution semantics, benchmark choice, and cost parameters must remain unchanged.",
+    "The chunk-size experiment is an engineering runtime parameter and must not change strategy outputs."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "challenger_candidate_scheme_id": "price_volume_v23_amount_shock_gated_overlay",
+  "reference_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "challenger_run_id": "fullchain_price_volume_amount_shock_gated_overlay_20260425_0008",
+  "final_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": [
+      -0.04414228898711203,
+      -0.04805837648402245
+    ],
+    "relative_ir": [
+      -0.4024807492034419,
+      -0.4244563502661919
+    ],
+    "max_drawdown": [
+      -0.2772009864700842,
+      -0.2839937622646995
+    ],
+    "avg_cash_weight": [
+      0.7678748817060334,
+      0.7715847572695773
+    ],
+    "avg_invested_weight": [
+      0.23212511829398338,
+      0.22841524273043265
+    ],
+    "avg_turnover_daily": [
+      0.11104145726428083,
+      0.10941737643055024
+    ],
+    "low_liquidity_weight_share": [
+      0.029557319223990304,
+      0.03295747422680713
+    ],
+    "topk_perturbation_pass": [
+      false,
+      false
+    ],
+    "cost_stress_pass": [
+      false,
+      false
+    ],
+    "cost_stress_annual_relative_return": [
+      -0.09617269729063371,
+      -0.09935940557846878
+    ]
+  }
+}

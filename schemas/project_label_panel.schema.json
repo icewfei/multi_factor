@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/project_label_panel.schema.json",
+  "title": "Project Label Panel",
+  "type": "object",
+  "required": [
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "entry_date",
+    "planned_exit_date",
+    "label_defined",
+    "label_5d_next_open_close"
+  ],
+  "properties": {
+    "snapshot_id": { "type": "string" },
+    "instrument": { "type": "string" },
+    "signal_date": { "type": "string" },
+    "entry_date": { "type": ["string", "null"] },
+    "planned_exit_date": { "type": ["string", "null"] },
+    "open_D1": { "type": ["number", "null"] },
+    "close_D5": { "type": ["number", "null"] },
+    "adj_factor_D1": { "type": ["number", "null"] },
+    "adj_factor_D5": { "type": ["number", "null"] },
+    "adj_open_base_D1": { "type": ["number", "null"] },
+    "adj_close_base_D5": { "type": ["number", "null"] },
+    "label_defined": { "type": "boolean" },
+    "label_5d_next_open_close_raw": { "type": ["number", "null"] },
+    "label_5d_next_open_close": { "type": ["number", "null"] },
+    "label_masked_reason": { "type": ["string", "null"] }
+  }
+}

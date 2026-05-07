@@ -1,0 +1,26 @@
+{
+  "fixed_test_run_id": "exploratory_cohort5_v18_ref",
+  "run_id": "exploratory_cohort5_v18_ref",
+  "attempt_id": "attempt_20260501_123051",
+  "generated_at": "2026-05-01T12:33:59.683447+08:00",
+  "candidate_scheme_id": "exploratory_cohort5_v18_ref",
+  "research_round_id": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 123887,
+  "unfilled_topk_count": 2081,
+  "terminal_event_degraded_rows": null,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": false,
+  "topk_perturbation_pass": true,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.1388472461395136,
+  "exposure_driven_or_liquidity_driven": false,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

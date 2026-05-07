@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_vsumd60_seed_liquidity_guard70_trainval_20260429",
+  "run_id": "confirmatory_vsumd60_seed_liquidity_guard70_trainval_20260429",
+  "attempt_id": "attempt_20260429_151710",
+  "generated_at": "2026-04-29T15:20:02.270763+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_vsumd60_seed_liquidity_guard70_v1",
+  "research_round_id": "rr_confirmatory_alpha158_vsumd60_family_seed_liquidity_guard_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.1220835682380047,
+  "pass_cost_stress_relative_return_floor": false
+}

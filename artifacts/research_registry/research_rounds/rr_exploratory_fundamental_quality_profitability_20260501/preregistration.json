@@ -1,0 +1,49 @@
+{
+  "registered_at": "2026-05-01T16:00:00+08:00",
+  "research_round_id": "rr_exploratory_fundamental_quality_profitability_20260501",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "family_construction",
+  "research_question": "在 5-cohort 合同下，以基本面 quality/profitability 信号（ROE, ROA 等 PIT 财务比率）构建的独立基线，能否在验证集（2019-2021）上通过 9 道 prereg success rules？基本面信号的低换手特性是否能解决 cost_stress 瓶颈？",
+  "changed_dimension": "score_family_composition",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "从价格类技术信号完全替换为基本面 quality/profitability 信号。不允许改变：TopK(10)、执行语义、成本合同、基准、持仓提取规则、组合刷新规则、purge gap、样本资格矩阵、流动性 guard(0.70)、holding_cohort_count(5)、cash retention/no-replacement。",
+  "baseline_reference_candidate_scheme_id": "exploratory_cohort5_v18_ref",
+  "baseline_contract": "holding_cohort_count=5 (contract-matched)",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "score_builder": "build_quality_profitability_model_scores.py",
+  "preprocess": {"winsor_method": "mad_clip", "winsor_param": 5.0, "standardization": "percentile_rank"},
+  "contract_params": {"holding_cohort_count": 5},
+  "candidate_scheme_ids": [
+    "exploratory_fundamental_c1_roe_dt",
+    "exploratory_fundamental_c2_roa_yearly",
+    "exploratory_fundamental_c3_roe_roa"
+  ],
+  "planned_candidate_scheme_ids": [
+    "exploratory_fundamental_c1_roe_dt",
+    "exploratory_fundamental_c2_roa_yearly",
+    "exploratory_fundamental_c3_roe_roa"
+  ],
+  "serial_execution_order": ["c1_roe_dt", "c2_roa_yearly", "c3_roe_roa"],
+  "serial_rule": "三个候选在 prereg 时一次性冻结。运行顺序为串行，但非级联淘汰。不允许根据 c1/c2 结果临时改 c3 定义。",
+  "success_rules": {
+    "pass_validation_annual_relative_return": "annual_relative_return >= 0.01",
+    "pass_validation_relative_ir": "relative_ir >= 0.30",
+    "pass_not_worse_than_baseline": "annual_relative_return_delta_vs_v18_5cohort >= -0.005",
+    "pass_avg_invested_weight": "avg_invested_weight >= 0.15",
+    "pass_max_drawdown_not_worse": "max_drawdown_delta_vs_v18_5cohort >= -0.05",
+    "pass_topk_perturbation": "topk_8_relative_return >= 0.00 AND topk_12_relative_return >= 0.00",
+    "pass_cost_stress": "cost_stress_annual_relative_return >= 0.00",
+    "pass_turnover_not_materially_worse": "avg_turnover_daily_delta_vs_v18_5cohort <= 0.04",
+    "core_pass_condition": "all 9 gates must pass"
+  },
+  "forbidden": [
+    "不能加入任何价格类技术信号（该方向已关闭）",
+    "不能中途更换 PIT 口径",
+    "不能混合不同财年数据",
+    "不能从 fina_indicator 扩展到 financial_statement_raw",
+    "不能改动 5-cohort 合同参数"
+  ]
+}

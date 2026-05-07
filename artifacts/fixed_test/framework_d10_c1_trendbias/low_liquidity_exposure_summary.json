@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "framework_d10_c1_trendbias",
+  "run_id": "framework_d10_c1_trendbias",
+  "attempt_id": "attempt_20260501_230432",
+  "generated_at": "2026-05-01T23:07:36.671385+08:00",
+  "candidate_scheme_id": "framework_d10_c1_trendbias",
+  "research_round_id": "rr_framework_d10_holding_period_20260501",
+  "low_liquidity_holding_count": 6195,
+  "low_liquidity_weight_total": 61.94999999999898,
+  "low_liquidity_weight_share": 0.11933886844791558,
+  "low_liquidity_contribution_total": -0.07220587651294885,
+  "low_liquidity_contribution_share_of_strategy": -0.02944904691949417,
+  "low_liquidity_alpha_contribution_share": -0.009528746698335774,
+  "flag_high_low_liquidity_exposure": false
+}

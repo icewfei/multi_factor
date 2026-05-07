@@ -1,0 +1,82 @@
+version: multifactor_project_source_mapping_v1
+updated_at: "2026-04-14"
+source_root:
+  repository_root: /Users/wy/MiscProject/tushare_data/parquet_duckdb
+  current_root: /Users/wy/MiscProject/tushare_data/parquet_duckdb/data/current
+  latest_snapshot_contract: /Users/wy/MiscProject/tushare_data/parquet_duckdb/data/meta/latest_snapshot.json
+preferred_query_entry: duckdb_serving_views
+
+shared_views:
+  calendar:
+    view_name: serving.vw_calendar
+    local_alias: source_calendar
+    scope: shared_truth
+  instruments_main_chinext:
+    view_name: serving.vw_instruments_main_chinext
+    local_alias: source_instruments_dim
+    scope: shared_truth_dimension
+  bars_daily:
+    view_name: serving.vw_bars_daily
+    local_alias: source_bars_daily
+    scope: shared_truth
+  limit_rules_daily:
+    view_name: serving.vw_limit_rules_daily
+    local_alias: source_limit_rules_daily
+    scope: shared_truth
+  tradability_daily:
+    view_name: serving.vw_tradability_daily
+    local_alias: source_tradability_daily
+    scope: shared_contract
+  instrument_status_daily:
+    view_name: serving.vw_instrument_status_daily
+    local_alias: source_instrument_status_daily
+    scope: shared_truth
+  terminal_event_daily:
+    view_name: serving.vw_terminal_event_daily
+    local_alias: source_terminal_event_daily
+    scope: shared_contract_degraded
+  labels_daily:
+    view_name: serving.vw_labels_daily
+    local_alias: source_labels_daily
+    scope: shared_research_contract
+  execution_path_daily:
+    view_name: serving.vw_execution_path_daily
+    local_alias: source_execution_path_daily
+    scope: shared_research_contract
+  sample_eligibility_daily:
+    view_name: serving.vw_sample_eligibility_daily
+    local_alias: source_sample_eligibility_daily
+    scope: shared_research_contract
+
+project_consumption_layers:
+  project_label_panel:
+    source_dependencies:
+      - source_calendar
+      - source_labels_daily
+      - source_tradability_daily
+  project_sample_panel:
+    source_dependencies:
+      - source_sample_eligibility_daily
+      - source_labels_daily
+      - source_execution_path_daily
+  project_execution_panel:
+    source_dependencies:
+      - source_execution_path_daily
+      - source_terminal_event_daily
+      - source_labels_daily
+  ranking_state_daily:
+    source_dependencies:
+      - project_sample_panel
+  execution_state_daily:
+    source_dependencies:
+      - ranking_state_daily
+      - project_execution_panel
+  dataset_split_daily:
+    source_dependencies:
+      - project_sample_panel
+
+notes:
+  - Shared truth and shared contracts must remain in parquet_duckdb.
+  - Project-side tables normalize field names, attach run metadata, and hold run-state fields.
+  - topk_frozen_D0, execution_attempt_D1, model_score_D0, and run_id are project-owned fields.
+  - rerun outputs for ranking_state_daily and execution_state_daily are isolated under attempt_id-scoped subdirectories.

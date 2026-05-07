@@ -1,0 +1,33 @@
+{
+  "fixed_test_run_id": "framework_d10_c1_trendbias",
+  "run_id": "framework_d10_c1_trendbias",
+  "attempt_id": "attempt_20260501_230432",
+  "generated_at": "2026-05-01T23:07:37.125935+08:00",
+  "inputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/framework_d10_c1_trendbias/attempts/attempt_20260501_230432/holdings.csv",
+    "portfolio_daily_summary_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/framework_d10_c1_trendbias/attempts/attempt_20260501_230432/portfolio_daily_summary.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/framework_d10_c1_trendbias/attempts/attempt_20260501_230432/turnover_daily.csv",
+    "run_state_audit_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/framework_d10_c1_trendbias/attempts/attempt_20260501_230432/data_quality_audit.json",
+    "run_state_attempt_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/framework_d10_c1_trendbias/attempts/attempt_20260501_230432/run_state_attempt_manifest.json",
+    "portfolio_artifacts_manifest_json": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/framework_d10_c1_trendbias/attempts/attempt_20260501_230432/portfolio_artifacts_manifest.json"
+  },
+  "outputs": {
+    "backtest_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/backtest_daily.csv",
+    "metrics_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/metrics.json",
+    "trade_statistics_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/trade_statistics_summary.json",
+    "annual_return_table_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/annual_return_table.csv",
+    "holding_period_return_distribution_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/holding_period_return_distribution.csv",
+    "topk_perturbation_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/topk_perturbation_summary.json",
+    "data_contract_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/data_contract_summary.json",
+    "audit_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/audit_summary.json",
+    "cash_source_explanation_csv": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/cash_source_explanation.csv",
+    "low_liquidity_exposure_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/low_liquidity_exposure_summary.json",
+    "cost_stress_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/cost_stress_summary.json",
+    "return_attribution_summary_json": "/Users/wy/MiscProject/multi_factor/artifacts/fixed_test/framework_d10_c1_trendbias/return_attribution_summary.json"
+  },
+  "notes": [
+    "Near-formal fixed-test skeleton.",
+    "Benchmark-relative metrics, annual return table, holding-period distribution, TopK perturbation summary, and audit-side summaries are included.",
+    "Daily PnL uses open-to-close on entry day, close-to-close on hold days, and actual sell price on exit day."
+  ]
+}

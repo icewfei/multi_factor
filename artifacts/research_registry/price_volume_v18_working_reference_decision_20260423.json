@@ -1,0 +1,11 @@
+{
+  "decided_at": "2026-04-23T09:45:00+08:00",
+  "working_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "working_reference_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "superseded_as_working_reference": [
+    "price_volume_v19_extraction_stability_cap",
+    "price_volume_v20_piecewise_bucket_extraction"
+  ],
+  "decision_reason": "Within the v16-v20 price-volume line, v18 retains the best overall balance across annual_relative_return(年化超额收益), relative_ir(相对信息比率), and max_drawdown(最大回撤), while later portfolio-layer tweaks produced only marginal gains and did not clear TopK perturbation or cost-stress gates.",
+  "next_stage_direction": "Open a new single-signal discovery round and stop micro-tuning the v19/v20 portfolio-layer line."
+}

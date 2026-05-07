@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "attempt_id": "attempt_20260419_091919",
+  "generated_at": "2026-04-19T09:29:11.634134+08:00",
+  "candidate_scheme_id": "quality_profitability_v12_core",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "benchmark_contribution_total": 2.7944407238618854,
+  "cash_drag_total": -2.5442154688307292,
+  "selection_alpha_total": 0.25964198504627733,
+  "low_liquidity_contribution_total": -0.12596878752429613
+}

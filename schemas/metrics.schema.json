@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/metrics.schema.json",
+  "title": "Metrics JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "snapshot_id",
+    "n_days"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "generated_at": { "type": "string" },
+    "snapshot_id": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "n_days": { "type": "integer" },
+    "total_return": { "type": ["number", "null"] },
+    "annualized_return": { "type": ["number", "null"] },
+    "daily_volatility": { "type": ["number", "null"] },
+    "annualized_volatility": { "type": ["number", "null"] },
+    "sharpe_ratio": { "type": ["number", "null"] },
+    "max_drawdown": { "type": ["number", "null"] },
+    "avg_cash_weight": { "type": ["number", "null"] },
+    "avg_invested_weight": { "type": ["number", "null"] },
+    "avg_turnover_daily": { "type": ["number", "null"] },
+    "rebalance_days": { "type": "integer" },
+    "benchmark_status": { "type": "object" }
+  }
+}

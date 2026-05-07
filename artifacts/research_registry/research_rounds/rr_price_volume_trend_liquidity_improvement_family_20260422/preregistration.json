@@ -1,0 +1,74 @@
+{
+  "registered_at": "2026-04-22T14:25:00+08:00",
+  "research_round_id": "rr_price_volume_trend_liquidity_improvement_family_20260422",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_v15_trend_liquidity_improvement_core"
+  ],
+  "baseline_reference_candidate_scheme_id": "baseline_momentum_v7_liquidity_guard70",
+  "research_question": "Can a mixed price-volume family built only from the retained atomic signals discovered in rr_price_volume_single_signal_discovery_20260422 produce a stronger and more robust edge than calibrated v7 without reintroducing rejected signals?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "score_family_contract": {
+    "family_name": "price_volume_trend_liquidity_improvement_core_v1",
+    "builder_name": "build_baseline_model_scores.py",
+    "feature_source": "bars_daily_derived",
+    "feature_set": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger medium-term momentum should rank higher"
+      },
+      {
+        "field": "trend_consistency_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "more internally consistent recent trend should rank higher"
+      },
+      {
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "improving recent liquidity versus medium-term liquidity should rank higher"
+      }
+    ],
+    "score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(trend_consistency_20d_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2",
+    "missing_data_rule": "Only score rows with at least 2 non-null ranked features; otherwise emit null model_score_D0 and preserve the row for audit."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated v7 0.70 ranking liquidity guard and same TopK=10 width",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same equal-weight daily Top10 extraction used by calibrated v7",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "avg_turnover_daily",
+    "low_liquidity_weight_share",
+    "topk_perturbation_pass",
+    "cost_stress_pass"
+  ],
+  "disallowed_changes": [
+    "Do not mix any rejected atomic signals from rr_price_volume_single_signal_discovery_20260422 into this family.",
+    "Do not include price_volume_single_signal_momentum_120_20_v1 in this first constructed family; treat it as borderline and leave it out unless separately promoted later.",
+    "Do not change the calibrated v7 liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, or turnover-suppression changes inside this round.",
+    "Do not sweep multiple family compositions or aggregation formulas inside this round."
+  ],
+  "notes": [
+    "This is the first mixed family constructed only from retained atomic price-volume signals discovered under the discovery-round contract.",
+    "The family intentionally excludes all signals currently labeled signal_edge_negative and also excludes the borderline momentum_120_20 candidate.",
+    "The objective is to test whether combining one strength signal, one trend-quality signal, and one liquidity-improvement signal yields a cleaner gross edge than the earlier mixed price-volume attempts."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_cord30_w10_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_cord30_w10_trainval_20260506",
+  "attempt_id": "attempt_20260506_124016",
+  "generated_at": "2026-05-06T12:42:52.960641+08:00",
+  "candidate_scheme_id": "reversal_p98_cord30_w10_v1",
+  "research_round_id": "rr_exploratory_reversal_cord30_weight10_20260506",
+  "warnings": [
+    "execution_path_daily contains unresolved or unpriced rows.",
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK.",
+    "terminal_event_daily is present but partially degraded in the shared source."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 222698,
+  "unfilled_topk_count": 1098,
+  "terminal_event_degraded_rows": 144,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": false,
+  "topk_perturbation_pass": true,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.040173280521152765,
+  "exposure_driven_or_liquidity_driven": false,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

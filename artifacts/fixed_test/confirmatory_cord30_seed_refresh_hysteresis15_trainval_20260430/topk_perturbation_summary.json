@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "confirmatory_fixed_test_cord30_seed_refresh_hysteresis15_trainval_20260430",
+  "run_id": "confirmatory_cord30_seed_refresh_hysteresis15_trainval_20260430",
+  "attempt_id": "attempt_20260430_162803",
+  "generated_at": "2026-04-30T16:30:49.552936+08:00",
+  "candidate_scheme_id": "confirmatory_alpha158_cord30_seed_refresh_hysteresis15_v1",
+  "research_round_id": "rr_confirmatory_alpha158_cord30_turnover_control_seed_20260430",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.03200439574094094,
+      "relative_ir": -0.30994737906587955
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.035505039746541955,
+      "relative_ir": -0.330436046038404
+    }
+  ]
+}

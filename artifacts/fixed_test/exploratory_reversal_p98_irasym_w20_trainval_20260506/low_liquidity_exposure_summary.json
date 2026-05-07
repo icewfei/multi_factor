@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_irasym_w20_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_irasym_w20_trainval_20260506",
+  "attempt_id": "attempt_20260506_130137",
+  "generated_at": "2026-05-06T13:04:24.313968+08:00",
+  "candidate_scheme_id": "reversal_p98_intraday_reversal_asymmetry_w20_v1",
+  "research_round_id": "rr_exploratory_reversal_irasym_w20_20260506",
+  "low_liquidity_holding_count": 5720,
+  "low_liquidity_weight_total": 38.13333333333384,
+  "low_liquidity_weight_share": 0.10971305815558455,
+  "low_liquidity_contribution_total": 0.25179341562481594,
+  "low_liquidity_contribution_share_of_strategy": 0.09329312591107958,
+  "low_liquidity_alpha_contribution_share": 0.020848367153628696,
+  "flag_high_low_liquidity_exposure": false
+}

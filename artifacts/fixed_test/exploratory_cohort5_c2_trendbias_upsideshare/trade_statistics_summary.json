@@ -1,0 +1,39 @@
+{
+  "fixed_test_run_id": "exploratory_cohort5_c2_trendbias_upsideshare",
+  "run_id": "exploratory_cohort5_c2_trendbias_upsideshare",
+  "attempt_id": "attempt_20260501_131040",
+  "generated_at": "2026-05-01T13:13:37.454021+08:00",
+  "candidate_scheme_id": "exploratory_cohort5_c2_trendbias_upsideshare",
+  "research_round_id": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+  "holdings_count": 51854,
+  "unique_instruments": 3333,
+  "signal_dates_with_positions": 5325,
+  "avg_exit_delay_days": 0.4228572531161965,
+  "delayed_exit_positions": 1744,
+  "terminal_event_positions": 13,
+  "total_entry_fill_weight": 1037.0799999999267,
+  "avg_turnover_daily": 0.3889701744513575,
+  "median_turnover_daily": 0.4,
+  "max_turnover_daily": 0.5800000000000001,
+  "rebalance_days": 5331,
+  "run_state_summary_counts": {
+    "ranking_state_rows": 11198074,
+    "execution_state_rows": 11198074,
+    "ranking_anomaly_rows": 769,
+    "rankable_rows": 10780187,
+    "null_model_score_rows": 417887,
+    "nonfinite_model_score_rows": 0,
+    "topk_frozen_rows": 53270,
+    "execution_attempt_rows": 53270,
+    "entry_filled_rows": 51854,
+    "backtest_executable_rows": 51854,
+    "unfilled_topk_count": 1416,
+    "unfilled_topk_weight": 141.6,
+    "topk_per_signal_breach_count": 0,
+    "topk_default_used": 10
+  },
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": []
+}

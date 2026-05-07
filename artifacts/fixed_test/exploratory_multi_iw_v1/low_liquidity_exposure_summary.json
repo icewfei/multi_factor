@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_multi_iw_v1",
+  "run_id": "exploratory_multi_iw_v1",
+  "attempt_id": "attempt_20260507_122945",
+  "generated_at": "2026-05-07T12:32:15.068391+08:00",
+  "candidate_scheme_id": "multi_ic_weighted_v1",
+  "research_round_id": "rr_exploratory_multi_signal_composite_20260506",
+  "low_liquidity_holding_count": 8325,
+  "low_liquidity_weight_total": 41.62499999999927,
+  "low_liquidity_weight_share": 0.15941557198114992,
+  "low_liquidity_contribution_total": 0.305198338709304,
+  "low_liquidity_contribution_share_of_strategy": 0.1257241697053425,
+  "low_liquidity_alpha_contribution_share": 0.03151649865285161,
+  "flag_high_low_liquidity_exposure": false
+}

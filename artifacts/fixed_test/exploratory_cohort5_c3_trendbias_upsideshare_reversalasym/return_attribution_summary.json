@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_cohort5_c3_trendbias_upsideshare_reversalasym",
+  "run_id": "exploratory_cohort5_c3_trendbias_upsideshare_reversalasym",
+  "attempt_id": "attempt_20260501_133137",
+  "generated_at": "2026-05-01T13:34:37.065594+08:00",
+  "candidate_scheme_id": "exploratory_cohort5_c3_trendbias_upsideshare_reversalasym",
+  "research_round_id": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -0.9489175519927704,
+  "selection_alpha_total": 2.9329773541696493,
+  "low_liquidity_contribution_total": 0.1508051620742343
+}

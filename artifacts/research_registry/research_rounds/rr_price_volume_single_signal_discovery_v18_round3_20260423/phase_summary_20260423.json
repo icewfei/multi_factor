@@ -1,0 +1,71 @@
+{
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round3_20260423",
+  "as_of_date": "20260423",
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "final_classification": {
+    "price_volume_single_signal_liquidity_trend_60_120_v1": "signal_edge_positive",
+    "price_volume_single_signal_momentum_250_20_v1": "signal_edge_negative",
+    "price_volume_single_signal_trend_consistency_60d_v1": "signal_edge_mixed",
+    "price_volume_single_signal_momentum_20_5_v1": "signal_edge_mixed"
+  },
+  "new_clean_positive_keepers": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_60_120_v1",
+      "full_sample_corr_ic": 0.008324338703899713,
+      "avg_daily_ic": 0.013665530780982413,
+      "positive_daily_ic_share": 0.555153422501967,
+      "avg_label_top10": 0.006166502617103923,
+      "avg_label_rank11_20": 0.005725672862421423,
+      "avg_label_bottom10": 0.0009941765426700287
+    }
+  ],
+  "rejected_candidates": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_momentum_250_20_v1",
+      "full_sample_corr_ic": 0.00025318388998891663,
+      "avg_daily_ic": -0.0006703092614552303,
+      "positive_daily_ic_share": 0.4890235910878113,
+      "avg_label_top10": 0.00278179830647121,
+      "avg_label_rank11_20": 0.0035676936067962324,
+      "avg_label_bottom10": 0.003960821777054606
+    }
+  ],
+  "mixed_candidates": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_trend_consistency_60d_v1",
+      "full_sample_corr_ic": 0.004400389993946233,
+      "avg_daily_ic": 0.005802777311568718,
+      "positive_daily_ic_share": 0.5147128245476004,
+      "avg_label_top10": 0.002922101373931546,
+      "avg_label_rank11_20": 0.003954186844856967
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_momentum_20_5_v1",
+      "full_sample_corr_ic": 0.007225986026647348,
+      "avg_daily_ic": 0.008331105066074538,
+      "positive_daily_ic_share": 0.5155485398579321,
+      "avg_label_top10": 0.0002683964744661304,
+      "avg_label_rank11_20": 0.003300683544781965
+    }
+  ],
+  "decision": {
+    "continue_pool_expansion": false,
+    "reopen_family_construction": true,
+    "reason": "Round 3 produced one new clean positive keeper with clean top-slice behavior, which is enough new information to justify a direct family-level substitution test rather than another discovery-only batch."
+  },
+  "recommended_next_family_construction": {
+    "primary_signal": "momentum_60_5_raw",
+    "replacement_signal": "liquidity_trend_60_120_raw",
+    "signals_to_exclude": [
+      "trend_consistency_20d_raw",
+      "momentum_250_20_raw",
+      "trend_consistency_60d_raw",
+      "momentum_20_5_raw",
+      "liquidity_60d_raw",
+      "volatility_60d_raw",
+      "vol_regime_20_60_inverse_v1",
+      "reversal_5d_followthrough_v1"
+    ],
+    "construction_rule": "reopen family construction with a direct substitution test instead of continuing another single-signal expansion batch"
+  }
+}

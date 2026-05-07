@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_reversal_p98_cord30_liqguard60_trainval_20260506",
+  "run_id": "exploratory_reversal_p98_cord30_liqguard60_trainval_20260506",
+  "attempt_id": "attempt_20260506_120904",
+  "generated_at": "2026-05-06T12:13:38.747563+08:00",
+  "candidate_scheme_id": "reversal_p98_cord30_liqguard60_v1",
+  "research_round_id": "rr_exploratory_reversal_cord30_liquidity_guard60_20260506",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.1831934261157357,
+  "selection_alpha_total": 1.4150138067831453,
+  "low_liquidity_contribution_total": 0.012992772681708158
+}

@@ -1,0 +1,53 @@
+{
+  "registered_at": "2026-05-01T13:00:00+08:00",
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "signal_conditioning_investigation",
+  "research_question": "intraday_trend_bias 在高成交量 regime 下（当日 raw amount > 过去 20 日中位数，排除当日）是否比无条件的 trend_bias 具有更好的 cost_stress 和绝对收益表现？volume gate 是否能让 trend_bias 从 6/9 推进到 9/9？",
+  "changed_dimension": "score_activation_condition",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "只添加一个 conditioning condition：当日 raw amount > 过去 20 日 raw amount 中位数（窗口不含当日，strict >）。gate 不满足时 model_score_D0 = NULL（stock-day 不参与排名，但保留在原始样本审计中）。所有其他要素不变：score family（intraday_trend_bias 单信号）、TopK(10)、执行语义、成本合同、基准、持仓提取、组合刷新、purge gap、流动性 guard、holding_cohort_count(5)。",
+  "baseline_reference_candidate_scheme_id": "exploratory_cohort5_c1_trendbias_only",
+  "baseline_contract": "holding_cohort_count=5, intraday_trend_bias only, no gate",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "contract_params": {"holding_cohort_count": 5},
+  "candidate_scheme_ids": ["exploratory_trend_bias_volume_gated_v1"],
+  "planned_candidate_scheme_ids": ["exploratory_trend_bias_volume_gated_v1"],
+  "gate_definition": {
+    "conditioning_variable": "volume_ratio_20d = raw_amount / median_20d_excluding_current",
+    "threshold": "> 1.0 (strict >)",
+    "window": "rolling 20 trading days, excluding current day",
+    "amount_unit": "thousand CNY (Tushare Pro daily.amount convention)",
+    "gate_failure_action": "model_score_D0 = NULL, stock-day retained in audit"
+  },
+  "success_rules": {
+    "pass_validation_annual_relative_return": "annual_relative_return >= 0.01",
+    "pass_validation_relative_ir": "relative_ir >= 0.30",
+    "pass_not_worse_than_baseline": "annual_relative_return_delta_vs_c1_5cohort >= -0.005",
+    "pass_avg_invested_weight": "avg_invested_weight >= 0.15",
+    "pass_max_drawdown_not_worse": "max_drawdown_delta_vs_c1_5cohort >= -0.05",
+    "pass_topk_perturbation": "topk_8_relative_return >= 0.00 AND topk_12_relative_return >= 0.00",
+    "pass_cost_stress": "cost_stress_annual_relative_return >= 0.00",
+    "pass_turnover_not_materially_worse": "avg_turnover_daily_delta_vs_c1_5cohort <= 0.04",
+    "core_pass_condition": "all 9 gates must pass"
+  },
+  "diagnostic_metrics": ["volume_gate_exclusion_rate", "avg_invested_weight_post_gate", "total_turnover_comparison"],
+  "serial_execution": {"single_candidate_only": true},
+  "forbidden": [
+    "不能新增第二个候选",
+    "中途不能更换 gate 条件或阈值",
+    "不能查看 2022-2025 测试集",
+    "不能改动 trend_bias 信号本体",
+    "不能改动任何合同参数（holding_cohort_count=5 固定）",
+    "不能将 volume gate 与其他 regime 维度组合",
+    "不能在 volume gate 之外再加第二层 gate"
+  ],
+  "relationship_to_previous_rounds": {
+    "previous_contract_round": "rr_exploratory_intraday_cohort5_contract_design_20260501",
+    "previous_baseline_candidate": "exploratory_cohort5_c1_trendbias_only",
+    "relationship": "same contract (5-cohort), same base signal, added volume gate on score_activation_condition"
+  }
+}

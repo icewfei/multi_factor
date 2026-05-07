@@ -1,0 +1,48 @@
+{
+  "registered_at": "2026-05-06T12:40:00+08:00",
+  "research_round_id": "rr_exploratory_reversal_cord30_weight10_20260506",
+  "research_phase": "signal_learnability",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "weighted_partner_followup",
+  "research_question": "Can reversal_p98_cord30_w10_v1 recover fixed-test promotion against the p98 reversal baseline by keeping cord30 as only a light auxiliary component?",
+  "allowed_core_dimension": "score family composition only",
+  "changed_dimension": "score_family_composition",
+  "change_control_rule": "single_dimension_only",
+  "change_detail": "Single frozen challenger only: 0.9 * percent_rank(p98_reversal_score) + 0.1 * percent_rank(cord30_score). No new partner, no new liquidity guard, no change to p98 tail handling, no parameter sweep inside this round.",
+  "baseline_reference_candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+  "frozen_reference_fixed_test_run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "secondary_reference_fixed_test_run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+  "weight_screen_reference": "artifacts/fixed_test/reversal_cord30_weight_screen/weight_screen_20260506.json",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_path": "contracts/run_input_contract.research_trainval_20211231.json",
+  "execution_logic_version": "warehouse_execution_v3",
+  "candidate_scheme_ids": [
+    "reversal_p98_cord30_w10_v1"
+  ],
+  "planned_candidate_scheme_ids": [
+    "reversal_p98_cord30_w10_v1"
+  ],
+  "success_rules": {
+    "validation_edge": {
+      "validation_annual_relative_return_delta_vs_p98": "> 0",
+      "validation_relative_ir_delta_vs_p98": "> 0",
+      "validation_max_drawdown_delta_vs_p98": ">= 0"
+    },
+    "deployment_robustness": {
+      "cost_stress_annual_relative_return_delta_vs_p98": ">= 0",
+      "low_liquidity_weight_share_delta_vs_p98": "<= 0.00",
+      "topk8_annual_relative_return_delta_vs_p98": "> 0",
+      "topk12_annual_relative_return_delta_vs_p98": "> 0",
+      "validation_avg_turnover_daily_delta_vs_p98": "<= 0.02",
+      "candidate_avg_invested_weight": ">= 0.18"
+    },
+    "core_pass_condition": "All 9 rules must pass."
+  },
+  "disallowed_changes": [
+    "Do not reopen corr30 in this round.",
+    "Do not add a liquidity guard in this round.",
+    "Do not change p98 tail handling.",
+    "Do not run multiple weight candidates inside this round."
+  ]
+}

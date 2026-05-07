@@ -1,0 +1,115 @@
+{
+  "registered_at": "2026-04-23T11:08:00+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round3_20260423",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_momentum_20_5_v1",
+    "price_volume_single_signal_momentum_250_20_v1",
+    "price_volume_single_signal_trend_consistency_60d_v1",
+    "price_volume_single_signal_liquidity_trend_60_120_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After round 2 produced no new clean positive keeper under the frozen v18 operational contract, which additional atomic price-volume signals can expand the retained pool with truly complementary positive edge before any later family-construction round is reopened?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_momentum_20_5_v1",
+        "field": "momentum_20_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a shorter medium-term trend horizon may be more responsive than momentum_60_5_raw while still preserving clean continuation logic under the frozen v18 contract",
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "horizon_variant",
+          "independent_budget_reason": "This tests whether the retained trend-strength mechanism becomes more actionable on a shorter continuation window.",
+          "override_reason": "Registered as a shorter-horizon variant of the canonical medium-term momentum mechanism."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_momentum_250_20_v1",
+        "field": "momentum_250_20_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a much longer trend horizon may produce thicker edge and more stable head separation than the currently retained momentum_60_5_raw signal",
+        "dedup_note": {
+          "nearest_canonical_signal": "momentum_60_5_raw",
+          "relationship_type": "horizon_variant",
+          "independent_budget_reason": "This tests whether the same trend-strength mechanism thickens when stretched to a very long skip-month horizon.",
+          "override_reason": "Registered as a long-horizon variant of the canonical momentum mechanism."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_trend_consistency_60d_v1",
+        "field": "trend_consistency_60d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a slower trend-consistency measure may behave more cleanly than the previously removed 20-day version and could complement trend strength without overreacting to short noise",
+        "dedup_note": {
+          "nearest_canonical_signal": "trend_consistency_20d_raw",
+          "relationship_type": "horizon_variant",
+          "independent_budget_reason": "This tests whether the retired short-horizon trend-consistency mechanism becomes cleaner when slowed down materially.",
+          "override_reason": "Registered as a slower-horizon variant of the earlier trend-consistency mechanism."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_liquidity_trend_60_120_v1",
+        "field": "liquidity_trend_60_120_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a longer-horizon liquidity-improvement signal may preserve the positive edge found in liquidity_trend_20_60_raw while reducing head fragility and structural microstructure sensitivity",
+        "dedup_note": {
+          "nearest_canonical_signal": "liquidity_trend_20_60_raw",
+          "relationship_type": "horizon_variant",
+          "independent_budget_reason": "This tests whether the retained liquidity-improvement mechanism becomes more stable on a longer window pair.",
+          "override_reason": "Registered as a longer-horizon variant of the canonical liquidity-trend mechanism."
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later family-construction round.",
+    "non_promotion_rule": "A signal that shows negative full-sample IC, inverted decile ordering, or clearly worse head labels than tail labels should be rejected rather than rescued by later extraction or refresh tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, or stability-cap changes inside this round.",
+    "Do not sweep multiple alternative directions for the same signal beyond the four preregistered hypotheses in this batch.",
+    "Do not introduce PIT quality, value, or investment fields into this round."
+  ],
+  "notes": [
+    "This round starts only after round 2 completed with zero new clean positive keepers under the frozen v18 operational contract.",
+    "The retained atomic signal pool before round 3 still rests mainly on earlier discoveries such as momentum_60_5_raw and liquidity_trend_20_60_raw.",
+    "Round 3 therefore focuses on complementary horizon variants rather than repeating raw liquidity-level or low-volatility-level hypotheses that have already failed."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "run_id": "project_panels_walk_forward_full_20260418_181408_20260430",
+  "snapshot_id": "warehouse_20260418_181408",
+  "run_input_contract_path": "/Users/wy/MiscProject/multi_factor/contracts/run_input_contract.walk_forward_20260418_181408.json",
+  "generated_at": "2026-04-30T04:27:44+00:00",
+  "field_mapping_version": "multifactor_project_field_mapping_v1",
+  "shared_source_degraded_flags": {
+    "terminal_event_daily": "shared source currently covers delist-only terminal events and should be treated as degraded truth for terminal pricing."
+  },
+  "summary_counts": {
+    "project_label_panel_rows": 15818326,
+    "project_sample_panel_rows": 15818326,
+    "project_execution_panel_rows": 15818326,
+    "labels_masked_rows": 224131,
+    "tradability_degraded_rows": 0,
+    "terminal_event_rows": 314,
+    "terminal_event_degraded_rows": 314,
+    "terminal_event_flagged_rows_in_execution": 2121,
+    "execution_unresolved_rows": 20443,
+    "sample_masked_rows": 325924
+  },
+  "fatal_blockers": [],
+  "warnings": [
+    "terminal_event_daily is present but partially degraded in the shared source.",
+    "execution_path_daily contains unresolved or unpriced rows."
+  ],
+  "source_views": [
+    "serving.vw_calendar",
+    "serving.vw_instruments_main_chinext",
+    "serving.vw_bars_daily",
+    "serving.vw_limit_rules_daily",
+    "serving.vw_tradability_daily",
+    "serving.vw_instrument_status_daily",
+    "serving.vw_terminal_event_daily",
+    "serving.vw_labels_daily",
+    "serving.vw_execution_path_daily",
+    "serving.vw_sample_eligibility_daily"
+  ],
+  "notes": [
+    "This audit summarizes project-side panel assembly quality only.",
+    "Run-state fields such as topk_frozen_D0 and execution_attempt_D1 remain downstream-owned."
+  ]
+}

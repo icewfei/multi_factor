@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/turnover_daily.schema.json",
+  "title": "Turnover Daily CSV",
+  "type": "object",
+  "required": [
+    "run_id",
+    "attempt_id",
+    "trade_date",
+    "buy_notional_daily",
+    "sell_notional_daily",
+    "turnover_daily",
+    "rebalance_event_flag"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "trade_date": { "type": "string" },
+    "buy_notional_daily": { "type": ["number", "null"] },
+    "sell_notional_daily": { "type": ["number", "null"] },
+    "turnover_daily": { "type": ["number", "null"] },
+    "rebalance_event_flag": { "type": "boolean" }
+  }
+}

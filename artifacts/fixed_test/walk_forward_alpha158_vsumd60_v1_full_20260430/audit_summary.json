@@ -1,0 +1,28 @@
+{
+  "fixed_test_run_id": "walk_forward_fixed_test_alpha158_vsumd60_v1_full_20260430",
+  "run_id": "walk_forward_alpha158_vsumd60_v1_full_20260430",
+  "attempt_id": "attempt_20260430_123709",
+  "generated_at": "2026-04-30T12:41:53.624867+08:00",
+  "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+  "research_round_id": "rr_walk_forward_alpha158_vsumd60_v1_20260430",
+  "warnings": [
+    "execution_path_daily contains unresolved or unpriced rows.",
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK.",
+    "terminal_event_daily is present but partially degraded in the shared source."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 907,
+  "unfilled_topk_count": 1090,
+  "terminal_event_degraded_rows": 314,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": false,
+  "topk_perturbation_pass": false,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.08080130626576876,
+  "exposure_driven_or_liquidity_driven": false,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

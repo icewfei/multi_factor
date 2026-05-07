@@ -1,0 +1,74 @@
+{
+  "registered_at": "2026-04-22T13:51:26+08:00",
+  "research_round_id": "rr_price_volume_remove_trend_consistency_family_20260422",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_v16_remove_trend_consistency"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v15_trend_liquidity_improvement_core",
+  "research_question": "Does removing trend_consistency_20d_raw from v15 produce a cleaner two-signal price-volume family that preserves v15's broad edge while improving head extraction robustness and reducing drawdown fragility?",
+  "allowed_core_dimension": "score family only",
+  "changed_dimension": "score_family",
+  "change_control_rule": "single_dimension_only",
+  "score_family_contract": {
+    "family_name": "price_volume_remove_trend_consistency_core_v1",
+    "builder_name": "build_baseline_model_scores.py",
+    "feature_source": "bars_daily_derived",
+    "feature_set": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger medium-term momentum should rank higher"
+      },
+      {
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "improving recent liquidity versus medium-term liquidity should rank higher"
+      }
+    ],
+    "score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2",
+    "missing_data_rule": "Only score rows with both retained features ranked and non-null; otherwise emit null model_score_D0 and preserve the row for audit."
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated v7 0.70 ranking liquidity guard and same TopK=10 width as used by v15",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same equal-weight daily Top10 extraction used by calibrated v7 and v15",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "annual_relative_return",
+    "relative_ir",
+    "max_drawdown",
+    "avg_cash_weight",
+    "avg_invested_weight",
+    "avg_turnover_daily",
+    "low_liquidity_weight_share",
+    "topk_perturbation_pass",
+    "cost_stress_pass"
+  ],
+  "motivation_from_component_diagnosis": [
+    "Removing trend_consistency_20d_raw from v15 improved full_sample_corr_ic(全样本IC), avg_daily_ic(平均日IC), positive_daily_ic_share(正IC日占比), and avg_label_top10(前10平均标签).",
+    "Removing trend_consistency_20d_raw also slightly lowered the top-slice low-liquidity proxy, while momentum_60_5_raw and liquidity_trend_20_60_raw remained the stronger broad-edge contributors."
+  ],
+  "disallowed_changes": [
+    "Do not remove or weaken liquidity_trend_20_60_raw inside this round.",
+    "Do not reintroduce trend_consistency_20d_raw through any weighting or extraction adjustment.",
+    "Do not include any rejected atomic signal from rr_price_volume_single_signal_discovery_20260422.",
+    "Do not include the borderline momentum_120_20 candidate.",
+    "Do not change the calibrated v7 liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, or turnover-suppression changes inside this round.",
+    "Do not sweep multiple family compositions or aggregation formulas inside this round."
+  ],
+  "notes": [
+    "This is the first strict ablation challenger built off v15.",
+    "The goal is not to search broadly again, but to test whether dropping the weakest diagnosed component is enough to improve robustness without giving back the relative-return gains observed in v15."
+  ]
+}

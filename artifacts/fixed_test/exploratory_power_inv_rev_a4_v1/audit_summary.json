@@ -1,0 +1,28 @@
+{
+  "fixed_test_run_id": "exploratory_power_inv_rev_a4_v1",
+  "run_id": "exploratory_power_inv_rev_a4_v1",
+  "attempt_id": "attempt_20260506_153253",
+  "generated_at": "2026-05-06T15:35:16.807968+08:00",
+  "candidate_scheme_id": "power_inv_rev_a4_v1",
+  "research_round_id": "rr_exploratory_power_transform_reversal_20260506",
+  "warnings": [
+    "execution_path_daily contains unresolved or unpriced rows.",
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK.",
+    "terminal_event_daily is present but partially degraded in the shared source."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 9067,
+  "unfilled_topk_count": 1912,
+  "terminal_event_degraded_rows": 144,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": true,
+  "topk_perturbation_pass": false,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.16964523935838527,
+  "exposure_driven_or_liquidity_driven": true,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution.",
+    "All fixed-test return fields use decimal-return convention unless explicitly labeled otherwise."
+  ]
+}

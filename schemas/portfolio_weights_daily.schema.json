@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/portfolio_weights_daily.schema.json",
+  "title": "Portfolio Weights Daily CSV",
+  "type": "object",
+  "required": [
+    "run_id",
+    "attempt_id",
+    "trade_date",
+    "instrument",
+    "target_weight_D0",
+    "opening_weight",
+    "closing_weight",
+    "entry_filled_flag",
+    "delayed_exit_flag"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "run_type": { "type": ["string", "null"] },
+    "trade_date": { "type": "string" },
+    "instrument": { "type": "string" },
+    "target_weight_D0": { "type": ["number", "null"] },
+    "opening_weight": { "type": ["number", "null"] },
+    "closing_weight": { "type": ["number", "null"] },
+    "entry_filled_flag": { "type": "boolean" },
+    "delayed_exit_flag": { "type": "boolean" }
+  }
+}

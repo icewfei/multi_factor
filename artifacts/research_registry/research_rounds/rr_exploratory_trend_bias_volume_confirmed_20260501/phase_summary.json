@@ -1,0 +1,29 @@
+{
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "research_tier": "exploratory",
+  "round_type": "signal_conditioning_investigation",
+  "status": "completed_volume_gate_not_viable",
+  "conclusion": "volume-gated trend bias did not improve viability relative to ungated c1 under the same 5-cohort contract (6/9). Same failing gates: absolute return, IR, cost_stress.",
+  "completed_at": "2026-05-01T14:00:00+08:00",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "contract_params": {"holding_cohort_count": 5},
+  "baseline": "exploratory_cohort5_c1_trendbias_only (ungated, same contract)",
+  "candidate": {
+    "candidate_scheme_id": "exploratory_trend_bias_volume_gated_v1",
+    "verdict": "fail (6/9)",
+    "gate_definition": "raw amount > rolling 20d median amount (excl current day), strict >",
+    "gate_exclusion_rate": 52.72,
+    "failing_gates": ["annual_relative_return", "relative_ir", "cost_stress"],
+    "delta_vs_baseline_return": 0.0231,
+    "delta_vs_baseline_drawdown": 0.1117,
+    "delta_vs_baseline_cost_stress": -0.0362
+  },
+  "failure_analysis": {
+    "cost_stress_not_improved": "Volume gate did not improve cost_stress because the current cost-stress model uses fixed slippage (20bp open + 20bp close) rather than liquidity-sensitive slippage. Excluding low-volume stocks does not reduce assumed trading costs under this model.",
+    "diversification_loss": "Gate excluded 52.72% of stock-days. Reduced candidate pool led to lower topk perturbation robustness (0.106 to 0.062) and higher cost sensitivity.",
+    "alpha_slight_improvement": "Return improved marginally (+0.023) but not enough to offset IR and cost_stress deterioration. Gate removed some noise but not enough to change the viability tier.",
+    "root_cause": "Fixed-slippage cost model renders volume-based conditioning ineffective. A conditioning strategy that targets the actual cost model (e.g., turnover compression, weight capping) would be more aligned with the cost_stress gate."
+  },
+  "strategic_closure": "intraday microstructure standalone line is now closed across three attempts: 26-cohort baseline (5/9), 5-cohort contract redesign (6/9), and volume-gated trend-bias conditioning (6/9).",
+  "next_direction_candidate": "Investigate whether a fundamentally different signal family (e.g., overnight-gap-based or cross-asset momentum) can provide positive absolute return under the existing 5-cohort contract."
+}

@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-05-06T12:05:36+08:00",
+  "source_score_run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+  "screen_results": [
+    {
+      "screen_id": "no_guard",
+      "liquidity_rank_threshold": null,
+      "median_daily_ic": 0.05440424576273783,
+      "median_daily_ic_ci_low": 0.05069195341055153,
+      "median_daily_ic_ci_high": 0.05778745553749408,
+      "top10_avg_label": 0.009714967192450373,
+      "bottom10_avg_label": -0.004162837012806145,
+      "top10_bot10_spread": 0.013877804205256517,
+      "top10_avg_liquidity_rank": 0.5605728591788873,
+      "top10_median_liquidity_rank": 0.5874355632902518,
+      "avg_eligible_names_per_day": 1951.599022923713,
+      "n_days": 5322
+    },
+    {
+      "screen_id": "liq_ge_0.55",
+      "liquidity_rank_threshold": 0.55,
+      "median_daily_ic": 0.04924491311137957,
+      "median_daily_ic_ci_low": 0.04494823535098745,
+      "median_daily_ic_ci_high": 0.05343404770714494,
+      "top10_avg_label": 0.008792729176836787,
+      "bottom10_avg_label": -0.0020121381688215593,
+      "top10_bot10_spread": 0.010804867345658347,
+      "top10_avg_liquidity_rank": 0.7870180310563257,
+      "top10_median_liquidity_rank": 0.7916336489105571,
+      "avg_eligible_names_per_day": 868.4545283727922,
+      "n_days": 5322
+    },
+    {
+      "screen_id": "liq_ge_0.60",
+      "liquidity_rank_threshold": 0.6,
+      "median_daily_ic": 0.05094708373821698,
+      "median_daily_ic_ci_low": 0.04692478821486992,
+      "median_daily_ic_ci_high": 0.05478564666199245,
+      "top10_avg_label": 0.008583948082629233,
+      "bottom10_avg_label": -0.001975292316364163,
+      "top10_bot10_spread": 0.010559240398993395,
+      "top10_avg_liquidity_rank": 0.8091442621329712,
+      "top10_median_liquidity_rank": 0.8128776224323239,
+      "avg_eligible_names_per_day": 770.9607290492296,
+      "n_days": 5322
+    },
+    {
+      "screen_id": "liq_ge_0.65",
+      "liquidity_rank_threshold": 0.65,
+      "median_daily_ic": 0.04975664676091623,
+      "median_daily_ic_ci_low": 0.04534793489956236,
+      "median_daily_ic_ci_high": 0.05351295340464117,
+      "top10_avg_label": 0.008309106763345427,
+      "bottom10_avg_label": -0.002053297201818013,
+      "top10_bot10_spread": 0.01036240396516344,
+      "top10_avg_liquidity_rank": 0.8318068061591577,
+      "top10_median_liquidity_rank": 0.8353401253593868,
+      "avg_eligible_names_per_day": 673.5886884629839,
+      "n_days": 5322
+    },
+    {
+      "screen_id": "liq_ge_0.70",
+      "liquidity_rank_threshold": 0.7,
+      "median_daily_ic": 0.04937651015060488,
+      "median_daily_ic_ci_low": 0.044835669781781703,
+      "median_daily_ic_ci_high": 0.05358385233348296,
+      "top10_avg_label": 0.007949264104440294,
+      "bottom10_avg_label": -0.0021191727298003915,
+      "top10_bot10_spread": 0.010068436834240685,
+      "top10_avg_liquidity_rank": 0.8547700146384826,
+      "top10_median_liquidity_rank": 0.8569199539182624,
+      "avg_eligible_names_per_day": 576.5095828635851,
+      "n_days": 5322
+    }
+  ]
+}

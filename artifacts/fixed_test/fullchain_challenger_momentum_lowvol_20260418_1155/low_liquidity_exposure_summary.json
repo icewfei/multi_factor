@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_challenger_momentum_lowvol_20260418_1155",
+  "run_id": "fullchain_challenger_momentum_lowvol_20260418_1155",
+  "attempt_id": "attempt_challenger_momentum_lowvol_20260418_1200",
+  "generated_at": "2026-04-18T14:36:26.963414+08:00",
+  "candidate_scheme_id": "baseline_momentum_lowvol_v5",
+  "research_round_id": "rr_baseline_challenger_add_lowvol_20260418",
+  "low_liquidity_holding_count": 60135,
+  "low_liquidity_weight_total": 273.3409090909214,
+  "low_liquidity_weight_share": 0.9988373058716046,
+  "low_liquidity_contribution_total": -0.1947648272450419,
+  "low_liquidity_contribution_share_of_strategy": 1.049958560509823,
+  "low_liquidity_alpha_contribution_share": 0.8231938505469207,
+  "flag_high_low_liquidity_exposure": true
+}

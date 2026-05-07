@@ -1,0 +1,71 @@
+{
+  "registered_at": "2026-04-25T08:16:00+08:00",
+  "research_round_id": "rr_price_volume_up_amount_persistence_composability_screen_20260425",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [
+    "price_volume_screen_up_amount_persistence_20d_composability_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Under the frozen v18 operational contract, does up_amount_persistence_20d_raw look compositionally compatible with the current core two-signal family of momentum_60_5_raw plus liquidity_trend_20_60_raw, or would it likely destabilize head selection and portfolio path if promoted into a later family round?",
+  "allowed_core_dimension": "composability screening only",
+  "changed_dimension": "signal_composability_screen",
+  "change_control_rule": "single_dimension_only",
+  "reference_core_family_contract": {
+    "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+    "reference_components": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC"
+      },
+      {
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC"
+      }
+    ],
+    "reference_score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2",
+    "reference_portfolio_contract": "Freeze the full v18 operational contract, including the calibrated 0.70 ranking liquidity guard, TopK=10 width, current head extraction, and top-15 refresh hysteresis. This round does not run a new full chain and does not change any live portfolio rule."
+  },
+  "screened_atomic_signal": {
+    "candidate_scheme_id": "price_volume_single_signal_up_amount_persistence_20d_v1",
+    "field": "up_amount_persistence_20d_raw",
+    "ranking_direction": "DESC",
+    "standalone_status": "signal_edge_positive",
+    "standalone_reference_report": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_price_volume_single_signal_discovery_v18_round5_20260425/price_volume_single_signal_up_amount_persistence_20d_v1_signal_edge_diagnosis_20260425.json"
+  },
+  "screening_contract": {
+    "tentative_screen_score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC), percentile_rank(up_amount_persistence_20d_raw DESC)); require min_feature_count >= 3",
+    "pairwise_component_checks": [
+      "momentum_60_5_raw vs up_amount_persistence_20d_raw rank correlation",
+      "liquidity_trend_20_60_raw vs up_amount_persistence_20d_raw rank correlation",
+      "core_v18_score vs up_amount_persistence_20d_raw interaction bucket monotonicity"
+    ],
+    "head_slice_checks": [
+      "avg_label_top10 vs avg_label_rank11_20",
+      "avg_rank10_11_score_gap",
+      "avg_top10_overlap_next_day",
+      "avg_top10_overlap_same_day_vs_v18"
+    ],
+    "risk_proxy_checks": [
+      "avg_top10_liquidity_rank_mean",
+      "reference_vs_screen scored coverage"
+    ]
+  },
+  "disallowed_changes": [
+    "Do not open a new family round inside this screen.",
+    "Do not run a new full chain or fixed test inside this round.",
+    "Do not change score family weights in the live contract.",
+    "Do not change the 0.70 ranking liquidity guard.",
+    "Do not change TopK width.",
+    "Do not change portfolio extraction.",
+    "Do not change refresh hysteresis.",
+    "Do not change execution semantics, benchmark, or cost contracts.",
+    "Do not screen multiple new atomic signals inside this round."
+  ],
+  "decision_rule": "If up_amount_persistence_20d_raw shows clean additive or at least non-destructive interaction with the v18 core family, preserves or improves static head-slice quality, and does not materially worsen head stability or liquidity proxies, it may be promoted into a future family-construction round. Otherwise it should remain a standalone keeper only.",
+  "notes": [
+    "This round exists because direct family substitution and constrained overlay tests already showed that positive standalone keeper status is not sufficient for safe family promotion.",
+    "The project is using a formal composability-screening layer between single-signal discovery and new family construction.",
+    "Round 5 identified up_amount_persistence_20d_raw as a clean positive keeper, so it is screened before any family-level promotion is attempted."
+  ]
+}

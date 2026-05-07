@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/cost_stress_summary.schema.json",
+  "title": "Cost Stress Summary JSON",
+  "type": "object",
+  "required": [
+    "fixed_test_run_id",
+    "run_id",
+    "attempt_id",
+    "generated_at",
+    "stress_open_bp",
+    "stress_close_bp",
+    "effective_relative_days",
+    "annual_relative_return",
+    "pass_cost_stress_relative_return_floor"
+  ],
+  "properties": {
+    "fixed_test_run_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "attempt_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "candidate_scheme_id": { "type": ["string", "null"] },
+    "research_round_id": { "type": ["string", "null"] },
+    "stress_open_bp": { "type": "number" },
+    "stress_close_bp": { "type": "number" },
+    "effective_relative_days": { "type": "integer" },
+    "annual_relative_return": { "type": ["number", "null"] },
+    "pass_cost_stress_relative_return_floor": { "type": "boolean" }
+  }
+}

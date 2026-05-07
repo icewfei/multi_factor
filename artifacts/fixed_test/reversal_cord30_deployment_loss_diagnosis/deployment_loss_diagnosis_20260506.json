@@ -1,0 +1,255 @@
+{
+  "generated_at": "2026-05-06T12:03:04+08:00",
+  "baseline_run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "composite_run_id": "confirmatory_reversal_p98_cord30_trainval_20260506",
+  "high_level": {
+    "validation_annual_relative_return_delta": -0.020931530032809342,
+    "validation_relative_ir_delta": -0.10045219941358208,
+    "validation_max_drawdown_delta": 0.020746488173983946,
+    "validation_avg_turnover_daily_delta": -0.013926940639267957,
+    "validation_avg_invested_weight_delta": -0.028826103500757733,
+    "cost_stress_annual_relative_return_delta": 0.015020699054418607,
+    "low_liquidity_weight_share_delta": 0.013047760910043296
+  },
+  "attribution_decomposition": {
+    "selection_alpha_delta": 0.16671468801155287,
+    "cash_drag_delta": -0.04900313588981664,
+    "low_liquidity_contribution_delta": 0.08226181987445971
+  },
+  "top10_overlap": {
+    "avg_overlap_n": 1.3010146561443066,
+    "avg_overlap_share": 0.13010146561443015,
+    "min_overlap_n": 0,
+    "max_overlap_n": 7
+  },
+  "unique_name_liquidity_profile": {
+    "composite_unique_avg_liquidity_rank": 0.5581247517332231,
+    "composite_unique_median_liquidity_rank": 0.58398671617111,
+    "baseline_unique_avg_liquidity_rank": 0.6299009376035386,
+    "baseline_unique_median_liquidity_rank": 0.6825095528970273,
+    "composite_unique_rows": 46296,
+    "baseline_unique_rows": 46296
+  },
+  "top10_fill_profile": {
+    "baseline_fill_rate": 0.9808342728297632,
+    "composite_fill_rate": 0.9806651634723788,
+    "baseline_top10_avg_liquidity_rank": 0.622879346395766,
+    "composite_top10_avg_liquidity_rank": 0.5604413475033893,
+    "baseline_top10_median_liquidity_rank": 0.6743799843763694,
+    "composite_top10_median_liquidity_rank": 0.587400717148125
+  },
+  "daily_fill_count": {
+    "baseline_avg_filled_n": 9.808342728297632,
+    "composite_avg_filled_n": 9.806651634723789,
+    "avg_filled_n_delta": -0.0016910935738444193
+  },
+  "yearly_validation_profile": {
+    "2005": {
+      "baseline_avg_relative_return_daily": 0.0006131223452369262,
+      "composite_avg_relative_return_daily": 0.0006700136350055409,
+      "avg_relative_return_daily_delta": 5.689128976861466e-05,
+      "baseline_avg_invested_weight": 0.2533574380165292,
+      "composite_avg_invested_weight": 0.22079889807162473,
+      "avg_invested_weight_delta": -0.03255853994490448,
+      "baseline_avg_turnover_daily": 0.11918904958677688,
+      "composite_avg_turnover_daily": 0.10780532598714396,
+      "avg_turnover_daily_delta": -0.011383723599632927,
+      "n_days": 242
+    },
+    "2006": {
+      "baseline_avg_relative_return_daily": -0.0022041577286937768,
+      "composite_avg_relative_return_daily": -0.002094175338224133,
+      "avg_relative_return_daily_delta": 0.00010998239046964387,
+      "baseline_avg_invested_weight": 0.28254668049792525,
+      "composite_avg_invested_weight": 0.23948824343015188,
+      "avg_invested_weight_delta": -0.04305843706777337,
+      "baseline_avg_turnover_daily": 0.12040975103734435,
+      "composite_avg_turnover_daily": 0.10756108805901321,
+      "avg_turnover_daily_delta": -0.012848662978331126,
+      "n_days": 241
+    },
+    "2007": {
+      "baseline_avg_relative_return_daily": -0.002325879923512588,
+      "composite_avg_relative_return_daily": -0.0026044626875549046,
+      "avg_relative_return_daily_delta": -0.0002785827640423167,
+      "baseline_avg_invested_weight": 0.26962809917355357,
+      "composite_avg_invested_weight": 0.23174931129476525,
+      "avg_invested_weight_delta": -0.03787878787878828,
+      "baseline_avg_turnover_daily": 0.12166838842975197,
+      "composite_avg_turnover_daily": 0.10665748393021103,
+      "avg_turnover_daily_delta": -0.015010904499540933,
+      "n_days": 242
+    },
+    "2008": {
+      "baseline_avg_relative_return_daily": 0.0031236898487324474,
+      "composite_avg_relative_return_daily": 0.003219598708611642,
+      "avg_relative_return_daily_delta": 9.590885987919496e-05,
+      "baseline_avg_invested_weight": 0.26524390243902457,
+      "composite_avg_invested_weight": 0.2235546522131883,
+      "avg_invested_weight_delta": -0.04168925022583628,
+      "baseline_avg_turnover_daily": 0.12037601626016257,
+      "composite_avg_turnover_daily": 0.10693315266485992,
+      "avg_turnover_daily_delta": -0.013442863595302659,
+      "n_days": 246
+    },
+    "2009": {
+      "baseline_avg_relative_return_daily": -0.001683345927967904,
+      "composite_avg_relative_return_daily": -0.0017392290254299807,
+      "avg_relative_return_daily_delta": -5.588309746207663e-05,
+      "baseline_avg_invested_weight": 0.2625000000000006,
+      "composite_avg_invested_weight": 0.23062386156648446,
+      "avg_invested_weight_delta": -0.03187613843351619,
+      "baseline_avg_turnover_daily": 0.12297643442622946,
+      "composite_avg_turnover_daily": 0.10853825136612,
+      "avg_turnover_daily_delta": -0.014438183060109466,
+      "n_days": 244
+    },
+    "2010": {
+      "baseline_avg_relative_return_daily": 0.000644967476519243,
+      "composite_avg_relative_return_daily": 0.0008149889186266271,
+      "avg_relative_return_daily_delta": 0.0001700214421073841,
+      "baseline_avg_invested_weight": 0.2680526859504129,
+      "composite_avg_invested_weight": 0.2657713498622593,
+      "avg_invested_weight_delta": -0.0022813360881536043,
+      "baseline_avg_turnover_daily": 0.12262396694214871,
+      "composite_avg_turnover_daily": 0.10964187327823674,
+      "avg_turnover_daily_delta": -0.012982093663911959,
+      "n_days": 242
+    },
+    "2011": {
+      "baseline_avg_relative_return_daily": 0.001110760208653874,
+      "composite_avg_relative_return_daily": 0.001173840551066652,
+      "avg_relative_return_daily_delta": 6.308034241277797e-05,
+      "baseline_avg_invested_weight": 0.27359118852458963,
+      "composite_avg_invested_weight": 0.24282786885245858,
+      "avg_invested_weight_delta": -0.030763319672131036,
+      "baseline_avg_turnover_daily": 0.1231813524590164,
+      "composite_avg_turnover_daily": 0.1096994535519124,
+      "avg_turnover_daily_delta": -0.013481898907104013,
+      "n_days": 244
+    },
+    "2012": {
+      "baseline_avg_relative_return_daily": 0.00024228140253047448,
+      "composite_avg_relative_return_daily": 8.825129696740187e-05,
+      "avg_relative_return_daily_delta": -0.00015403010556307262,
+      "baseline_avg_invested_weight": 0.26116255144032985,
+      "composite_avg_invested_weight": 0.22775491540923523,
+      "avg_invested_weight_delta": -0.03340763603109461,
+      "baseline_avg_turnover_daily": 0.1237911522633745,
+      "composite_avg_turnover_daily": 0.10996799268404184,
+      "avg_turnover_daily_delta": -0.01382315957933266,
+      "n_days": 243
+    },
+    "2013": {
+      "baseline_avg_relative_return_daily": 0.0003402968582396677,
+      "composite_avg_relative_return_daily": 0.00041995330598063496,
+      "avg_relative_return_daily_delta": 7.965644774096722e-05,
+      "baseline_avg_invested_weight": 0.2588497899159667,
+      "composite_avg_invested_weight": 0.22539682539682482,
+      "avg_invested_weight_delta": -0.03345296451914186,
+      "baseline_avg_turnover_daily": 0.12442226890756297,
+      "composite_avg_turnover_daily": 0.11055088702147498,
+      "avg_turnover_daily_delta": -0.013871381886088,
+      "n_days": 238
+    },
+    "2014": {
+      "baseline_avg_relative_return_daily": -0.0009033597485647049,
+      "composite_avg_relative_return_daily": -0.0009701878006097593,
+      "avg_relative_return_daily_delta": -6.682805204505451e-05,
+      "baseline_avg_invested_weight": 0.26926020408163287,
+      "composite_avg_invested_weight": 0.2362585034013602,
+      "avg_invested_weight_delta": -0.033001700680272694,
+      "baseline_avg_turnover_daily": 0.12446428571428564,
+      "composite_avg_turnover_daily": 0.1106122448979589,
+      "avg_turnover_daily_delta": -0.013852040816326737,
+      "n_days": 245
+    },
+    "2015": {
+      "baseline_avg_relative_return_daily": -0.0004683046291972712,
+      "composite_avg_relative_return_daily": -0.00035922077361163313,
+      "avg_relative_return_daily_delta": 0.00010908385558563812,
+      "baseline_avg_invested_weight": 0.2757684426229508,
+      "composite_avg_invested_weight": 0.24294171220400737,
+      "avg_invested_weight_delta": -0.03282673041894342,
+      "baseline_avg_turnover_daily": 0.12195184426229506,
+      "composite_avg_turnover_daily": 0.10762750455373384,
+      "avg_turnover_daily_delta": -0.014324339708561222,
+      "n_days": 244
+    },
+    "2016": {
+      "baseline_avg_relative_return_daily": 0.0006294785467479612,
+      "composite_avg_relative_return_daily": 0.0006880325065267605,
+      "avg_relative_return_daily_delta": 5.8553959778799365e-05,
+      "baseline_avg_invested_weight": 0.260399590163935,
+      "composite_avg_invested_weight": 0.23239981785063699,
+      "avg_invested_weight_delta": -0.027999772313298015,
+      "baseline_avg_turnover_daily": 0.12482069672131146,
+      "composite_avg_turnover_daily": 0.110769581056466,
+      "avg_turnover_daily_delta": -0.014051115664845465,
+      "n_days": 244
+    },
+    "2017": {
+      "baseline_avg_relative_return_daily": -0.0004010217568522943,
+      "composite_avg_relative_return_daily": -7.139526223965471e-06,
+      "avg_relative_return_daily_delta": 0.0003938822306283289,
+      "baseline_avg_invested_weight": 0.2756147540983605,
+      "composite_avg_invested_weight": 0.24016393442622916,
+      "avg_invested_weight_delta": -0.03545081967213132,
+      "baseline_avg_turnover_daily": 0.12453893442622951,
+      "composite_avg_turnover_daily": 0.11045081967213093,
+      "avg_turnover_daily_delta": -0.014088114754098593,
+      "n_days": 244
+    },
+    "2018": {
+      "baseline_avg_relative_return_daily": 0.0009094170582774895,
+      "composite_avg_relative_return_daily": 0.0011129819934552353,
+      "avg_relative_return_daily_delta": 0.00020356493517774564,
+      "baseline_avg_invested_weight": 0.2725308641975313,
+      "composite_avg_invested_weight": 0.24245541838134432,
+      "avg_invested_weight_delta": -0.030075445816186982,
+      "baseline_avg_turnover_daily": 0.12453703703703703,
+      "composite_avg_turnover_daily": 0.11072245084590737,
+      "avg_turnover_daily_delta": -0.013814586191129663,
+      "n_days": 243
+    },
+    "2019": {
+      "baseline_avg_relative_return_daily": -0.0009228195923554693,
+      "composite_avg_relative_return_daily": -0.0009112791235191659,
+      "avg_relative_return_daily_delta": 1.1540468836303457e-05,
+      "baseline_avg_invested_weight": 0.25056352459016396,
+      "composite_avg_invested_weight": 0.22192622950819613,
+      "avg_invested_weight_delta": -0.028637295081967815,
+      "baseline_avg_turnover_daily": 0.12476946721311474,
+      "composite_avg_turnover_daily": 0.11074681238615636,
+      "avg_turnover_daily_delta": -0.014022654826958388,
+      "n_days": 244
+    },
+    "2020": {
+      "baseline_avg_relative_return_daily": -0.0009757986432845404,
+      "composite_avg_relative_return_daily": -0.0008570338910478829,
+      "avg_relative_return_daily_delta": 0.00011876475223665745,
+      "baseline_avg_invested_weight": 0.25501543209876587,
+      "composite_avg_invested_weight": 0.2234796524919976,
+      "avg_invested_weight_delta": -0.03153577960676825,
+      "baseline_avg_turnover_daily": 0.12479423868312757,
+      "composite_avg_turnover_daily": 0.11076817558299012,
+      "avg_turnover_daily_delta": -0.014026063100137444,
+      "n_days": 243
+    },
+    "2021": {
+      "baseline_avg_relative_return_daily": 4.058329235661748e-05,
+      "composite_avg_relative_return_daily": -0.0003913043179928759,
+      "avg_relative_return_daily_delta": -0.0004318876103494934,
+      "baseline_avg_invested_weight": 0.2474537037037037,
+      "composite_avg_invested_weight": 0.22114769090077668,
+      "avg_invested_weight_delta": -0.02630601280292704,
+      "baseline_avg_turnover_daily": 0.12379115226337449,
+      "composite_avg_turnover_daily": 0.11005944215820733,
+      "avg_turnover_daily_delta": -0.013731710105167164,
+      "n_days": 243
+    }
+  },
+  "diagnosis_verdict": {
+    "summary": "Composite improves gross selection alpha, drawdown, turnover, and cost stress, but loses validation annual relative return because it deploys less capital and takes on more low-liquidity exposure than the standalone p98 baseline."
+  }
+}

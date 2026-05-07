@@ -1,0 +1,101 @@
+{
+  "registered_at": "2026-04-28T23:34:31+08:00",
+  "research_round_id": "rr_alpha158_exact_keeper_composability_screen_20260428",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_screen_alpha158_corr20_composability_v1",
+    "price_volume_screen_alpha158_cord30_composability_v1",
+    "price_volume_screen_alpha158_vma60_composability_v1",
+    "price_volume_screen_alpha158_vsumd60_composability_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "Under the frozen v18 operational contract, which of four consolidated Alpha158 exact keepers corr20, cord30, vma60, and vsumd60 appear compositionally compatible enough with the current core two-signal family to justify a later restrained overlay or family round?",
+  "allowed_core_dimension": "composability screening only",
+  "changed_dimension": "signal_composability_screen",
+  "change_control_rule": "single_dimension_only",
+  "reference_core_family_contract": {
+    "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+    "reference_components": [
+      {
+        "field": "momentum_60_5_raw",
+        "ranking_direction": "DESC"
+      },
+      {
+        "field": "liquidity_trend_20_60_raw",
+        "ranking_direction": "DESC"
+      }
+    ],
+    "reference_score_rule": "mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC)); require min_feature_count >= 2",
+    "reference_portfolio_contract": "Freeze the full v18 operational contract, including the calibrated 0.70 ranking liquidity guard, TopK=10 width, current head extraction, and top-15 refresh hysteresis. This round does not run a new full chain and does not change any live portfolio rule."
+  },
+  "screened_atomic_signals": [
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_corr20_v1",
+      "field": "alpha158_corr20_raw",
+      "ranking_direction": "DESC",
+      "standalone_status": "signal_edge_positive",
+      "standalone_reference_report": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428/price_volume_single_signal_alpha158_corr20_v1_signal_edge_diagnosis_20260428.json"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_cord30_v1",
+      "field": "alpha158_cord30_raw",
+      "ranking_direction": "DESC",
+      "standalone_status": "signal_edge_positive",
+      "standalone_reference_report": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428/price_volume_single_signal_alpha158_cord30_v1_signal_edge_diagnosis_20260428.json"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vma60_v1",
+      "field": "alpha158_vma60_raw",
+      "ranking_direction": "ASC",
+      "standalone_status": "signal_edge_positive",
+      "standalone_reference_report": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428/price_volume_single_signal_alpha158_vma60_v1_signal_edge_diagnosis_20260428.json"
+    },
+    {
+      "candidate_scheme_id": "price_volume_single_signal_alpha158_vsumd60_v1",
+      "field": "alpha158_vsumd60_raw",
+      "ranking_direction": "DESC",
+      "standalone_status": "signal_edge_positive",
+      "standalone_reference_report": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/research_rounds/rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch06_20260428/price_volume_single_signal_alpha158_vsumd60_v1_signal_edge_diagnosis_20260428.json"
+    }
+  ],
+  "screening_contract": {
+    "tentative_screen_score_rule": "For each screened signal independently: mean(percentile_rank(momentum_60_5_raw DESC), percentile_rank(liquidity_trend_20_60_raw DESC), percentile_rank(signal direction-aware)); require min_feature_count >= 3",
+    "pairwise_component_checks": [
+      "momentum_60_5_raw vs screened signal rank correlation",
+      "liquidity_trend_20_60_raw vs screened signal rank correlation",
+      "core_v18_score vs screened signal interaction bucket monotonicity"
+    ],
+    "head_slice_checks": [
+      "avg_label_top10 vs avg_label_rank11_20",
+      "avg_rank10_11_score_gap",
+      "avg_top10_overlap_next_day",
+      "avg_top10_overlap_same_day_vs_v18"
+    ],
+    "risk_proxy_checks": [
+      "avg_top10_liquidity_rank_mean",
+      "reference_vs_screen scored coverage"
+    ],
+    "hard_gate": {
+      "screen_avg_top10_overlap_next_day_drop_tolerance": 0.2,
+      "rule": "screen_avg_top10_overlap_next_day must not be lower than reference_avg_top10_overlap_next_day by more than 0.2"
+    }
+  },
+  "disallowed_changes": [
+    "Do not open a live family round inside this screen.",
+    "Do not run a new full chain or fixed test inside this round.",
+    "Do not change score family weights in the live contract.",
+    "Do not change the 0.70 ranking liquidity guard.",
+    "Do not change TopK width.",
+    "Do not change portfolio extraction.",
+    "Do not change refresh hysteresis.",
+    "Do not change execution semantics, benchmark, or cost contracts."
+  ],
+  "decision_rule": "If a screened Alpha158 keeper shows clean additive or at least non-destructive interaction with the v18 core family, preserves or improves static head-slice quality, and does not violate the next-day top10 overlap hard gate or materially worsen liquidity proxies, it may advance into a later restrained overlay or family-construction round. Otherwise it should remain a standalone keeper only.",
+  "notes": [
+    "This round operationalizes the post-Alpha158 exact 158 consolidation decision: do composability screening before any new family reopening.",
+    "Only four consolidated primary-pool keepers are screened in this round: corr20, cord30, vma60, and vsumd60.",
+    "The overlap hard gate is now explicit and binding in this preregistration."
+  ]
+}

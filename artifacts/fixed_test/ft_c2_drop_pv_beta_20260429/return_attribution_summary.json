@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "ft_c2_drop_pv_beta_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_142500",
+  "generated_at": "2026-04-29T14:33:39.118432+08:00",
+  "candidate_scheme_id": "confirmatory_ablation_drop_price_volume_beta_4sig",
+  "research_round_id": "rr_confirmatory_c2_ablation_20260429",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -0.8287329339084661,
+  "selection_alpha_total": 5.007784192933007,
+  "low_liquidity_contribution_total": 1.1379074529118176
+}

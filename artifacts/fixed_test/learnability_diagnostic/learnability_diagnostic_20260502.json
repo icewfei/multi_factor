@@ -1,0 +1,671 @@
+{
+  "as_of_date": "20260502",
+  "research_question": "Do any existing features or signals contain non-zero rank correlation with the oracle 5d forward label?",
+  "success_criterion": "|median daily IC| > 0.03 AND bootstrap 95% CI does not cross zero.",
+  "bootstrap_config": {
+    "n_resamples": 10000,
+    "seed": 42
+  },
+  "base_label_path": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/project_label_panel.parquet",
+  "base_sample_path": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_baseline_v1_trainval_20260429/project_sample_panel.parquet",
+  "signals": [
+    {
+      "name": "pv_beta_rank",
+      "source": "baseline_raw_rank",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10602758
+        },
+        "ic": {
+          "full_sample_corr": 0.019365658438493846,
+          "mean_daily_ic": 0.030724805117706366,
+          "median_daily_ic": 0.030263546969600437,
+          "std_daily_ic": 0.10122669285677953,
+          "n_days": 5325,
+          "positive_daily_share": 0.6189671361502347,
+          "mean_daily_ic_95ci_low": 0.02803535658940773,
+          "mean_daily_ic_95ci_high": 0.03337419830423458,
+          "median_daily_ic_95ci_low": 0.027329743824111342,
+          "median_daily_ic_95ci_high": 0.03329272678245909
+        },
+        "decile_labels": {
+          "1": 0.006349760347592222,
+          "2": 0.005374119835913135,
+          "3": 0.004931787586935613,
+          "4": 0.004649894885667842,
+          "5": 0.00451798307252465,
+          "6": 0.004252425285984859,
+          "7": 0.0037374594157038024,
+          "8": 0.003310239292949085,
+          "9": 0.0026929699797995864,
+          "10": 0.0013445011642583555
+        },
+        "top_slice": {
+          "top10_avg_label": 0.008863659938041194,
+          "rank11_20_avg_label": 0.00840886895603555,
+          "bottom10_avg_label": 0.0011419092113074117,
+          "top10_minus_bottom10": 0.007721750726733783
+        }
+      },
+      "classification": "positive_pass"
+    },
+    {
+      "name": "intraday_trend_rank",
+      "source": "baseline_raw_rank",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "full_sample_corr": 0.013621117151097716,
+          "mean_daily_ic": 0.01929162474334605,
+          "median_daily_ic": 0.0162117517269864,
+          "std_daily_ic": 0.12813808932561085,
+          "n_days": 5327,
+          "positive_daily_share": 0.5535948939365497,
+          "mean_daily_ic_95ci_low": 0.015776344714290895,
+          "mean_daily_ic_95ci_high": 0.02268041910723284,
+          "median_daily_ic_95ci_low": 0.012333038876370274,
+          "median_daily_ic_95ci_high": 0.02035042275273134
+        },
+        "decile_labels": {
+          "1": 0.004989246666008426,
+          "2": 0.004703497958000016,
+          "3": 0.004740482665171472,
+          "4": 0.004771370389918011,
+          "5": 0.004704391985517211,
+          "6": 0.004700783547465151,
+          "7": 0.004464141030192823,
+          "8": 0.004035682837303839,
+          "9": 0.0032718314494960374,
+          "10": 0.0008507794198893774
+        },
+        "top_slice": {
+          "top10_avg_label": 0.006496152919492397,
+          "rank11_20_avg_label": 0.0058802736248973805,
+          "bottom10_avg_label": -0.002148267299300511,
+          "top10_minus_bottom10": 0.008644420218792907
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "liq_trend_rank",
+      "source": "baseline_raw_rank",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "full_sample_corr": 0.011741988019409436,
+          "mean_daily_ic": 0.01924362966639463,
+          "median_daily_ic": 0.022911052848611207,
+          "std_daily_ic": 0.10183535370850674,
+          "n_days": 5327,
+          "positive_daily_share": 0.5875727426318753,
+          "mean_daily_ic_95ci_low": 0.01653334880010642,
+          "mean_daily_ic_95ci_high": 0.021924453461351308,
+          "median_daily_ic_95ci_low": 0.01990135155694647,
+          "median_daily_ic_95ci_high": 0.025942530870101493
+        },
+        "decile_labels": {
+          "1": 0.00472019396732434,
+          "2": 0.0047520987167177925,
+          "3": 0.004750453017910943,
+          "4": 0.0047283164755828385,
+          "5": 0.00475619307104233,
+          "6": 0.0045019120120546475,
+          "7": 0.0044115345783344055,
+          "8": 0.0038935462935261625,
+          "9": 0.003421685382902512,
+          "10": 0.0012978036954912578
+        },
+        "top_slice": {
+          "top10_avg_label": 0.00596372319669266,
+          "rank11_20_avg_label": 0.0056520424173320035,
+          "bottom10_avg_label": -0.0006521495429755125,
+          "top10_minus_bottom10": 0.006615872739668172
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "momentum_rank",
+      "source": "baseline_raw_rank",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10482505
+        },
+        "ic": {
+          "full_sample_corr": 0.008585556646700831,
+          "mean_daily_ic": 0.013058206729093946,
+          "median_daily_ic": 0.00697850238132022,
+          "std_daily_ic": 0.14847850568678578,
+          "n_days": 5267,
+          "positive_daily_share": 0.5217391304347826,
+          "mean_daily_ic_95ci_low": 0.009019941957756121,
+          "mean_daily_ic_95ci_high": 0.016935728344430266,
+          "median_daily_ic_95ci_low": 0.002409371729747908,
+          "median_daily_ic_95ci_high": 0.011766647900528875
+        },
+        "decile_labels": {
+          "1": 0.005086082767658166,
+          "2": 0.00460199695849335,
+          "3": 0.004424565250644104,
+          "4": 0.0042610977489609195,
+          "5": 0.004197102975319008,
+          "6": 0.004126443908139314,
+          "7": 0.003904191103148114,
+          "8": 0.0037369812088670117,
+          "9": 0.00321757712783287,
+          "10": 0.0028615195867961523
+        },
+        "top_slice": {
+          "top10_avg_label": 0.004862456493503748,
+          "rank11_20_avg_label": 0.0061043007801672095,
+          "bottom10_avg_label": 0.0027605471547952616,
+          "top10_minus_bottom10": 0.002101909338708486
+        }
+      },
+      "classification": "below_threshold"
+    },
+    {
+      "name": "upside_share_rank",
+      "source": "baseline_raw_rank",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604442
+        },
+        "ic": {
+          "full_sample_corr": 0.009391665700747063,
+          "mean_daily_ic": 0.015789416284123475,
+          "median_daily_ic": 0.01377250154143851,
+          "std_daily_ic": 0.10696887444456304,
+          "n_days": 5327,
+          "positive_daily_share": 0.5504036042800826,
+          "mean_daily_ic_95ci_low": 0.012875989345338705,
+          "mean_daily_ic_95ci_high": 0.018582453769383764,
+          "median_daily_ic_95ci_low": 0.01002135323924476,
+          "median_daily_ic_95ci_high": 0.017366424978988573
+        },
+        "decile_labels": {
+          "1": 0.004439812684411037,
+          "2": 0.0046814462319652375,
+          "3": 0.004712774713924534,
+          "4": 0.004627560687071423,
+          "5": 0.004543551651375178,
+          "6": 0.004488834477554246,
+          "7": 0.004316234924331886,
+          "8": 0.004029161115984303,
+          "9": 0.003531549139870563,
+          "10": 0.0018691378664724978
+        },
+        "top_slice": {
+          "top10_avg_label": 0.004520898604996752,
+          "rank11_20_avg_label": 0.0043805484931176706,
+          "bottom10_avg_label": -5.767185278459761e-05,
+          "top10_minus_bottom10": 0.00457857045778135
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "baseline_v1 (5sig equal-weight)",
+      "source": "composite",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604557
+        },
+        "ic": {
+          "full_sample_corr": 0.017757570425652017,
+          "mean_daily_ic": 0.029526532401703793,
+          "median_daily_ic": 0.02971589089438373,
+          "std_daily_ic": 0.1363394693056019,
+          "n_days": 5327,
+          "positive_daily_share": 0.5894499718415619,
+          "mean_daily_ic_95ci_low": 0.025812921863866432,
+          "mean_daily_ic_95ci_high": 0.03311100971177063,
+          "median_daily_ic_95ci_low": 0.02553392831030208,
+          "median_daily_ic_95ci_high": 0.03391671377447928
+        },
+        "decile_labels": {
+          "1": 0.00588588661910521,
+          "2": 0.005176387560051902,
+          "3": 0.004968853719847918,
+          "4": 0.004853004923780041,
+          "5": 0.004603930800784815,
+          "6": 0.004368398163998698,
+          "7": 0.004106312543804206,
+          "8": 0.0035200866597475265,
+          "9": 0.0028880695070630357,
+          "10": 0.0008564326982814799
+        },
+        "top_slice": {
+          "top10_avg_label": 0.009676756516631788,
+          "rank11_20_avg_label": 0.007474200284885984,
+          "bottom10_avg_label": -0.0003397328912742247,
+          "top10_minus_bottom10": 0.010016489407906013
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "alpha158_cord30",
+      "source": "canonical_cluster",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10602756
+        },
+        "ic": {
+          "full_sample_corr": 0.02109899193950517,
+          "mean_daily_ic": 0.03578488717603624,
+          "median_daily_ic": 0.032510819100776134,
+          "std_daily_ic": 0.08461348026040766,
+          "n_days": 5325,
+          "positive_daily_share": 0.6661032863849765,
+          "mean_daily_ic_95ci_low": 0.03350408581597164,
+          "mean_daily_ic_95ci_high": 0.03803290602439349,
+          "median_daily_ic_95ci_low": 0.02998391755976437,
+          "median_daily_ic_95ci_high": 0.03464856779568037
+        },
+        "decile_labels": {
+          "1": 0.006025017856738003,
+          "2": 0.005611819759802222,
+          "3": 0.005376359581801756,
+          "4": 0.004933382800399503,
+          "5": 0.004488045319306853,
+          "6": 0.004262458331949718,
+          "7": 0.0037973623737844503,
+          "8": 0.0032270565149083077,
+          "9": 0.0025351800014151637,
+          "10": 0.0009024379154884376
+        },
+        "top_slice": {
+          "top10_avg_label": 0.007580352277541825,
+          "rank11_20_avg_label": 0.006779992959830004,
+          "bottom10_avg_label": -0.0021950455381943637,
+          "top10_minus_bottom10": 0.009775397815736189
+        }
+      },
+      "classification": "positive_pass"
+    },
+    {
+      "name": "alpha158_corr30",
+      "source": "canonical_cluster",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10603625
+        },
+        "ic": {
+          "full_sample_corr": 0.019181370784440554,
+          "mean_daily_ic": 0.0303069399746821,
+          "median_daily_ic": 0.031347839033363634,
+          "std_daily_ic": 0.09230463716768426,
+          "n_days": 5326,
+          "positive_daily_share": 0.6430717236199774,
+          "mean_daily_ic_95ci_low": 0.02781021541089387,
+          "mean_daily_ic_95ci_high": 0.03278281155116893,
+          "median_daily_ic_95ci_low": 0.028367766363291542,
+          "median_daily_ic_95ci_high": 0.03449984819426734
+        },
+        "decile_labels": {
+          "1": 0.005936783574921424,
+          "2": 0.0054422194318317196,
+          "3": 0.005072498268203706,
+          "4": 0.004786160711052522,
+          "5": 0.0044465724801137935,
+          "6": 0.004255628429214985,
+          "7": 0.0039389997264514375,
+          "8": 0.0034599394836983717,
+          "9": 0.0028771420701964867,
+          "10": 0.0009649633674732929
+        },
+        "top_slice": {
+          "top10_avg_label": 0.010257591042413573,
+          "rank11_20_avg_label": 0.007679706730575687,
+          "bottom10_avg_label": -0.0021138994637282596,
+          "top10_minus_bottom10": 0.012371490506141832
+        }
+      },
+      "classification": "positive_pass"
+    },
+    {
+      "name": "alpha158_imxd5",
+      "source": "canonical_cluster",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "full_sample_corr": 0.018794860328867645,
+          "mean_daily_ic": 0.035324220510052476,
+          "median_daily_ic": 0.03161644288839815,
+          "std_daily_ic": 0.09861118119574307,
+          "n_days": 5327,
+          "positive_daily_share": 0.6363807020837244,
+          "mean_daily_ic_95ci_low": 0.0326587225524121,
+          "mean_daily_ic_95ci_high": 0.03794048831894136,
+          "median_daily_ic_95ci_low": 0.027962953243665125,
+          "median_daily_ic_95ci_high": 0.03464272119600038
+        },
+        "decile_labels": {
+          "1": 0.005044741332422973,
+          "2": 0.005298759968724518,
+          "3": 0.005173435836364682,
+          "4": 0.005326350182380668,
+          "5": 0.005110693299786011,
+          "6": 0.004676152421973302,
+          "7": 0.0040936928913234616,
+          "8": 0.003427926748420549,
+          "9": 0.002536612301031986,
+          "10": 0.0005385553378666654
+        },
+        "top_slice": {
+          "top10_avg_label": 0.005084524402723986,
+          "rank11_20_avg_label": 0.004955182272792709,
+          "bottom10_avg_label": -0.0014727089531416384,
+          "top10_minus_bottom10": 0.006557233355865624
+        }
+      },
+      "classification": "positive_pass"
+    },
+    {
+      "name": "alpha158_imax20",
+      "source": "canonical_cluster",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "full_sample_corr": 0.007079503791511426,
+          "mean_daily_ic": 0.013719975588072223,
+          "median_daily_ic": 0.013080092325447204,
+          "std_daily_ic": 0.10017816980000901,
+          "n_days": 5327,
+          "positive_daily_share": 0.5545335085413929,
+          "mean_daily_ic_95ci_low": 0.010990262740708828,
+          "mean_daily_ic_95ci_high": 0.016390024017141947,
+          "median_daily_ic_95ci_low": 0.009631272884655333,
+          "median_daily_ic_95ci_high": 0.016705631577409213
+        },
+        "decile_labels": {
+          "1": 0.003740670433913188,
+          "2": 0.004444780651508609,
+          "3": 0.004643700826837056,
+          "4": 0.004725720848468947,
+          "5": 0.004785628392122422,
+          "6": 0.004729599435119448,
+          "7": 0.004566230273789177,
+          "8": 0.004171811123873419,
+          "9": 0.003690394872818271,
+          "10": 0.0017400614109548877
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0037351307493831477,
+          "rank11_20_avg_label": 0.003781832528388185,
+          "bottom10_avg_label": -0.0005313109300299375,
+          "top10_minus_bottom10": 0.004266441679413085
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "alpha158_vsumd60",
+      "source": "canonical_cluster",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10603660
+        },
+        "ic": {
+          "full_sample_corr": 0.015118096350416901,
+          "mean_daily_ic": 0.024919465152372207,
+          "median_daily_ic": 0.02770884206533339,
+          "std_daily_ic": 0.08946224399185515,
+          "n_days": 5326,
+          "positive_daily_share": 0.626924521216673,
+          "mean_daily_ic_95ci_low": 0.02253808029802931,
+          "mean_daily_ic_95ci_high": 0.02736369193442754,
+          "median_daily_ic_95ci_low": 0.02513566765501737,
+          "median_daily_ic_95ci_high": 0.029951336467339974
+        },
+        "decile_labels": {
+          "1": 0.005081772514893324,
+          "2": 0.004811270447459791,
+          "3": 0.004763863570600163,
+          "4": 0.004719280545718584,
+          "5": 0.004769359940929918,
+          "6": 0.004714509011435528,
+          "7": 0.004621919968447131,
+          "8": 0.004288886159087247,
+          "9": 0.0034804832961824552,
+          "10": -6.611095684049612e-05
+        },
+        "top_slice": {
+          "top10_avg_label": 0.005681015066266457,
+          "rank11_20_avg_label": 0.004763724396702728,
+          "bottom10_avg_label": -0.006748353124030351,
+          "top10_minus_bottom10": 0.01242936819029681
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "intraday_trend_bias (exploratory)",
+      "source": "exploratory",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10604559
+        },
+        "ic": {
+          "full_sample_corr": 0.013621117151097175,
+          "mean_daily_ic": 0.01929162474334605,
+          "median_daily_ic": 0.0162117517269864,
+          "std_daily_ic": 0.12813808932561085,
+          "n_days": 5327,
+          "positive_daily_share": 0.5535948939365497,
+          "mean_daily_ic_95ci_low": 0.015776344714290895,
+          "mean_daily_ic_95ci_high": 0.022680419107232837,
+          "median_daily_ic_95ci_low": 0.012333038876370274,
+          "median_daily_ic_95ci_high": 0.02035042275273134
+        },
+        "decile_labels": {
+          "1": 0.004989246666008414,
+          "2": 0.0047034979580000075,
+          "3": 0.004740482665171465,
+          "4": 0.004771370389917992,
+          "5": 0.004704391985517201,
+          "6": 0.004700783547465147,
+          "7": 0.004464141030192826,
+          "8": 0.004035682837303811,
+          "9": 0.0032718314494960517,
+          "10": 0.0008507794198893733
+        },
+        "top_slice": {
+          "top10_avg_label": 0.006496152919492399,
+          "rank11_20_avg_label": 0.00588027362489738,
+          "bottom10_avg_label": -0.0021482672993005107,
+          "top10_minus_bottom10": 0.008644420218792909
+        }
+      },
+      "classification": "marginal"
+    },
+    {
+      "name": "reversal (exploratory)",
+      "source": "exploratory",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10600061
+        },
+        "ic": {
+          "full_sample_corr": -0.02521771273077204,
+          "mean_daily_ic": -0.046433588572640475,
+          "median_daily_ic": -0.04418187833021832,
+          "std_daily_ic": 0.1289495972192595,
+          "n_days": 5322,
+          "positive_daily_share": 0.3560691469372416,
+          "mean_daily_ic_95ci_low": -0.049869059754852604,
+          "mean_daily_ic_95ci_high": -0.042905376810945875,
+          "median_daily_ic_95ci_low": -0.04790069499833394,
+          "median_daily_ic_95ci_high": -0.04047043950623341
+        },
+        "decile_labels": {
+          "1": -0.0006869129379681135,
+          "2": 0.0019943291177146015,
+          "3": 0.003447513572113853,
+          "4": 0.0042158162256464415,
+          "5": 0.004825215508589675,
+          "6": 0.005102530674108409,
+          "7": 0.005483710064095444,
+          "8": 0.005642474324487634,
+          "9": 0.005874805487399628,
+          "10": 0.005458065937154422
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0026894159742355157,
+          "rank11_20_avg_label": -0.002744233838301106,
+          "bottom10_avg_label": -0.0018316057672217573,
+          "top10_minus_bottom10": 0.004521021741457273
+        }
+      },
+      "classification": "sign_inverted_pass"
+    },
+    {
+      "name": "momentum (exploratory)",
+      "source": "exploratory",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 10482505
+        },
+        "ic": {
+          "full_sample_corr": 0.008585556646700907,
+          "mean_daily_ic": 0.013058206729093946,
+          "median_daily_ic": 0.00697850238132022,
+          "std_daily_ic": 0.14847850568678578,
+          "n_days": 5267,
+          "positive_daily_share": 0.5217391304347826,
+          "mean_daily_ic_95ci_low": 0.009019941957756121,
+          "mean_daily_ic_95ci_high": 0.016935728344430266,
+          "median_daily_ic_95ci_low": 0.002409371729747908,
+          "median_daily_ic_95ci_high": 0.011766647900528875
+        },
+        "decile_labels": {
+          "1": 0.005086082767658172,
+          "2": 0.004601996958493342,
+          "3": 0.004424565250644094,
+          "4": 0.004261097748960891,
+          "5": 0.0041971029753189865,
+          "6": 0.004126443908139304,
+          "7": 0.0039041911031481007,
+          "8": 0.0037369812088670013,
+          "9": 0.00321757712783286,
+          "10": 0.00286151958679615
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0048624564935037485,
+          "rank11_20_avg_label": 0.006104300780167206,
+          "bottom10_avg_label": 0.0027605471547952573,
+          "top10_minus_bottom10": 0.0021019093387084913
+        }
+      },
+      "classification": "below_threshold"
+    },
+    {
+      "name": "ROE (exploratory)",
+      "source": "exploratory",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 6735353
+        },
+        "ic": {
+          "full_sample_corr": -0.0003277338669751594,
+          "mean_daily_ic": -0.004976385515504238,
+          "median_daily_ic": 0.006400900189678389,
+          "std_daily_ic": 0.1920322515565663,
+          "n_days": 4888,
+          "positive_daily_share": 0.5169803600654664,
+          "mean_daily_ic_95ci_low": -0.01051542537984765,
+          "mean_daily_ic_95ci_high": 0.0003042625536627572,
+          "median_daily_ic_95ci_low": 0.0012052208780838343,
+          "median_daily_ic_95ci_high": 0.011833611277287593
+        },
+        "decile_labels": {
+          "1": 0.003970225972290839,
+          "2": 0.004278054318547479,
+          "3": 0.004823173291963779,
+          "4": 0.004227898905424274,
+          "5": 0.004341313858477078,
+          "6": 0.004517320398797632,
+          "7": 0.004214464305637383,
+          "8": 0.004464645743341073,
+          "9": 0.004260330456182385,
+          "10": 0.004374894600207694
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0038250586681492613,
+          "rank11_20_avg_label": 0.0032076688761383297,
+          "bottom10_avg_label": 0.0040623566629578505,
+          "top10_minus_bottom10": -0.00023729799480858927
+        }
+      },
+      "classification": "below_threshold"
+    },
+    {
+      "name": "ROA (exploratory)",
+      "source": "exploratory",
+      "diagnostic": {
+        "coverage": {
+          "eligible_rows": 10780956,
+          "scored_with_label_rows": 6748560
+        },
+        "ic": {
+          "full_sample_corr": -0.0026228809271332627,
+          "mean_daily_ic": -0.008956296778581705,
+          "median_daily_ic": 0.0017326010357433506,
+          "std_daily_ic": 0.20255261731718904,
+          "n_days": 5176,
+          "positive_daily_share": 0.5028979907264297,
+          "mean_daily_ic_95ci_low": -0.014446059122671688,
+          "mean_daily_ic_95ci_high": -0.0033064502027807478,
+          "median_daily_ic_95ci_low": -0.0036595450923572054,
+          "median_daily_ic_95ci_high": 0.008088327683915309
+        },
+        "decile_labels": {
+          "1": 0.004148843155533816,
+          "2": 0.004311276795576858,
+          "3": 0.003992452179876945,
+          "4": 0.004229570425730784,
+          "5": 0.004043304860512664,
+          "6": 0.004381969194284404,
+          "7": 0.004362577929833223,
+          "8": 0.004611820790563233,
+          "9": 0.004602168166624532,
+          "10": 0.004717647604298707
+        },
+        "top_slice": {
+          "top10_avg_label": 0.0026794858967959445,
+          "rank11_20_avg_label": 0.00309574974346641,
+          "bottom10_avg_label": 0.00444385339256205,
+          "top10_minus_bottom10": -0.0017643674957661054
+        }
+      },
+      "classification": "below_threshold"
+    }
+  ],
+  "status": "frozen",
+  "criterion_note": "The threshold applies to the point estimate (median), not the CI bounds. CI is NOT required to lie entirely above 0.03 — only to exclude zero."
+}

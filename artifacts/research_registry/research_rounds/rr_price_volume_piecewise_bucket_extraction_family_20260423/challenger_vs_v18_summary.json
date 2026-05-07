@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-04-23T09:40:30+08:00",
+  "reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "challenger_candidate_scheme_id": "price_volume_v20_piecewise_bucket_extraction",
+  "reference_run_id": "fullchain_price_volume_refresh_hysteresis_20260422_143317",
+  "challenger_run_id": "fullchain_price_volume_piecewise_bucket_extraction_20260423_092900",
+  "summary_judgement": "weak_candidate",
+  "comparison": {
+    "annual_relative_return": {
+      "reference": -0.04414228898711203,
+      "challenger": -0.043794385365343524,
+      "delta": 0.0003479036217685074
+    },
+    "relative_ir": {
+      "reference": -0.4024807492034419,
+      "challenger": -0.3964967771705849,
+      "delta": 0.005983972032857026
+    },
+    "max_drawdown": {
+      "reference": -0.2772009864700842,
+      "challenger": -0.2808214653291665,
+      "delta": -0.003620478859082306
+    },
+    "avg_cash_weight": {
+      "reference": 0.7678748817060334,
+      "challenger": 0.7667918305148704,
+      "delta": -0.0010830511911630497
+    },
+    "avg_invested_weight": {
+      "reference": 0.23212511829398338,
+      "challenger": 0.2332081694851519,
+      "delta": 0.001083051191168521
+    },
+    "avg_turnover_daily": {
+      "reference": 0.11104145726428083,
+      "challenger": 0.11103826112257495,
+      "delta": -0.000003196141705876834
+    },
+    "low_liquidity_weight_share": {
+      "reference": 0.029557319223990304,
+      "challenger": 0.02968161375661706,
+      "delta": 0.0001242945326267562
+    },
+    "topk_perturbation_pass": {
+      "reference": false,
+      "challenger": false
+    },
+    "cost_stress_pass": {
+      "reference": false,
+      "challenger": false
+    }
+  },
+  "conclusion": "Piecewise bucket extraction slightly improved annual_relative_return(年化超额收益), relative_ir(相对信息比率), and avg_turnover_daily(平均日换手) versus v18, but max_drawdown(最大回撤) worsened a bit, low_liquidity_weight_share(低流动性权重占比) ticked up, and both topk_perturbation_pass(TopK扰动通过) plus cost_stress_pass(成本压力通过) still failed, so it remains a weak_candidate."
+}

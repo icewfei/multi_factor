@@ -1,0 +1,46 @@
+{
+  "candidate_scheme_id": "price_volume_single_signal_momentum_20_5_v1",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round3_20260423",
+  "as_of_date": "20260423",
+  "coverage": {
+    "ranking_eligible_rows": 15233701,
+    "null_score_rows": 18239,
+    "null_score_share": 0.0011972796367737558,
+    "scored_with_label_rows": 15003964
+  },
+  "ic_readout": {
+    "full_sample_corr_ic": 0.007225986026647348,
+    "avg_daily_ic": 0.008331105066074538,
+    "median_daily_ic": 0.00472769928737004,
+    "positive_daily_ic_share": 0.5155485398579321
+  },
+  "decile_monotonicity": {
+    "1": 0.0037878281810753574,
+    "2": 0.004156633385298944,
+    "3": 0.004190188011083389,
+    "4": 0.0042922901353156994,
+    "5": 0.004318176931241091,
+    "6": 0.0042464988679723065,
+    "7": 0.0041200796081596585,
+    "8": 0.00373861079546431,
+    "9": 0.003019439449807762,
+    "10": 0.0018647102403752383
+  },
+  "top_slice_readout": {
+    "avg_label_top10": 0.0002683964744661304,
+    "avg_label_rank11_20": 0.003300683544781965,
+    "avg_label_bottom10": 0.00100286157055989,
+    "top10_minus_rank11_20": -0.0030322870703158346,
+    "top10_minus_bottom10": -0.0007344650960937596
+  },
+  "cutoff_gap": {
+    "avg_rank10_11_score_gap": 0.0005347592217493036,
+    "median_rank10_11_score_gap": 0.0004446420631392112,
+    "days_with_both_ranks": 6342,
+    "days_gap_lt_0_005": 6342,
+    "days_gap_lt_0_001": 6075
+  },
+  "notes": [
+    "Manual direct diagnosis path used because the generic builder path was abnormally slow for this candidate."
+  ]
+}

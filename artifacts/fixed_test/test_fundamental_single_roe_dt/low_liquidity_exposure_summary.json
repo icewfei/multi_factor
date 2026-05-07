@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "test_fundamental_single_roe_dt",
+  "run_id": "test_fundamental_single_roe_dt",
+  "attempt_id": "attempt_20260501_162543",
+  "generated_at": "2026-05-01T16:28:42.396995+08:00",
+  "candidate_scheme_id": "test_fundamental_single_roe_dt",
+  "research_round_id": "plumbing_validation_fundamental_20260501",
+  "low_liquidity_holding_count": 6993,
+  "low_liquidity_weight_total": 139.8599999999977,
+  "low_liquidity_weight_share": 0.14472867254438598,
+  "low_liquidity_contribution_total": -1.4340533513373144,
+  "low_liquidity_contribution_share_of_strategy": -0.8729355584660968,
+  "low_liquidity_alpha_contribution_share": -2.0596094467329604,
+  "flag_high_low_liquidity_exposure": true
+}

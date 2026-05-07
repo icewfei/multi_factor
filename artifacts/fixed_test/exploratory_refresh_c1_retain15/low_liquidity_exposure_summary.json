@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_refresh_c1_retain15",
+  "run_id": "exploratory_refresh_c1_retain15",
+  "attempt_id": "attempt_20260501_180653",
+  "generated_at": "2026-05-01T18:09:52.652758+08:00",
+  "candidate_scheme_id": "exploratory_refresh_c1_retain15",
+  "research_round_id": "rr_exploratory_refresh_rule_turnover_reduction_20260501",
+  "low_liquidity_holding_count": 6497,
+  "low_liquidity_weight_total": 130.03111111110897,
+  "low_liquidity_weight_share": 0.12209494001042773,
+  "low_liquidity_contribution_total": -0.2013601078924496,
+  "low_liquidity_contribution_share_of_strategy": -0.04041617334996325,
+  "low_liquidity_alpha_contribution_share": -0.005247557104008691,
+  "flag_high_low_liquidity_exposure": false
+}

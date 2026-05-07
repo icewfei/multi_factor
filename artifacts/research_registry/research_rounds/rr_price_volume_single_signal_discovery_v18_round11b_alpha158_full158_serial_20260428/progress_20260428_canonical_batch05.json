@@ -1,0 +1,40 @@
+{
+  "as_of_date": "20260428",
+  "controller_round_id": "rr_price_volume_single_signal_discovery_v18_round11b_alpha158_full158_serial_20260428",
+  "policy": {
+    "serial_only": true,
+    "family_reopen_blocked": true
+  },
+  "canonical_progress": {
+    "exact_total_candidate_count": 158,
+    "exact_executed_candidate_count": 150,
+    "exact_remaining_candidate_count": 8,
+    "executed_canonical_batch_count": 5,
+    "completed_batches": [
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch01_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch02_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch03_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch04_20260428",
+      "rr_price_volume_single_signal_discovery_v18_round11b_canonical_batch05_20260428"
+    ]
+  },
+  "canonical_batch05_summary": {
+    "signal_edge_positive_count": 10,
+    "signal_edge_mixed_count": 15,
+    "signal_edge_negative_count": 5,
+    "new_clean_positive_keepers": [
+      "price_volume_single_signal_alpha158_vma5_v1",
+      "price_volume_single_signal_alpha158_vma10_v1",
+      "price_volume_single_signal_alpha158_vma20_v1",
+      "price_volume_single_signal_alpha158_vma30_v1",
+      "price_volume_single_signal_alpha158_vma60_v1",
+      "price_volume_single_signal_alpha158_vstd30_v1",
+      "price_volume_single_signal_alpha158_vstd60_v1",
+      "price_volume_single_signal_alpha158_vsump20_v1",
+      "price_volume_single_signal_alpha158_vsump30_v1",
+      "price_volume_single_signal_alpha158_vsump60_v1"
+    ],
+    "note": "Controller policy remains serial-only and still blocks family reopening despite batch-level positives."
+  },
+  "next_step": "open canonical batch06 using the final exact Alpha158 feature tranche under the same serial-only controller policy"
+}

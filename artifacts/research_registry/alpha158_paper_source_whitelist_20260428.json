@@ -1,0 +1,48 @@
+{
+  "as_of_date": "20260428",
+  "policy_name": "alpha158_paper_whitelist_only",
+  "allowed_source_categories": [
+    "alpha158_style",
+    "academic_paper",
+    "classic_factor_handbook"
+  ],
+  "approved_source_examples": [
+    {
+      "source_category": "alpha158_style",
+      "source_id": "Alpha158:PriceVolume:CloseLocation",
+      "source_title": "Qlib Alpha158 style close-location and shadow-derived price-volume atomics",
+      "source_locator": "Qlib Alpha158 feature family specification",
+      "notes": "Use as mechanism inspiration only; implementation must follow this project's own data contracts."
+    },
+    {
+      "source_category": "academic_paper",
+      "source_id": "JegadeeshTitman1993:Momentum",
+      "source_title": "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency",
+      "source_locator": "Journal of Finance (1993)",
+      "notes": "Use mechanism-level mapping and convert to project-native atomic formulation."
+    },
+    {
+      "source_category": "academic_paper",
+      "source_id": "ChordiaSubrahmanyamAnshuman2001:Liquidity",
+      "source_title": "Trading Activity and Expected Stock Returns",
+      "source_locator": "Journal of Financial Economics (2001)",
+      "notes": "Use as liquidity participation mechanism reference."
+    },
+    {
+      "source_category": "classic_factor_handbook",
+      "source_id": "GrinoldKahn:ActivePortfolioManagement",
+      "source_title": "Active Portfolio Management (factor construction and cross-sectional ranking principles)",
+      "source_locator": "Grinold and Kahn textbook reference",
+      "notes": "Treat as classical factor-construction reference for standardized definitions."
+    }
+  ],
+  "required_source_provenance_fields": [
+    "source_category",
+    "source_id",
+    "source_title",
+    "source_locator",
+    "mechanism_mapping",
+    "independent_implementation_note"
+  ],
+  "implementation_rule": "All signals must be implemented independently inside this project and must not import or depend on neighboring qlib adapters."
+}

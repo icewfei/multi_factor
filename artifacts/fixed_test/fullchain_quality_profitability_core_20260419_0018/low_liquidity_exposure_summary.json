@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "attempt_id": "attempt_20260419_091919",
+  "generated_at": "2026-04-19T09:29:11.123198+08:00",
+  "candidate_scheme_id": "quality_profitability_v12_core",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "low_liquidity_holding_count": 6032,
+  "low_liquidity_weight_total": 15.466666666666617,
+  "low_liquidity_weight_share": 0.10730804810359125,
+  "low_liquidity_contribution_total": -0.12596878752429613,
+  "low_liquidity_contribution_share_of_strategy": -0.3409106790798756,
+  "low_liquidity_alpha_contribution_share": -0.3027090411497928,
+  "flag_high_low_liquidity_exposure": false
+}

@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "ft_confirmatory_c1_ic_weighted_20260429",
+  "run_id": "confirmatory_baseline_v1_trainval_20260429",
+  "attempt_id": "attempt_20260429_134136",
+  "generated_at": "2026-04-29T13:46:11.963694+08:00",
+  "candidate_scheme_id": "confirmatory_baseline_v1_ic_weighted_5sig",
+  "research_round_id": "rr_confirmatory_c1_weighting_20260429",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": 0.04395438571689381,
+  "pass_cost_stress_relative_return_floor": true
+}

@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "run_id": "fullchain_quality_profitability_core_20260419_0018",
+  "attempt_id": "attempt_20260419_091919",
+  "generated_at": "2026-04-19T09:29:09.163959+08:00",
+  "candidate_scheme_id": "quality_profitability_v12_core",
+  "research_round_id": "rr_quality_profitability_family_20260419",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.07454350305396196,
+      "relative_ir": -0.48422425163131444
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 5162,
+      "annual_relative_return": -0.07631007865517725,
+      "relative_ir": -0.4960713430496044
+    }
+  ]
+}

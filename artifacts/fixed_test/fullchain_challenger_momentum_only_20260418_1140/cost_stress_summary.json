@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "fullchain_challenger_momentum_only_20260418_1140",
+  "run_id": "fullchain_challenger_momentum_only_20260418_1140",
+  "attempt_id": "attempt_challenger_momentum_only_20260418_1145",
+  "generated_at": "2026-04-18T11:42:24.049437+08:00",
+  "candidate_scheme_id": "baseline_momentum_v4",
+  "research_round_id": "rr_baseline_challenger_drop_reversal_20260418",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 5162,
+  "annual_relative_return": -0.1059577217473423,
+  "pass_cost_stress_relative_return_floor": false
+}

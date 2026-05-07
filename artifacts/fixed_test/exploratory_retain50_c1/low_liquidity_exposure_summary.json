@@ -1,0 +1,15 @@
+{
+  "fixed_test_run_id": "exploratory_retain50_c1",
+  "run_id": "exploratory_retain50_c1",
+  "attempt_id": "attempt_20260501_182233",
+  "generated_at": "2026-05-01T18:25:34.741905+08:00",
+  "candidate_scheme_id": "exploratory_retain50_c1",
+  "research_round_id": "rr_exploratory_retain50_round2_20260501",
+  "low_liquidity_holding_count": 6552,
+  "low_liquidity_weight_total": 131.0399999999978,
+  "low_liquidity_weight_share": 0.12299605781865289,
+  "low_liquidity_contribution_total": -0.19476133706959645,
+  "low_liquidity_contribution_share_of_strategy": -0.047673400641236596,
+  "low_liquidity_alpha_contribution_share": -0.012593892292790532,
+  "flag_high_low_liquidity_exposure": false
+}

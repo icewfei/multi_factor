@@ -1,0 +1,46 @@
+{
+  "run_id": "confirmatory_reversal_p98_trainval_20260506",
+  "attempt_id": "attempt_20260506_114831",
+  "generated_at": "2026-05-06T11:51:01.590842+08:00",
+  "source_attempt_manifest": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/run_state_attempt_manifest.json",
+  "inputs": {
+    "execution_state_daily": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/execution_state_daily.parquet",
+    "ranking_state_daily": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/ranking_state_daily.parquet",
+    "project_execution_panel": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/project_execution_panel.parquet"
+  },
+  "outputs": {
+    "holdings_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/holdings.csv",
+    "portfolio_weights_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/portfolio_weights_daily.csv",
+    "portfolio_daily_summary_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/portfolio_daily_summary.csv",
+    "turnover_daily_csv": "/Users/wy/MiscProject/multi_factor/artifacts/run_state/confirmatory_reversal_p98_trainval_20260506/attempts/attempt_20260506_114831/turnover_daily.csv"
+  },
+  "assumptions": {
+    "holding_cohort_count": 16,
+    "cohort_capital_fraction": 0.0625,
+    "weight_unit_basis": "normalized_0_to_1_portfolio_weight",
+    "weight_mapping_contract": null,
+    "portfolio_extraction_contract": null,
+    "portfolio_refresh_contract": null,
+    "turnover_notional_basis": "normalized_portfolio_weight_with_lag_total_equity_equal_1",
+    "weight_path_rule": "entry_day_opening_weight_is_zero_and_actual_exit_day_closing_weight_is_zero",
+    "industry_active_weight_max": "null_until_industry_exposure_layer_is_implemented"
+  },
+  "summary_counts": {
+    "holdings_rows": 52200,
+    "portfolio_weights_daily_rows": 253054,
+    "portfolio_daily_summary_rows": 5326,
+    "turnover_daily_rows": 5326,
+    "max_invested_weight": 0.36250000000000004,
+    "target_weight_min": 0.1,
+    "target_weight_max": 0.1
+  },
+  "upstream_attempt_parameters": {
+    "topk": 10,
+    "signal_date_chunk_size": 5,
+    "max_threads": 8,
+    "memory_limit_gb": 20.0,
+    "candidate_scheme_id": "reversal_tail_exclude_p98_v1",
+    "changed_dimension": "score_family_composition",
+    "liquidity_guard": null
+  }
+}

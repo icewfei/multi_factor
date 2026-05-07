@@ -1,0 +1,21 @@
+{
+  "registered_at": "2026-04-29T14:48:53.117875+08:00",
+  "research_round_id": "rr_confirmatory_c4_ablation_mid_20260429",
+  "research_tier": "confirmatory",
+  "research_question": "Are all middle signals necessary in the 4-signal baseline?",
+  "changed_dimension": "signal_set_membership",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "confirmatory_ablation_drop_upside_range_share_4sig",
+    "confirmatory_ablation_drop_liq_trend_3sig"
+  ],
+  "baseline_reference_candidate_scheme_id": "confirmatory_ablation_drop_upside_range_share_4sig",
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "topk": 10,
+    "holding_cohort_count": 5
+  },
+  "pass_criteria": {
+    "boolean_expression": "annual_relative_return > 0.01 AND sharpe_ratio > 0.5 AND avg_invested_weight > 0.60"
+  }
+}

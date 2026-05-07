@@ -1,0 +1,27 @@
+{
+  "fixed_test_run_id": "ft_minimal_fullchain_20260417",
+  "run_id": "fullchain_reviewfix_20260417_160610",
+  "attempt_id": "attempt_fullchain_reviewfix_20260417_160610",
+  "generated_at": "2026-04-17T21:02:15.094353+08:00",
+  "candidate_scheme_id": "baseline_reversal_momentum_lowvol_liquidity_v1",
+  "research_round_id": "rr_baseline_scaffold_20260417",
+  "warnings": [
+    "execution_path_daily contains unresolved or unpriced rows.",
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK.",
+    "terminal_event_daily is present but partially degraded in the shared source."
+  ],
+  "fatal_blockers": [],
+  "ranking_anomaly_rows": 4538,
+  "unfilled_topk_count": 4751,
+  "terminal_event_degraded_rows": 314,
+  "benchmark_fallback_triggered": false,
+  "low_liquidity_flag_high": true,
+  "topk_perturbation_pass": false,
+  "cost_stress_pass": false,
+  "cost_stress_annual_relative_return": -0.14841115114719172,
+  "exposure_driven_or_liquidity_driven": true,
+  "notes": [
+    "Low-liquidity exposure flag uses a heuristic threshold on weight share and alpha contribution share.",
+    "Audit summary is a near-formal scaffold and still excludes full exposure attribution."
+  ]
+}

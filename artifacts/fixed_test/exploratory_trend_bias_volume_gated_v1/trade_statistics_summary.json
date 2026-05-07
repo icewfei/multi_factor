@@ -1,0 +1,39 @@
+{
+  "fixed_test_run_id": "exploratory_trend_bias_volume_gated_v1",
+  "run_id": "exploratory_trend_bias_volume_gated_v1",
+  "attempt_id": "attempt_20260501_145346",
+  "generated_at": "2026-05-01T14:56:26.102376+08:00",
+  "candidate_scheme_id": "exploratory_trend_bias_volume_gated_v1",
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "holdings_count": 52067,
+  "unique_instruments": 3446,
+  "signal_dates_with_positions": 5326,
+  "avg_exit_delay_days": 0.4495811236645915,
+  "delayed_exit_positions": 1711,
+  "terminal_event_positions": 7,
+  "total_entry_fill_weight": 1041.3399999999228,
+  "avg_turnover_daily": 0.3906604127580115,
+  "median_turnover_daily": 0.4,
+  "max_turnover_daily": 0.6000000000000001,
+  "rebalance_days": 5330,
+  "run_state_summary_counts": {
+    "ranking_state_rows": 11198074,
+    "execution_state_rows": 11198074,
+    "ranking_anomaly_rows": 5683680,
+    "rankable_rows": 5097276,
+    "null_model_score_rows": 6100798,
+    "nonfinite_model_score_rows": 0,
+    "topk_frozen_rows": 53260,
+    "execution_attempt_rows": 53260,
+    "entry_filled_rows": 52067,
+    "backtest_executable_rows": 52067,
+    "unfilled_topk_count": 1193,
+    "unfilled_topk_weight": 119.30000000000001,
+    "topk_per_signal_breach_count": 0,
+    "topk_default_used": 10
+  },
+  "warnings": [
+    "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+  ],
+  "fatal_blockers": []
+}

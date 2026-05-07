@@ -1,0 +1,194 @@
+{
+  "registered_at": "2026-04-25T09:18:47+08:00",
+  "research_round_id": "rr_price_volume_single_signal_discovery_v18_round6_alpha158_paper_20260425",
+  "research_tier": "exploratory",
+  "run_type": "exploratory",
+  "candidate_scheme_ids": [],
+  "planned_candidate_scheme_ids": [
+    "price_volume_single_signal_price_volume_corr_20d_v1",
+    "price_volume_single_signal_turnover_mean_reversion_gap_5_20_v1",
+    "price_volume_single_signal_volume_momentum_5_20_v1",
+    "price_volume_single_signal_close_to_high_ratio_20d_v1",
+    "price_volume_single_signal_upper_shadow_pressure_20d_v1",
+    "price_volume_single_signal_path_efficiency_60d_v1",
+    "price_volume_single_signal_breakout_distance_20d_v1",
+    "price_volume_single_signal_breakdown_distance_20d_v1",
+    "price_volume_single_signal_range_compression_5_20_v1",
+    "price_volume_single_signal_downside_recovery_strength_10d_v1"
+  ],
+  "baseline_reference_candidate_scheme_id": "price_volume_v18_refresh_hysteresis",
+  "research_question": "After pausing the current price-volume family tuning line and deciding not to promote any round-5 keeper directly into a new family, which more standardized atomic price-volume signals inspired by Alpha158-style feature construction and common price-volume research can expand the retained keeper pool under the frozen v18 operational contract before any later family construction is reopened?",
+  "allowed_core_dimension": "single raw signal only",
+  "changed_dimension": "atomic_signal_choice",
+  "change_control_rule": "single_dimension_only",
+  "dedup_intake_rule_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/future_signal_naming_and_intake_rules_20260425.json",
+  "discovery_contract": {
+    "mode": "single_signal_discovery",
+    "builder_rule": "each candidate builder may rank exactly one raw signal field and may not combine multiple raw signals inside the same candidate",
+    "source_inspiration_rule": "candidate definitions may draw inspiration from Alpha158-style price-volume expressions and common price-volume research papers, but all fields must be implemented independently inside this project's own data and scoring stack",
+    "signal_pool": [
+      {
+        "candidate_scheme_id": "price_volume_single_signal_price_volume_corr_20d_v1",
+        "field": "volume_price_synchronicity_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a stronger positive 20-day correlation between daily return and change in traded amount may encode a standardized price-volume confirmation signal",
+        "dedup_note": {
+          "nearest_canonical_signal": "volume_price_synchronicity_20d_raw",
+          "relationship_type": "naming_alias",
+          "independent_budget_reason": "This standardized Alpha-style label is economically the same price-volume confirmation mechanism and is retained only to document the naming bridge.",
+          "override_reason": "Historical candidate id kept the Alpha-style alias label, but prereg field is normalized to the canonical signal name."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_turnover_mean_reversion_gap_5_20_v1",
+        "field": "turnover_acceleration_5_20_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "a smaller short-vs-medium turnover deviation may capture cleaner participation normalization than simple turnover acceleration alone",
+        "dedup_note": {
+          "nearest_canonical_signal": "turnover_acceleration_5_20_raw",
+          "relationship_type": "direction_variant",
+          "independent_budget_reason": "This used the same canonical turnover-acceleration mechanism but intentionally tested the opposite ranking direction under a standardized naming frame.",
+          "override_reason": "Historical Alpha-style candidate was retained only as a preregistered inverse-direction test of the canonical turnover-acceleration field."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_volume_momentum_5_20_v1",
+        "field": "amount_shock_5_20_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a stronger recent amount momentum relative to a 20-day baseline may reveal standardized volume persistence",
+        "dedup_note": {
+          "nearest_canonical_signal": "amount_shock_5_20_raw",
+          "relationship_type": "naming_alias",
+          "independent_budget_reason": "This standardized volume-momentum label maps onto the same canonical amount-shock mechanism and is kept only for naming normalization.",
+          "override_reason": "Historical candidate id preserved the Alpha-style alias label, but the field is normalized to the canonical amount-shock name."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_close_to_high_ratio_20d_v1",
+        "field": "close_location_value_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "signals that persistently close nearer the top of the daily range may represent a standardized trend-quality signal",
+        "dedup_note": {
+          "nearest_canonical_signal": "close_location_value_20d_raw",
+          "relationship_type": "naming_alias",
+          "independent_budget_reason": "This is a standardized label for the same intraday close-location mechanism already present in canonical form.",
+          "override_reason": "Historical candidate id kept the standardized alias wording, while the prereg field is normalized to the canonical close-location name."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_upper_shadow_pressure_20d_v1",
+        "field": "upper_shadow_ratio_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower recent upper-shadow pressure may indicate less overhead supply and cleaner continuation structure",
+        "dedup_note": {
+          "nearest_canonical_signal": "upper_shadow_ratio_20d_raw",
+          "relationship_type": "naming_alias",
+          "independent_budget_reason": "This standardized pressure wording maps onto the same upper-shadow candle-pressure mechanism already named canonically.",
+          "override_reason": "Historical candidate id preserved the standardized alias, but the prereg field is normalized to the canonical upper-shadow ratio."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_path_efficiency_60d_v1",
+        "field": "path_efficiency_60d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "a more efficient 60-day path may provide a slower and more standardized trend-quality edge than broad momentum alone",
+        "dedup_note": {
+          "nearest_canonical_signal": "path_efficiency_20d_raw",
+          "relationship_type": "horizon_variant",
+          "independent_budget_reason": "This tests whether the canonical path-efficiency mechanism improves on a slower horizon under standardized naming.",
+          "override_reason": "Registered as a 60-day horizon variant of the canonical path-efficiency mechanism."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_breakout_distance_20d_v1",
+        "field": "breakout_proximity_20d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "signals trading closer to the recent 20-day breakout boundary may encode a standardized structural-position signal",
+        "dedup_note": {
+          "nearest_canonical_signal": "breakout_proximity_20d_raw",
+          "relationship_type": "naming_alias",
+          "independent_budget_reason": "This standardized breakout-distance wording maps onto the same canonical breakout-proximity mechanism.",
+          "override_reason": "Historical candidate id preserved the standardized alias, but the prereg field is normalized to the canonical breakout-proximity name."
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_breakdown_distance_20d_v1",
+        "field": "breakdown_distance_20d_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "signals trading farther from the recent 20-day breakdown boundary may encode downside-distance resilience",
+        "dedup_note": {
+          "nearest_canonical_signal": "breakdown_distance_20d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This introduced a downside-distance structural resilience mechanism that was not already canonicalized elsewhere.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_range_compression_5_20_v1",
+        "field": "range_compression_5_20_raw",
+        "ranking_direction": "ASC",
+        "interpretation": "lower recent range expansion relative to a 20-day baseline may capture a standardized compression state distinct from level volatility",
+        "dedup_note": {
+          "nearest_canonical_signal": "range_compression_5_20_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This introduced a standardized compression-state mechanism that is not merely a relabeling of volatility level.",
+          "override_reason": ""
+        }
+      },
+      {
+        "candidate_scheme_id": "price_volume_single_signal_downside_recovery_strength_10d_v1",
+        "field": "downside_recovery_strength_10d_raw",
+        "ranking_direction": "DESC",
+        "interpretation": "stronger recovery after recent weak opens or intraday downside pressure may encode a standardized resilience signal",
+        "dedup_note": {
+          "nearest_canonical_signal": "downside_recovery_strength_10d_raw",
+          "relationship_type": "new_mechanism",
+          "independent_budget_reason": "This introduced a standardized downside-recovery mechanism distinct from prior gap-recovery or close-location signals.",
+          "override_reason": ""
+        }
+      }
+    ],
+    "aggregation_rule": "none; this round explicitly forbids combining signals",
+    "missing_data_rule": "score nulls are allowed and must be preserved for audit; no imputation or cross-signal fallback is allowed"
+  },
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260418_181408",
+    "execution_logic_version": "warehouse_execution_v3",
+    "selection_contract": "same calibrated 0.70 ranking liquidity guard, same TopK=10 width, and same v18 top-15 refresh hysteresis",
+    "entry_and_exit_logic": "unchanged from framework v1",
+    "portfolio_contract": "same v18 refreshed-portfolio implementation until any later family round explicitly changes it",
+    "benchmark_contract": "CSI_ALL_SHARE_TR primary + CSI_300_TR auxiliary",
+    "cost_contract": "inherit current fixed-test defaults",
+    "engineering_default_signal_date_chunk_size": 5
+  },
+  "evaluation_focus": [
+    "full_sample_corr_ic",
+    "avg_daily_ic",
+    "median_daily_ic",
+    "positive_daily_ic_share",
+    "decile_monotonicity",
+    "avg_label_top10",
+    "avg_label_rank11_20",
+    "avg_label_bottom10"
+  ],
+  "promotion_rule": {
+    "phase_gate": "Only atomic signals that show directionally coherent positive edge in signal-edge diagnostics may advance into a later composability-screening or family-construction round.",
+    "non_promotion_rule": "A signal that shows negative or near-zero broad ordering, inverted decile structure, or clearly weaker head labels than both rank11_20 and tail labels should be rejected rather than rescued by later extraction or overlay tweaks."
+  },
+  "disallowed_changes": [
+    "Do not mix multiple raw signals into one candidate inside this round.",
+    "Do not change the calibrated 0.70 ranking liquidity guard threshold or guard stage.",
+    "Do not change TopK width.",
+    "Do not change the frozen v18 refresh hysteresis rule.",
+    "Do not change execution semantics.",
+    "Do not change benchmark or cost contracts.",
+    "Do not add extraction, weight-penalty, turnover-suppression, stability-cap, overlay, or family-composition changes inside this round.",
+    "Do not import or depend on the neighboring qlib data adapter layer; this project must implement all candidate fields independently on its own data contracts.",
+    "Do not introduce PIT quality, value, or investment fields into this round."
+  ],
+  "notes": [
+    "This round starts after pausing the current price-volume family tuning line despite new round-5 keepers, because subsequent composability screens remained mixed and did not justify direct promotion.",
+    "The method now reopens atomic discovery with a more standardized candidate set inspired by Alpha158-style price-volume feature ideas and common price-volume research, while preserving this project's independent implementation boundary.",
+    "The objective is to discover cleaner, more reusable atomic signals before any later composability screen or family construction is reopened."
+  ]
+}

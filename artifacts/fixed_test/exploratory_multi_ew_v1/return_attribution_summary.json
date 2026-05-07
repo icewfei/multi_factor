@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_multi_ew_v1",
+  "run_id": "exploratory_multi_ew_v1",
+  "attempt_id": "attempt_20260507_122506",
+  "generated_at": "2026-05-07T12:27:20.908440+08:00",
+  "candidate_scheme_id": "multi_equal_weight_v1",
+  "research_round_id": "rr_exploratory_multi_signal_composite_20260506",
+  "benchmark_contribution_total": 2.6183351305800753,
+  "cash_drag_total": -2.1458343113742653,
+  "selection_alpha_total": 1.7535072587030802,
+  "low_liquidity_contribution_total": 0.33560507310076515
+}

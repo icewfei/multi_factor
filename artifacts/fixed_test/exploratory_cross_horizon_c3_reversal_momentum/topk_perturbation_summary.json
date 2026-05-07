@@ -1,0 +1,25 @@
+{
+  "fixed_test_run_id": "exploratory_cross_horizon_c3_reversal_momentum",
+  "run_id": "exploratory_cross_horizon_c3_reversal_momentum",
+  "attempt_id": "attempt_20260501_152947",
+  "generated_at": "2026-05-01T15:32:40.291371+08:00",
+  "candidate_scheme_id": "exploratory_cross_horizon_c3_reversal_momentum",
+  "research_round_id": "rr_exploratory_cross_horizon_reversal_momentum_20260501",
+  "benchmark_code": "CSI_ALL_SHARE_TR",
+  "benchmark_name": "中证全指全收益指数",
+  "statistics_definition": "annual_relative_return follows framework appendix B.2/B.2B using effective benchmark-overlap days.",
+  "perturbations": [
+    {
+      "topk": 8,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.33387239851189765,
+      "relative_ir": -1.9144426040498972
+    },
+    {
+      "topk": 12,
+      "effective_relative_days": 4132,
+      "annual_relative_return": -0.3120495108829885,
+      "relative_ir": -1.8679369809911166
+    }
+  ]
+}

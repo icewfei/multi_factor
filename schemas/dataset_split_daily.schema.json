@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/dataset_split_daily.schema.json",
+  "title": "Dataset Split Daily",
+  "type": "object",
+  "required": [
+    "split_version",
+    "instrument",
+    "signal_date",
+    "split_bucket",
+    "purge_gap_applied"
+  ],
+  "properties": {
+    "split_version": { "type": "string" },
+    "instrument": { "type": "string" },
+    "signal_date": { "type": "string" },
+    "split_bucket": { "type": "string" },
+    "purge_gap_applied": { "type": "boolean" },
+    "train_flag": { "type": "boolean" },
+    "validation_flag": { "type": "boolean" },
+    "test_flag": { "type": "boolean" },
+    "observation_flag": { "type": "boolean" },
+    "notes": { "type": ["string", "null"] }
+  }
+}

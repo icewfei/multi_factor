@@ -1,0 +1,12 @@
+{
+  "fixed_test_run_id": "exploratory_trend_bias_volume_gated_v1",
+  "run_id": "exploratory_trend_bias_volume_gated_v1",
+  "attempt_id": "attempt_20260501_145346",
+  "generated_at": "2026-05-01T14:56:28.658588+08:00",
+  "candidate_scheme_id": "exploratory_trend_bias_volume_gated_v1",
+  "research_round_id": "rr_exploratory_trend_bias_volume_confirmed_20260501",
+  "benchmark_contribution_total": 2.618335130580075,
+  "cash_drag_total": -0.648818512794012,
+  "selection_alpha_total": 2.2646281238197354,
+  "low_liquidity_contribution_total": 0.09667480604929062
+}

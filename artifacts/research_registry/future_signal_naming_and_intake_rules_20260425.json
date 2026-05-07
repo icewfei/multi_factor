@@ -1,0 +1,130 @@
+{
+  "as_of_date": "20260428",
+  "purpose": "operationalize atomic keeper deduplication into future naming and signal-intake governance",
+  "canonical_alias_map_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/canonical_signal_alias_map_20260425.json",
+  "core_rules": [
+    {
+      "rule_id": 1,
+      "title": "canonical_naming_structure",
+      "requirement": "new atomic signal names must follow domain_mechanism_window_raw"
+    },
+    {
+      "rule_id": 2,
+      "title": "mechanism_family_assignment",
+      "requirement": "every new signal must declare its canonical mechanism family and whether it is a new_mechanism, horizon_variant, direction_variant, or naming_alias"
+    },
+    {
+      "rule_id": 3,
+      "title": "mandatory_alias_check",
+      "requirement": "no new candidate may be preregistered before alias, direction-variant, and horizon-variant checks are explicitly answered"
+    },
+    {
+      "rule_id": 4,
+      "title": "canonical_name_precedence",
+      "requirement": "when a canonical label already exists, future work must use that canonical label instead of a near-equivalent alias"
+    },
+    {
+      "rule_id": 5,
+      "title": "single_signal_positive_is_not_direct_promotion",
+      "requirement": "signal_edge_positive is only an intake pass and does not justify direct family or overlay promotion"
+    },
+    {
+      "rule_id": 6,
+      "title": "historical_positive_can_be_retired",
+      "requirement": "a signal may remain historically positive while being removed from the active keeper pool if later family-level evidence turns against it"
+    },
+    {
+      "rule_id": 7,
+      "title": "prereg_must_include_dedup_note",
+      "requirement": "every future discovery prereg must include nearest canonical signal, relationship type, and why it deserves independent budget"
+    },
+    {
+      "rule_id": 8,
+      "title": "family_rounds_use_canonical_signals_only",
+      "requirement": "future family rounds may use canonical fields only and must not mix canonical signals with their aliases or inverse duplicates"
+    },
+    {
+      "rule_id": 9,
+      "title": "watchlist_is_not_auto_promotion",
+      "requirement": "watchlist keeper means retained for observation, not automatically promotable"
+    },
+    {
+      "rule_id": 10,
+      "title": "exploration_budget_prefers_orthogonal_mechanisms",
+      "requirement": "future atomic discovery should prioritize genuinely orthogonal mechanisms over more labels inside existing clusters"
+    },
+    {
+      "rule_id": 11,
+      "title": "composability_head_stability_hard_gate",
+      "requirement": "before family-promotion, screen_avg_top10_overlap_next_day must not be lower than reference_avg_top10_overlap_next_day by more than 0.10"
+    },
+    {
+      "rule_id": 12,
+      "title": "alpha158_paper_whitelist_only_source_policy",
+      "requirement": "for next round and onwards, single-signal discovery intake must run in alpha158_paper_whitelist_only mode and every candidate must provide source provenance from the approved whitelist categories"
+    }
+  ],
+  "canonical_name_precedence": [
+    {
+      "canonical_field": "volume_price_synchronicity_20d_raw",
+      "retired_alias": "price_volume_corr_20d_raw"
+    },
+    {
+      "canonical_field": "amount_shock_5_20_raw",
+      "retired_alias": "volume_momentum_5_20_raw"
+    },
+    {
+      "canonical_field": "turnover_acceleration_5_20_raw",
+      "retired_alias": "turnover_mean_reversion_gap_5_20_raw"
+    },
+    {
+      "canonical_field": "breakout_proximity_20d_raw",
+      "retired_alias": "breakout_distance_20d_raw"
+    },
+    {
+      "canonical_field": "close_location_value_20d_raw",
+      "retired_alias": "close_to_high_ratio_20d_raw"
+    },
+    {
+      "canonical_field": "upper_shadow_ratio_20d_raw",
+      "retired_alias": "upper_shadow_pressure_20d_raw"
+    }
+  ],
+  "active_watchlist": [
+    "volume_price_synchronicity_20d_raw"
+  ],
+  "registration_checklist": [
+    "canonical_name_check",
+    "family_assignment_check",
+    "alias_check",
+    "direction_variant_check",
+    "horizon_variant_check",
+    "new_mechanism_justification",
+    "source_whitelist_mode_check",
+    "source_provenance_check"
+  ],
+  "source_whitelist_policy": {
+    "enforcement_start_datetime": "2026-04-28T18:00:00+08:00",
+    "required_round_source_mode": "alpha158_paper_whitelist_only",
+    "allowed_source_categories": [
+      "alpha158_style",
+      "academic_paper",
+      "classic_factor_handbook"
+    ],
+    "required_source_provenance_fields": [
+      "source_category",
+      "source_id",
+      "source_title",
+      "source_locator",
+      "mechanism_mapping",
+      "independent_implementation_note"
+    ],
+    "source_whitelist_ref": "/Users/wy/MiscProject/multi_factor/artifacts/research_registry/alpha158_paper_source_whitelist_20260428.json"
+  },
+  "composability_promotion_gate": {
+    "metric": "screen_avg_top10_overlap_next_day",
+    "reference_metric": "reference_avg_top10_overlap_next_day",
+    "max_allowed_drop": 0.1,
+    "block_if_reference_minus_screen_gt": 0.1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "fixed_test_run_id": "exploratory_cohort10_c1_trendbias_only",
+  "run_id": "exploratory_cohort10_c1_trendbias_only",
+  "attempt_id": "attempt_20260501_212955",
+  "generated_at": "2026-05-01T21:32:49.246414+08:00",
+  "candidate_scheme_id": "exploratory_cohort10_c1_trendbias_only",
+  "research_round_id": "rr_exploratory_cohort10_feasibility_20260501",
+  "stress_open_bp": 20.0,
+  "stress_close_bp": 20.0,
+  "effective_relative_days": 4132,
+  "annual_relative_return": -0.08149668073818928,
+  "pass_cost_stress_relative_return_floor": false
+}
