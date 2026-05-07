@@ -60,27 +60,28 @@ def test_current_manifests_fail_because_baseline_candidate_is_still_placeholder(
 
     result = run_validator(repo_root, feature_set_path, model_config_path, candidate_path)
 
+    assert result.returncode == 0
+    assert "validation passed" in result.stdout
+
+
+def test_validation_fails_if_baseline_candidate_is_replaced_with_placeholder(
+    repo_root: Path, tmp_path: Path
+) -> None:
+    feature_set_path, model_config_path, candidate_path = write_temp_manifests(repo_root, tmp_path)
+    candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+    candidate["baseline_candidate_scheme_id"] = "<to_be_bound_before_training>"
+    write_json(candidate_path, candidate)
+
+    result = run_validator(repo_root, feature_set_path, model_config_path, candidate_path)
+
     assert result.returncode != 0
     assert "baseline_candidate_scheme_id" in result.stderr
     assert "<to_be_bound_before_training>" in result.stderr
 
 
-def test_validation_passes_after_binding_baseline_candidate(repo_root: Path, tmp_path: Path) -> None:
-    feature_set_path, model_config_path, candidate_path = write_temp_manifests(repo_root, tmp_path)
-    candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
-    candidate["baseline_candidate_scheme_id"] = "linear_baseline_control_v1"
-    write_json(candidate_path, candidate)
-
-    result = run_validator(repo_root, feature_set_path, model_config_path, candidate_path)
-
-    assert result.returncode == 0
-    assert "validation passed" in result.stdout
-
-
 def test_validation_fails_when_allowed_readouts_include_frozen_test(repo_root: Path, tmp_path: Path) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(repo_root, tmp_path)
     candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
-    candidate["baseline_candidate_scheme_id"] = "linear_baseline_control_v1"
     candidate["allowed_readouts"].append("frozen_test_summary")
     write_json(candidate_path, candidate)
 
@@ -94,11 +95,8 @@ def test_validation_fails_when_allowed_readouts_include_frozen_test(repo_root: P
 def test_validation_fails_when_feature_count_exceeds_budget(repo_root: Path, tmp_path: Path) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(repo_root, tmp_path)
     feature_set = json.loads(feature_set_path.read_text(encoding="utf-8"))
-    candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
-    candidate["baseline_candidate_scheme_id"] = "linear_baseline_control_v1"
     feature_set["feature_count"] = 21
     write_json(feature_set_path, feature_set)
-    write_json(candidate_path, candidate)
 
     result = run_validator(repo_root, feature_set_path, model_config_path, candidate_path)
 
@@ -111,12 +109,9 @@ def test_validation_fails_when_prohibited_field_appears_in_feature_list(
 ) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(repo_root, tmp_path)
     feature_set = json.loads(feature_set_path.read_text(encoding="utf-8"))
-    candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
-    candidate["baseline_candidate_scheme_id"] = "linear_baseline_control_v1"
     feature_set["feature_list"].append("actual_exit_date")
     feature_set["feature_count"] = len(feature_set["feature_list"])
     write_json(feature_set_path, feature_set)
-    write_json(candidate_path, candidate)
 
     result = run_validator(repo_root, feature_set_path, model_config_path, candidate_path)
 
