@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from functools import lru_cache
 from pathlib import Path
 
@@ -26,6 +27,12 @@ def schema_properties(relative_path: str) -> dict:
 
 def schema_required(relative_path: str) -> list[str]:
     return load_json(relative_path).get("required", [])
+
+
+def normalize_markdown_text(text: str) -> str:
+    text = text.replace("`", "")
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
 
 
 @pytest.fixture

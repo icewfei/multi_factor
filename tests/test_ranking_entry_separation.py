@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from conftest import read_text, schema_properties
+from conftest import normalize_markdown_text, read_text, schema_properties
 
 
 def test_ranking_and_entry_fields_exist_without_being_collapsed() -> None:
@@ -29,13 +29,15 @@ def test_contracts_keep_ranking_and_execution_fields_separate() -> None:
 
 
 def test_governance_docs_forbid_prefiltering_by_entry_tradeable() -> None:
-    framework_text = read_text("项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md")
-    dual_probe_text = read_text("项目总纲及计划/dual_probe_design.md")
+    framework_text = normalize_markdown_text(
+        read_text("项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md")
+    )
+    dual_probe_text = normalize_markdown_text(read_text("项目总纲及计划/dual_probe_design.md"))
 
-    assert "entry_tradeable 只能在 `TopK` 冻结后于执行层生效，不得用于排序前过滤" in framework_text
-    assert "明确禁止在排序前用 `entry_tradeable` 过滤宇宙" in framework_text
+    assert "entry_tradeable 只能在 TopK 冻结后于执行层生效，不得用于排序前过滤" in framework_text
+    assert "明确禁止在排序前用 entry_tradeable 过滤宇宙" in framework_text
     assert "entry_filled_D1 = execution_attempt_D1 & entry_tradeable" in framework_text
-    assert "D0 仅按 `ranking_eligible_D0 = signal_emittable` 排序" in framework_text
-    assert "从 `ranking_eligible_D0` 中冻结 `topk_frozen_D0`" in framework_text
-    assert "D1 开盘执行时才应用 `entry_tradeable`" in framework_text
+    assert "D0 仅按 ranking_eligible_D0 = signal_emittable 排序" in framework_text
+    assert "从 ranking_eligible_D0 中冻结 topk_frozen_D0" in framework_text
+    assert "D1 开盘执行时才应用 entry_tradeable" in framework_text
     assert "execution: override — force entry_filled_D1 = true" in dual_probe_text
