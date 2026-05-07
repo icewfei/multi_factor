@@ -5,6 +5,7 @@
 相关背景请同时参照：
 
 - [docs/nonlinear_challenger_v1_design.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_design.md)
+- [docs/nonlinear_challenger_v1_training_script_design.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_training_script_design.md)
 - [docs/current_stage.md](/Users/wy/MiscProject/multi_factor/docs/current_stage.md)
 - [docs/research_freeze_policy.md](/Users/wy/MiscProject/multi_factor/docs/research_freeze_policy.md)
 - [docs/audit_boundary.md](/Users/wy/MiscProject/multi_factor/docs/audit_boundary.md)

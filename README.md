@@ -65,9 +65,10 @@ next: awaiting new data modality or project scope change
 3. 然后看 [docs/phase1_signal_engineering_closure_report.md](/Users/wy/MiscProject/multi_factor/docs/phase1_signal_engineering_closure_report.md)，理解第一阶段信号工程为什么收口。
 4. 审计口径相关内容看 [docs/audit_boundary.md](/Users/wy/MiscProject/multi_factor/docs/audit_boundary.md) 与 [docs/research_freeze_policy.md](/Users/wy/MiscProject/multi_factor/docs/research_freeze_policy.md)。
 5. 若要理解冻结后的受控 ML challenger 设计，先看 [docs/nonlinear_challenger_v1_design.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_design.md) 与 [docs/nonlinear_challenger_v1_manifest_spec.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_manifest_spec.md)。
-6. 若要查看预注册模板骨架，再看 [configs/nonlinear_challenger_v1/README.md](/Users/wy/MiscProject/multi_factor/configs/nonlinear_challenger_v1/README.md)。
-7. 如果要运行当前审计测试，先看 [docs/test_running.md](/Users/wy/MiscProject/multi_factor/docs/test_running.md)。
-8. 需要原始治理与方法背景时，再回到 [项目总纲及计划](/Users/wy/MiscProject/multi_factor/项目总纲及计划) 与 [项目总纲](/Users/wy/MiscProject/multi_factor/项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md)。
+6. 若要理解未来训练脚本必须遵守的边界，再看 [docs/nonlinear_challenger_v1_training_script_design.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_training_script_design.md)。
+7. 若要查看预注册模板骨架，再看 [configs/nonlinear_challenger_v1/README.md](/Users/wy/MiscProject/multi_factor/configs/nonlinear_challenger_v1/README.md)。
+8. 如果要运行当前审计测试，先看 [docs/test_running.md](/Users/wy/MiscProject/multi_factor/docs/test_running.md)。
+9. 需要原始治理与方法背景时，再回到 [项目总纲及计划](/Users/wy/MiscProject/multi_factor/项目总纲及计划) 与 [项目总纲](/Users/wy/MiscProject/multi_factor/项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md)。
 
 ## 运行审计测试
 
