@@ -1,0 +1,17 @@
+{
+  "candidate_scheme_id": "<candidate_scheme_id>",
+  "research_round_id": "<research_round_id>",
+  "feature_set_id": "<feature_set_id>",
+  "model_config_id": "<model_config_id>",
+  "snapshot_id": "<snapshot_id>",
+  "run_id": "<run_id>",
+  "attempt_id": "<attempt_id>",
+  "candidate_tier": "<candidate_tier>",
+  "preregistered_at": "<preregistered_at>",
+  "preregistered_by": "<preregistered_by>",
+  "expected_outputs": [],
+  "allowed_readouts": [],
+  "promotion_criteria": [],
+  "failure_criteria": [],
+  "candidate_status": "preregistered"
+}

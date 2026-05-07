@@ -1,0 +1,23 @@
+{
+  "model_config_id": "<model_config_id>",
+  "model_family": "<Ridge|ElasticNet|LightGBM|XGBoost>",
+  "model_version": "<model_version>",
+  "random_seed": "<random_seed>",
+  "target_label": "<target_label>",
+  "objective": "<objective>",
+  "train_split": "<train_split>",
+  "validation_split": "<validation_split>",
+  "frozen_test_access": false,
+  "hyperparameters": {
+    "placeholder_param": "<to_be_filled>"
+  },
+  "max_depth": 3,
+  "num_leaves": "<num_leaves_or_not_applicable>",
+  "learning_rate": "<learning_rate_or_not_applicable>",
+  "n_estimators": "<n_estimators_or_not_applicable>",
+  "regularization": "<regularization_or_not_applicable>",
+  "early_stopping_policy": "<early_stopping_policy_or_none>",
+  "class_or_sample_weight_policy": "<class_or_sample_weight_policy>",
+  "missing_value_handling": "<missing_value_handling>",
+  "model_config_hash": "<model_config_hash>"
+}

@@ -1,0 +1,21 @@
+{
+  "feature_set_id": "<feature_set_id>",
+  "feature_set_version": "<feature_set_version>",
+  "created_at": "<created_at>",
+  "created_by": "<created_by>",
+  "snapshot_id": "<snapshot_id>",
+  "source_data_scope": "<existing_data_sources_only>",
+  "feature_count": 0,
+  "feature_list": [],
+  "feature_family": [],
+  "feature_description": "<to_be_filled>",
+  "d0_visibility_statement": "<all_features_must_be_visible_at_D0>",
+  "pit_check_required": true,
+  "leakage_risk_notes": "<to_be_filled>",
+  "missing_value_policy": "<to_be_filled>",
+  "winsorize_or_clip_policy": "<to_be_filled>",
+  "standardization_policy": "<to_be_filled>",
+  "allowed_training_split": "<train_validation_only>",
+  "prohibited_fields": [],
+  "feature_set_hash": "<feature_set_hash>"
+}
