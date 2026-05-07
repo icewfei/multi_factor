@@ -36,6 +36,10 @@ import yaml
 ROOT = Path("/Users/wy/MiscProject/multi_factor")
 CONTRACTS_DIR = ROOT / "contracts"
 ARTIFACTS_DIR = ROOT / "artifacts" / "run_state"
+HOLDING_PERIOD_OVERRIDE_BLOCKED_MESSAGE = (
+    "当前 v1 审计阶段禁止使用 --holding-period-days，因为它会破坏 "
+    "label/sample/execution panel 一致性。"
+)
 
 
 @dataclass(frozen=True)
@@ -68,6 +72,11 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def enforce_holding_period_days_guardrail(holding_period_days: int | None) -> None:
+    if holding_period_days is not None:
+        raise ValueError(HOLDING_PERIOD_OVERRIDE_BLOCKED_MESSAGE)
 
 
 def build_context(run_id: str, output_dir: Path | None, run_input_contract_path: Path | None) -> BuildContext:
@@ -189,7 +198,7 @@ def build_project_sample_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext
     return fetch_arrow_table(con, sql.format(select_exprs=",\n            ".join(select_exprs)), [ctx.snapshot_id])
 
 
-def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext, holding_period_days: int | None = None) -> pa.Table:
+def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext) -> pa.Table:
     e_signal_date = mapped_source_field(ctx, "common_keys", "signal_date")
     e_instrument = mapped_source_field(ctx, "common_keys", "instrument")
     e_entry_date = mapped_source_field(ctx, "execution_path_daily", "entry_date")
@@ -199,19 +208,7 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
     t_terminal_event_type = mapped_source_field(ctx, "terminal_event_daily", "terminal_event_type")
     t_terminal_event_date = mapped_source_field(ctx, "terminal_event_daily", "terminal_event_date")
 
-    if holding_period_days is not None:
-        # Override planned_exit_date with signal_date + holding_period_days
-        # Use calendar days approximation: 5 trading days ≈ 7 calendar days (D5 default)
-        # For D10: 10 trading days ≈ 14 calendar days
-        cal_days = max(holding_period_days, int(holding_period_days * 1.4))  # rough calendar day conversion
-        planned_exit_expr = (
-            f"CAST(strftime(CAST(substr(e.{e_signal_date}, 1, 4) || '-' || "
-            f"substr(e.{e_signal_date}, 5, 2) || '-' || "
-            f"substr(e.{e_signal_date}, 7, 2) AS DATE) + {cal_days}, "
-            f"'%Y%m%d') AS VARCHAR) AS planned_exit_date"
-        )
-    else:
-        planned_exit_expr = f"e.{e_planned_exit_date} AS planned_exit_date"
+    planned_exit_expr = f"e.{e_planned_exit_date} AS planned_exit_date"
 
     select_exprs = [
         mapped_select_expr(ctx, "common_keys", "snapshot_id", table_alias="e"),
@@ -407,13 +404,17 @@ def parse_args() -> argparse.Namespace:
         "--holding-period-days",
         type=int,
         default=None,
-        help="Optional holding period in trading days. When set, planned_exit_date is overridden to signal_date + holding_period_days (using calendar days approximation). Default: read from source field (usually D5).",
+        help=(
+            "Audit-stage guardrail parameter. Any explicit value is rejected because "
+            "holding-period overrides would break panel consistency."
+        ),
     )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    enforce_holding_period_days_guardrail(args.holding_period_days)
     ctx = build_context(
         args.run_id,
         Path(args.output_dir) if args.output_dir else None,
@@ -423,7 +424,7 @@ def main() -> None:
     with duckdb.connect(str(ctx.source_db_path), read_only=True) as con:
         label_panel = build_project_label_panel(con, ctx)
         sample_panel = build_project_sample_panel(con, ctx)
-        execution_panel = build_project_execution_panel(con, ctx, holding_period_days=args.holding_period_days)
+        execution_panel = build_project_execution_panel(con, ctx)
         audit = build_data_quality_audit(con, ctx, label_panel, sample_panel, execution_panel)
 
     write_parquet(label_panel, ctx.output_dir / "project_label_panel.parquet")

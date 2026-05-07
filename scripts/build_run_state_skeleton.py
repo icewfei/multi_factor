@@ -825,14 +825,21 @@ def main() -> None:
             """
         ).fetchone()
 
-        topk_count, execution_state_rows = con.execute(
+        topk_count = con.execute(
             """
             SELECT
-                SUM(CASE WHEN topk_frozen_D0 THEN 1 ELSE 0 END) AS topk_count,
-                COUNT(*) AS execution_state_rows
+                SUM(CASE WHEN topk_frozen_D0 THEN 1 ELSE 0 END) AS topk_count
             FROM ranking_state_daily_t
             """
-        ).fetchone()
+        ).fetchone()[0]
+
+        execution_state_rows = con.execute(
+            """
+            SELECT
+                COUNT(*) AS execution_state_rows
+            FROM execution_state_daily_t
+            """
+        ).fetchone()[0]
 
         entry_filled_count = con.execute(
             """
@@ -857,14 +864,20 @@ def main() -> None:
             """
         ).fetchone()[0]
 
+        ranking_rows_int = int(ranking_rows or 0)
+        execution_state_rows_int = int(execution_state_rows or 0)
+        execution_state_missing_rows = max(ranking_rows_int - execution_state_rows_int, 0)
+        execution_state_row_mismatch = ranking_rows_int != execution_state_rows_int
         topk_count = int(topk_count or 0)
         entry_filled_count = int(entry_filled_count or 0)
         unfilled_topk_count = topk_count - entry_filled_count
 
         summary_counts.update(
             {
-                "ranking_state_rows": int(ranking_rows or 0),
-                "execution_state_rows": int(execution_state_rows or 0),
+                "ranking_state_rows": ranking_rows_int,
+                "execution_state_rows": execution_state_rows_int,
+                "execution_state_row_mismatch": execution_state_row_mismatch,
+                "execution_state_missing_rows": execution_state_missing_rows,
                 "ranking_anomaly_rows": int(ranking_anomaly_rows or 0),
                 "rankable_rows": int(rankable_rows or 0),
                 "null_model_score_rows": int(null_score_rows or 0),
@@ -893,6 +906,14 @@ def main() -> None:
         if summary_counts["ranking_anomaly_rows"] > 0:
             warnings.append(
                 "ranking_eligible_D0 rows with missing or nonfinite model_score_D0 were excluded from TopK."
+            )
+        if execution_state_row_mismatch:
+            warnings.append(
+                "execution_state_daily row count does not match ranking_state_daily_t; "
+                "execution_state_daily join may have dropped rows."
+            )
+            fatal_blockers.append(
+                "execution_state_daily row count mismatch versus ranking_state_daily_t."
             )
         if liquidity_guard is not None and summary_counts.get("liquidity_guard_excluded_rows", 0) > 0:
             if guard_kind == "universe_eligibility_guard":

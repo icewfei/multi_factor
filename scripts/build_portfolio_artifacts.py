@@ -44,6 +44,10 @@ ROOT = Path("/Users/wy/MiscProject/multi_factor")
 ARTIFACTS_RUN_STATE_DIR = ROOT / "artifacts" / "run_state"
 CONTRACTS_DIR = ROOT / "contracts"
 RESEARCH_ROUNDS_DIR = ROOT / "artifacts" / "research_registry" / "research_rounds"
+UNRESOLVED_EXIT_BLOCKED_MESSAGE = (
+    "Found backtest_executable positions with actual_exit_date = NULL; "
+    "unresolved exit would cause holdings/portfolio path mismatch."
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -138,6 +142,36 @@ def atomic_csv_copy(con: duckdb.DuckDBPyConnection, query: str, output_path: Pat
         """
     )
     os.replace(temp_path, output_path)
+
+
+def ensure_no_unresolved_backtest_exits(con: duckdb.DuckDBPyConnection) -> None:
+    unresolved_rows = con.execute(
+        """
+        SELECT COUNT(*)
+        FROM pre_holdings_positions_t
+        WHERE backtest_executable
+          AND actual_exit_date IS NULL
+        """
+    ).fetchone()[0]
+    unresolved_rows_int = int(unresolved_rows or 0)
+    if unresolved_rows_int == 0:
+        return
+
+    sample_rows = con.execute(
+        """
+        SELECT signal_date, instrument
+        FROM pre_holdings_positions_t
+        WHERE backtest_executable
+          AND actual_exit_date IS NULL
+        ORDER BY signal_date, instrument
+        LIMIT 5
+        """
+    ).fetchall()
+    sample_positions = ", ".join(f"{signal_date}/{instrument}" for signal_date, instrument in sample_rows)
+    raise ValueError(
+        f"{UNRESOLVED_EXIT_BLOCKED_MESSAGE} "
+        f"unresolved_rows={unresolved_rows_int}; sample_positions=[{sample_positions}]"
+    )
 
 
 def load_preregistration(research_round_id: str | None) -> dict | None:
@@ -1116,6 +1150,7 @@ def main() -> None:
                 FROM read_csv_auto({sql_path(refresh_csv_path)}, HEADER=TRUE)
                 """
             )
+        ensure_no_unresolved_backtest_exits(con)
         weight_sanity = con.execute(
             """
             SELECT

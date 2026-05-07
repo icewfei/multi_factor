@@ -90,3 +90,11 @@ Oracle 结果不能直接支持的结论是：
 - 一个研究阶段已收口、证据仍可审计的项目
 - 其大量结果可作为探索性与治理性证据
 - 但严格 OOS 证据边界仍需要未来更干净的 frozen 隔离层来承接
+
+## v1 面板参数护栏
+
+当前 v1 审计阶段禁止使用 `--holding-period-days` 覆写。
+
+- 原因不是研究结论变化，而是该覆写只会改 `project_execution_panel.planned_exit_date`
+- 它不会同步重建 label/sample/execution 三张核心面板的同一语义
+- 因此当前阶段必须 fail fast，保持默认 D1/D5 执行口径不变
