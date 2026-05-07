@@ -24,3 +24,9 @@
 - `artifacts/research_registry/` 用于运行后登记和失败留痕
 
 若把两者混写，会破坏“先冻结、后运行、再登记”的治理顺序。
+
+当前目录也可以存放少量 `draft manifest` 草案，用于在训练实现前先审计自由度与边界。
+
+- `draft manifest` 仍属于预注册配置
+- `draft manifest` 不代表模型已经训练
+- `draft manifest` 不代表 challenger 已验证成功

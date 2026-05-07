@@ -1,0 +1,50 @@
+{
+  "feature_set_id": "nlc_v1_fset01_price_volume_interaction",
+  "feature_set_version": "draft_v1",
+  "created_at": "2026-05-07",
+  "created_by": "codex_manifest_draft",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "source_data_scope": "existing_daily_price_volume_and_state_features_only_no_new_data_sources",
+  "feature_count": 12,
+  "feature_list": [
+    "p98",
+    "reversal_5d",
+    "reversal_20d",
+    "cord30",
+    "corr30",
+    "vsumd60",
+    "overnight_return_1d",
+    "intraday_return_1d",
+    "volatility_20d",
+    "turnover_20d",
+    "amount_20d",
+    "market_index_return_20d"
+  ],
+  "feature_family": [
+    "price_reversal",
+    "price_volume_correlation",
+    "volume_strength",
+    "overnight_intraday",
+    "state_liquidity",
+    "market_regime_proxy"
+  ],
+  "feature_description": "Draft feature set for a controlled nonlinear challenger using only existing daily price-volume and state features with plausible interaction coverage and no new data sources.",
+  "d0_visibility_statement": "All listed features must be computable using information visible by D0 close and must not depend on D1 entry execution, D5 exit realization, or any post-signal execution outcome.",
+  "pit_check_required": true,
+  "leakage_risk_notes": "Do not include label columns, realized execution outcomes, frozen ranking outputs, or any field that becomes known only after D0 signal formation. Maintain PIT discipline under the trainval research snapshot.",
+  "missing_value_policy": "Missing values to be handled by predeclared training-time policy only; no post-validation feature-specific imputation changes allowed.",
+  "winsorize_or_clip_policy": "No additional feature-specific clipping decisions may be introduced after preregistration; any clipping must remain frozen once finalized.",
+  "standardization_policy": "Tree model draft assumes no mandatory global standardization; any preprocessing choice must remain fixed after manifest freeze.",
+  "allowed_training_split": "train_validation_only_bound_to_run_input_contract.research_trainval_20211231",
+  "prohibited_fields": [
+    "label_5d_next_open_close",
+    "label_5d_next_open_close_raw",
+    "actual_exit_date",
+    "actual_sell_price",
+    "execution_delayed_realized_return",
+    "topk_frozen_D0",
+    "entry_filled_D1",
+    "backtest_executable"
+  ],
+  "feature_set_hash": "<to_be_computed_after_freeze>"
+}
