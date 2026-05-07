@@ -34,6 +34,17 @@ python -m pip install -r requirements-dev.txt
 python -m pytest tests/
 ```
 
+如果只想单独检查当前 `Nonlinear Challenger v1` draft manifests 是否满足基础治理约束，也可以执行：
+
+```bash
+python scripts/validate_nonlinear_challenger_manifests.py \
+  --feature-set configs/nonlinear_challenger_v1/feature_sets/feature_set_nlc_v1_fset01.json \
+  --model-config configs/nonlinear_challenger_v1/model_configs/model_config_nlc_v1_lgbm_depth3_seed42.json \
+  --candidate configs/nonlinear_challenger_v1/candidates/candidate_nlc_v1_fset01_lgbm_depth3_seed42.json
+```
+
+当前这条命令预期会因为 `baseline_candidate_scheme_id` 仍是 placeholder 而失败。这不是 bug，而是说明 baseline 尚未正式绑定，因此当前仍不允许进入训练阶段。
+
 如果只想运行当前第一批制度红线测试，也可以指定单个文件或小集合。
 
 ## 当前可能出现的 xfail
