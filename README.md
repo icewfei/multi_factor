@@ -64,4 +64,21 @@ next: awaiting new data modality or project scope change
 2. 再看 [docs/repo_map.md](/Users/wy/MiscProject/multi_factor/docs/repo_map.md)，理解各目录职责与当前工程边界。
 3. 然后看 [docs/phase1_signal_engineering_closure_report.md](/Users/wy/MiscProject/multi_factor/docs/phase1_signal_engineering_closure_report.md)，理解第一阶段信号工程为什么收口。
 4. 审计口径相关内容看 [docs/audit_boundary.md](/Users/wy/MiscProject/multi_factor/docs/audit_boundary.md) 与 [docs/research_freeze_policy.md](/Users/wy/MiscProject/multi_factor/docs/research_freeze_policy.md)。
-5. 需要原始治理与方法背景时，再回到 [项目总纲及计划](/Users/wy/MiscProject/multi_factor/项目总纲及计划) 与 [项目总纲](/Users/wy/MiscProject/multi_factor/项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md)。
+5. 如果要运行当前审计测试，先看 [docs/test_running.md](/Users/wy/MiscProject/multi_factor/docs/test_running.md)。
+6. 需要原始治理与方法背景时，再回到 [项目总纲及计划](/Users/wy/MiscProject/multi_factor/项目总纲及计划) 与 [项目总纲](/Users/wy/MiscProject/multi_factor/项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md)。
+
+## 运行审计测试
+
+当前 `tests/` 主要是 contract-level audit tests，用于固定核心研究语义、字段边界与治理红线，不连接真实数据，也不是收益验证。
+
+安装依赖：
+
+```bash
+python -m pip install -r requirements-dev.txt
+```
+
+运行测试：
+
+```bash
+python -m pytest tests/
+```
