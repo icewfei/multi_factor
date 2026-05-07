@@ -45,6 +45,9 @@
     "results depend on low-liquidity names",
     "effect can only be maintained by repeatedly changing features or parameters"
   ],
+  "baseline_binding_required_before_training": true,
+  "baseline_candidate_scheme_id": "<to_be_bound_before_training>",
+  "baseline_comparison_policy": "must_compare_against_current_linear_or_exploratory_baseline_under_same_execution_and_cost_protocol",
   "candidate_status": "preregistered",
   "frozen_test_access": false
 }

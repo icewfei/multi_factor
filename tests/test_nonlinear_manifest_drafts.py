@@ -34,6 +34,8 @@ def test_feature_set_draft_respects_feature_budget_and_prohibited_fields(repo_ro
 
     assert payload["feature_count"] <= 20
     assert payload["feature_count"] == len(payload["feature_list"])
+    assert payload["source_column_mapping_required"] is True
+    assert "feature_column_existence_status" in payload
     assert REQUIRED_PROHIBITED_FIELDS.issubset(set(payload["prohibited_fields"]))
 
 
@@ -42,6 +44,8 @@ def test_model_config_draft_disables_frozen_test_and_caps_depth(repo_root: Path)
 
     assert payload["frozen_test_access"] is False
     assert payload["max_depth"] <= 3
+    assert payload["hyperparameter_tuning_allowed"] is False
+    assert payload["n_estimators_tuning_allowed"] is False
 
 
 def test_candidate_draft_is_preregistered_and_excludes_frozen_test_readouts(repo_root: Path) -> None:
@@ -49,4 +53,6 @@ def test_candidate_draft_is_preregistered_and_excludes_frozen_test_readouts(repo
 
     assert payload["candidate_status"] == "preregistered"
     assert payload["frozen_test_access"] is False
+    assert payload["baseline_binding_required_before_training"] is True
+    assert "baseline_candidate_scheme_id" in payload
     assert all("frozen_test" not in readout for readout in payload["allowed_readouts"])

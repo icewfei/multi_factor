@@ -29,6 +29,8 @@
     "market_regime_proxy"
   ],
   "feature_description": "Draft feature set for a controlled nonlinear challenger using only existing daily price-volume and state features with plausible interaction coverage and no new data sources.",
+  "source_column_mapping_required": true,
+  "feature_column_existence_status": "draft_names_require_source_column_mapping_before_training",
   "d0_visibility_statement": "All listed features must be computable using information visible by D0 close and must not depend on D1 entry execution, D5 exit realization, or any post-signal execution outcome.",
   "pit_check_required": true,
   "leakage_risk_notes": "Do not include label columns, realized execution outcomes, frozen ranking outputs, or any field that becomes known only after D0 signal formation. Maintain PIT discipline under the trainval research snapshot.",
