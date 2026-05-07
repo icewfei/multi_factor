@@ -7,6 +7,7 @@
 - [docs/current_stage.md](/Users/wy/MiscProject/multi_factor/docs/current_stage.md)
 - [docs/research_freeze_policy.md](/Users/wy/MiscProject/multi_factor/docs/research_freeze_policy.md)
 - [docs/audit_boundary.md](/Users/wy/MiscProject/multi_factor/docs/audit_boundary.md)
+- [docs/nonlinear_challenger_v1_manifest_spec.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_manifest_spec.md)
 - [项目状态总结 2026-05-07](/Users/wy/MiscProject/multi_factor/项目总纲及计划/project_status_20260507.md)
 
 ## 1. 立项目的
