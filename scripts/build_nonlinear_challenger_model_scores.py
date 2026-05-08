@@ -74,7 +74,9 @@ TRAINING_MANIFEST_FIELDS = [
 FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE = (
     "feature source mapping is not yet implemented / feature columns cannot be resolved."
 )
-DATA_LOADING_NOT_IMPLEMENTED_MESSAGE = "training data loading is not yet implemented."
+TRAINING_DATA_SOURCE_NOT_IMPLEMENTED_MESSAGE = (
+    "training data source is not yet implemented / cannot resolve confirmed5 training data."
+)
 
 
 class BuildError(Exception):
@@ -191,17 +193,44 @@ def resolve_feature_sources_or_fail(
         )
 
 
+def build_data_loading_audit(
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    candidate: dict[str, Any],
+    output_dir: Path,
+) -> dict[str, Any]:
+    _ = model_config
+    requested_features = feature_set.get("feature_list")
+    if not isinstance(requested_features, list):
+        requested_features = []
+
+    return {
+        "stage": "data_loading",
+        "status": "blocked_training_data_source_unimplemented",
+        "feature_set_id": feature_set.get("feature_set_id"),
+        "candidate_scheme_id": candidate.get("candidate_scheme_id"),
+        "snapshot_id": candidate.get("snapshot_id"),
+        "requested_feature_count": len(requested_features),
+        "requested_features": requested_features,
+        "source_gate_status": "passed",
+        "resolved_train_data_source": None,
+        "resolved_validation_data_source": None,
+        "output_dir": str(output_dir),
+    }
+
+
 def load_training_data_or_fail(
     feature_set: dict[str, Any],
     model_config: dict[str, Any],
     candidate: dict[str, Any],
     output_dir: Path,
 ) -> None:
-    _ = feature_set
-    _ = model_config
-    _ = candidate
-    _ = output_dir
-    raise BuildError(DATA_LOADING_NOT_IMPLEMENTED_MESSAGE)
+    audit = build_data_loading_audit(feature_set, model_config, candidate, output_dir)
+    raise BuildError(
+        TRAINING_DATA_SOURCE_NOT_IMPLEMENTED_MESSAGE
+        + " Data loading audit: "
+        + json.dumps(audit, sort_keys=True, ensure_ascii=True)
+    )
 
 
 def run_builder(

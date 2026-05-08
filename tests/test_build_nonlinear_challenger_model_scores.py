@@ -136,6 +136,61 @@ def test_builder_calls_manifest_validator_before_feature_resolution(monkeypatch:
     ]
 
 
+def test_builder_calls_data_loading_stage_after_feature_source_gate(monkeypatch: pytest.MonkeyPatch) -> None:
+    module = load_module(SCRIPT_PATH, "build_nonlinear_challenger_model_scores_module_gate_to_data_loading")
+    call_order: list[str] = []
+
+    def fake_load_and_validate_manifests(
+        feature_set_path: Path,
+        model_config_path: Path,
+        candidate_path: Path,
+    ) -> tuple[dict, dict, dict]:
+        _ = feature_set_path
+        _ = model_config_path
+        _ = candidate_path
+        call_order.append("load_validate")
+        return (
+            {"feature_set_id": "nlc_v1_fset01_confirmed5", "feature_list": ["reversal_5d"]},
+            {"model_config_id": "nlc_v1_lgbm_regressor_depth3_seed42"},
+            {"candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42"},
+        )
+
+    def fake_resolve_feature_sources_or_fail(feature_set: dict, model_config: dict, candidate: dict) -> None:
+        _ = feature_set
+        _ = model_config
+        _ = candidate
+        call_order.append("resolve")
+
+    def fake_load_training_data_or_fail(
+        feature_set: dict,
+        model_config: dict,
+        candidate: dict,
+        output_dir: Path,
+    ) -> None:
+        _ = feature_set
+        _ = model_config
+        _ = candidate
+        _ = output_dir
+        call_order.append("data_loading")
+        raise module.BuildError("stub data loading stop")
+
+    monkeypatch.setattr(module, "load_and_validate_manifests", fake_load_and_validate_manifests)
+    monkeypatch.setattr(module, "resolve_feature_sources_or_fail", fake_resolve_feature_sources_or_fail)
+    monkeypatch.setattr(module, "load_training_data_or_fail", fake_load_training_data_or_fail)
+
+    with pytest.raises(module.BuildError, match="stub data loading stop"):
+        module.run_builder(
+            feature_set_path=Path("feature.json"),
+            model_config_path=Path("model.json"),
+            candidate_path=Path("candidate.json"),
+            run_id="run_id",
+            attempt_id="attempt_id",
+            output_dir=Path("output"),
+        )
+
+    assert call_order == ["load_validate", "resolve", "data_loading"]
+
+
 def test_builder_fails_when_frozen_access_is_enabled(repo_root: Path, tmp_path: Path) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(tmp_path)
     model_config = json.loads(model_config_path.read_text(encoding="utf-8"))
@@ -183,9 +238,45 @@ def test_confirmed5_builder_passes_feature_source_gate_but_stops_at_data_loading
     result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
 
     assert result.returncode != 0
-    assert "training data loading is not yet implemented." in result.stderr
+    assert "training data source is not yet implemented / cannot resolve confirmed5 training data." in result.stderr
     assert "feature source mapping is not yet implemented" not in result.stderr
+    assert '"stage": "data_loading"' in result.stderr
+    assert '"status": "blocked_training_data_source_unimplemented"' in result.stderr
+    assert '"source_gate_status": "passed"' in result.stderr
+    assert '"feature_set_id": "nlc_v1_fset01_confirmed5"' in result.stderr
+    assert '"candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42"' in result.stderr
+    assert '"resolved_train_data_source": null' in result.stderr
+    assert '"resolved_validation_data_source": null' in result.stderr
     assert not output_dir.exists()
+    assert not (output_dir / "model_scores_D0.parquet").exists()
+    assert not (output_dir / "metrics.json").exists()
+    assert not (output_dir / "holdings.csv").exists()
+    assert not (output_dir / "validation_readout.json").exists()
+
+
+def test_build_data_loading_audit_marks_confirmed5_as_source_gate_passed() -> None:
+    module = load_module(SCRIPT_PATH, "build_nonlinear_challenger_model_scores_module_data_loading_audit")
+    feature_set = load_json(CONFIRMED5_FEATURE_SET_PATH)
+    model_config = load_json(MODEL_CONFIG_PATH)
+    candidate = load_json(CONFIRMED5_CANDIDATE_PATH)
+
+    audit = module.build_data_loading_audit(feature_set, model_config, candidate, Path("tmp_out"))
+
+    assert audit["stage"] == "data_loading"
+    assert audit["status"] == "blocked_training_data_source_unimplemented"
+    assert audit["source_gate_status"] == "passed"
+    assert audit["feature_set_id"] == "nlc_v1_fset01_confirmed5"
+    assert audit["candidate_scheme_id"] == "nlc_v1_confirmed5_lgbm_depth3_seed42"
+    assert audit["requested_feature_count"] == 5
+    assert audit["requested_features"] == [
+        "reversal_5d",
+        "cord30",
+        "corr30",
+        "vsumd60",
+        "volatility_20d",
+    ]
+    assert audit["resolved_train_data_source"] is None
+    assert audit["resolved_validation_data_source"] is None
 
 
 def test_builder_source_excludes_portfolio_metrics_and_readout_paths() -> None:
