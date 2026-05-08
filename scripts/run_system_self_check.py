@@ -64,6 +64,14 @@ def parse_args() -> argparse.Namespace:
         default=5,
         help="Number of shuffle trials for placebo tests.",
     )
+    parser.add_argument(
+        "--terminal-event-repair-audit",
+        default=None,
+        help=(
+            "Path to terminal_event_repair_audit JSON. "
+            "Defaults to <run_dir>/terminal_event_repair_audit.json."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -93,6 +101,92 @@ def require_path(path: Path) -> Path:
 
 def resolve_run_dir(run_id: str) -> Path:
     return require_path(ARTIFACTS_RUN_STATE_DIR / run_id)
+
+
+def inspect_terminal_event_repair_audit(audit_path: Path) -> dict[str, object]:
+    result: dict[str, object] = {
+        "audit_path": str(audit_path),
+        "present": False,
+        "status": "missing",
+        "pass_flag": False,
+        "missing_fields": [],
+        "still_hard_blocker_count": None,
+        "can_emit_terminal_priced_last_tradable_close_count": None,
+        "unclassifiable_excluded_count": None,
+        "hard_blocker_present_flag": None,
+        "requires_upstream_execution_path_implementation": False,
+        "portfolio_resolution_allowed": False,
+        "notes": ["terminal_event_repair_audit JSON missing."],
+    }
+    if not audit_path.exists():
+        return result
+
+    payload = load_json(audit_path)
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        result.update({
+            "present": True,
+            "status": "invalid",
+            "missing_fields": ["summary"],
+            "notes": ["terminal_event_repair_audit JSON is invalid: missing summary object."],
+        })
+        return result
+
+    required_fields = [
+        "still_hard_blocker_count",
+        "can_emit_terminal_priced_last_tradable_close_count",
+        "unclassifiable_excluded_count",
+    ]
+    missing_fields = [field for field in required_fields if field not in summary]
+    if missing_fields:
+        result.update({
+            "present": True,
+            "status": "invalid",
+            "missing_fields": missing_fields,
+            "notes": [
+                "terminal_event_repair_audit JSON is invalid: missing summary fields "
+                + ", ".join(missing_fields)
+                + "."
+            ],
+        })
+        return result
+
+    still_hard_blocker_count = int(summary["still_hard_blocker_count"])
+    can_emit_count = int(summary["can_emit_terminal_priced_last_tradable_close_count"])
+    unclassifiable_excluded_count = int(summary["unclassifiable_excluded_count"])
+
+    status = "ok"
+    pass_flag = still_hard_blocker_count == 0
+    notes = [
+        "This self-check does not produce prices, backfill actual_exit_date, or backfill actual_sell_price.",
+    ]
+    if still_hard_blocker_count > 0:
+        status = "terminal_event_repair_blocked"
+        notes.append(
+            "terminal_event_repair_audit confirms rows remain hard blockers and must not be auto-unblocked."
+        )
+    if can_emit_count > 0:
+        if still_hard_blocker_count == 0:
+            status = "terminal_event_repair_requires_upstream_execution_path_implementation"
+        notes.append(
+            "can_emit_terminal_priced_last_tradable_close_count > 0 is informational only; "
+            "upstream execution path implementation is still required before any unblock."
+        )
+
+    result.update({
+        "present": True,
+        "status": status,
+        "pass_flag": pass_flag,
+        "missing_fields": [],
+        "still_hard_blocker_count": still_hard_blocker_count,
+        "can_emit_terminal_priced_last_tradable_close_count": can_emit_count,
+        "unclassifiable_excluded_count": unclassifiable_excluded_count,
+        "hard_blocker_present_flag": still_hard_blocker_count > 0,
+        "requires_upstream_execution_path_implementation": can_emit_count > 0,
+        "portfolio_resolution_allowed": False,
+        "notes": notes,
+    })
+    return result
 
 
 def fmt(v: float | None, decimals: int = 6) -> str:
@@ -126,6 +220,7 @@ def main() -> None:
     label_panel = require_path(run_dir / "project_label_panel.parquet")
     sample_panel = require_path(run_dir / "project_sample_panel.parquet")
     execution_panel = require_path(run_dir / "project_execution_panel.parquet")
+    terminal_event_repair_audit_path = Path(args.terminal_event_repair_audit) if args.terminal_event_repair_audit else run_dir / "terminal_event_repair_audit.json"
 
     run_input = load_json(CONTRACTS_DIR / "run_input_contract.current.json")
     snapshot_id = run_input["snapshot_id"]
@@ -292,6 +387,43 @@ def main() -> None:
             check_pass(unresolved_pass, "No unresolved exit paths"),
             "",
         ])
+
+        # ---- 1f. Terminal event repair audit gate ----
+        terminal_event_repair_check = inspect_terminal_event_repair_audit(terminal_event_repair_audit_path)
+        terminal_event_repair_present = bool(terminal_event_repair_check["present"])
+        terminal_event_repair_pass = bool(terminal_event_repair_check["pass_flag"])
+        terminal_event_repair_status = str(terminal_event_repair_check["status"])
+        md_lines.append("### Terminal Event Repair Audit Gate")
+        md_lines.append("")
+        md_lines.append(f"- Audit path: `{terminal_event_repair_check['audit_path']}`")
+        if not terminal_event_repair_present:
+            md_lines.extend([
+                "- Audit status: `missing`",
+                f"{BOLD_FAIL} terminal_event_repair_audit missing",
+                "",
+            ])
+        else:
+            md_lines.extend([
+                f"- Audit status: `{terminal_event_repair_status}`",
+                f"- still_hard_blocker_count: `{terminal_event_repair_check['still_hard_blocker_count']}`",
+                f"- can_emit_terminal_priced_last_tradable_close_count: `{terminal_event_repair_check['can_emit_terminal_priced_last_tradable_close_count']}`",
+                f"- unclassifiable_excluded_count: `{terminal_event_repair_check['unclassifiable_excluded_count']}`",
+                f"- portfolio_resolution_allowed: `{terminal_event_repair_check['portfolio_resolution_allowed']}`",
+            ])
+            if terminal_event_repair_status == "invalid":
+                md_lines.append(
+                    f"{BOLD_FAIL} terminal_event_repair_audit invalid: missing "
+                    + ", ".join(terminal_event_repair_check["missing_fields"])
+                )
+            elif terminal_event_repair_status == "terminal_event_repair_blocked":
+                md_lines.append(f"{BOLD_FAIL} terminal_event_repair_blocked")
+            else:
+                md_lines.append(check_pass(terminal_event_repair_pass, "terminal_event_repair_audit has no hard blockers"))
+            if bool(terminal_event_repair_check["requires_upstream_execution_path_implementation"]):
+                md_lines.append(
+                    f"{BOLD_WARN} terminal_event_repair_audit found rows that may require upstream execution path implementation; this does not unblock portfolio handling."
+                )
+            md_lines.append("")
 
         # ---- 2. Label & execution semantics consistency ----
         md_lines.extend([
@@ -873,6 +1005,7 @@ def main() -> None:
             ("Data quality: train coverage >= 50%", coverage_pass),
             ("Data quality: no tradability degradation", degrad_pass),
             ("Data quality: no unresolved exit paths", unresolved_pass),
+            ("Data quality: terminal event repair audit present and clear of hard blockers", terminal_event_repair_pass),
             ("Label consistency: label-defined rate >= 80%", ld_pass),
             ("Label consistency: entry-tradeable rate >= 70%", et_pass),
             ("Label consistency: actually-exited rate >= 95%", ae_pass),
@@ -932,6 +1065,7 @@ def main() -> None:
                 "terminal_event_rows": terminal_rows,
                 "unresolved_exit_rows": unresolved_rows,
                 "unresolved_exit_flag": unresolved_pass,
+                "terminal_event_repair_audit": terminal_event_repair_check,
             },
             "label_consistency": {
                 "label_defined_rate": ld_rate,
