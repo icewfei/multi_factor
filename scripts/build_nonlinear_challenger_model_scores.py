@@ -74,6 +74,7 @@ TRAINING_MANIFEST_FIELDS = [
 FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE = (
     "feature source mapping is not yet implemented / feature columns cannot be resolved."
 )
+DATA_LOADING_NOT_IMPLEMENTED_MESSAGE = "training data loading is not yet implemented."
 
 
 class BuildError(Exception):
@@ -118,6 +119,17 @@ def load_and_validate_manifests(
     return feature_set, model_config, candidate
 
 
+def resolve_source_audit_path(feature_set: dict[str, Any]) -> Path:
+    source_audit_value = feature_set.get("source_audit_file")
+    if not source_audit_value:
+        return SOURCE_AUDIT_PATH
+
+    source_audit_path = Path(str(source_audit_value))
+    if source_audit_path.is_absolute():
+        return source_audit_path
+    return ROOT / source_audit_path
+
+
 def resolve_feature_sources_or_fail(
     feature_set: dict[str, Any],
     model_config: dict[str, Any],
@@ -126,9 +138,11 @@ def resolve_feature_sources_or_fail(
     _ = model_config
     _ = candidate
 
-    mapping_required = feature_set.get("source_column_mapping_required")
-    existence_status = str(feature_set.get("feature_column_existence_status", ""))
-    audit_path = SOURCE_AUDIT_PATH
+    requested_features = feature_set.get("feature_list")
+    if not isinstance(requested_features, list):
+        raise BuildError("feature_set.feature_list must be a list before source gating can proceed.")
+
+    audit_path = resolve_source_audit_path(feature_set)
     audit_suffix = f" See source audit: {audit_path}"
 
     try:
@@ -138,24 +152,56 @@ def resolve_feature_sources_or_fail(
     except json.JSONDecodeError as exc:
         raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix) from exc
 
-    summary = source_audit.get("summary", {})
-    ready_for_training_count = summary.get("ready_for_training_count")
-    total_features = summary.get("total_features")
-    if ready_for_training_count != total_features:
+    audit_features = source_audit.get("features")
+    if not isinstance(audit_features, list):
         raise BuildError(
             FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE
-            + f" Source audit reports ready_for_training_count={ready_for_training_count}, "
-            f"total_features={total_features}."
             + audit_suffix
         )
 
-    if mapping_required is True:
-        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix)
+    feature_ready_flags: dict[str, bool] = {}
+    for feature in audit_features:
+        feature_name = feature.get("feature_name")
+        if not isinstance(feature_name, str):
+            continue
+        feature_ready_flags[feature_name] = feature.get("ready_for_training") is True
 
-    if "require_source_column_mapping_before_training" in existence_status:
-        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix)
+    missing_from_audit = sorted(
+        feature_name for feature_name in requested_features if feature_name not in feature_ready_flags
+    )
+    if missing_from_audit:
+        raise BuildError(
+            FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE
+            + " Requested features are missing from the source audit: "
+            + ", ".join(missing_from_audit)
+            + "."
+            + audit_suffix
+        )
 
-    raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix)
+    not_ready_features = sorted(
+        feature_name for feature_name in requested_features if feature_ready_flags[feature_name] is not True
+    )
+    if not_ready_features:
+        raise BuildError(
+            FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE
+            + " Requested features are not ready_for_training=true: "
+            + ", ".join(not_ready_features)
+            + "."
+            + audit_suffix
+        )
+
+
+def load_training_data_or_fail(
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    candidate: dict[str, Any],
+    output_dir: Path,
+) -> None:
+    _ = feature_set
+    _ = model_config
+    _ = candidate
+    _ = output_dir
+    raise BuildError(DATA_LOADING_NOT_IMPLEMENTED_MESSAGE)
 
 
 def run_builder(
@@ -168,7 +214,6 @@ def run_builder(
 ) -> int:
     _ = run_id
     _ = attempt_id
-    _ = output_dir
 
     feature_set, model_config, candidate = load_and_validate_manifests(
         feature_set_path,
@@ -176,6 +221,7 @@ def run_builder(
         candidate_path,
     )
     resolve_feature_sources_or_fail(feature_set, model_config, candidate)
+    load_training_data_or_fail(feature_set, model_config, candidate, output_dir)
     return 0
 
 

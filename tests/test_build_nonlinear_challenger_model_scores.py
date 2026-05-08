@@ -11,8 +11,14 @@ from conftest import load_json, load_module, read_text
 
 
 FEATURE_SET_PATH = "configs/nonlinear_challenger_v1/feature_sets/feature_set_nlc_v1_fset01.json"
+CONFIRMED5_FEATURE_SET_PATH = (
+    "configs/nonlinear_challenger_v1/feature_sets/feature_set_nlc_v1_fset01_confirmed5.json"
+)
 MODEL_CONFIG_PATH = "configs/nonlinear_challenger_v1/model_configs/model_config_nlc_v1_lgbm_depth3_seed42.json"
 CANDIDATE_PATH = "configs/nonlinear_challenger_v1/candidates/candidate_nlc_v1_fset01_lgbm_depth3_seed42.json"
+CONFIRMED5_CANDIDATE_PATH = (
+    "configs/nonlinear_challenger_v1/candidates/candidate_nlc_v1_confirmed5_lgbm_depth3_seed42.json"
+)
 SCRIPT_PATH = "scripts/build_nonlinear_challenger_model_scores.py"
 
 
@@ -20,14 +26,18 @@ def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
 
-def write_temp_manifests(tmp_path: Path) -> tuple[Path, Path, Path]:
+def write_temp_manifests(
+    tmp_path: Path,
+    feature_set_source: str = FEATURE_SET_PATH,
+    candidate_source: str = CANDIDATE_PATH,
+) -> tuple[Path, Path, Path]:
     feature_set_path = tmp_path / "feature_set.json"
     model_config_path = tmp_path / "model_config.json"
     candidate_path = tmp_path / "candidate.json"
 
-    write_json(feature_set_path, load_json(FEATURE_SET_PATH))
+    write_json(feature_set_path, load_json(feature_set_source))
     write_json(model_config_path, load_json(MODEL_CONFIG_PATH))
-    write_json(candidate_path, load_json(CANDIDATE_PATH))
+    write_json(candidate_path, load_json(candidate_source))
 
     return feature_set_path, model_config_path, candidate_path
 
@@ -157,6 +167,25 @@ def test_builder_fails_fast_when_feature_source_mapping_is_not_ready(repo_root: 
 
     assert result.returncode != 0
     assert "feature source mapping is not yet implemented / feature columns cannot be resolved." in result.stderr
+    assert "Requested features are not ready_for_training=true" in result.stderr
+
+
+def test_confirmed5_builder_passes_feature_source_gate_but_stops_at_data_loading(
+    repo_root: Path, tmp_path: Path
+) -> None:
+    feature_set_path, model_config_path, candidate_path = write_temp_manifests(
+        tmp_path,
+        feature_set_source=CONFIRMED5_FEATURE_SET_PATH,
+        candidate_source=CONFIRMED5_CANDIDATE_PATH,
+    )
+    output_dir = tmp_path / "out"
+
+    result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
+
+    assert result.returncode != 0
+    assert "training data loading is not yet implemented." in result.stderr
+    assert "feature source mapping is not yet implemented" not in result.stderr
+    assert not output_dir.exists()
 
 
 def test_builder_source_excludes_portfolio_metrics_and_readout_paths() -> None:
