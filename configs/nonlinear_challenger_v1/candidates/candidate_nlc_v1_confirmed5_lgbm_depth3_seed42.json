@@ -1,0 +1,54 @@
+{
+  "candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42",
+  "research_round_id": "rr_nonlinear_challenger_v1_confirmed5",
+  "feature_set_id": "nlc_v1_fset01_confirmed5",
+  "model_config_id": "nlc_v1_lgbm_regressor_depth3_seed42",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_id": "<to_be_assigned_after_training_authorization>",
+  "attempt_id": "<to_be_assigned_after_training_authorization>",
+  "candidate_tier": "nonlinear_challenger",
+  "preregistered_at": "2026-05-08",
+  "preregistered_by": "codex_manifest_confirmed5",
+  "expected_outputs": [
+    "train_rankic_summary",
+    "validation_rankic_summary",
+    "validation_portfolio_summary",
+    "validation_cost_stress_summary",
+    "validation_topk_sensitivity_summary",
+    "validation_yearly_breakdown_summary"
+  ],
+  "allowed_readouts": [
+    "train_rankic_summary",
+    "validation_rankic_summary",
+    "validation_portfolio_summary",
+    "validation_cost_stress_summary",
+    "validation_topk_sensitivity_summary",
+    "validation_yearly_breakdown_summary"
+  ],
+  "promotion_criteria": [
+    "validation relative annualized return exceeds the linear baseline",
+    "cost stress result remains better than the baseline",
+    "TopK=8/10/12 remains stable rather than collapsing",
+    "year-by-year performance is not driven mainly by one or two years",
+    "average cash weight is not improved mainly by holding more cash",
+    "turnover does not become materially uncontrolled",
+    "RankIC and RankICIR do not materially deteriorate",
+    "results are not mainly explained by single-industry, microcap, or low-liquidity concentration"
+  ],
+  "failure_criteria": [
+    "validation does not improve versus the baseline",
+    "cost stress fails after transaction cost pressure",
+    "apparent improvement is mainly caused by higher turnover",
+    "apparent improvement is mainly caused by high cash weight or low invested exposure",
+    "TopK sensitivity collapses under small perturbations",
+    "results are concentrated in only a small number of years",
+    "results depend on low-liquidity names",
+    "effect can only be maintained by repeatedly changing features or parameters"
+  ],
+  "baseline_binding_required_before_training": true,
+  "baseline_candidate_scheme_id": "multi_equal_weight_v1",
+  "baseline_binding_status": "bound_for_manifest_validation_only",
+  "baseline_comparison_policy": "must_compare_against_current_linear_or_exploratory_baseline_under_same_execution_and_cost_protocol",
+  "candidate_status": "preregistered",
+  "frozen_test_access": false
+}

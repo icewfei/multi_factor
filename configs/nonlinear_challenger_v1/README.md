@@ -30,3 +30,8 @@
 - `draft manifest` 仍属于预注册配置
 - `draft manifest` 不代表模型已经训练
 - `draft manifest` 不代表 challenger 已验证成功
+
+当前还可以包含基于 source audit 收敛后的受限候选，例如 `confirmed5` 子集。
+
+- `confirmed5` 只允许引用已在 source audit 中确认 `ready_for_training=true` 的既有项目特征
+- `confirmed5` 仍然只是预注册配置，不代表训练、验证或回测已经执行
