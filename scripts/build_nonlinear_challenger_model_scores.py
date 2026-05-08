@@ -75,7 +75,8 @@ FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE = (
     "feature source mapping is not yet implemented / feature columns cannot be resolved."
 )
 TRAINING_DATA_SOURCE_NOT_IMPLEMENTED_MESSAGE = (
-    "training data source is not yet implemented / cannot resolve confirmed5 training data."
+    "training data loading is not yet wired for confirmed5 builder. "
+    "See configs/nonlinear_challenger_v1/feature_sets/confirmed5_data_source_audit.json."
 )
 
 

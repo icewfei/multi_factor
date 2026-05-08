@@ -238,7 +238,10 @@ def test_confirmed5_builder_passes_feature_source_gate_but_stops_at_data_loading
     result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
 
     assert result.returncode != 0
-    assert "training data source is not yet implemented / cannot resolve confirmed5 training data." in result.stderr
+    assert (
+        "training data loading is not yet wired for confirmed5 builder. "
+        "See configs/nonlinear_challenger_v1/feature_sets/confirmed5_data_source_audit.json."
+    ) in result.stderr
     assert "feature source mapping is not yet implemented" not in result.stderr
     assert '"stage": "data_loading"' in result.stderr
     assert '"status": "blocked_training_data_source_unimplemented"' in result.stderr

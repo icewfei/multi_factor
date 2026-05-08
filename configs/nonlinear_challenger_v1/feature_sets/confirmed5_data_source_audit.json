@@ -1,0 +1,78 @@
+{
+  "feature_set_id": "nlc_v1_fset01_confirmed5",
+  "candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_input_contract": "contracts/run_input_contract.research_trainval_20211231.json",
+  "data_source_status": "resolved",
+  "train_data_source": {
+    "sample_panel_file": "artifacts/run_state/<trainval_panels_run>/project_sample_panel.parquet",
+    "source_db_file": "/Users/wy/MiscProject/tushare_data/parquet_duckdb/data/snapshots/warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb",
+    "source_view": "serving.vw_bars_daily",
+    "join_key": [
+      "instrument",
+      "signal_date"
+    ],
+    "split_mask_fields": [
+      "train_mask_v1",
+      "eval_mask_v1"
+    ],
+    "resolution_basis": "contracts/source_table_mapping.yaml + contracts/run_input_contract.research_trainval_20211231.json + builder/view definitions in scripts/"
+  },
+  "validation_data_source": {
+    "sample_panel_file": "artifacts/run_state/<trainval_panels_run>/project_sample_panel.parquet",
+    "source_db_file": "/Users/wy/MiscProject/tushare_data/parquet_duckdb/data/snapshots/warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb",
+    "source_view": "serving.vw_bars_daily",
+    "join_key": [
+      "instrument",
+      "signal_date"
+    ],
+    "split_mask_fields": [
+      "train_mask_v1",
+      "eval_mask_v1"
+    ],
+    "resolution_basis": "train/validation share the same project sample panel and shared snapshot; split selection happens via project_sample_panel mask fields."
+  },
+  "features": [
+    {
+      "feature_name": "reversal_5d",
+      "source_column": "reversal_5d_raw",
+      "source_script": "scripts/build_baseline_model_scores.py",
+      "source_table_or_file": "warehouse.duckdb::serving.vw_bars_daily -> DuckDB temp view bar_features -> joined with project_sample_panel.parquet",
+      "ready_for_data_loading": true,
+      "blocking_reason": ""
+    },
+    {
+      "feature_name": "cord30",
+      "source_column": "alpha158_cord30_raw",
+      "source_script": "scripts/alpha158_canonical_common.py",
+      "source_table_or_file": "warehouse.duckdb::serving.vw_bars_daily -> DuckDB temp view bar_features/feature_frame via build_feature_views() -> joined with project_sample_panel.parquet",
+      "ready_for_data_loading": true,
+      "blocking_reason": ""
+    },
+    {
+      "feature_name": "corr30",
+      "source_column": "alpha158_corr30_raw",
+      "source_script": "scripts/alpha158_canonical_common.py",
+      "source_table_or_file": "warehouse.duckdb::serving.vw_bars_daily -> DuckDB temp view bar_features/feature_frame via build_feature_views() -> joined with project_sample_panel.parquet",
+      "ready_for_data_loading": true,
+      "blocking_reason": ""
+    },
+    {
+      "feature_name": "vsumd60",
+      "source_column": "alpha158_vsumd60_raw",
+      "source_script": "scripts/alpha158_canonical_common.py",
+      "source_table_or_file": "warehouse.duckdb::serving.vw_bars_daily -> DuckDB temp view bar_features/feature_frame via build_feature_views() -> joined with project_sample_panel.parquet",
+      "ready_for_data_loading": true,
+      "blocking_reason": ""
+    },
+    {
+      "feature_name": "volatility_20d",
+      "source_column": "volatility_20d_raw",
+      "source_script": "scripts/build_baseline_model_scores.py",
+      "source_table_or_file": "warehouse.duckdb::serving.vw_bars_daily -> DuckDB temp view bar_features -> joined with project_sample_panel.parquet",
+      "ready_for_data_loading": true,
+      "blocking_reason": ""
+    }
+  ],
+  "blocking_reason": "All five confirmed5 features have explicit source columns and load paths. The remaining blocker is builder-side implementation to materialize the joined training/validation frame, not source discovery."
+}
