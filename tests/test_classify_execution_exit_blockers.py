@@ -12,7 +12,41 @@ from conftest import REPO_ROOT, load_json
 
 SCRIPT_PATH = "scripts/classify_execution_exit_blockers.py"
 POLICY_PATH = "contracts/terminal_exit_policy.v1.json"
-DIAGNOSIS_PATH = "/private/tmp/confirmed5_execution_path_unresolved_exit_diagnosis.json"
+
+
+def _make_terminal_event_unpriced_row(i: int) -> dict:
+    return {
+        "instrument": f"TEP{i:03d}.SZ",
+        "signal_date": "20210101",
+        "entry_date": "20210104",
+        "planned_exit_date": "20210111",
+        "execution_path_status": "terminal_event_unpriced",
+        "terminal_event_flag": True,
+        "terminal_event_type": "delist",
+        "terminal_event_date": "20210108",
+        "terminal_exit_pricing_method": "no_terminal_pricing_source",
+        "terminal_event_source": {
+            "last_tradable_date": "20210107",
+            "contract_degraded_flag": True,
+            "contract_degraded_reason": "source contract degraded",
+            "cash_settlement_flag": False,
+        },
+    }
+
+
+def _make_exit_unresolved_row(i: int) -> dict:
+    return {
+        "instrument": f"EUR{i:03d}.SZ",
+        "signal_date": "20210101",
+        "entry_date": "20210104",
+        "planned_exit_date": "20210111",
+        "execution_path_status": "exit_unresolved",
+        "terminal_event_flag": False,
+        "terminal_event_type": None,
+        "terminal_event_date": None,
+        "terminal_exit_pricing_method": None,
+        "terminal_event_source": {},
+    }
 
 
 @pytest.fixture
@@ -21,18 +55,25 @@ def policy() -> dict:
 
 
 @pytest.fixture
-def diagnose_20_rows() -> dict:
-    return json.loads(Path(DIAGNOSIS_PATH).read_text(encoding="utf-8"))
+def diagnosis_path(tmp_path: Path) -> str:
+    rows = [_make_terminal_event_unpriced_row(i) for i in range(10)]
+    rows += [_make_exit_unresolved_row(i) for i in range(10)]
+    path = tmp_path / "diagnosis.json"
+    path.write_text(
+        json.dumps({"rows": rows}, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+    return str(path)
 
 
 @pytest.fixture
-def classification_output(tmp_path: Path) -> dict:
+def classification_output(tmp_path: Path, diagnosis_path: str) -> dict:
     output_path = tmp_path / "classification.json"
     result = subprocess.run(
         [
             sys.executable,
             str(REPO_ROOT / SCRIPT_PATH),
-            "--diagnosis-json", DIAGNOSIS_PATH,
+            "--diagnosis-json", diagnosis_path,
             "--policy-contract", str(REPO_ROOT / POLICY_PATH),
             "--output", str(output_path),
         ],

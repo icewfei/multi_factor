@@ -5,22 +5,174 @@ import subprocess
 import sys
 from pathlib import Path
 
+import duckdb
 import pytest
 
-from conftest import REPO_ROOT, load_json
+from conftest import REPO_ROOT
 
 SCRIPT_PATH = "scripts/audit_terminal_last_tradable_close.py"
-DIAGNOSIS_PATH = "/private/tmp/confirmed5_execution_path_unresolved_exit_diagnosis.json"
+
+
+def _make_audit_diagnosis_row(
+    instrument: str,
+    signal_date: str,
+    terminal_event_date: str,
+    declared_ltd: str,
+    degraded: bool = True,
+) -> dict:
+    return {
+        "instrument": instrument,
+        "signal_date": signal_date,
+        "entry_date": "20210104",
+        "planned_exit_date": "20210111",
+        "execution_path_status": "terminal_event_unpriced",
+        "terminal_event_flag": True,
+        "terminal_event_type": "delist",
+        "terminal_event_date": terminal_event_date,
+        "terminal_exit_pricing_method": "no_terminal_pricing_source",
+        "terminal_event_source": {
+            "last_tradable_date": declared_ltd,
+            "contract_degraded_flag": degraded,
+            "contract_degraded_reason": "source contract degraded",
+        },
+    }
 
 
 @pytest.fixture
-def audit_output(tmp_path: Path) -> dict:
+def source_db_path(tmp_path: Path) -> Path:
+    """Create a minimal DuckDB with serving.vw_bars_daily, vw_tradability_daily, vw_terminal_event_daily."""
+    db_path = tmp_path / "duckdb" / "warehouse.duckdb"
+    db_path.parent.mkdir(parents=True)
+    con = duckdb.connect(str(db_path))
+    try:
+        con.execute("CREATE SCHEMA serving")
+
+        con.execute("""
+            CREATE TABLE serving.vw_bars_daily (
+                ts_code VARCHAR, trade_date VARCHAR, close DOUBLE, adj_close DOUBLE,
+                adj_factor DOUBLE, vol DOUBLE, amount DOUBLE
+            )
+        """)
+        con.execute("""
+            CREATE TABLE serving.vw_tradability_daily (
+                ts_code VARCHAR, trade_date VARCHAR,
+                is_suspended_t BOOLEAN, no_trade_t BOOLEAN, is_listed_t BOOLEAN
+            )
+        """)
+        con.execute("""
+            CREATE TABLE serving.vw_terminal_event_daily (
+                ts_code VARCHAR, event_date VARCHAR, contract_degraded_reason VARCHAR
+            )
+        """)
+
+        # 4 degraded-source instruments: close data exists on declared LTD 20210107
+        for i in range(4):
+            inst = f"DEG{i:03d}.SZ"
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_bars_daily VALUES
+                ('{inst}', '20210107', 10.5, 11.0, 1.05, 100000.0, 1050000.0)
+                """
+            )
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_tradability_daily VALUES
+                ('{inst}', '20210107', FALSE, FALSE, TRUE)
+                """
+            )
+
+        # 6 suspended-date instruments: no close on declared LTD 20210108,
+        # but close exists on actual last trade date 20210107
+        for i in range(6):
+            inst = f"SUS{i:03d}.SZ"
+            # actual last trade date has bars data
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_bars_daily VALUES
+                ('{inst}', '20210107', 10.0, 10.5, 1.05, 50000.0, 500000.0)
+                """
+            )
+            # declared LTD is suspended
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_tradability_daily VALUES
+                ('{inst}', '20210108', TRUE, FALSE, TRUE)
+                """
+            )
+            # actual last trade date is tradable
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_tradability_daily VALUES
+                ('{inst}', '20210107', FALSE, FALSE, TRUE)
+                """
+            )
+    finally:
+        con.close()
+    return db_path
+
+
+@pytest.fixture
+def run_input_contract_path(tmp_path: Path) -> Path:
+    """Create a run_input_contract pointing to the test DuckDB snapshot root."""
+    path = tmp_path / "run_input_contract.json"
+    path.write_text(
+        json.dumps(
+            {"source_root": {"snapshot_path": str(tmp_path)}},
+            indent=2,
+            ensure_ascii=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+@pytest.fixture
+def diagnosis_path(tmp_path: Path) -> str:
+    """Create a minimal diagnosis JSON with 10 terminal_event_unpriced rows:
+    4 degraded source with auditable bars on declared LTD,
+    6 suspended declared LTD with actual last trade date earlier."""
+    rows = []
+    for i in range(4):
+        rows.append(
+            _make_audit_diagnosis_row(
+                instrument=f"DEG{i:03d}.SZ",
+                signal_date=f"2021010{i+1}",
+                terminal_event_date="20210110",
+                declared_ltd="20210107",
+            )
+        )
+    for i in range(6):
+        rows.append(
+            _make_audit_diagnosis_row(
+                instrument=f"SUS{i:03d}.SZ",
+                signal_date=f"2021011{i+1}",
+                terminal_event_date="20210110",
+                declared_ltd="20210108",
+            )
+        )
+    path = tmp_path / "diagnosis.json"
+    path.write_text(
+        json.dumps({"rows": rows}, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+    return str(path)
+
+
+@pytest.fixture
+def audit_output(
+    tmp_path: Path,
+    diagnosis_path: str,
+    run_input_contract_path: Path,
+    source_db_path: Path,
+) -> dict:
     output_path = tmp_path / "audit.json"
     result = subprocess.run(
         [
             sys.executable,
             str(REPO_ROOT / SCRIPT_PATH),
-            "--diagnosis-json", DIAGNOSIS_PATH,
+            "--diagnosis-json", diagnosis_path,
+            "--run-input-contract", str(run_input_contract_path),
             "--output", str(output_path),
         ],
         cwd=REPO_ROOT,

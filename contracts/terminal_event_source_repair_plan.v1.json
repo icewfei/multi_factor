@@ -1,0 +1,105 @@
+{
+  "contract_version": "terminal_event_source_repair_plan_v1",
+  "generated_at": "2026-05-08T12:00:00+08:00",
+  "scope": "Defines the source repair plan for terminal_event rows whose terminal pricing is blocked by source degradation or declared-vs-actual last_tradable_date mismatch. This contract codifies repair requirements, required flags, and prohibitions. It does not implement any repair logic, produce prices, or unblock rows.",
+  "references": {
+    "terminal_exit_policy": "contracts/terminal_exit_policy.v1.json",
+    "execution_exit_blocker_resolution": "contracts/execution_exit_blocker_resolution.v1.json",
+    "run_input_contract": "contracts/run_input_contract.current.json",
+    "terminal_last_tradable_close_audit": "audit of 10 terminal_event_unpriced rows: 4 degraded source with auditable bars, 6 declared last_tradable_date suspended with actual earlier tradable close"
+  },
+  "repair_cases": {
+    "degraded_terminal_source_with_auditable_bars": {
+      "description": "bars_daily close, adj_factor, and volume exist and are auditable for the last tradable date, but the terminal_event_daily shared source carries a contract_degraded flag per run_input_contract. The terminal event (e.g. delist) is recorded but the shared source is not trusted for direct pricing. The row remains a hard blocker until source repair is completed.",
+      "row_count": 4,
+      "still_hard_blocker": true,
+      "audit_finding": "4 rows have auditable bars_daily close/adj_factor/volume but terminal_event source is contract_degraded",
+      "repair_requirements": {
+        "source_credibility_upgrade_condition": "terminal_event source must be upgraded from contract_degraded to auditable by either (a) cross-validating terminal_event_daily fields against bars_daily and tradability_daily for the same instrument-date pairs, or (b) sourcing a non-degraded terminal_event record from an alternative auditable source. The upgrade decision must be recorded with a verifiable audit trail.",
+        "bars_daily_as_pricing_input_condition": "bars_daily close and adj_factor may serve as pricing input for last_tradable_close only when (a) the trading date is confirmed as the last tradable date by tradability_daily, (b) close > 0 and adj_factor > 0 are verified, (c) volume > 0 confirms actual trading activity on that date, and (d) the terminal_event_source_degraded_flag is explicitly recorded and retained.",
+        "must_retain_terminal_event_source_degraded_flag": true,
+        "entry_to_terminal_priced_last_tradable_close": "Only after source repair is completed and the repair audit is verified may the row enter the terminal_priced_last_tradable_close path. The repair must produce a repaired_terminal_event_daily or terminal_event_repair_audit record before any pricing is attempted."
+      },
+      "required_flags": ["terminal_event_source_degraded_flag"],
+      "prohibited_actions": [
+        "Unblock the row without completing source repair audit",
+        "Price the row using bars_daily before source credibility is upgraded",
+        "Drop the terminal_event_source_degraded_flag before repair is verified",
+        "Enter terminal_priced_last_tradable_close without repaired terminal event source"
+      ]
+    },
+    "declared_last_tradable_date_suspended": {
+      "description": "The terminal_event declared last_tradable_date falls on a suspension/non-trading day. The actual last trading day with confirmed close/adj_factor/volume precedes the declared date. The declared last_tradable_date is the suspension date; the actual last tradable date must be inferred from tradability/bars data. The row remains a hard blocker until the date discrepancy is resolved and recorded.",
+      "row_count": 6,
+      "still_hard_blocker": true,
+      "audit_finding": "6 rows have declared last_tradable_date equal to suspension date, actual last trading day is earlier with auditable prices",
+      "repair_requirements": {
+        "infer_actual_last_tradable_date_from_tradability_or_bars": "actual_last_tradable_date must be inferred by scanning backward from the declared last_tradable_date through tradability_daily and bars_daily to find the most recent trading day with (a) tradability_daily confirms the date is tradable, (b) bars_daily close > 0 and adj_factor > 0, and (c) bars_daily volume > 0. The inferred date must be the latest date satisfying all three conditions and must precede or equal the declared last_tradable_date.",
+        "actual_last_tradable_date_must_have_close_adj_factor_volume": true,
+        "must_record_declared_vs_actual_last_tradable_date_difference": true,
+        "declared_vs_actual_diff_required_fields": [
+          "declared_last_tradable_date",
+          "actual_last_tradable_date",
+          "date_diff_trading_days",
+          "reason_for_diff"
+        ],
+        "must_set_terminal_exit_approximation_or_source_repair_flag": true,
+        "entry_to_terminal_priced_last_tradable_close": "Only after (a) actual_last_tradable_date is inferred and verified, (b) the declared-vs-actual date difference is recorded with all required fields, and (c) terminal_exit_approximation_flag or source_repair_flag is set, may the row enter the terminal_priced_last_tradable_close path using the actual last tradable date close/adj_factor."
+      },
+      "required_flags": ["terminal_exit_approximation_flag", "source_repair_flag"],
+      "prohibited_actions": [
+        "Use declared last_tradable_date as actual last_tradable_date without verification",
+        "Price the row without confirming actual last tradable date has close/adj_factor/volume",
+        "Skip recording declared-vs-actual last_tradable_date difference",
+        "Enter terminal_priced_last_tradable_close without terminal_exit_approximation_flag or source_repair_flag"
+      ]
+    }
+  },
+  "global_prohibitions": {
+    "portfolio_repair_allowed": false,
+    "portfolio_must_not_repair_terminal_event_source": "The portfolio layer must never repair, infer, or supplement terminal_event source fields. All source repair must occur upstream in the execution path or a dedicated repair audit step.",
+    "build_project_panels_price_invention_allowed": false,
+    "build_project_panels_must_not_invent_prices": "build_project_panels.py must not invent, approximate, or backfill terminal exit prices. Its role is passthrough or standardization only.",
+    "zero_recovery_allowed_in_repair_plan": false,
+    "zero_recovery_prohibition_detail": "zero_recovery is not admitted as a repair-plan outcome. Rows that cannot be repaired through source repair must remain hard_blocker=true and must not silently fall to zero_recovery.",
+    "silent_zero_recovery_allowed": false,
+    "planned_exit_date_substitution_allowed": false,
+    "trainer_or_model_scores_layer_terminal_event_handling_allowed": false
+  },
+  "recommended_implementation_order": [
+    {
+      "step": 1,
+      "action": "Implement source repair audit (no price output)",
+      "description": "Build the repair audit logic that (a) cross-validates terminal_event_daily against bars_daily and tradability_daily for degraded source rows, and (b) infers actual_last_tradable_date for suspended-date rows. The audit outputs a terminal_event_repair_audit record with all required flags and date differences, but does NOT produce actual_exit_date or actual_sell_price.",
+      "rationale": "Repair audit must precede pricing to ensure all source credibility decisions and date corrections are verified before any price is computed."
+    },
+    {
+      "step": 2,
+      "action": "Implement repaired_terminal_event_daily or terminal_event_repair_audit output",
+      "description": "Produce a repaired_terminal_event_daily view or terminal_event_repair_audit table that carries the corrected last_tradable_date, required flags (terminal_event_source_degraded_flag, terminal_exit_approximation_flag, source_repair_flag), and the declared-vs-actual date difference record.",
+      "rationale": "The repaired output is the single source of truth for downstream pricing. It separates repair concerns from pricing concerns."
+    },
+    {
+      "step": 3,
+      "action": "Wire execution path upstream to optionally produce terminal_priced_last_tradable_close from repaired source",
+      "description": "Allow the upstream execution path to consume the repaired_terminal_event_daily or terminal_event_repair_audit output and, if the repair flags permit, apply the last_tradable_close pricing layer to produce terminal_priced_last_tradable_close with actual_exit_date, actual_sell_price, and execution_delayed_realized_return.",
+      "rationale": "Pricing is a separate decision from repair. The execution path decides whether a repaired row qualifies for last_tradable_close pricing."
+    },
+    {
+      "step": 4,
+      "action": "Restore portfolio dry-run after all resolvable blockers are cleared",
+      "description": "Re-enable portfolio dry-run only when zero rows with actual_exit_date=NULL remain in the backtest_executable subset. Portfolio must still fail-fast on any residual hard blockers.",
+      "rationale": "Portfolio dry-run is the final verification that all exit paths are fully resolved. It must only be restored after repair and pricing are complete."
+    }
+  ],
+  "notes": [
+    "This contract defines repair requirements only. It does not implement repair logic, produce prices, or unblock rows.",
+    "Both repair cases default to still_hard_blocker=true. They can only transition to terminal_priced_last_tradable_close after repair audit is completed and verified.",
+    "zero_recovery is not an admissible outcome of this repair plan. Rows that cannot be repaired remain hard_blocker=true.",
+    "planned_exit_date must never substitute for actual_exit_date under any circumstance.",
+    "Portfolio layer must never perform source repair. All repair work must occur upstream.",
+    "build_project_panels.py must not invent or approximate prices for terminal exits.",
+    "The trainer/model_scores layer must not handle terminal event resolution.",
+    "This repair plan is a prerequisite for terminal_priced_last_tradable_close, not a replacement for it."
+  ]
+}
