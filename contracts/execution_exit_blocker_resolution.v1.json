@@ -1,0 +1,136 @@
+{
+  "contract_version": "execution_exit_blocker_resolution_v1",
+  "generated_at": "2026-05-08T11:00:00+08:00",
+  "scope": "Defines the resolution matrix for each execution exit blocker type. Specifies resolution paths, required upstream fields, auto-unblock rules, prohibited behaviors, and recommended implementation order. This contract codifies what must happen before any blocker can be lifted — it does not implement any resolution logic.",
+  "references": {
+    "terminal_exit_policy": "contracts/terminal_exit_policy.v1.json",
+    "diagnosis": "/private/tmp/confirmed5_execution_path_unresolved_exit_diagnosis.json",
+    "classification": "/private/tmp/execution_exit_blocker_classification.json"
+  },
+  "blocker_types": {
+    "terminal_event_unpriced": {
+      "description": "A terminal event (e.g. delist) is recorded but no pricing layer in the terminal_exit_pricing_hierarchy has been applied. actual_exit_date and actual_sell_price remain NULL.",
+      "current_count": 10,
+      "default_hard_blocker": true,
+      "resolution_path": {
+        "primary": "terminal_pricing_policy",
+        "description": "Apply the terminal_exit_pricing_hierarchy (cash_settlement -> last_tradable_close -> zero_recovery) in the upstream execution path to resolve pricing for each terminal event.",
+        "required_upstream_fields": [
+          "terminal_event_type",
+          "terminal_event_date",
+          "terminal_exit_pricing_method"
+        ],
+        "required_pricing_fields_per_layer": {
+          "cash_settlement": ["cash_settlement_amount", "auditable_field_source"],
+          "last_tradable_close": ["last_tradable_close_or_adjusted_return", "auditable_field_source"],
+          "zero_recovery": ["terminal_exit_conservative_flag", "zero_recovery_policy_decision"]
+        },
+        "resolution_criteria": "Row transitions from terminal_event_unpriced to one of the terminal_priced_* states when actual_exit_date, actual_sell_price, and execution_delayed_realized_return are all populated from an auditable pricing layer.",
+        "auto_unblock_allowed": false,
+        "auto_unblock_condition": "Only when upstream execution path formally outputs a terminal_priced_* state with complete required portfolio fields.",
+        "fallback_if_unresolvable": "Remain hard_blocker=true. Must not be silently dropped or filtered."
+      },
+      "portfolio_resolution_allowed": false,
+      "prohibited_workarounds": [
+        "Treat planned_exit_date as actual_exit_date",
+        "Silently apply zero_recovery without policy decision",
+        "Filter rows and continue portfolio construction",
+        "Price at portfolio layer"
+      ]
+    },
+    "exit_unresolved": {
+      "description": "No exit signal and no terminal event is recorded. The exit path is entirely unresolved. actual_exit_date is NULL.",
+      "current_count": 10,
+      "default_hard_blocker": true,
+      "resolution_path": {
+        "primary": "execution_path_completion",
+        "description": "Complete the execution path by determining whether the exit is a normal D5 close, a delayed sell, or a missing terminal event record. If the exit is truly unresolvable (no tradable path, no terminal event), it remains a hard blocker.",
+        "required_upstream_fields": [
+          "actual_exit_date",
+          "actual_sell_price",
+          "execution_delayed_realized_return",
+          "execution_path_status"
+        ],
+        "resolution_criteria": "Row transitions from exit_unresolved to a resolved state when actual_exit_date, actual_sell_price, and execution_delayed_realized_return are all populated from the upstream execution path. This may require calendar/tradability source investigation if the exit path was never computed.",
+        "auto_unblock_allowed": false,
+        "auto_unblock_condition": "Only when upstream execution path formally outputs complete actual exit fields with a valid execution_path_status.",
+        "fallback_if_unresolvable": "Remain hard_blocker=true. Must not be silently dropped or filtered."
+      },
+      "portfolio_resolution_allowed": false,
+      "prohibited_workarounds": [
+        "Treat planned_exit_date as actual_exit_date",
+        "Assume normal D5 exit without evidence",
+        "Filter rows and continue portfolio construction",
+        "Price at portfolio layer"
+      ]
+    },
+    "calendar_insufficient": {
+      "description": "Calendar data is insufficient to determine the exit date or to verify tradability windows.",
+      "current_count": 0,
+      "default_hard_blocker": true,
+      "resolution_path": {
+        "primary": "calendar_or_tradability_source_repair",
+        "description": "Repair or extend the trading calendar and tradability source coverage so that exit timing and tradability can be determined for all affected instruments and dates.",
+        "required_upstream_fields": [
+          "trading_calendar_coverage",
+          "tradability_source_coverage"
+        ],
+        "resolution_criteria": "Row transitions from calendar_insufficient when trading calendar and tradability data are sufficient to determine exit date and verify tradability for the affected instrument-date pairs.",
+        "auto_unblock_allowed": false,
+        "auto_unblock_condition": "Only when upstream calendar/tradability source is repaired and the execution path recomputes exit timing.",
+        "fallback_if_unresolvable": "Remain hard_blocker=true. Must not be silently dropped or filtered."
+      },
+      "portfolio_resolution_allowed": false,
+      "prohibited_workarounds": [
+        "Assume calendar coverage without verification",
+        "Skip tradability check for exit date",
+        "Filter rows and continue portfolio construction"
+      ]
+    }
+  },
+  "global_prohibitions": {
+    "portfolio_workaround": false,
+    "planned_exit_date_substitution_allowed": false,
+    "filter_unresolved_and_continue": false,
+    "silent_zero_recovery_allowed": false,
+    "trainer_or_model_scores_layer_execution_blocker_handling": false
+  },
+  "required_portfolio_fields_before_unblock": [
+    "actual_exit_date",
+    "actual_sell_price",
+    "execution_delayed_realized_return"
+  ],
+  "recommended_implementation_order": [
+    {
+      "step": 1,
+      "action": "Implement last_tradable_close auditability check for terminal_event_unpriced rows",
+      "rationale": "All 10 terminal_event_unpriced rows have last_tradable_date available but the terminal_event source is contract_degraded. Verifying that auditable close prices exist for those last-tradable dates is the lowest-risk path to reducing the blocker count.",
+      "expected_effect": "If auditable close prices are confirmed, these 10 rows can transition to terminal_priced_last_tradable_close."
+    },
+    {
+      "step": 2,
+      "action": "Decide whether zero_recovery is enabled as a formal policy",
+      "rationale": "If last_tradable_close audit fails for any row, zero_recovery is the only remaining pricing layer. This must be an explicit policy decision with terminal_exit_conservative_flag=true, not a default fallback.",
+      "expected_effect": "Rows that fail last_tradable_close audit could be priced at zero_recovery, producing conservative but complete portfolio entries."
+    },
+    {
+      "step": 3,
+      "action": "Investigate exit_unresolved rows for calendar/source coverage gaps",
+      "rationale": "The 10 exit_unresolved rows may stem from calendar gaps, tradability source gaps, or genuinely missing exit signals. Diagnosis should distinguish these cases before any resolution is attempted.",
+      "expected_effect": "Identifies whether exit_unresolved rows are fixable via source repair or are permanently unresolvable."
+    },
+    {
+      "step": 4,
+      "action": "Restore portfolio dry-run after all resolvable blockers are cleared",
+      "rationale": "Portfolio dry-run must fail-fast on any remaining hard blockers. It should only be re-enabled when zero rows with actual_exit_date=NULL exist in the backtest_executable subset.",
+      "expected_effect": "Clean portfolio dry-run with all exit paths fully resolved."
+    }
+  ],
+  "notes": [
+    "This contract defines resolution requirements only. It does not implement any resolution logic, pricing, or filtering.",
+    "All three blocker types default to hard_blocker=true. They can only be unblocked by upstream resolution producing complete actual_exit_date, actual_sell_price, and execution_delayed_realized_return.",
+    "Portfolio layer must never resolve, filter, or work around any blocker type.",
+    "planned_exit_date substitution is prohibited under all circumstances.",
+    "silent zero_recovery (zero_recovery applied without terminal_exit_conservative_flag=true and formal policy decision) is prohibited."
+  ]
+}
