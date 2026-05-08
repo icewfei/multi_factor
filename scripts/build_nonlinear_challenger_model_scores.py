@@ -51,9 +51,15 @@ CONFIRMED5_REQUIRED_SAMPLE_COLUMNS = {
     "signal_date",
     "ranking_eligible_D0",
 }
-CONFIRMED5_SPLIT_FIELD = "split"
-CONFIRMED5_TRAIN_SPLIT_VALUES = ("train",)
-CONFIRMED5_VALIDATION_SPLIT_VALUES = ("validation", "eval")
+CONFIRMED5_REQUIRED_SPLIT_COLUMNS = {
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "split_bucket",
+    "train_flag",
+    "validation_flag",
+    "test_flag",
+}
 CONFIRMED5_REQUIRED_SOURCE_COLUMNS = {
     "snapshot_id",
     "ts_code",
@@ -131,6 +137,7 @@ CONFIRMED5_REQUIRED_FEATURE_COLUMNS_MISSING_MESSAGE = "confirmed5 required featu
 CONFIRMED5_SPLIT_FIELD_NOT_AVAILABLE_MESSAGE = (
     "train validation split field is not available in confirmed5 data loading source"
 )
+CONFIRMED5_REQUIRED_SPLIT_COLUMNS_MISSING_MESSAGE = "confirmed5 required split columns missing"
 
 
 class BuildError(Exception):
@@ -277,10 +284,11 @@ def build_data_loading_audit(
         "output_dir": str(output_dir),
     }
     if load_plan is not None:
+        audit_payload["resolved_dataset_split_source"] = str(load_plan["dataset_split_path"])
         audit_payload["source_db_path"] = str(load_plan["source_db_path"])
         audit_payload["source_view"] = load_plan["source_view"]
         audit_payload["feature_columns"] = load_plan["feature_columns"]
-        audit_payload["split_mask_fields"] = load_plan["split_mask_fields"]
+        audit_payload["split_fields"] = load_plan["split_fields"]
     if train_rows is not None:
         audit_payload["train_rows"] = train_rows
     if validation_rows is not None:
@@ -383,6 +391,10 @@ def build_confirmed5_data_loading_plan_or_fail(
         str(validation_source.get("sample_panel_file", "")),
         "NLC_CONFIRMED5_VALIDATION_SAMPLE_PANEL_PATH",
     )
+    dataset_split_path = resolve_runtime_input_path(
+        str(train_source.get("dataset_split_file", "")),
+        "NLC_CONFIRMED5_DATASET_SPLIT_PATH",
+    )
     source_db_path = resolve_runtime_input_path(
         str(train_source.get("source_db_file", "")),
         "NLC_CONFIRMED5_SOURCE_DB_PATH",
@@ -391,7 +403,7 @@ def build_confirmed5_data_loading_plan_or_fail(
 
     missing_paths = [
         path
-        for path in (train_sample_panel_path, validation_sample_panel_path, source_db_path)
+        for path in (train_sample_panel_path, validation_sample_panel_path, dataset_split_path, source_db_path)
         if not path.exists()
     ]
     if missing_paths:
@@ -403,11 +415,12 @@ def build_confirmed5_data_loading_plan_or_fail(
     return {
         "train_sample_panel_path": train_sample_panel_path,
         "validation_sample_panel_path": validation_sample_panel_path,
+        "dataset_split_path": dataset_split_path,
         "source_db_path": source_db_path,
         "source_view": source_view,
         "snapshot_id": candidate.get("snapshot_id"),
         "join_key": train_source.get("join_key", ["instrument", "signal_date"]),
-        "split_mask_fields": train_source.get("split_mask_fields", ["train_mask_v1", "eval_mask_v1"]),
+        "split_fields": ["split_bucket", "train_flag", "validation_flag", "test_flag"],
         "feature_columns": [CONFIRMED5_FEATURE_COLUMN_MAP[name] for name in CONFIRMED5_REQUIRED_FEATURES],
     }
 
@@ -430,9 +443,13 @@ def ensure_required_columns_or_fail(
         )
 
 
-def ensure_confirmed5_split_field_or_fail(available_columns: set[str]) -> None:
-    if CONFIRMED5_SPLIT_FIELD not in available_columns:
-        raise BuildError(CONFIRMED5_SPLIT_FIELD_NOT_AVAILABLE_MESSAGE)
+def ensure_confirmed5_split_columns_or_fail(available_columns: set[str]) -> None:
+    missing_columns = sorted(CONFIRMED5_REQUIRED_SPLIT_COLUMNS - available_columns)
+    if missing_columns:
+        raise BuildError(
+            f"{CONFIRMED5_REQUIRED_SPLIT_COLUMNS_MISSING_MESSAGE}: "
+            + ", ".join(missing_columns)
+        )
 
 
 def build_confirmed5_feature_frame(
@@ -449,7 +466,14 @@ def build_confirmed5_feature_frame(
         )
         sample_columns = describe_columns(con, "project_sample_panel")
         ensure_required_columns_or_fail(sample_columns, CONFIRMED5_REQUIRED_SAMPLE_COLUMNS, "project_sample_panel")
-        ensure_confirmed5_split_field_or_fail(sample_columns)
+        con.execute(
+            f"""
+            CREATE OR REPLACE VIEW dataset_split_daily AS
+            SELECT * FROM read_parquet('{load_plan["dataset_split_path"].as_posix()}')
+            """
+        )
+        split_columns = describe_columns(con, "dataset_split_daily")
+        ensure_confirmed5_split_columns_or_fail(split_columns)
 
         source_relation = f"warehouse_db.{load_plan['source_view']}"
         source_columns = describe_columns(con, source_relation)
@@ -572,13 +596,20 @@ def build_confirmed5_feature_frame(
                 p.instrument,
                 p.signal_date,
                 p.ranking_eligible_D0,
-                p.split,
+                s.split_bucket,
+                s.train_flag,
+                s.validation_flag,
+                s.test_flag,
                 b.reversal_5d_raw,
                 b.alpha158_cord30_raw,
                 b.alpha158_corr30_raw,
                 b.alpha158_vsumd60_raw,
                 b.volatility_20d_raw
             FROM project_sample_panel p
+            LEFT JOIN dataset_split_daily s
+              ON p.snapshot_id = s.snapshot_id
+             AND p.instrument = s.instrument
+             AND p.signal_date = s.signal_date
             LEFT JOIN bar_features b
               ON p.instrument = b.instrument
              AND p.signal_date = b.signal_date
@@ -592,12 +623,12 @@ def build_confirmed5_feature_frame(
         )
 
         train_rows, validation_rows = con.execute(
-            f"""
+            """
             SELECT
                 SUM(
                     CASE
                         WHEN ranking_eligible_D0
-                         AND LOWER(split) IN ({", ".join(repr(value) for value in CONFIRMED5_TRAIN_SPLIT_VALUES)})
+                         AND train_flag
                         THEN 1
                         ELSE 0
                     END
@@ -605,7 +636,7 @@ def build_confirmed5_feature_frame(
                 SUM(
                     CASE
                         WHEN ranking_eligible_D0
-                         AND LOWER(split) IN ({", ".join(repr(value) for value in CONFIRMED5_VALIDATION_SPLIT_VALUES)})
+                         AND validation_flag
                         THEN 1
                         ELSE 0
                     END

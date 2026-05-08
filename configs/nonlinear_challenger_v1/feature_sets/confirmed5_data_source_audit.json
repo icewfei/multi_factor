@@ -6,6 +6,7 @@
   "data_source_status": "resolved",
   "train_data_source": {
     "sample_panel_file": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/project_sample_panel.parquet",
+    "dataset_split_file": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/dataset_split_daily.parquet",
     "source_db_file": "/Users/wy/MiscProject/tushare_data/parquet_duckdb/data/snapshots/warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb",
     "source_view": "serving.vw_bars_daily",
     "join_key": [
@@ -20,6 +21,7 @@
   },
   "validation_data_source": {
     "sample_panel_file": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/project_sample_panel.parquet",
+    "dataset_split_file": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/dataset_split_daily.parquet",
     "source_db_file": "/Users/wy/MiscProject/tushare_data/parquet_duckdb/data/snapshots/warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb",
     "source_view": "serving.vw_bars_daily",
     "join_key": [

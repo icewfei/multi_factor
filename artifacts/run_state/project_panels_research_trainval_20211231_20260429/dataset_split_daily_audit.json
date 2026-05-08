@@ -1,0 +1,14 @@
+{
+  "status": "built_dataset_split_daily",
+  "split_config_id": "dataset_split_research_trainval_20211231",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "split_policy": "fixed_calendar_date_split_v1",
+  "sample_panel_path": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/project_sample_panel.parquet",
+  "output_path": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/dataset_split_daily.parquet",
+  "total_rows": 11198074,
+  "split_bucket_counts": {
+    "outside_config_range": 3024889,
+    "train": 5414284,
+    "validation": 2758901
+  }
+}

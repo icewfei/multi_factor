@@ -84,6 +84,7 @@ def write_temp_data_source_audit(
     ready_overrides: dict[str, bool] | None = None,
     sample_panel_path: Path | None = None,
     validation_sample_panel_path: Path | None = None,
+    dataset_split_path: Path | None = None,
     source_db_path: Path | None = None,
 ) -> Path:
     payload = json.loads(json.dumps(load_json(CONFIRMED5_DATA_SOURCE_AUDIT_PATH)))
@@ -99,6 +100,9 @@ def write_temp_data_source_audit(
         payload["train_data_source"]["sample_panel_file"] = str(sample_panel_path)
     if validation_sample_panel_path is not None:
         payload["validation_data_source"]["sample_panel_file"] = str(validation_sample_panel_path)
+    if dataset_split_path is not None:
+        payload["train_data_source"]["dataset_split_file"] = str(dataset_split_path)
+        payload["validation_data_source"]["dataset_split_file"] = str(dataset_split_path)
     if source_db_path is not None:
         payload["train_data_source"]["source_db_file"] = str(source_db_path)
         payload["validation_data_source"]["source_db_file"] = str(source_db_path)
@@ -112,7 +116,6 @@ def build_confirmed5_loader_fixture(
     tmp_path: Path,
     *,
     omit_source_column: str | None = None,
-    include_split_field: bool = True,
 ) -> tuple[Path, Path]:
     source_db_path = tmp_path / "warehouse.duckdb"
     con = duckdb.connect(str(source_db_path))
@@ -146,11 +149,6 @@ def build_confirmed5_loader_fixture(
         )
 
         sample_panel_path = tmp_path / "project_sample_panel.parquet"
-        split_column = (
-            "CASE WHEN day_idx < 50 THEN 'train' ELSE 'validation' END AS split,"
-            if include_split_field
-            else ""
-        )
         con.execute(
             f"""
             COPY (
@@ -159,7 +157,6 @@ def build_confirmed5_loader_fixture(
                     ts_code AS instrument,
                     trade_date AS signal_date,
                     TRUE AS ranking_eligible_D0,
-                    {split_column}
                     day_idx < 50 AS train_mask_v1,
                     day_idx >= 50 AS eval_mask_v1
                 FROM (
@@ -179,6 +176,45 @@ def build_confirmed5_loader_fixture(
         con.close()
 
     return sample_panel_path, source_db_path
+
+
+def build_confirmed5_dataset_split_fixture(
+    tmp_path: Path,
+    sample_panel_path: Path,
+    *,
+    omit_split_column: str | None = None,
+) -> Path:
+    dataset_split_path = tmp_path / "dataset_split_daily.parquet"
+    con = duckdb.connect()
+    try:
+        select_columns = [
+            "snapshot_id",
+            "instrument",
+            "signal_date",
+            "CASE WHEN signal_date < '20200220' THEN 'train' ELSE 'validation' END AS split_bucket",
+            "signal_date < '20200220' AS train_flag",
+            "signal_date >= '20200220' AS validation_flag",
+            "FALSE AS test_flag",
+            "'dataset_split_research_trainval_20211231' AS split_config_id",
+            "'fixed_calendar_date_split_v1' AS split_policy",
+            "'dataset_split_research_trainval_20211231' AS split_version",
+            "FALSE AS purge_gap_applied",
+        ]
+        if omit_split_column is not None:
+            select_columns = [column for column in select_columns if f" AS {omit_split_column}" not in column]
+
+        con.execute(
+            f"""
+            COPY (
+                SELECT
+                    {", ".join(select_columns)}
+                FROM read_parquet('{sample_panel_path.as_posix()}')
+            ) TO '{dataset_split_path.as_posix()}' (FORMAT PARQUET)
+            """
+        )
+    finally:
+        con.close()
+    return dataset_split_path
 
 
 def test_builder_script_exists(repo_root: Path) -> None:
@@ -304,10 +340,12 @@ def test_confirmed5_data_source_audit_gate_accepts_resolved_ready_audit(tmp_path
     feature_set = load_json(CONFIRMED5_FEATURE_SET_PATH)
     candidate = load_json(CONFIRMED5_CANDIDATE_PATH)
     sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path)
+    dataset_split_path = build_confirmed5_dataset_split_fixture(tmp_path, sample_panel_path)
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
         validation_sample_panel_path=sample_panel_path,
+        dataset_split_path=dataset_split_path,
         source_db_path=source_db_path,
     )
     monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
@@ -317,6 +355,7 @@ def test_confirmed5_data_source_audit_gate_accepts_resolved_ready_audit(tmp_path
 
     assert plan["train_sample_panel_path"] == sample_panel_path
     assert plan["validation_sample_panel_path"] == sample_panel_path
+    assert plan["dataset_split_path"] == dataset_split_path
     assert plan["source_db_path"] == source_db_path
     assert plan["feature_columns"] == [
         "reversal_5d_raw",
@@ -406,6 +445,7 @@ def test_confirmed5_builder_fails_when_input_path_is_missing(
         tmp_path,
         sample_panel_path=tmp_path / "missing_project_sample_panel.parquet",
         validation_sample_panel_path=tmp_path / "missing_project_sample_panel.parquet",
+        dataset_split_path=tmp_path / "missing_dataset_split_daily.parquet",
         source_db_path=tmp_path / "missing_warehouse.duckdb",
     )
     monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
@@ -432,10 +472,12 @@ def test_confirmed5_builder_fails_when_required_source_columns_are_missing(
         candidate_source=CONFIRMED5_CANDIDATE_PATH,
     )
     sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path, omit_source_column="vol")
+    dataset_split_path = build_confirmed5_dataset_split_fixture(tmp_path, sample_panel_path)
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
         validation_sample_panel_path=sample_panel_path,
+        dataset_split_path=dataset_split_path,
         source_db_path=source_db_path,
     )
     monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
@@ -449,7 +491,7 @@ def test_confirmed5_builder_fails_when_required_source_columns_are_missing(
     assert not output_dir.exists()
 
 
-def test_confirmed5_builder_fails_fast_when_split_field_is_missing(
+def test_confirmed5_builder_fails_fast_when_dataset_split_columns_are_missing(
     repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(
@@ -457,23 +499,27 @@ def test_confirmed5_builder_fails_fast_when_split_field_is_missing(
         feature_set_source=CONFIRMED5_FEATURE_SET_PATH,
         candidate_source=CONFIRMED5_CANDIDATE_PATH,
     )
-    sample_panel_path, source_db_path = build_confirmed5_loader_fixture(
+    sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path)
+    dataset_split_path = build_confirmed5_dataset_split_fixture(
         tmp_path,
-        include_split_field=False,
+        sample_panel_path,
+        omit_split_column="validation_flag",
     )
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
         validation_sample_panel_path=sample_panel_path,
+        dataset_split_path=dataset_split_path,
         source_db_path=source_db_path,
     )
-    monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
     output_dir = tmp_path / "out_missing_split"
+    monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
 
     result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
 
     assert result.returncode != 0
-    assert "train validation split field is not available in confirmed5 data loading source" in result.stderr
+    assert "confirmed5 required split columns missing" in result.stderr
+    assert "validation_flag" in result.stderr
     assert not output_dir.exists()
     assert not (output_dir / "model_scores_D0.parquet").exists()
     assert not (output_dir / "metrics.json").exists()
@@ -490,10 +536,12 @@ def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_aud
         candidate_source=CONFIRMED5_CANDIDATE_PATH,
     )
     sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path)
+    dataset_split_path = build_confirmed5_dataset_split_fixture(tmp_path, sample_panel_path)
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
         validation_sample_panel_path=sample_panel_path,
+        dataset_split_path=dataset_split_path,
         source_db_path=source_db_path,
     )
     monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
@@ -519,6 +567,7 @@ def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_aud
     assert payload["validation_rows"] != 140
     assert payload["resolved_train_data_source"].endswith("project_sample_panel.parquet")
     assert payload["resolved_validation_data_source"].endswith("project_sample_panel.parquet")
+    assert payload["resolved_dataset_split_source"].endswith("dataset_split_daily.parquet")
     assert set(payload["feature_columns"]) == {
         "reversal_5d_raw",
         "alpha158_cord30_raw",
@@ -536,6 +585,7 @@ def test_build_data_loading_audit_records_loaded_feature_frame_status() -> None:
     load_plan = {
         "train_sample_panel_path": Path("train_sample.parquet"),
         "validation_sample_panel_path": Path("validation_sample.parquet"),
+        "dataset_split_path": Path("dataset_split_daily.parquet"),
         "source_db_path": Path("warehouse.duckdb"),
         "source_view": "serving.vw_bars_daily",
         "feature_columns": [
@@ -545,7 +595,7 @@ def test_build_data_loading_audit_records_loaded_feature_frame_status() -> None:
             "alpha158_vsumd60_raw",
             "volatility_20d_raw",
         ],
-        "split_mask_fields": ["train_mask_v1", "eval_mask_v1"],
+        "split_fields": ["split_bucket", "train_flag", "validation_flag", "test_flag"],
     }
 
     audit = module.build_data_loading_audit(
@@ -575,6 +625,7 @@ def test_build_data_loading_audit_records_loaded_feature_frame_status() -> None:
     ]
     assert audit["resolved_train_data_source"] == "train_sample.parquet"
     assert audit["resolved_validation_data_source"] == "validation_sample.parquet"
+    assert audit["resolved_dataset_split_source"] == "dataset_split_daily.parquet"
     assert audit["source_db_path"] == "warehouse.duckdb"
     assert audit["train_rows"] == 10
     assert audit["validation_rows"] == 4

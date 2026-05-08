@@ -40,6 +40,8 @@ def test_confirmed5_data_source_audit_points_to_shared_snapshot_and_sample_panel
     assert "<trainval_panels_run>" not in train_source["sample_panel_file"]
     assert train_source["sample_panel_file"].endswith("project_sample_panel.parquet")
     assert validation_source["sample_panel_file"].endswith("project_sample_panel.parquet")
+    assert train_source["dataset_split_file"].endswith("dataset_split_daily.parquet")
+    assert validation_source["dataset_split_file"].endswith("dataset_split_daily.parquet")
     assert train_source["source_db_file"].endswith(
         "warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb"
     )
