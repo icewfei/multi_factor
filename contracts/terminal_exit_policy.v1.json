@@ -1,0 +1,72 @@
+{
+  "contract_version": "terminal_exit_policy_v1",
+  "generated_at": "2026-05-08T10:00:00+08:00",
+  "scope": "Defines terminal pricing hierarchy, unresolved exit policy, and hard-blocker rules for portfolio consumption. This contract governs the boundary between execution-path upstream pricing and portfolio-layer fail-fast enforcement.",
+  "terminal_pricing_hierarchy": {
+    "order": ["cash_settlement", "last_tradable_close", "zero_recovery"],
+    "layers": {
+      "cash_settlement": {
+        "rank": 1,
+        "description": "Applicable only when an explicit cash_settlement_amount exists and its field provenance is auditable (e.g. exchange-delisted cash buyout, merger consideration). The amount must be traceable to a verifiable source field.",
+        "requires": ["cash_settlement_amount", "auditable_field_source"],
+        "terminal_exit_conservative_flag": false
+      },
+      "last_tradable_close": {
+        "rank": 2,
+        "description": "Applicable only when an auditable close price or adjusted-return basis can be sourced from the last tradable day immediately preceding the terminal event effective date. The price must come from a verifiable close or adjusted-return field, not an approximation.",
+        "requires": ["last_tradable_close_or_adjusted_return", "auditable_field_source"],
+        "terminal_exit_conservative_flag": false
+      },
+      "zero_recovery": {
+        "rank": 3,
+        "description": "Conservative fallback used only when neither cash_settlement nor last_tradable_close is available. actual_sell_price is set to zero. Must always carry terminal_exit_conservative_flag=true. This layer must never be used as a convenience workaround.",
+        "requires": ["terminal_exit_conservative_flag"],
+        "terminal_exit_conservative_flag": true
+      }
+    }
+  },
+  "state_definitions": {
+    "terminal_priced_cash_settlement": "Terminal exit has been priced via the cash_settlement layer. actual_exit_date and actual_sell_price are populated from auditable cash settlement data. terminal_exit_conservative_flag is false.",
+    "terminal_priced_last_tradable_close": "Terminal exit has been priced via the last_tradable_close layer. actual_exit_date and actual_sell_price are populated from auditable last-tradable-day close or adjusted return. terminal_exit_conservative_flag is false.",
+    "terminal_priced_zero_recovery": "Terminal exit has been priced via the zero_recovery layer. actual_sell_price is zero. terminal_exit_conservative_flag is true. This state must only be entered as an explicit policy decision, not as a default fallback.",
+    "terminal_event_unpriced": "A terminal event (e.g. delist) is recorded, but no pricing layer in the hierarchy could be applied. actual_exit_date and actual_sell_price remain NULL. This is a hard blocker and must not enter portfolio.",
+    "exit_unresolved": "No exit signal and no terminal event is recorded for this row. The exit path is entirely unresolved. actual_exit_date is NULL. This is a hard blocker and must not enter portfolio.",
+    "calendar_insufficient": "Calendar data is insufficient to determine the exit date or to verify tradability windows. This is a hard blocker and must not enter portfolio."
+  },
+  "hard_blocker_rules": {
+    "terminal_event_unpriced": {
+      "portfolio_allowed": false,
+      "hard_blocker": true,
+      "reason": "A terminal event exists but no pricing was applied. Including this row in portfolio would create an unpriced exit and corrupt realized-return calculations."
+    },
+    "exit_unresolved": {
+      "portfolio_allowed": false,
+      "hard_blocker": true,
+      "reason": "The exit path is entirely unresolved. actual_exit_date is NULL and no terminal event is recorded. This row cannot contribute to valid holdings or metrics."
+    },
+    "calendar_insufficient": {
+      "portfolio_allowed": false,
+      "hard_blocker": true,
+      "reason": "Calendar data is insufficient to resolve exit timing or tradability. The exit date cannot be determined."
+    }
+  },
+  "portfolio_consumption_rules": {
+    "required_fields_for_portfolio": ["actual_exit_date", "actual_sell_price", "execution_delayed_realized_return"],
+    "portfolio_can_price_terminal_exit": false,
+    "portfolio_can_filter_unresolved_and_continue": false,
+    "portfolio_behavior_on_unresolved": "fail_fast",
+    "rule": "The portfolio layer MUST fail-fast on any row where actual_exit_date IS NULL or actual_sell_price IS NULL or execution_delayed_realized_return IS NULL. It MUST NOT determine terminal pricing. It MUST NOT filter unresolved rows and continue downstream. It MUST NOT treat planned_exit_date as actual_exit_date."
+  },
+  "implementation_boundary": {
+    "terminal_pricing_owner": "execution path / project_execution_panel upstream",
+    "build_project_panels_role": "passthrough or standardize only; must not invent or approximate prices for terminal exits",
+    "zero_recovery_constraint": "If zero_recovery is introduced, it must be output as a formal policy decision with terminal_exit_conservative_flag=true, not as a silent portfolio workaround",
+    "future_implementation_note": "Downstream formal implementation of terminal pricing should occur in the execution path or project_execution_panel layer, resolving each terminal event against the pricing hierarchy before the row reaches portfolio."
+  },
+  "notes": [
+    "This contract defines policy and constraints only. It does not implement pricing logic or filter rows.",
+    "The terminal pricing hierarchy is ordered: cash_settlement > last_tradable_close > zero_recovery. Higher-ranked layers must be exhausted before falling to the next.",
+    "shared_source_degraded_flags.terminal_event_daily in run_input_contract declares the shared source as degraded truth for terminal pricing. Project-side data may supplement but must be auditable.",
+    "Any future implementation must produce actual_exit_date, actual_sell_price, and execution_delayed_realized_return before the row reaches portfolio."
+  ]
+}
