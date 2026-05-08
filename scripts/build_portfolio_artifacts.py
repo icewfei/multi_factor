@@ -576,6 +576,10 @@ def main() -> None:
     manifest_path = attempt_dir / "portfolio_artifacts_manifest.json"
 
     con = duckdb.connect()
+    derived_holding_cohort_count: int | None = None
+    cohort_fraction: float | None = None
+    row_counts: tuple[int, int, int, int, float] | None = None
+    weight_sanity: tuple[float | None, float | None, int | None, int | None] | None = None
     try:
         con.execute(f"ATTACH {sql_path(source_db_path)} AS warehouse_db (READ_ONLY)")
         con.execute(
@@ -1563,44 +1567,48 @@ def main() -> None:
         con.close()
 
         manifest_payload = {
-        "run_id": args.run_id,
-        "attempt_id": attempt_id,
-        "generated_at": datetime.now().astimezone().isoformat(),
-        "source_attempt_manifest": str(attempt_manifest_path),
-        "inputs": {
-            "execution_state_daily": str(execution_state),
-            "ranking_state_daily": str(ranking_state),
-            "project_execution_panel": str(project_execution_panel),
-        },
-        "outputs": {
-            "holdings_csv": str(holdings_path),
-            "portfolio_weights_daily_csv": str(weights_path),
-            "portfolio_daily_summary_csv": str(summary_path),
-            "turnover_daily_csv": str(turnover_path),
-        },
-        "assumptions": {
-            "holding_cohort_count": derived_holding_cohort_count,
-            "cohort_capital_fraction": cohort_fraction,
-            "weight_unit_basis": "normalized_0_to_1_portfolio_weight",
-            "weight_mapping_contract": weight_mapping_contract,
-            "portfolio_extraction_contract": portfolio_extraction_contract,
-            "portfolio_refresh_contract": portfolio_refresh_contract,
-            "turnover_notional_basis": "normalized_portfolio_weight_with_lag_total_equity_equal_1",
-            "weight_path_rule": "entry_day_opening_weight_is_zero_and_actual_exit_day_closing_weight_is_zero",
-            "industry_active_weight_max": "null_until_industry_exposure_layer_is_implemented",
-        },
-        "summary_counts": {
-            "holdings_rows": row_counts[0],
-            "portfolio_weights_daily_rows": row_counts[1],
-            "portfolio_daily_summary_rows": row_counts[2],
-            "turnover_daily_rows": row_counts[3],
-            "max_invested_weight": row_counts[4],
-            "target_weight_min": float(weight_sanity[0] or 0.0),
-            "target_weight_max": float(weight_sanity[1] or 0.0),
-        },
-        "upstream_attempt_parameters": attempt_manifest.get("parameters", {}),
-    }
-    atomic_json_write(manifest_path, manifest_payload)
+            "run_id": args.run_id,
+            "attempt_id": attempt_id,
+            "generated_at": datetime.now().astimezone().isoformat(),
+            "source_attempt_manifest": str(attempt_manifest_path),
+            "inputs": {
+                "execution_state_daily": str(execution_state),
+                "ranking_state_daily": str(ranking_state),
+                "project_execution_panel": str(project_execution_panel),
+            },
+            "outputs": {
+                "holdings_csv": str(holdings_path),
+                "portfolio_weights_daily_csv": str(weights_path),
+                "portfolio_daily_summary_csv": str(summary_path),
+                "turnover_daily_csv": str(turnover_path),
+            },
+            "assumptions": {
+                "holding_cohort_count": derived_holding_cohort_count,
+                "cohort_capital_fraction": cohort_fraction,
+                "weight_unit_basis": "normalized_0_to_1_portfolio_weight",
+                "weight_mapping_contract": weight_mapping_contract,
+                "portfolio_extraction_contract": portfolio_extraction_contract,
+                "portfolio_refresh_contract": portfolio_refresh_contract,
+                "turnover_notional_basis": "normalized_portfolio_weight_with_lag_total_equity_equal_1",
+                "weight_path_rule": "entry_day_opening_weight_is_zero_and_actual_exit_day_closing_weight_is_zero",
+                "industry_active_weight_max": "null_until_industry_exposure_layer_is_implemented",
+            },
+            "summary_counts": {
+                "holdings_rows": row_counts[0] if row_counts is not None else None,
+                "portfolio_weights_daily_rows": row_counts[1] if row_counts is not None else None,
+                "portfolio_daily_summary_rows": row_counts[2] if row_counts is not None else None,
+                "turnover_daily_rows": row_counts[3] if row_counts is not None else None,
+                "max_invested_weight": row_counts[4] if row_counts is not None else None,
+                "target_weight_min": (
+                    float(weight_sanity[0]) if weight_sanity is not None and weight_sanity[0] is not None else None
+                ),
+                "target_weight_max": (
+                    float(weight_sanity[1]) if weight_sanity is not None and weight_sanity[1] is not None else None
+                ),
+            },
+            "upstream_attempt_parameters": attempt_manifest.get("parameters", {}),
+        }
+        atomic_json_write(manifest_path, manifest_payload)
 
 
 if __name__ == "__main__":
