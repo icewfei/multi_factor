@@ -1,0 +1,202 @@
+{
+  "feature_set_id": "nlc_v1_fset01_price_volume_interaction",
+  "audit_status": "draft_source_availability_audit",
+  "created_at": "2026-05-07",
+  "updated_at": "2026-05-08",
+  "audited_by": "codex_source_audit_v2",
+  "search_scope": [
+    "scripts/",
+    "contracts/",
+    "schemas/",
+    "configs/",
+    "artifacts/research_registry/"
+  ],
+  "excluded_from_search": [
+    "data/",
+    "tushare_data/",
+    "artifacts/run_state/",
+    "artifacts/fixed_test/"
+  ],
+  "features": [
+    {
+      "feature_name": "p98",
+      "status": "ambiguous",
+      "evidence_files": [
+        "scripts/build_reversal_tail_composite_model_scores.py",
+        "scripts/run_reversal_cord30_weight_screen.py",
+        "scripts/build_decile_nonlinear_scores.py"
+      ],
+      "likely_source_script": null,
+      "likely_source_column": null,
+      "derivation_notes": "p98 is not a standalone raw feature column. It is computed at runtime as PERCENTILE_CONT(0.98) WITHIN GROUP (ORDER BY nr_score) — a daily cross-sectional percentile threshold on reversal scores, used exclusively as a tail-exclusion filter. No pre-computed p98 feature column exists in any parquet artifact. The concept exists as a computational pattern but cannot be used as a direct model feature without first creating a percentile-rank feature builder.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": false
+    },
+    {
+      "feature_name": "reversal_5d",
+      "status": "found",
+      "evidence_files": [
+        "scripts/build_decile_nonlinear_scores.py",
+        "scripts/build_baseline_model_scores.py",
+        "artifacts/research_registry/factor_card_registry_20260428.md"
+      ],
+      "likely_source_script": "scripts/build_decile_nonlinear_scores.py",
+      "likely_source_column": "reversal_5d_raw",
+      "derivation_notes": "Expression: (adj_close / LAG(adj_close, 5) OVER w - 1.0). Defined in build_decile_nonlinear_scores.py FEATURE_SPECS. Also registered in factor_card_registry as price_volume_single_signal_reversal_5d_v1. Computable from bars_daily.adj_close with 5-day lag.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": true
+    },
+    {
+      "feature_name": "reversal_20d",
+      "status": "derived_possible",
+      "evidence_files": [],
+      "likely_source_script": null,
+      "likely_source_column": null,
+      "derivation_notes": "No script defines reversal_20d or reversal_20d_raw as a feature column. Can be derived as (adj_close / LAG(adj_close, 20) OVER w - 1.0) from bars_daily. Conceptually similar to negative of ROC20 from alpha158. No pre-existing feature column or registered candidate_scheme_id for this exact 20-day horizon.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": false
+    },
+    {
+      "feature_name": "cord30",
+      "status": "found",
+      "evidence_files": [
+        "scripts/alpha158_canonical_common.py",
+        "artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+        "artifacts/research_registry/canonical_cluster_registry_20260430.json"
+      ],
+      "likely_source_script": "scripts/alpha158_canonical_common.py",
+      "likely_source_column": "alpha158_cord30_raw",
+      "derivation_notes": "Alpha158 canonical feature CORD30. Expression: CORR(close_rel1, log_volume_rel1) OVER w30 — 30-day rolling correlation between price change ratio and volume change ratio. Canonical candidate_scheme_id: price_volume_single_signal_alpha158_cord30_v1. Computable via alpha158_canonical_common.py build_feature_views().",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": true
+    },
+    {
+      "feature_name": "corr30",
+      "status": "found",
+      "evidence_files": [
+        "scripts/alpha158_canonical_common.py",
+        "artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+        "artifacts/research_registry/canonical_cluster_registry_20260430.json"
+      ],
+      "likely_source_script": "scripts/alpha158_canonical_common.py",
+      "likely_source_column": "alpha158_corr30_raw",
+      "derivation_notes": "Alpha158 canonical feature CORR30. Expression: CORR(adj_close, log_volume) OVER w30 — 30-day rolling correlation between close and log volume. Canonical candidate_scheme_id: price_volume_single_signal_alpha158_corr30_v1. Computable via alpha158_canonical_common.py build_feature_views().",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": true
+    },
+    {
+      "feature_name": "vsumd60",
+      "status": "found",
+      "evidence_files": [
+        "scripts/alpha158_canonical_common.py",
+        "artifacts/research_registry/alpha158_qlib_full_definition_manifest_20260428.json",
+        "artifacts/research_registry/canonical_cluster_registry_20260430.json"
+      ],
+      "likely_source_script": "scripts/alpha158_canonical_common.py",
+      "likely_source_column": "alpha158_vsumd60_raw",
+      "derivation_notes": "Alpha158 canonical feature VSUMD60. Expression: (SUM(pos_vol_delta) OVER w60 - SUM(neg_vol_delta) OVER w60) / (SUM(abs_vol_delta) OVER w60 + 1e-12) — 60-day net signed volume change share. Canonical candidate_scheme_id: price_volume_single_signal_alpha158_vsumd60_v1. Computable via alpha158_canonical_common.py build_feature_views().",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": true
+    },
+    {
+      "feature_name": "overnight_return_1d",
+      "status": "derived_possible",
+      "evidence_files": [
+        "scripts/build_overnight_intraday_decomposition_scores.py",
+        "scripts/build_overnight_intraday_v2_scores.py",
+        "scripts/run_round9_single_signal_batch.py"
+      ],
+      "likely_source_script": "scripts/build_overnight_intraday_decomposition_scores.py",
+      "likely_source_column": null,
+      "derivation_notes": "No standalone feature column named overnight_return_1d exists. The daily overnight return is computed internally as overnight_ret = adj_open / LAG(adj_close, 1) - 1.0 in multiple scripts. Only rolling aggregations (overnight_rev_5d_raw, overnight_rev_20d_raw) are persisted. A single-day overnight_return_1d column would need a dedicated feature builder.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": false
+    },
+    {
+      "feature_name": "intraday_return_1d",
+      "status": "derived_possible",
+      "evidence_files": [
+        "scripts/build_overnight_intraday_decomposition_scores.py",
+        "scripts/build_overnight_intraday_v2_scores.py",
+        "scripts/build_baseline_model_scores.py"
+      ],
+      "likely_source_script": "scripts/build_baseline_model_scores.py",
+      "likely_source_column": null,
+      "derivation_notes": "No standalone feature column named intraday_return_1d exists. The daily intraday return is computed internally as intraday_ret = adj_close / adj_open - 1.0 in multiple scripts. Only rolling aggregations (intraday_rev_5d_raw, intraday_rev_20d_raw, intraday_trend_bias_20d_raw) are persisted. A single-day intraday_return_1d column would need a dedicated feature builder.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": false
+    },
+    {
+      "feature_name": "volatility_20d",
+      "status": "found",
+      "evidence_files": [
+        "scripts/build_baseline_model_scores.py",
+        "scripts/build_decile_nonlinear_scores.py",
+        "scripts/build_trend_quality_price_volume_model_scores.py"
+      ],
+      "likely_source_script": "scripts/build_baseline_model_scores.py",
+      "likely_source_column": "volatility_20d_raw",
+      "derivation_notes": "Expression: STDDEV_SAMP(pct_ret) OVER w20 AS volatility_20d_raw. Confirmed in build_baseline_model_scores.py:300, build_decile_nonlinear_scores.py:122-125, build_trend_quality_price_volume_model_scores.py:163. Computable from bars_daily. Registered factor_card: price_volume_single_signal_volatility_20d_v1.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": true
+    },
+    {
+      "feature_name": "turnover_20d",
+      "status": "ambiguous",
+      "evidence_files": [
+        "artifacts/research_registry/data_field_units_audit_20260418.json",
+        "artifacts/research_registry/formal_factor_cards_20260429.json",
+        "scripts/run_round5_single_signal_batch.py"
+      ],
+      "likely_source_script": null,
+      "likely_source_column": null,
+      "derivation_notes": "No script defines or persists a turnover_20d feature column. The shared data warehouse has turnover_rate and turnover_rate_f columns (confirmed in data_field_units_audit). Some round5 scripts reference turnover_rate in feature expressions. The project framework document mentions turnover_20d as a planned field, but no build script actually generates this column. The name could mean: (a) 20-day average turnover_rate, (b) turnover_rate / MA20(turnover_rate), or (c) AVG(LN(turnover_rate+1)) OVER w20. Resolution requires explicit specification. Design-doc references alone do not qualify as training-ready.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "unknown",
+      "ready_for_training": false
+    },
+    {
+      "feature_name": "amount_20d",
+      "status": "ambiguous",
+      "evidence_files": [
+        "scripts/build_baseline_model_scores.py",
+        "scripts/run_reversal_tail_diagnosis.py"
+      ],
+      "likely_source_script": null,
+      "likely_source_column": null,
+      "derivation_notes": "No standalone registered feature column named amount_20d exists. Related computations: median_amount_20d = MEDIAN(amount) OVER w20_excl_current (build_baseline_model_scores.py:320), avg_amount_20d = AVG(amount) OVER w20 (run_reversal_tail_diagnosis.py:88). The closest registered feature is liquidity_20d_raw = AVG(LN(GREATEST(amount, 0.0) + 1.0)) OVER w20. The project framework document mentions amount_20d as a planned field, but no build script generates this column. amount_20d could mean raw average, log-transformed average, or median amount — each has different statistical properties. Resolution requires explicit specification. Design-doc references alone do not qualify as training-ready.",
+      "d0_visibility_risk": "low",
+      "pit_risk": "low",
+      "ready_for_training": false
+    },
+    {
+      "feature_name": "market_index_return_20d",
+      "status": "not_found",
+      "evidence_files": [],
+      "likely_source_script": null,
+      "likely_source_column": null,
+      "derivation_notes": "No script defines or computes market_index_return_20d as a feature column. The shared data warehouse has vw_benchmark_daily with CSI_ALL_SHARE_TR containing daily benchmark returns (used in backtest evaluation via build_fixed_test_minimal.py:324-344). However, no project script joins benchmark returns to stock-level data or generates a market_index_return_20d feature. This would require: (a) joining benchmark daily returns to each stock-date row, (b) computing a 20-day cumulative/average return. No infrastructure exists for this cross-entity feature construction.",
+      "d0_visibility_risk": "unknown",
+      "pit_risk": "unknown",
+      "ready_for_training": false
+    }
+  ],
+  "summary": {
+    "total_features": 12,
+    "ready_for_training_count": 5,
+    "found_count": 5,
+    "ambiguous_count": 3,
+    "derived_possible_count": 3,
+    "not_found_count": 1,
+    "blocking_reason": "Only 5 of 12 features have confirmed source scripts and column names (reversal_5d, cord30, corr30, vsumd60, volatility_20d). 3 features are ambiguous (p98, turnover_20d, amount_20d) — their names appear in design docs but no build script generates them as standalone columns. 3 features are derivable from raw bars but lack registered columns (reversal_20d, overnight_return_1d, intraday_return_1d). 1 feature is not found (market_index_return_20d) with no existing infrastructure. The feature set cannot enter training until source_column_mapping is fully resolved for all 12 features."
+  }
+}

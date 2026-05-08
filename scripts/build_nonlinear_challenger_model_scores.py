@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -10,6 +11,13 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = Path(__file__).resolve().parent
 VALIDATOR_PATH = SCRIPTS_DIR / "validate_nonlinear_challenger_manifests.py"
+SOURCE_AUDIT_PATH = (
+    ROOT
+    / "configs"
+    / "nonlinear_challenger_v1"
+    / "feature_sets"
+    / "feature_set_nlc_v1_fset01_source_audit.json"
+)
 
 MODEL_SCORES_FILENAME = "model_scores_D0.parquet"
 MODEL_SCORES_AUDIT_FILENAME = "model_scores_D0_audit.json"
@@ -120,14 +128,34 @@ def resolve_feature_sources_or_fail(
 
     mapping_required = feature_set.get("source_column_mapping_required")
     existence_status = str(feature_set.get("feature_column_existence_status", ""))
+    audit_path = SOURCE_AUDIT_PATH
+    audit_suffix = f" See source audit: {audit_path}"
+
+    try:
+        source_audit = json.loads(audit_path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix) from exc
+    except json.JSONDecodeError as exc:
+        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix) from exc
+
+    summary = source_audit.get("summary", {})
+    ready_for_training_count = summary.get("ready_for_training_count")
+    total_features = summary.get("total_features")
+    if ready_for_training_count != total_features:
+        raise BuildError(
+            FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE
+            + f" Source audit reports ready_for_training_count={ready_for_training_count}, "
+            f"total_features={total_features}."
+            + audit_suffix
+        )
 
     if mapping_required is True:
-        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE)
+        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix)
 
     if "require_source_column_mapping_before_training" in existence_status:
-        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE)
+        raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix)
 
-    raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE)
+    raise BuildError(FEATURE_SOURCE_MAPPING_NOT_IMPLEMENTED_MESSAGE + audit_suffix)
 
 
 def run_builder(
