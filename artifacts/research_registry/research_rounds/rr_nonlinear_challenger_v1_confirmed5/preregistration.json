@@ -1,0 +1,54 @@
+{
+  "registered_at": "2026-05-08T10:30:00+08:00",
+  "research_round_id": "rr_nonlinear_challenger_v1_confirmed5",
+  "research_tier": "exploratory",
+  "status": "preregistered",
+  "round_type": "nonlinear_challenger",
+  "research_question": "Can a fixed-configuration LightGBM challenger using only confirmed5 features produce governed train/validation model_scores_D0 without changing execution semantics or accessing frozen test data?",
+  "changed_dimension": "nonlinear_challenger_confirmed5_model_scores",
+  "change_control_rule": "single_dimension_only",
+  "candidate_scheme_ids": [
+    "nlc_v1_confirmed5_lgbm_depth3_seed42"
+  ],
+  "baseline_reference_candidate_scheme_id": null,
+  "constants_frozen": {
+    "snapshot_id": "warehouse_20260429_trainval_20211231",
+    "feature_set_id": "nlc_v1_fset01_confirmed5",
+    "model_config_id": "nlc_v1_lgbm_regressor_depth3_seed42",
+    "split_source": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/dataset_split_daily.parquet",
+    "split_scope": "train_validation_only",
+    "frozen_test_access": false,
+    "topk": 10,
+    "holding_period": "5d_D0_D1_D5",
+    "entry_and_exit_logic": "framework_v1",
+    "execution_logic_version": "warehouse_execution_v3"
+  },
+  "allowed_candidate_contract": {
+    "candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42",
+    "feature_set_id": "nlc_v1_fset01_confirmed5",
+    "feature_names": [
+      "reversal_5d",
+      "cord30",
+      "corr30",
+      "vsumd60",
+      "volatility_20d"
+    ],
+    "model_family": "LightGBM",
+    "model_config_id": "nlc_v1_lgbm_regressor_depth3_seed42",
+    "target_label": "label_5d_next_open_close",
+    "train_split": "dataset_split_daily.train_flag = true",
+    "validation_split": "dataset_split_daily.validation_flag = true"
+  },
+  "disallowed_changes": [
+    "Do not change the confirmed5 feature list.",
+    "Do not change model_config parameters or random_seed.",
+    "Do not change TopK width.",
+    "Do not change execution semantics.",
+    "Do not access frozen test data.",
+    "Do not read data outside the train/validation snapshot."
+  ],
+  "notes": [
+    "Nonlinear Challenger v1 registers only the governed model-score generation candidate.",
+    "This preregistration does not assert strategy success and does not include return conclusions."
+  ]
+}
