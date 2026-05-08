@@ -37,6 +37,7 @@ def test_confirmed5_data_source_audit_points_to_shared_snapshot_and_sample_panel
     train_source = payload["train_data_source"]
     validation_source = payload["validation_data_source"]
 
+    assert "<trainval_panels_run>" not in train_source["sample_panel_file"]
     assert train_source["sample_panel_file"].endswith("project_sample_panel.parquet")
     assert validation_source["sample_panel_file"].endswith("project_sample_panel.parquet")
     assert train_source["source_db_file"].endswith(
@@ -44,4 +45,3 @@ def test_confirmed5_data_source_audit_points_to_shared_snapshot_and_sample_panel
     )
     assert validation_source["source_view"] == "serving.vw_bars_daily"
     assert train_source["split_mask_fields"] == ["train_mask_v1", "eval_mask_v1"]
-

@@ -5,7 +5,7 @@
   "run_input_contract": "contracts/run_input_contract.research_trainval_20211231.json",
   "data_source_status": "resolved",
   "train_data_source": {
-    "sample_panel_file": "artifacts/run_state/<trainval_panels_run>/project_sample_panel.parquet",
+    "sample_panel_file": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/project_sample_panel.parquet",
     "source_db_file": "/Users/wy/MiscProject/tushare_data/parquet_duckdb/data/snapshots/warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb",
     "source_view": "serving.vw_bars_daily",
     "join_key": [
@@ -19,7 +19,7 @@
     "resolution_basis": "contracts/source_table_mapping.yaml + contracts/run_input_contract.research_trainval_20211231.json + builder/view definitions in scripts/"
   },
   "validation_data_source": {
-    "sample_panel_file": "artifacts/run_state/<trainval_panels_run>/project_sample_panel.parquet",
+    "sample_panel_file": "artifacts/run_state/project_panels_research_trainval_20211231_20260429/project_sample_panel.parquet",
     "source_db_file": "/Users/wy/MiscProject/tushare_data/parquet_duckdb/data/snapshots/warehouse_20260429_trainval_20211231/duckdb/warehouse.duckdb",
     "source_view": "serving.vw_bars_daily",
     "join_key": [

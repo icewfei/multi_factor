@@ -384,13 +384,20 @@ def test_builder_fails_fast_when_feature_source_mapping_is_not_ready(repo_root: 
 
 
 def test_confirmed5_builder_fails_when_input_path_is_missing(
-    repo_root: Path, tmp_path: Path
+    repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(
         tmp_path,
         feature_set_source=CONFIRMED5_FEATURE_SET_PATH,
         candidate_source=CONFIRMED5_CANDIDATE_PATH,
     )
+    audit_path = write_temp_data_source_audit(
+        tmp_path,
+        sample_panel_path=tmp_path / "missing_project_sample_panel.parquet",
+        validation_sample_panel_path=tmp_path / "missing_project_sample_panel.parquet",
+        source_db_path=tmp_path / "missing_warehouse.duckdb",
+    )
+    monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
     output_dir = tmp_path / "out"
 
     result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
