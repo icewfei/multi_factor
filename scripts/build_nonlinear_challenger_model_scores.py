@@ -1,14 +1,21 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import importlib
 import importlib.util
 import json
 import os
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import duckdb
+import numpy as np
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +66,12 @@ CONFIRMED5_REQUIRED_SPLIT_COLUMNS = {
     "train_flag",
     "validation_flag",
     "test_flag",
+}
+CONFIRMED5_REQUIRED_LABEL_COLUMNS = {
+    "snapshot_id",
+    "instrument",
+    "signal_date",
+    "label_defined",
 }
 CONFIRMED5_REQUIRED_SOURCE_COLUMNS = {
     "snapshot_id",
@@ -138,6 +151,8 @@ CONFIRMED5_SPLIT_FIELD_NOT_AVAILABLE_MESSAGE = (
     "train validation split field is not available in confirmed5 data loading source"
 )
 CONFIRMED5_REQUIRED_SPLIT_COLUMNS_MISSING_MESSAGE = "confirmed5 required split columns missing"
+LIGHTGBM_REQUIRED_MESSAGE = "lightgbm is required for nonlinear challenger training"
+CONFIRMED5_TARGET_LABEL_NOT_AVAILABLE_MESSAGE = "target label source is not available for confirmed5 training"
 
 
 class BuildError(Exception):
@@ -155,6 +170,70 @@ def load_validator_symbols() -> tuple[type[Exception], Any, Any]:
 
 
 ValidationError, load_json_manifest, validate_manifests = load_validator_symbols()
+
+
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def load_lightgbm_or_fail() -> Any:
+    try:
+        return importlib.import_module("lightgbm")
+    except ModuleNotFoundError as exc:
+        raise BuildError(LIGHTGBM_REQUIRED_MESSAGE) from exc
+
+
+def stable_json_hash(payload: dict[str, Any], excluded_keys: set[str] | None = None) -> str:
+    normalized = {
+        key: value
+        for key, value in payload.items()
+        if excluded_keys is None or key not in excluded_keys
+    }
+    encoded = json.dumps(normalized, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def build_training_hashes(
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    load_plan: dict[str, Any],
+) -> tuple[str, str, str]:
+    feature_set_hash = stable_json_hash(feature_set, {"feature_set_hash"})
+    model_config_hash = stable_json_hash(model_config, {"model_config_hash"})
+    config_hash = stable_json_hash(
+        {
+            "feature_set_hash": feature_set_hash,
+            "model_config_hash": model_config_hash,
+            "split_fields": load_plan["split_fields"],
+            "dataset_split_path": str(load_plan["dataset_split_path"]),
+        }
+    )
+    return feature_set_hash, model_config_hash, config_hash
+
+
+def resolve_git_commit_hash() -> str | None:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return None
+    if result.returncode != 0:
+        return None
+    commit_hash = result.stdout.strip()
+    return commit_hash or None
+
+
+def to_float32_ndarray(values: Any) -> np.ndarray:
+    return np.ma.asarray(values, dtype=np.float32).filled(np.nan)
+
+
+def to_bool_ndarray(values: Any) -> np.ndarray:
+    return np.ma.asarray(values, dtype=bool).filled(False)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -443,6 +522,16 @@ def ensure_required_columns_or_fail(
         )
 
 
+def ensure_required_label_columns_or_fail(
+    available_columns: set[str],
+    required_columns: set[str],
+    relation_label: str,
+) -> None:
+    missing_columns = sorted(required_columns - available_columns)
+    if missing_columns:
+        raise BuildError(CONFIRMED5_TARGET_LABEL_NOT_AVAILABLE_MESSAGE)
+
+
 def ensure_confirmed5_split_columns_or_fail(available_columns: set[str]) -> None:
     missing_columns = sorted(CONFIRMED5_REQUIRED_SPLIT_COLUMNS - available_columns)
     if missing_columns:
@@ -452,11 +541,23 @@ def ensure_confirmed5_split_columns_or_fail(available_columns: set[str]) -> None
         )
 
 
+def resolve_confirmed5_label_panel_path(sample_panel_path: Path) -> Path:
+    override = os.environ.get("NLC_CONFIRMED5_LABEL_PANEL_PATH")
+    if override:
+        return Path(override)
+    return sample_panel_path.with_name("project_label_panel.parquet")
+
+
 def build_confirmed5_feature_frame(
     load_plan: dict[str, Any],
-) -> tuple[int, int, dict[str, int]]:
+    target_label: str,
+) -> dict[str, Any]:
     con = duckdb.connect()
     try:
+        label_panel_path = resolve_confirmed5_label_panel_path(load_plan["train_sample_panel_path"])
+        if not label_panel_path.exists():
+            raise BuildError(CONFIRMED5_TARGET_LABEL_NOT_AVAILABLE_MESSAGE)
+
         con.execute(f"ATTACH '{load_plan['source_db_path'].as_posix()}' AS warehouse_db (READ_ONLY)")
         con.execute(
             f"""
@@ -474,6 +575,18 @@ def build_confirmed5_feature_frame(
         )
         split_columns = describe_columns(con, "dataset_split_daily")
         ensure_confirmed5_split_columns_or_fail(split_columns)
+        con.execute(
+            f"""
+            CREATE OR REPLACE VIEW project_label_panel AS
+            SELECT * FROM read_parquet('{label_panel_path.as_posix()}')
+            """
+        )
+        label_columns = describe_columns(con, "project_label_panel")
+        ensure_required_label_columns_or_fail(
+            label_columns,
+            CONFIRMED5_REQUIRED_LABEL_COLUMNS | {target_label},
+            "project_label_panel",
+        )
 
         source_relation = f"warehouse_db.{load_plan['source_view']}"
         source_columns = describe_columns(con, source_relation)
@@ -589,7 +702,7 @@ def build_confirmed5_feature_frame(
             """
         )
         con.execute(
-            """
+            f"""
             CREATE OR REPLACE VIEW feature_frame AS
             SELECT
                 p.snapshot_id,
@@ -600,6 +713,8 @@ def build_confirmed5_feature_frame(
                 s.train_flag,
                 s.validation_flag,
                 s.test_flag,
+                l.label_defined,
+                l.{target_label} AS target_label,
                 b.reversal_5d_raw,
                 b.alpha158_cord30_raw,
                 b.alpha158_corr30_raw,
@@ -610,6 +725,10 @@ def build_confirmed5_feature_frame(
               ON p.snapshot_id = s.snapshot_id
              AND p.instrument = s.instrument
              AND p.signal_date = s.signal_date
+            LEFT JOIN project_label_panel l
+              ON p.snapshot_id = l.snapshot_id
+             AND p.instrument = l.instrument
+             AND p.signal_date = l.signal_date
             LEFT JOIN bar_features b
               ON p.instrument = b.instrument
              AND p.signal_date = b.signal_date
@@ -657,6 +776,27 @@ def build_confirmed5_feature_frame(
             WHERE ranking_eligible_D0
             """
         ).fetchone()
+
+        score_arrays = con.execute(
+            """
+            SELECT
+                snapshot_id,
+                instrument,
+                signal_date,
+                train_flag,
+                validation_flag,
+                target_label,
+                reversal_5d_raw,
+                alpha158_cord30_raw,
+                alpha158_corr30_raw,
+                alpha158_vsumd60_raw,
+                volatility_20d_raw
+            FROM feature_frame
+            WHERE ranking_eligible_D0
+              AND (train_flag OR validation_flag)
+            ORDER BY signal_date, instrument
+            """
+        ).fetchnumpy()
     finally:
         con.close()
 
@@ -667,7 +807,30 @@ def build_confirmed5_feature_frame(
         "alpha158_vsumd60_raw": int(feature_missing_summary_rows[3] or 0),
         "volatility_20d_raw": int(feature_missing_summary_rows[4] or 0),
     }
-    return int(train_rows or 0), int(validation_rows or 0), feature_missing_summary
+    feature_columns = load_plan["feature_columns"]
+    feature_matrix = np.column_stack([to_float32_ndarray(score_arrays[column]) for column in feature_columns])
+    target_values = to_float32_ndarray(score_arrays["target_label"])
+    train_flag_array = to_bool_ndarray(score_arrays["train_flag"])
+    validation_flag_array = to_bool_ndarray(score_arrays["validation_flag"])
+    train_fit_mask = train_flag_array & np.isfinite(target_values)
+    if not np.any(train_fit_mask):
+        raise BuildError(CONFIRMED5_TARGET_LABEL_NOT_AVAILABLE_MESSAGE)
+
+    return {
+        "label_panel_path": label_panel_path,
+        "feature_columns": feature_columns,
+        "feature_missing_summary": feature_missing_summary,
+        "train_rows": int(train_rows or 0),
+        "validation_rows": int(validation_rows or 0),
+        "score_snapshot_ids": np.asarray(score_arrays["snapshot_id"]),
+        "score_instruments": np.asarray(score_arrays["instrument"]),
+        "score_signal_dates": np.asarray(score_arrays["signal_date"]),
+        "score_train_flags": train_flag_array,
+        "score_validation_flags": validation_flag_array,
+        "score_target_values": target_values,
+        "score_feature_matrix": feature_matrix,
+        "train_fit_mask": train_fit_mask,
+    }
 
 
 def write_data_loading_audit(output_dir: Path, audit_payload: dict[str, Any]) -> Path:
@@ -675,6 +838,195 @@ def write_data_loading_audit(output_dir: Path, audit_payload: dict[str, Any]) ->
     audit_path = output_dir / DATA_LOADING_AUDIT_FILENAME
     audit_path.write_text(json.dumps(audit_payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     return audit_path
+
+
+def write_model_scores_output(
+    output_dir: Path,
+    run_id: str,
+    candidate: dict[str, Any],
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    config_hash: str,
+    training_bundle: dict[str, Any],
+    scores: np.ndarray,
+) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    table = pa.table(
+        {
+            "run_id": pa.array([run_id] * len(scores)),
+            "candidate_scheme_id": pa.array([str(candidate["candidate_scheme_id"])] * len(scores)),
+            "snapshot_id": pa.array(training_bundle["score_snapshot_ids"]),
+            "instrument": pa.array(training_bundle["score_instruments"]),
+            "signal_date": pa.array(training_bundle["score_signal_dates"]),
+            "model_score_D0": pa.array(scores.astype(np.float32)),
+            "feature_set_id": pa.array([str(feature_set["feature_set_id"])] * len(scores)),
+            "model_config_id": pa.array([str(model_config["model_config_id"])] * len(scores)),
+            "config_hash": pa.array([config_hash] * len(scores)),
+        }
+    )
+    output_path = output_dir / MODEL_SCORES_FILENAME
+    pq.write_table(table.select(MODEL_SCORES_COLUMNS), output_path)
+    return output_path
+
+
+def write_json_output(path: Path, payload: dict[str, Any]) -> Path:
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    return path
+
+
+def write_model_scores_audit(
+    output_dir: Path,
+    run_id: str,
+    attempt_id: str,
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    candidate: dict[str, Any],
+    feature_set_hash: str,
+    model_config_hash: str,
+    config_hash: str,
+    training_bundle: dict[str, Any],
+    scores: np.ndarray,
+) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    audit_payload = {
+        "run_id": run_id,
+        "attempt_id": attempt_id,
+        "candidate_scheme_id": candidate.get("candidate_scheme_id"),
+        "snapshot_id": candidate.get("snapshot_id"),
+        "row_count": int(scores.shape[0]),
+        "null_score_rows": int(np.isnan(scores).sum()),
+        "nonfinite_score_rows": int((~np.isfinite(scores)).sum()),
+        "train_rows": training_bundle["train_rows"],
+        "validation_rows": training_bundle["validation_rows"],
+        "feature_count": len(training_bundle["feature_columns"]),
+        "feature_missing_summary": training_bundle["feature_missing_summary"],
+        "feature_column_mapping_status": "resolved_confirmed5_data_source_audit",
+        "frozen_test_access": False,
+        "baseline_candidate_scheme_id": candidate.get("baseline_candidate_scheme_id"),
+        "feature_set_hash": feature_set_hash,
+        "model_config_hash": model_config_hash,
+        "config_hash": config_hash,
+        "status": "trained_and_scored_minimal",
+    }
+    return write_json_output(output_dir / MODEL_SCORES_AUDIT_FILENAME, audit_payload)
+
+
+def write_training_manifest(
+    output_dir: Path,
+    run_id: str,
+    attempt_id: str,
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    candidate: dict[str, Any],
+    config_hash: str,
+    training_started_at: str,
+    training_finished_at: str,
+    lightgbm_module: Any,
+) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    manifest_payload = {
+        "run_id": run_id,
+        "attempt_id": attempt_id,
+        "candidate_scheme_id": candidate.get("candidate_scheme_id"),
+        "feature_set_id": feature_set.get("feature_set_id"),
+        "model_config_id": model_config.get("model_config_id"),
+        "snapshot_id": candidate.get("snapshot_id"),
+        "config_hash": config_hash,
+        "random_seed": model_config.get("random_seed"),
+        "training_started_at": training_started_at,
+        "training_finished_at": training_finished_at,
+        "git_commit_hash": resolve_git_commit_hash(),
+        "code_version": "build_nonlinear_challenger_model_scores.py",
+        "environment_summary": {
+            "python_version": sys.version.split()[0],
+            "lightgbm_version": getattr(lightgbm_module, "__version__", "unknown"),
+            "model_family": model_config.get("model_family"),
+        },
+        "status": "trained_and_scored_minimal",
+    }
+    return write_json_output(output_dir / TRAINING_MANIFEST_FILENAME, manifest_payload)
+
+
+def train_model_scores_or_fail(
+    feature_set: dict[str, Any],
+    model_config: dict[str, Any],
+    candidate: dict[str, Any],
+    run_id: str,
+    attempt_id: str,
+    output_dir: Path,
+    load_plan: dict[str, Any],
+    training_bundle: dict[str, Any],
+) -> dict[str, Any]:
+    if model_config.get("target_label") != "label_5d_next_open_close":
+        raise BuildError(CONFIRMED5_TARGET_LABEL_NOT_AVAILABLE_MESSAGE)
+
+    lightgbm = load_lightgbm_or_fail()
+    feature_set_hash, model_config_hash, config_hash = build_training_hashes(
+        feature_set,
+        model_config,
+        load_plan,
+    )
+
+    hyperparameters = dict(model_config.get("hyperparameters", {}))
+    model_params = {
+        "objective": model_config.get("objective"),
+        "random_state": model_config.get("random_seed"),
+        "max_depth": model_config.get("max_depth"),
+        "num_leaves": model_config.get("num_leaves"),
+        "learning_rate": model_config.get("learning_rate"),
+        "n_estimators": model_config.get("n_estimators"),
+        **hyperparameters,
+    }
+    model = lightgbm.LGBMRegressor(**model_params)
+
+    training_started_at = utc_now_iso()
+    model.fit(
+        training_bundle["score_feature_matrix"][training_bundle["train_fit_mask"]],
+        training_bundle["score_target_values"][training_bundle["train_fit_mask"]],
+    )
+    training_finished_at = utc_now_iso()
+
+    scores = np.asarray(model.predict(training_bundle["score_feature_matrix"]), dtype=np.float32)
+    write_model_scores_output(
+        output_dir,
+        run_id,
+        candidate,
+        feature_set,
+        model_config,
+        config_hash,
+        training_bundle,
+        scores,
+    )
+    write_model_scores_audit(
+        output_dir,
+        run_id,
+        attempt_id,
+        feature_set,
+        model_config,
+        candidate,
+        feature_set_hash,
+        model_config_hash,
+        config_hash,
+        training_bundle,
+        scores,
+    )
+    write_training_manifest(
+        output_dir,
+        run_id,
+        attempt_id,
+        feature_set,
+        model_config,
+        candidate,
+        config_hash,
+        training_started_at,
+        training_finished_at,
+        lightgbm,
+    )
+    return {
+        "feature_set_hash": feature_set_hash,
+        "model_config_hash": model_config_hash,
+        "config_hash": config_hash,
+    }
 
 
 def load_training_data_or_fail(
@@ -685,20 +1037,24 @@ def load_training_data_or_fail(
 ) -> dict[str, Any]:
     data_source_audit = load_confirmed5_data_source_audit(feature_set, candidate)
     load_plan = build_confirmed5_data_loading_plan_or_fail(feature_set, candidate, data_source_audit)
-    train_rows, validation_rows, feature_missing_summary = build_confirmed5_feature_frame(load_plan)
+    training_bundle = build_confirmed5_feature_frame(load_plan, str(model_config.get("target_label", "")))
     audit_payload = build_data_loading_audit(
         feature_set,
         model_config,
         candidate,
         output_dir,
-        status="loaded_feature_frame_only",
+        status="loaded_feature_frame_for_training",
         load_plan=load_plan,
-        train_rows=train_rows,
-        validation_rows=validation_rows,
-        feature_missing_summary=feature_missing_summary,
+        train_rows=training_bundle["train_rows"],
+        validation_rows=training_bundle["validation_rows"],
+        feature_missing_summary=training_bundle["feature_missing_summary"],
     )
     write_data_loading_audit(output_dir, audit_payload)
-    return audit_payload
+    return {
+        "load_plan": load_plan,
+        "training_bundle": training_bundle,
+        "data_loading_audit": audit_payload,
+    }
 
 
 def run_builder(
@@ -709,16 +1065,23 @@ def run_builder(
     attempt_id: str,
     output_dir: Path,
 ) -> int:
-    _ = run_id
-    _ = attempt_id
-
     feature_set, model_config, candidate = load_and_validate_manifests(
         feature_set_path,
         model_config_path,
         candidate_path,
     )
     resolve_feature_sources_or_fail(feature_set, model_config, candidate)
-    load_training_data_or_fail(feature_set, model_config, candidate, output_dir)
+    load_result = load_training_data_or_fail(feature_set, model_config, candidate, output_dir)
+    train_model_scores_or_fail(
+        feature_set,
+        model_config,
+        candidate,
+        run_id,
+        attempt_id,
+        output_dir,
+        load_result["load_plan"],
+        load_result["training_bundle"],
+    )
     return 0
 
 

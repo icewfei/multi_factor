@@ -217,6 +217,54 @@ def build_confirmed5_dataset_split_fixture(
     return dataset_split_path
 
 
+def build_confirmed5_label_panel_fixture(
+    tmp_path: Path,
+    sample_panel_path: Path,
+    *,
+    omit_target_label: bool = False,
+) -> Path:
+    label_panel_path = tmp_path / "project_label_panel.parquet"
+    con = duckdb.connect()
+    try:
+        select_columns = [
+            "snapshot_id",
+            "instrument",
+            "signal_date",
+            "NULL AS entry_date",
+            "NULL AS planned_exit_date",
+            "100.0 AS open_D1",
+            "101.0 AS close_D5",
+            "1.0 AS adj_factor_D1",
+            "1.0 AS adj_factor_D5",
+            "100.0 AS adj_open_base_D1",
+            "101.0 AS adj_close_base_D5",
+            "TRUE AS label_defined",
+            "0.01 AS label_5d_next_open_close_raw",
+            (
+                "CASE WHEN instrument = '000001.SZ' THEN 0.02 ELSE -0.01 END "
+                " + CAST(signal_date AS BIGINT) * 0.0 AS label_5d_next_open_close"
+            ),
+            "NULL AS label_masked_reason",
+        ]
+        if omit_target_label:
+            select_columns = [
+                column for column in select_columns if " AS label_5d_next_open_close" not in column
+            ]
+
+        con.execute(
+            f"""
+            COPY (
+                SELECT
+                    {", ".join(select_columns)}
+                FROM read_parquet('{sample_panel_path.as_posix()}')
+            ) TO '{label_panel_path.as_posix()}' (FORMAT PARQUET)
+            """
+        )
+    finally:
+        con.close()
+    return label_panel_path
+
+
 def test_builder_script_exists(repo_root: Path) -> None:
     assert (repo_root / SCRIPT_PATH).exists()
 
@@ -473,6 +521,7 @@ def test_confirmed5_builder_fails_when_required_source_columns_are_missing(
     )
     sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path, omit_source_column="vol")
     dataset_split_path = build_confirmed5_dataset_split_fixture(tmp_path, sample_panel_path)
+    _ = build_confirmed5_label_panel_fixture(tmp_path, sample_panel_path)
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
@@ -491,6 +540,36 @@ def test_confirmed5_builder_fails_when_required_source_columns_are_missing(
     assert not output_dir.exists()
 
 
+def test_confirmed5_builder_fails_fast_when_target_label_source_is_not_available(
+    repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    feature_set_path, model_config_path, candidate_path = write_temp_manifests(
+        tmp_path,
+        feature_set_source=CONFIRMED5_FEATURE_SET_PATH,
+        candidate_source=CONFIRMED5_CANDIDATE_PATH,
+    )
+    sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path)
+    dataset_split_path = build_confirmed5_dataset_split_fixture(tmp_path, sample_panel_path)
+    _ = build_confirmed5_label_panel_fixture(tmp_path, sample_panel_path, omit_target_label=True)
+    audit_path = write_temp_data_source_audit(
+        tmp_path,
+        sample_panel_path=sample_panel_path,
+        validation_sample_panel_path=sample_panel_path,
+        dataset_split_path=dataset_split_path,
+        source_db_path=source_db_path,
+    )
+    monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
+    output_dir = tmp_path / "out_missing_target"
+
+    result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
+
+    assert result.returncode != 0
+    assert "target label source is not available for confirmed5 training" in result.stderr
+    assert not (output_dir / "model_scores_D0.parquet").exists()
+    assert not (output_dir / "metrics.json").exists()
+    assert not (output_dir / "validation_readout.json").exists()
+
+
 def test_confirmed5_builder_fails_fast_when_dataset_split_columns_are_missing(
     repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -505,6 +584,7 @@ def test_confirmed5_builder_fails_fast_when_dataset_split_columns_are_missing(
         sample_panel_path,
         omit_split_column="validation_flag",
     )
+    _ = build_confirmed5_label_panel_fixture(tmp_path, sample_panel_path)
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
@@ -527,7 +607,7 @@ def test_confirmed5_builder_fails_fast_when_dataset_split_columns_are_missing(
     assert not (output_dir / "validation_readout.json").exists()
 
 
-def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_audit(
+def test_confirmed5_builder_trains_and_writes_model_scores_only(
     repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     feature_set_path, model_config_path, candidate_path = write_temp_manifests(
@@ -537,6 +617,7 @@ def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_aud
     )
     sample_panel_path, source_db_path = build_confirmed5_loader_fixture(tmp_path)
     dataset_split_path = build_confirmed5_dataset_split_fixture(tmp_path, sample_panel_path)
+    _ = build_confirmed5_label_panel_fixture(tmp_path, sample_panel_path)
     audit_path = write_temp_data_source_audit(
         tmp_path,
         sample_panel_path=sample_panel_path,
@@ -551,13 +632,17 @@ def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_aud
 
     assert result.returncode == 0
     assert (output_dir / "data_loading_audit.json").exists()
-    assert not (output_dir / "model_scores_D0.parquet").exists()
+    assert (output_dir / "model_scores_D0.parquet").exists()
+    assert (output_dir / "model_scores_D0_audit.json").exists()
+    assert (output_dir / "training_manifest.json").exists()
     assert not (output_dir / "metrics.json").exists()
     assert not (output_dir / "holdings.csv").exists()
     assert not (output_dir / "validation_readout.json").exists()
+    assert not (output_dir / "backtest_daily.csv").exists()
+    assert not (output_dir / "portfolio_daily_summary.csv").exists()
 
     payload = json.loads((output_dir / "data_loading_audit.json").read_text(encoding="utf-8"))
-    assert payload["status"] == "loaded_feature_frame_only"
+    assert payload["status"] == "loaded_feature_frame_for_training"
     assert payload["feature_set_id"] == "nlc_v1_fset01_confirmed5"
     assert payload["candidate_scheme_id"] == "nlc_v1_confirmed5_lgbm_depth3_seed42"
     assert payload["source_gate_status"] == "passed"
@@ -575,6 +660,64 @@ def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_aud
         "alpha158_vsumd60_raw",
         "volatility_20d_raw",
     }
+
+    con = duckdb.connect()
+    try:
+        score_columns = {
+            row[0]
+            for row in con.execute(
+                f"DESCRIBE SELECT * FROM read_parquet('{(output_dir / 'model_scores_D0.parquet').as_posix()}')"
+            ).fetchall()
+        }
+        score_row_count = con.execute(
+            f"SELECT COUNT(*) FROM read_parquet('{(output_dir / 'model_scores_D0.parquet').as_posix()}')"
+        ).fetchone()[0]
+    finally:
+        con.close()
+
+    assert score_row_count == 140
+    assert score_columns == {
+        "run_id",
+        "candidate_scheme_id",
+        "snapshot_id",
+        "instrument",
+        "signal_date",
+        "model_score_D0",
+        "feature_set_id",
+        "model_config_id",
+        "config_hash",
+    }
+
+    scores_audit = json.loads((output_dir / "model_scores_D0_audit.json").read_text(encoding="utf-8"))
+    assert scores_audit["row_count"] == 140
+    assert scores_audit["null_score_rows"] == 0
+    assert scores_audit["frozen_test_access"] is False
+    assert scores_audit["status"] == "trained_and_scored_minimal"
+    assert scores_audit["feature_count"] == 5
+    assert "feature_set_hash" in scores_audit
+    assert "model_config_hash" in scores_audit
+    assert "config_hash" in scores_audit
+
+    training_manifest = json.loads((output_dir / "training_manifest.json").read_text(encoding="utf-8"))
+    assert training_manifest["candidate_scheme_id"] == "nlc_v1_confirmed5_lgbm_depth3_seed42"
+    assert training_manifest["feature_set_id"] == "nlc_v1_fset01_confirmed5"
+    assert training_manifest["model_config_id"] == "nlc_v1_lgbm_regressor_depth3_seed42"
+    assert training_manifest["random_seed"] == 42
+    assert training_manifest["status"] == "trained_and_scored_minimal"
+    assert training_manifest["environment_summary"]["model_family"] == "LightGBM"
+
+
+def test_load_lightgbm_or_fail_reports_clear_message(monkeypatch: pytest.MonkeyPatch) -> None:
+    module = load_module(SCRIPT_PATH, "build_nonlinear_challenger_model_scores_module_lightgbm")
+
+    def fake_import_module(name: str):
+        assert name == "lightgbm"
+        raise ModuleNotFoundError("No module named 'lightgbm'")
+
+    monkeypatch.setattr(module.importlib, "import_module", fake_import_module)
+
+    with pytest.raises(module.BuildError, match="lightgbm is required for nonlinear challenger training"):
+        module.load_lightgbm_or_fail()
 
 
 def test_build_data_loading_audit_records_loaded_feature_frame_status() -> None:
@@ -641,3 +784,11 @@ def test_builder_source_excludes_portfolio_metrics_and_readout_paths() -> None:
     assert "validation_readout" not in script_text
     assert "build_portfolio_artifacts.py" not in script_text
     assert "build_fixed_test_minimal.py" not in script_text
+
+
+def test_builder_source_does_not_use_validation_for_tuning() -> None:
+    script_text = read_text(SCRIPT_PATH)
+
+    assert "eval_set" not in script_text
+    assert "early_stopping(" not in script_text
+    assert "valid_sets" not in script_text
