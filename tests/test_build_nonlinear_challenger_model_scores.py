@@ -108,7 +108,12 @@ def write_temp_data_source_audit(
     return audit_path
 
 
-def build_confirmed5_loader_fixture(tmp_path: Path, *, omit_source_column: str | None = None) -> tuple[Path, Path]:
+def build_confirmed5_loader_fixture(
+    tmp_path: Path,
+    *,
+    omit_source_column: str | None = None,
+    include_split_field: bool = True,
+) -> tuple[Path, Path]:
     source_db_path = tmp_path / "warehouse.duckdb"
     con = duckdb.connect(str(source_db_path))
     try:
@@ -141,6 +146,11 @@ def build_confirmed5_loader_fixture(tmp_path: Path, *, omit_source_column: str |
         )
 
         sample_panel_path = tmp_path / "project_sample_panel.parquet"
+        split_column = (
+            "CASE WHEN day_idx < 50 THEN 'train' ELSE 'validation' END AS split,"
+            if include_split_field
+            else ""
+        )
         con.execute(
             f"""
             COPY (
@@ -149,6 +159,7 @@ def build_confirmed5_loader_fixture(tmp_path: Path, *, omit_source_column: str |
                     ts_code AS instrument,
                     trade_date AS signal_date,
                     TRUE AS ranking_eligible_D0,
+                    {split_column}
                     day_idx < 50 AS train_mask_v1,
                     day_idx >= 50 AS eval_mask_v1
                 FROM (
@@ -438,6 +449,38 @@ def test_confirmed5_builder_fails_when_required_source_columns_are_missing(
     assert not output_dir.exists()
 
 
+def test_confirmed5_builder_fails_fast_when_split_field_is_missing(
+    repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    feature_set_path, model_config_path, candidate_path = write_temp_manifests(
+        tmp_path,
+        feature_set_source=CONFIRMED5_FEATURE_SET_PATH,
+        candidate_source=CONFIRMED5_CANDIDATE_PATH,
+    )
+    sample_panel_path, source_db_path = build_confirmed5_loader_fixture(
+        tmp_path,
+        include_split_field=False,
+    )
+    audit_path = write_temp_data_source_audit(
+        tmp_path,
+        sample_panel_path=sample_panel_path,
+        validation_sample_panel_path=sample_panel_path,
+        source_db_path=source_db_path,
+    )
+    monkeypatch.setenv("NLC_CONFIRMED5_DATA_SOURCE_AUDIT_PATH", str(audit_path))
+    output_dir = tmp_path / "out_missing_split"
+
+    result = run_builder(repo_root, feature_set_path, model_config_path, candidate_path, output_dir)
+
+    assert result.returncode != 0
+    assert "train validation split field is not available in confirmed5 data loading source" in result.stderr
+    assert not output_dir.exists()
+    assert not (output_dir / "model_scores_D0.parquet").exists()
+    assert not (output_dir / "metrics.json").exists()
+    assert not (output_dir / "holdings.csv").exists()
+    assert not (output_dir / "validation_readout.json").exists()
+
+
 def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_audit(
     repo_root: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -470,8 +513,10 @@ def test_confirmed5_builder_loads_feature_frame_and_writes_only_data_loading_aud
     assert payload["feature_set_id"] == "nlc_v1_fset01_confirmed5"
     assert payload["candidate_scheme_id"] == "nlc_v1_confirmed5_lgbm_depth3_seed42"
     assert payload["source_gate_status"] == "passed"
-    assert payload["train_rows"] > 0
-    assert payload["validation_rows"] > 0
+    assert payload["train_rows"] == 100
+    assert payload["validation_rows"] == 40
+    assert payload["train_rows"] != 140
+    assert payload["validation_rows"] != 140
     assert payload["resolved_train_data_source"].endswith("project_sample_panel.parquet")
     assert payload["resolved_validation_data_source"].endswith("project_sample_panel.parquet")
     assert set(payload["feature_columns"]) == {

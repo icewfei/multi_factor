@@ -50,9 +50,10 @@ CONFIRMED5_REQUIRED_SAMPLE_COLUMNS = {
     "instrument",
     "signal_date",
     "ranking_eligible_D0",
-    "train_mask_v1",
-    "eval_mask_v1",
 }
+CONFIRMED5_SPLIT_FIELD = "split"
+CONFIRMED5_TRAIN_SPLIT_VALUES = ("train",)
+CONFIRMED5_VALIDATION_SPLIT_VALUES = ("validation", "eval")
 CONFIRMED5_REQUIRED_SOURCE_COLUMNS = {
     "snapshot_id",
     "ts_code",
@@ -127,6 +128,9 @@ CONFIRMED5_DATA_SOURCE_AUDIT_NOT_RESOLVED_MESSAGE = "confirmed5 data source audi
 CONFIRMED5_DATA_SOURCE_READY_FLAG_MESSAGE = "confirmed5 data source audit requires all features ready_for_data_loading=true"
 CONFIRMED5_INPUT_PATH_NOT_FOUND_MESSAGE = "confirmed5 training data input path not found"
 CONFIRMED5_REQUIRED_FEATURE_COLUMNS_MISSING_MESSAGE = "confirmed5 required feature columns missing"
+CONFIRMED5_SPLIT_FIELD_NOT_AVAILABLE_MESSAGE = (
+    "train validation split field is not available in confirmed5 data loading source"
+)
 
 
 class BuildError(Exception):
@@ -426,6 +430,11 @@ def ensure_required_columns_or_fail(
         )
 
 
+def ensure_confirmed5_split_field_or_fail(available_columns: set[str]) -> None:
+    if CONFIRMED5_SPLIT_FIELD not in available_columns:
+        raise BuildError(CONFIRMED5_SPLIT_FIELD_NOT_AVAILABLE_MESSAGE)
+
+
 def build_confirmed5_feature_frame(
     load_plan: dict[str, Any],
 ) -> tuple[int, int, dict[str, int]]:
@@ -440,6 +449,7 @@ def build_confirmed5_feature_frame(
         )
         sample_columns = describe_columns(con, "project_sample_panel")
         ensure_required_columns_or_fail(sample_columns, CONFIRMED5_REQUIRED_SAMPLE_COLUMNS, "project_sample_panel")
+        ensure_confirmed5_split_field_or_fail(sample_columns)
 
         source_relation = f"warehouse_db.{load_plan['source_view']}"
         source_columns = describe_columns(con, source_relation)
@@ -562,8 +572,7 @@ def build_confirmed5_feature_frame(
                 p.instrument,
                 p.signal_date,
                 p.ranking_eligible_D0,
-                p.train_mask_v1,
-                p.eval_mask_v1,
+                p.split,
                 b.reversal_5d_raw,
                 b.alpha158_cord30_raw,
                 b.alpha158_corr30_raw,
@@ -583,10 +592,24 @@ def build_confirmed5_feature_frame(
         )
 
         train_rows, validation_rows = con.execute(
-            """
+            f"""
             SELECT
-                SUM(CASE WHEN ranking_eligible_D0 AND train_mask_v1 THEN 1 ELSE 0 END) AS train_rows,
-                SUM(CASE WHEN ranking_eligible_D0 AND eval_mask_v1 THEN 1 ELSE 0 END) AS validation_rows
+                SUM(
+                    CASE
+                        WHEN ranking_eligible_D0
+                         AND LOWER(split) IN ({", ".join(repr(value) for value in CONFIRMED5_TRAIN_SPLIT_VALUES)})
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS train_rows,
+                SUM(
+                    CASE
+                        WHEN ranking_eligible_D0
+                         AND LOWER(split) IN ({", ".join(repr(value) for value in CONFIRMED5_VALIDATION_SPLIT_VALUES)})
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS validation_rows
             FROM feature_frame
             """
         ).fetchone()
