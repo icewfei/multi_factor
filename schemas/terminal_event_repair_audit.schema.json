@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/terminal_event_repair_audit.schema.json",
+  "title": "Terminal Event Repair Audit",
+  "description": "Intermediate artifact produced by audit_terminal_event_source_repair.py. Classifies terminal_event_unpriced rows into repair cases. Does not produce prices, actual_exit_date, or actual_sell_price, and does not unblock rows.",
+  "type": "object",
+  "required": [
+    "audit_status",
+    "contract_ref",
+    "repair_policy_version",
+    "summary",
+    "rows",
+    "notes"
+  ],
+  "properties": {
+    "audit_status": {
+      "type": "string",
+      "const": "terminal_event_source_repair_audit_only"
+    },
+    "contract_ref": {
+      "type": "string",
+      "description": "Path to the repair plan contract that governs this audit."
+    },
+    "repair_policy_version": {
+      "type": "string",
+      "description": "Version identifier of the repair policy contract."
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_rows",
+        "degraded_terminal_source_with_auditable_bars_count",
+        "declared_last_tradable_date_suspended_count",
+        "still_hard_blocker_count",
+        "can_emit_terminal_priced_last_tradable_close_count"
+      ],
+      "properties": {
+        "total_rows": { "type": "integer", "minimum": 0 },
+        "degraded_terminal_source_with_auditable_bars_count": { "type": "integer", "minimum": 0 },
+        "declared_last_tradable_date_suspended_count": { "type": "integer", "minimum": 0 },
+        "still_hard_blocker_count": { "type": "integer", "minimum": 0 },
+        "can_emit_terminal_priced_last_tradable_close_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "instrument",
+          "signal_date",
+          "terminal_event_date",
+          "terminal_event_type",
+          "declared_last_tradable_date",
+          "actual_last_tradable_date",
+          "last_tradable_close",
+          "adj_factor",
+          "volume",
+          "repair_case",
+          "terminal_event_source_degraded_flag",
+          "terminal_exit_approximation_flag",
+          "source_repair_flag",
+          "declared_actual_ltd_diff_days",
+          "still_hard_blocker",
+          "can_emit_terminal_priced_last_tradable_close",
+          "required_next_step"
+        ],
+        "properties": {
+          "snapshot_id": {
+            "type": "string",
+            "description": "Snapshot identifier from the source data."
+          },
+          "instrument": {
+            "type": "string",
+            "description": "Instrument/ticker code."
+          },
+          "signal_date": {
+            "type": "string",
+            "description": "Signal generation date."
+          },
+          "terminal_event_date": {
+            "type": ["string", "null"],
+            "description": "Date of the terminal event (e.g. delist date)."
+          },
+          "terminal_event_type": {
+            "type": ["string", "null"],
+            "description": "Type of terminal event (e.g. delist)."
+          },
+          "declared_last_tradable_date": {
+            "type": ["string", "null"],
+            "description": "Last tradable date declared by the terminal_event source."
+          },
+          "actual_last_tradable_date": {
+            "type": ["string", "null"],
+            "description": "Actual last tradable date inferred from bars/tradability data. Must not be interpreted as actual_exit_date."
+          },
+          "last_tradable_close": {
+            "type": ["number", "null"],
+            "description": "Close price on the actual last tradable date. May exist but must not be interpreted as actual_sell_price."
+          },
+          "adj_factor": {
+            "type": ["number", "null"],
+            "description": "Adjustment factor on the actual last tradable date."
+          },
+          "volume": {
+            "type": ["number", "null"],
+            "description": "Trading volume on the actual last tradable date."
+          },
+          "repair_case": {
+            "type": "string",
+            "enum": [
+              "degraded_terminal_source_with_auditable_bars",
+              "declared_last_tradable_date_suspended"
+            ],
+            "description": "Repair case classification per terminal_event_source_repair_plan.v1.json."
+          },
+          "terminal_event_source_degraded_flag": {
+            "type": "boolean",
+            "description": "True when the terminal_event source is contract_degraded and source repair is required. A repair audit flag only; does not unblock the row."
+          },
+          "terminal_exit_approximation_flag": {
+            "type": "boolean",
+            "description": "True when the actual last tradable date is an inferred approximation rather than the declared date. A repair audit flag only; does not unblock the row."
+          },
+          "source_repair_flag": {
+            "type": "boolean",
+            "description": "True when source repair is required before pricing. A repair audit flag only; does not unblock the row."
+          },
+          "declared_actual_ltd_diff_days": {
+            "type": ["integer", "null"],
+            "description": "Calendar day difference between declared_last_tradable_date and actual_last_tradable_date. Positive when actual precedes declared."
+          },
+          "still_hard_blocker": {
+            "type": "boolean",
+            "const": true,
+            "description": "Must be true. No row is unblocked by this audit."
+          },
+          "can_emit_terminal_priced_last_tradable_close": {
+            "type": "boolean",
+            "const": false,
+            "description": "Must be false. This audit does not enable pricing."
+          },
+          "required_next_step": {
+            "type": "string",
+            "description": "Human-readable description of the next required step before this row can progress."
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

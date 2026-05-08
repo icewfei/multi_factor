@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -109,6 +110,26 @@ def infer_actual_last_tradable_date(
     return None
 
 
+REPAIR_POLICY_VERSION = "terminal_event_source_repair_plan_v1"
+
+
+def parse_date(d: str | None) -> date | None:
+    if not d:
+        return None
+    try:
+        return date(int(d[:4]), int(d[4:6]), int(d[6:8]))
+    except (ValueError, IndexError):
+        return None
+
+
+def calendar_diff_days(d1: str | None, d2: str | None) -> int | None:
+    p1 = parse_date(d1)
+    p2 = parse_date(d2)
+    if p1 is None or p2 is None:
+        return None
+    return (p1 - p2).days
+
+
 def classify_repair_case(
     con: duckdb.DuckDBPyConnection,
     row: dict[str, Any],
@@ -116,19 +137,27 @@ def classify_repair_case(
     inst = row["instrument"]
     signal_date = row["signal_date"]
     terminal_date = row.get("terminal_event_date")
+    terminal_type = row.get("terminal_event_type")
+    snapshot = row.get("snapshot_id")
     ts = row.get("terminal_event_source") or {}
     declared_ltd = ts.get("last_tradable_date")
 
     result: dict[str, Any] = {
+        "snapshot_id": snapshot,
         "instrument": inst,
         "signal_date": signal_date,
         "terminal_event_date": terminal_date,
+        "terminal_event_type": terminal_type,
         "declared_last_tradable_date": declared_ltd,
         "actual_last_tradable_date": None,
-        "close": None,
+        "last_tradable_close": None,
         "adj_factor": None,
         "volume": None,
         "repair_case": None,
+        "terminal_event_source_degraded_flag": False,
+        "terminal_exit_approximation_flag": False,
+        "source_repair_flag": False,
+        "declared_actual_ltd_diff_days": None,
         "still_hard_blocker": True,
         "can_emit_terminal_priced_last_tradable_close": False,
         "required_next_step": None,
@@ -156,6 +185,9 @@ def classify_repair_case(
         actual_ltd = infer_actual_last_tradable_date(con, inst, declared_ltd)
         result["repair_case"] = "declared_last_tradable_date_suspended"
         result["actual_last_tradable_date"] = actual_ltd
+        result["terminal_exit_approximation_flag"] = True
+        result["source_repair_flag"] = True
+        result["declared_actual_ltd_diff_days"] = calendar_diff_days(declared_ltd, actual_ltd)
 
         if actual_ltd:
             bar = fetch_one(
@@ -167,7 +199,7 @@ def classify_repair_case(
                 """,
             )
             if bar:
-                result["close"] = bar["close"]
+                result["last_tradable_close"] = bar["close"]
                 result["adj_factor"] = bar["adj_factor"]
                 result["volume"] = bar["vol"]
 
@@ -191,9 +223,11 @@ def classify_repair_case(
 
         result["repair_case"] = "degraded_terminal_source_with_auditable_bars"
         result["actual_last_tradable_date"] = declared_ltd
+        result["terminal_event_source_degraded_flag"] = True
+        result["declared_actual_ltd_diff_days"] = 0
 
         if bar:
-            result["close"] = bar["close"]
+            result["last_tradable_close"] = bar["close"]
             result["adj_factor"] = bar["adj_factor"]
             result["volume"] = bar["vol"]
 
@@ -228,6 +262,7 @@ def build_audit(diagnosis_path: Path, contract_path: Path) -> dict[str, Any]:
     return {
         "audit_status": "terminal_event_source_repair_audit_only",
         "contract_ref": "contracts/terminal_event_source_repair_plan.v1.json",
+        "repair_policy_version": REPAIR_POLICY_VERSION,
         "summary": {
             "total_rows": len(audited),
             "degraded_terminal_source_with_auditable_bars_count": len(degraded),

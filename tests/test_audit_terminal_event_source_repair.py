@@ -22,6 +22,7 @@ def _make_audit_diagnosis_row(
     execution_path_status: str = "terminal_event_unpriced",
 ) -> dict:
     return {
+        "snapshot_id": "test_snapshot_001",
         "instrument": instrument,
         "signal_date": signal_date,
         "entry_date": "20210104",
@@ -305,15 +306,21 @@ def test_summary_counts_consistent(audit_output: dict) -> None:
 
 def test_all_rows_have_required_fields(audit_output: dict) -> None:
     required = [
+        "snapshot_id",
         "instrument",
         "signal_date",
         "terminal_event_date",
+        "terminal_event_type",
         "declared_last_tradable_date",
         "actual_last_tradable_date",
-        "close",
+        "last_tradable_close",
         "adj_factor",
         "volume",
         "repair_case",
+        "terminal_event_source_degraded_flag",
+        "terminal_exit_approximation_flag",
+        "source_repair_flag",
+        "declared_actual_ltd_diff_days",
         "still_hard_blocker",
         "can_emit_terminal_priced_last_tradable_close",
         "required_next_step",
@@ -329,7 +336,7 @@ def test_degraded_rows_have_close_data(audit_output: dict) -> None:
         if r["repair_case"] == "degraded_terminal_source_with_auditable_bars"
     ]
     for row in degraded:
-        assert row["close"] is not None, f"{row['instrument']} degraded row missing close"
+        assert row["last_tradable_close"] is not None, f"{row['instrument']} degraded row missing last_tradable_close"
         assert row["adj_factor"] is not None, f"{row['instrument']} degraded row missing adj_factor"
         assert row["volume"] is not None, f"{row['instrument']} degraded row missing volume"
         assert row["actual_last_tradable_date"] == row["declared_last_tradable_date"]
@@ -343,7 +350,7 @@ def test_suspended_rows_have_inferred_actual_date(audit_output: dict) -> None:
     for row in suspended:
         assert row["actual_last_tradable_date"] is not None
         assert row["actual_last_tradable_date"] != row["declared_last_tradable_date"]
-        assert row["close"] is not None
+        assert row["last_tradable_close"] is not None
         assert row["adj_factor"] is not None
         assert row["volume"] is not None
 
@@ -383,3 +390,78 @@ def test_audit_has_notes(audit_output: dict) -> None:
 def test_notes_mention_no_price_output(audit_output: dict) -> None:
     notes_text = " ".join(audit_output["notes"]).lower()
     assert "does not implement repair logic" in notes_text or "does not implement" in notes_text
+
+
+# --- schema-aligned fields ---
+
+def test_all_rows_have_snapshot_id(audit_output: dict) -> None:
+    for row in audit_output["rows"]:
+        assert row["snapshot_id"] is not None
+
+
+def test_all_rows_have_terminal_event_type(audit_output: dict) -> None:
+    for row in audit_output["rows"]:
+        assert "terminal_event_type" in row
+
+
+def test_repair_policy_version_present(audit_output: dict) -> None:
+    assert audit_output["repair_policy_version"] == "terminal_event_source_repair_plan_v1"
+
+
+# --- flag assignments per repair case ---
+
+def test_degraded_rows_have_source_degraded_flag_true(audit_output: dict) -> None:
+    degraded = [
+        r for r in audit_output["rows"]
+        if r["repair_case"] == "degraded_terminal_source_with_auditable_bars"
+    ]
+    for row in degraded:
+        assert row["terminal_event_source_degraded_flag"] is True
+        assert row["terminal_exit_approximation_flag"] is False
+        assert row["source_repair_flag"] is False
+
+
+def test_suspended_rows_have_approximation_and_repair_flags_true(audit_output: dict) -> None:
+    suspended = [
+        r for r in audit_output["rows"]
+        if r["repair_case"] == "declared_last_tradable_date_suspended"
+    ]
+    for row in suspended:
+        assert row["terminal_event_source_degraded_flag"] is False
+        assert row["terminal_exit_approximation_flag"] is True
+        assert row["source_repair_flag"] is True
+
+
+# --- declared_actual_ltd_diff_days ---
+
+def test_degraded_rows_have_zero_diff_days(audit_output: dict) -> None:
+    degraded = [
+        r for r in audit_output["rows"]
+        if r["repair_case"] == "degraded_terminal_source_with_auditable_bars"
+    ]
+    for row in degraded:
+        assert row["declared_actual_ltd_diff_days"] == 0
+
+
+def test_suspended_rows_have_positive_diff_days(audit_output: dict) -> None:
+    suspended = [
+        r for r in audit_output["rows"]
+        if r["repair_case"] == "declared_last_tradable_date_suspended"
+    ]
+    for row in suspended:
+        assert row["declared_actual_ltd_diff_days"] is not None
+        assert row["declared_actual_ltd_diff_days"] > 0
+
+
+# --- last_tradable_close is not actual_sell_price ---
+
+def test_no_actual_sell_price_field(audit_output: dict) -> None:
+    for row in audit_output["rows"]:
+        assert "actual_sell_price" not in row
+
+
+# --- actual_last_tradable_date is not actual_exit_date ---
+
+def test_no_actual_exit_date_field(audit_output: dict) -> None:
+    for row in audit_output["rows"]:
+        assert "actual_exit_date" not in row
