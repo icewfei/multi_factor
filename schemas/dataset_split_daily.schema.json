@@ -4,13 +4,17 @@
   "title": "Dataset Split Daily",
   "type": "object",
   "required": [
+    "snapshot_id",
     "split_version",
     "instrument",
     "signal_date",
     "split_bucket",
-    "purge_gap_applied"
+    "purge_gap_applied",
+    "split_config_id",
+    "split_policy"
   ],
   "properties": {
+    "snapshot_id": { "type": "string" },
     "split_version": { "type": "string" },
     "instrument": { "type": "string" },
     "signal_date": { "type": "string" },
@@ -19,6 +23,8 @@
     "train_flag": { "type": "boolean" },
     "validation_flag": { "type": "boolean" },
     "test_flag": { "type": "boolean" },
+    "split_config_id": { "type": "string" },
+    "split_policy": { "type": "string" },
     "observation_flag": { "type": "boolean" },
     "notes": { "type": ["string", "null"] }
   }

@@ -1,0 +1,12 @@
+{
+  "split_config_id": "dataset_split_research_trainval_20211231",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "train_start": "2010-01-01",
+  "train_end": "2018-12-31",
+  "validation_start": "2019-01-01",
+  "validation_end": "2021-12-31",
+  "test_excluded_start": "2022-01-01",
+  "test_excluded_end": "2025-12-31",
+  "split_policy": "fixed_calendar_date_split_v1",
+  "frozen_test_access": false
+}
