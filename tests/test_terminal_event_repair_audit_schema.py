@@ -237,6 +237,177 @@ def test_audit_script_rows_match_schema_required_fields() -> None:
 def test_repair_policy_version_matches_contract() -> None:
     contract = load_json("contracts/terminal_event_source_repair_plan.v1.json")
     contract_version = contract["contract_version"]
-    # The repair_policy_version in the audit should match the contract version
-    # (using snake_case mapping: terminal_event_source_repair_plan_v1)
     assert contract_version == "terminal_event_source_repair_plan_v1"
+
+
+# --- validation script ---
+
+VALIDATE_SCRIPT_PATH = "scripts/validate_terminal_event_repair_audit.py"
+
+
+def test_validate_script_passes_on_valid_audit(tmp_path: Path) -> None:
+    """Run the validation script against a minimal valid audit and verify it passes."""
+    import subprocess
+    import sys
+
+    # Build a minimal schema-compliant audit JSON
+    audit = {
+        "audit_status": "terminal_event_source_repair_audit_only",
+        "contract_ref": "contracts/terminal_event_source_repair_plan.v1.json",
+        "repair_policy_version": "terminal_event_source_repair_plan_v1",
+        "summary": {
+            "total_rows": 1,
+            "degraded_terminal_source_with_auditable_bars_count": 1,
+            "declared_last_tradable_date_suspended_count": 0,
+            "still_hard_blocker_count": 1,
+            "can_emit_terminal_priced_last_tradable_close_count": 0,
+            "unclassifiable_excluded_count": 0,
+        },
+        "rows": [
+            {
+                "snapshot_id": "test_001",
+                "instrument": "TEST.SZ",
+                "signal_date": "20210101",
+                "terminal_event_date": "20210110",
+                "terminal_event_type": "delist",
+                "declared_last_tradable_date": "20210107",
+                "actual_last_tradable_date": "20210107",
+                "last_tradable_close": 10.5,
+                "adj_factor": 1.05,
+                "volume": 100000.0,
+                "repair_case": "degraded_terminal_source_with_auditable_bars",
+                "terminal_event_source_degraded_flag": True,
+                "terminal_exit_approximation_flag": False,
+                "source_repair_flag": False,
+                "declared_actual_ltd_diff_days": 0,
+                "still_hard_blocker": True,
+                "can_emit_terminal_priced_last_tradable_close": False,
+                "required_next_step": "source repair required",
+            }
+        ],
+        "notes": ["test audit"],
+    }
+    audit_path = tmp_path / "test_audit.json"
+    audit_path.write_text(json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / VALIDATE_SCRIPT_PATH),
+            "--audit-json", str(audit_path),
+            "--schema", str(REPO_ROOT / SCHEMA_PATH),
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, f"Validation script failed: {result.stderr}"
+    output = json.loads(result.stdout)
+    assert output["passed"] is True
+
+
+def test_validate_script_fails_on_invalid_repair_case(tmp_path: Path) -> None:
+    """Validation script should fail when repair_case is not in the enum."""
+    import subprocess
+    import sys
+
+    audit = {
+        "audit_status": "terminal_event_source_repair_audit_only",
+        "contract_ref": "contracts/terminal_event_source_repair_plan.v1.json",
+        "repair_policy_version": "terminal_event_source_repair_plan_v1",
+        "summary": {
+            "total_rows": 1,
+            "degraded_terminal_source_with_auditable_bars_count": 0,
+            "declared_last_tradable_date_suspended_count": 0,
+            "still_hard_blocker_count": 1,
+            "can_emit_terminal_priced_last_tradable_close_count": 0,
+            "unclassifiable_excluded_count": 0,
+        },
+        "rows": [
+            {
+                "snapshot_id": "test_001",
+                "instrument": "TEST.SZ",
+                "signal_date": "20210101",
+                "terminal_event_date": "20210110",
+                "terminal_event_type": "delist",
+                "declared_last_tradable_date": "20210107",
+                "actual_last_tradable_date": "20210107",
+                "last_tradable_close": 10.5,
+                "adj_factor": 1.05,
+                "volume": 100000.0,
+                "repair_case": "invalid_case",
+                "terminal_event_source_degraded_flag": False,
+                "terminal_exit_approximation_flag": False,
+                "source_repair_flag": False,
+                "declared_actual_ltd_diff_days": 0,
+                "still_hard_blocker": True,
+                "can_emit_terminal_priced_last_tradable_close": False,
+                "required_next_step": "fix it",
+            }
+        ],
+        "notes": ["test"],
+    }
+    audit_path = tmp_path / "test_audit.json"
+    audit_path.write_text(json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / VALIDATE_SCRIPT_PATH),
+            "--audit-json", str(audit_path),
+            "--schema", str(REPO_ROOT / SCHEMA_PATH),
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode != 0, "Validation script should have failed"
+
+
+def test_validate_script_fails_on_missing_required_field(tmp_path: Path) -> None:
+    """Validation script should fail when a required field is missing."""
+    import subprocess
+    import sys
+
+    audit = {
+        "audit_status": "terminal_event_source_repair_audit_only",
+        "contract_ref": "contracts/terminal_event_source_repair_plan.v1.json",
+        "repair_policy_version": "terminal_event_source_repair_plan_v1",
+        "summary": {
+            "total_rows": 1,
+            "degraded_terminal_source_with_auditable_bars_count": 0,
+            "declared_last_tradable_date_suspended_count": 0,
+            "still_hard_blocker_count": 1,
+            "can_emit_terminal_priced_last_tradable_close_count": 0,
+            "unclassifiable_excluded_count": 0,
+        },
+        "rows": [
+            {
+                "snapshot_id": "test_001",
+                "instrument": "TEST.SZ",
+                "signal_date": "20210101",
+                # missing terminal_event_date
+                "terminal_event_type": "delist",
+                "repair_case": "degraded_terminal_source_with_auditable_bars",
+            }
+        ],
+        "notes": ["test"],
+    }
+    audit_path = tmp_path / "test_audit.json"
+    audit_path.write_text(json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / VALIDATE_SCRIPT_PATH),
+            "--audit-json", str(audit_path),
+            "--schema", str(REPO_ROOT / SCHEMA_PATH),
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode != 0, "Validation script should have failed on missing field"

@@ -39,7 +39,8 @@
         "degraded_terminal_source_with_auditable_bars_count": { "type": "integer", "minimum": 0 },
         "declared_last_tradable_date_suspended_count": { "type": "integer", "minimum": 0 },
         "still_hard_blocker_count": { "type": "integer", "minimum": 0 },
-        "can_emit_terminal_priced_last_tradable_close_count": { "type": "integer", "minimum": 0 }
+        "can_emit_terminal_priced_last_tradable_close_count": { "type": "integer", "minimum": 0 },
+        "unclassifiable_excluded_count": { "type": "integer", "minimum": 0 }
       }
     },
     "rows": {

@@ -256,23 +256,27 @@ def build_audit(diagnosis_path: Path, contract_path: Path) -> dict[str, Any]:
     finally:
         con.close()
 
-    degraded = [r for r in audited if r["repair_case"] == "degraded_terminal_source_with_auditable_bars"]
-    suspended = [r for r in audited if r["repair_case"] == "declared_last_tradable_date_suspended"]
+    unclassifiable = [r for r in audited if r["repair_case"] == "unclassifiable"]
+    classified = [r for r in audited if r["repair_case"] != "unclassifiable"]
+
+    degraded = [r for r in classified if r["repair_case"] == "degraded_terminal_source_with_auditable_bars"]
+    suspended = [r for r in classified if r["repair_case"] == "declared_last_tradable_date_suspended"]
 
     return {
         "audit_status": "terminal_event_source_repair_audit_only",
         "contract_ref": "contracts/terminal_event_source_repair_plan.v1.json",
         "repair_policy_version": REPAIR_POLICY_VERSION,
         "summary": {
-            "total_rows": len(audited),
+            "total_rows": len(classified),
             "degraded_terminal_source_with_auditable_bars_count": len(degraded),
             "declared_last_tradable_date_suspended_count": len(suspended),
             "still_hard_blocker_count": sum(1 for r in audited if r["still_hard_blocker"]),
             "can_emit_terminal_priced_last_tradable_close_count": sum(
                 1 for r in audited if r["can_emit_terminal_priced_last_tradable_close"]
             ),
+            "unclassifiable_excluded_count": len(unclassifiable),
         },
-        "rows": audited,
+        "rows": classified,
         "notes": [
             "This audit classifies terminal_event_unpriced rows into repair cases only. It does not implement repair logic, produce prices, or unblock rows.",
             "All rows remain still_hard_blocker=true. No row can emit terminal_priced_last_tradable_close.",
