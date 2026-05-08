@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/post_delist_terminal_event_bridge.schema.json",
+  "title": "Post Delist Terminal Event Bridge Audit",
+  "type": "object",
+  "required": [
+    "audit_status",
+    "contract_ref",
+    "summary",
+    "rows",
+    "notes"
+  ],
+  "properties": {
+    "audit_status": {
+      "const": "post_delist_terminal_event_bridge_audit"
+    },
+    "contract_ref": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_candidate_rows",
+        "bridge_identified_rows",
+        "residual_exit_unresolved_rows"
+      ],
+      "properties": {
+        "total_candidate_rows": { "type": "integer" },
+        "bridge_identified_rows": { "type": "integer" },
+        "residual_exit_unresolved_rows": { "type": "integer" }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "instrument",
+          "signal_date",
+          "planned_exit_date",
+          "source_execution_path_status",
+          "bridged_execution_path_status",
+          "bridge_detected",
+          "bridge_marker",
+          "terminal_event_type",
+          "terminal_event_date",
+          "last_tradable_date",
+          "post_planned_exit_calendar_days",
+          "post_planned_exit_tradability_rows",
+          "post_planned_exit_bars_rows",
+          "still_hard_blocker"
+        ],
+        "properties": {
+          "instrument": { "type": "string" },
+          "signal_date": { "type": "string" },
+          "planned_exit_date": { "type": "string" },
+          "source_execution_path_status": { "type": "string" },
+          "bridged_execution_path_status": {
+            "type": "string",
+            "enum": ["terminal_event_unpriced", "exit_unresolved"]
+          },
+          "bridge_detected": { "type": "boolean" },
+          "bridge_marker": { "type": ["string", "null"] },
+          "terminal_event_type": { "type": ["string", "null"] },
+          "terminal_event_date": { "type": ["string", "null"] },
+          "last_tradable_date": { "type": ["string", "null"] },
+          "post_planned_exit_calendar_days": { "type": "integer" },
+          "post_planned_exit_tradability_rows": { "type": "integer" },
+          "post_planned_exit_bars_rows": { "type": "integer" },
+          "still_hard_blocker": { "type": "boolean" }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

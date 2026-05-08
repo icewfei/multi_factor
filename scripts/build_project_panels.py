@@ -40,6 +40,7 @@ HOLDING_PERIOD_OVERRIDE_BLOCKED_MESSAGE = (
     "当前 v1 审计阶段禁止使用 --holding-period-days，因为它会破坏 "
     "label/sample/execution panel 一致性。"
 )
+POST_DELIST_TERMINAL_EVENT_BRIDGE_PRICING_METHOD = "terminal_event_bridge_required"
 
 
 @dataclass(frozen=True)
@@ -199,16 +200,70 @@ def build_project_sample_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext
 
 
 def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext) -> pa.Table:
+    e_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
     e_signal_date = mapped_source_field(ctx, "common_keys", "signal_date")
     e_instrument = mapped_source_field(ctx, "common_keys", "instrument")
     e_entry_date = mapped_source_field(ctx, "execution_path_daily", "entry_date")
     e_planned_exit_date = mapped_source_field(ctx, "execution_path_daily", "planned_exit_date")
+    e_actual_exit_date = mapped_source_field(ctx, "execution_path_daily", "actual_exit_date")
+    e_actual_sell_price = mapped_source_field(ctx, "execution_path_daily", "actual_sell_price")
+    e_execution_path_status = mapped_source_field(ctx, "execution_path_daily", "execution_path_status")
+    e_terminal_event_flag = mapped_source_field(ctx, "execution_path_daily", "terminal_event_flag")
     e_terminal_event_type = mapped_source_field(ctx, "execution_path_daily", "terminal_event_type")
     e_terminal_event_date = mapped_source_field(ctx, "execution_path_daily", "terminal_event_date")
+    e_terminal_exit_pricing_method = mapped_source_field(ctx, "execution_path_daily", "terminal_exit_pricing_method")
+    t_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
+    t_instrument = mapped_source_field(ctx, "common_keys", "instrument")
+    t_trade_date = mapped_source_field(ctx, "common_keys", "signal_date")
     t_terminal_event_type = mapped_source_field(ctx, "terminal_event_daily", "terminal_event_type")
     t_terminal_event_date = mapped_source_field(ctx, "terminal_event_daily", "terminal_event_date")
+    t_last_tradable_date = mapped_source_field(ctx, "terminal_event_daily", "last_tradable_date")
+    tr_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
+    tr_instrument = mapped_source_field(ctx, "common_keys", "instrument")
+    tr_trade_date = mapped_source_field(ctx, "common_keys", "signal_date")
+    b_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
+    b_instrument = mapped_source_field(ctx, "common_keys", "instrument")
+    b_trade_date = mapped_source_field(ctx, "common_keys", "signal_date")
 
     planned_exit_expr = f"e.{e_planned_exit_date} AS planned_exit_date"
+    bridge_terminal_event_flag_expr = (
+        "CASE "
+        "WHEN bridge.bridge_to_terminal_event_unpriced THEN TRUE "
+        f"ELSE e.{e_terminal_event_flag} END AS terminal_event_flag"
+    )
+    bridge_terminal_event_type_expr = (
+        "COALESCE("
+        f"e.{e_terminal_event_type}, "
+        f"t.{t_terminal_event_type}, "
+        "CASE "
+        "WHEN bridge.bridge_to_terminal_event_unpriced THEN bridge.bridge_terminal_event_type "
+        "ELSE NULL "
+        "END"
+        ") "
+        "AS terminal_event_type"
+    )
+    bridge_terminal_event_date_expr = (
+        "COALESCE("
+        f"e.{e_terminal_event_date}, "
+        f"t.{t_terminal_event_date}, "
+        "CASE "
+        "WHEN bridge.bridge_to_terminal_event_unpriced THEN bridge.bridge_terminal_event_date "
+        "ELSE NULL "
+        "END"
+        ") "
+        "AS terminal_event_date"
+    )
+    bridge_execution_path_status_expr = (
+        "CASE "
+        "WHEN bridge.bridge_to_terminal_event_unpriced THEN 'terminal_event_unpriced' "
+        f"ELSE e.{e_execution_path_status} END AS execution_path_status"
+    )
+    bridge_terminal_exit_pricing_method_expr = (
+        "CASE "
+        "WHEN bridge.bridge_to_terminal_event_unpriced "
+        f"AND e.{e_terminal_exit_pricing_method} IS NULL THEN '{POST_DELIST_TERMINAL_EVENT_BRIDGE_PRICING_METHOD}' "
+        f"ELSE e.{e_terminal_exit_pricing_method} END AS terminal_exit_pricing_method"
+    )
 
     select_exprs = [
         mapped_select_expr(ctx, "common_keys", "snapshot_id", table_alias="e"),
@@ -221,34 +276,115 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
         mapped_select_expr(ctx, "execution_path_daily", "actual_exit_price_field", table_alias="e"),
         mapped_select_expr(ctx, "execution_path_daily", "actual_sell_price", table_alias="e"),
         mapped_select_expr(ctx, "execution_path_daily", "exit_delay_days", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "execution_path_status", table_alias="e"),
+        bridge_execution_path_status_expr,
         mapped_select_expr(ctx, "execution_path_daily", "execution_delayed_realized_return", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "terminal_event_flag", table_alias="e"),
-        f"COALESCE(e.{e_terminal_event_type}, t.{t_terminal_event_type}) AS terminal_event_type",
-        f"COALESCE(e.{e_terminal_event_date}, t.{t_terminal_event_date}) AS terminal_event_date",
-        mapped_select_expr(ctx, "execution_path_daily", "terminal_exit_pricing_method", table_alias="e"),
+        bridge_terminal_event_flag_expr,
+        bridge_terminal_event_type_expr,
+        bridge_terminal_event_date_expr,
+        bridge_terminal_exit_pricing_method_expr,
         mapped_select_expr(ctx, "execution_path_daily", "terminal_exit_approximation_flag", table_alias="e"),
         mapped_select_expr(ctx, "execution_path_daily", "terminal_exit_conservative_flag", table_alias="e"),
     ]
     sql = """
+        WITH bridge_candidates AS (
+            SELECT
+                e.{e_snapshot_id} AS snapshot_id,
+                e.{e_instrument} AS instrument,
+                e.{e_signal_date} AS signal_date,
+                bridge_event.bridge_terminal_event_type,
+                bridge_event.bridge_terminal_event_date,
+                post_calendar.post_calendar_days,
+                post_tradability.post_planned_exit_tradability_rows,
+                post_bars.post_planned_exit_bars_rows,
+                CASE
+                    WHEN bridge_event.bridge_terminal_event_date IS NOT NULL
+                     AND post_calendar.post_calendar_days > 0
+                     AND post_tradability.post_planned_exit_tradability_rows = 0
+                     AND post_bars.post_planned_exit_bars_rows = 0
+                    THEN TRUE
+                    ELSE FALSE
+                END AS bridge_to_terminal_event_unpriced
+            FROM serving.vw_execution_path_daily e
+            LEFT JOIN LATERAL (
+                SELECT
+                    t.{t_terminal_event_type} AS bridge_terminal_event_type,
+                    t.{t_terminal_event_date} AS bridge_terminal_event_date
+                FROM serving.vw_terminal_event_daily t
+                WHERE t.{t_snapshot_id} = e.{e_snapshot_id}
+                  AND t.{t_instrument} = e.{e_instrument}
+                  AND t.{t_terminal_event_type} = 'delist'
+                  AND t.{t_terminal_event_date} >= e.{e_signal_date}
+                  AND t.{t_terminal_event_date} <= e.{e_planned_exit_date}
+                  AND t.{t_last_tradable_date} IS NOT NULL
+                  AND t.{t_last_tradable_date} < e.{e_planned_exit_date}
+                ORDER BY t.{t_terminal_event_date} DESC
+                LIMIT 1
+            ) bridge_event ON TRUE
+            LEFT JOIN LATERAL (
+                SELECT COUNT(*) AS post_calendar_days
+                FROM serving.vw_calendar cal
+                WHERE cal.trade_date > e.{e_planned_exit_date}
+            ) post_calendar ON TRUE
+            LEFT JOIN LATERAL (
+                SELECT COUNT(*) AS post_planned_exit_tradability_rows
+                FROM serving.vw_tradability_daily tr
+                WHERE tr.{tr_snapshot_id} = e.{e_snapshot_id}
+                  AND tr.{tr_instrument} = e.{e_instrument}
+                  AND tr.{tr_trade_date} > e.{e_planned_exit_date}
+            ) post_tradability ON TRUE
+            LEFT JOIN LATERAL (
+                SELECT COUNT(*) AS post_planned_exit_bars_rows
+                FROM serving.vw_bars_daily b
+                WHERE b.{b_snapshot_id} = e.{e_snapshot_id}
+                  AND b.{b_instrument} = e.{e_instrument}
+                  AND b.{b_trade_date} > e.{e_planned_exit_date}
+            ) post_bars ON TRUE
+            WHERE e.{e_snapshot_id} = ?
+              AND e.{e_execution_path_status} = 'exit_unresolved'
+              AND e.{e_actual_exit_date} IS NULL
+              AND e.{e_actual_sell_price} IS NULL
+        )
         SELECT
             {select_exprs}
         FROM serving.vw_execution_path_daily e
         LEFT JOIN serving.vw_terminal_event_daily t
-            ON e.{e_instrument} = t.{t_instrument}
+            ON e.{e_snapshot_id} = t.{t_snapshot_id}
+           AND e.{e_instrument} = t.{t_instrument}
            AND e.{e_terminal_event_date} = t.{t_terminal_event_date}
+        LEFT JOIN bridge_candidates bridge
+            ON e.{e_snapshot_id} = bridge.snapshot_id
+           AND e.{e_instrument} = bridge.instrument
+           AND e.{e_signal_date} = bridge.signal_date
         WHERE e.snapshot_id = ?
     """
     return fetch_arrow_table(
         con,
         sql.format(
             select_exprs=",\n            ".join(select_exprs),
+            e_snapshot_id=e_snapshot_id,
             e_instrument=e_instrument,
-            t_instrument=mapped_source_field(ctx, "common_keys", "instrument"),
+            e_signal_date=e_signal_date,
+            e_planned_exit_date=e_planned_exit_date,
+            e_actual_exit_date=e_actual_exit_date,
+            e_actual_sell_price=e_actual_sell_price,
+            e_execution_path_status=e_execution_path_status,
+            e_terminal_event_flag=e_terminal_event_flag,
+            e_terminal_exit_pricing_method=e_terminal_exit_pricing_method,
+            t_snapshot_id=t_snapshot_id,
+            t_instrument=t_instrument,
+            t_trade_date=t_trade_date,
             e_terminal_event_date=e_terminal_event_date,
+            t_terminal_event_type=t_terminal_event_type,
             t_terminal_event_date=t_terminal_event_date,
+            t_last_tradable_date=t_last_tradable_date,
+            tr_snapshot_id=tr_snapshot_id,
+            tr_instrument=tr_instrument,
+            tr_trade_date=tr_trade_date,
+            b_snapshot_id=b_snapshot_id,
+            b_instrument=b_instrument,
+            b_trade_date=b_trade_date,
         ),
-        [ctx.snapshot_id],
+        [ctx.snapshot_id, ctx.snapshot_id],
     )
 
 

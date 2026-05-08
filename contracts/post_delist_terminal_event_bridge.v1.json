@@ -1,0 +1,61 @@
+{
+  "contract_version": "post_delist_terminal_event_bridge_v1",
+  "generated_at": "2026-05-08T23:30:00+08:00",
+  "scope": "Defines the upstream classification bridge for post-delist coverage-gap rows. The bridge standardizes terminal-event evidence earlier in the execution path, but it does not price exits and it does not relax any portfolio hard-blocker rule.",
+  "bridge_source_state": "exit_unresolved",
+  "bridge_target_state": "terminal_event_unpriced",
+  "bridge_marker": "terminal_event_bridge_required",
+  "eligibility_rule": {
+    "all_of": [
+      "execution_path_status is exit_unresolved",
+      "actual_exit_date is NULL",
+      "actual_sell_price is NULL",
+      "a delist terminal_event exists for the same instrument with signal_date <= terminal_event_date <= planned_exit_date",
+      "terminal_event.last_tradable_date is earlier than planned_exit_date",
+      "there is at least one later trading-calendar date after planned_exit_date",
+      "vw_tradability_daily has zero rows for the instrument on dates after planned_exit_date",
+      "vw_bars_daily has zero rows for the instrument on dates after planned_exit_date"
+    ]
+  },
+  "required_source_evidence": [
+    "instrument",
+    "signal_date",
+    "planned_exit_date",
+    "execution_path_status",
+    "terminal_event_type",
+    "terminal_event_date",
+    "terminal_event_last_tradable_date",
+    "post_planned_exit_calendar_days",
+    "post_planned_exit_tradability_rows",
+    "post_planned_exit_bars_rows"
+  ],
+  "required_output_fields": [
+    "execution_path_status",
+    "terminal_event_flag",
+    "terminal_event_type",
+    "terminal_event_date",
+    "terminal_exit_pricing_method"
+  ],
+  "post_bridge_invariants": {
+    "hard_blocker": true,
+    "portfolio_allowed": false,
+    "actual_exit_date_must_remain_null": true,
+    "actual_sell_price_must_remain_null": true,
+    "execution_delayed_realized_return_must_remain_null": true,
+    "pricing_not_applied": true
+  },
+  "prohibited_actions": [
+    "Backfill actual_exit_date",
+    "Backfill actual_sell_price",
+    "Treat planned_exit_date as actual_exit_date",
+    "Apply terminal_priced_last_tradable_close",
+    "Apply zero_recovery",
+    "Filter unresolved rows and continue portfolio",
+    "Resolve the blocker at portfolio layer"
+  ],
+  "notes": [
+    "This bridge is classification-only. It upgrades hidden terminal-event evidence into an explicit terminal_event_unpriced blocker.",
+    "The bridge marker terminal_event_bridge_required is an audit breadcrumb, not a pricing result.",
+    "Any later unblock still requires a formal terminal pricing layer upstream."
+  ]
+}

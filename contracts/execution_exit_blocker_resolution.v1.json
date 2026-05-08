@@ -4,6 +4,7 @@
   "scope": "Defines the resolution matrix for each execution exit blocker type. Specifies resolution paths, required upstream fields, auto-unblock rules, prohibited behaviors, and recommended implementation order. This contract codifies what must happen before any blocker can be lifted — it does not implement any resolution logic.",
   "references": {
     "terminal_exit_policy": "contracts/terminal_exit_policy.v1.json",
+    "post_delist_terminal_event_bridge": "contracts/post_delist_terminal_event_bridge.v1.json",
     "diagnosis": "/private/tmp/confirmed5_execution_path_unresolved_exit_diagnosis.json",
     "classification": "/private/tmp/execution_exit_blocker_classification.json"
   },
@@ -39,17 +40,20 @@
       ]
     },
     "exit_unresolved": {
-      "description": "No exit signal and no terminal event is recorded. The exit path is entirely unresolved. actual_exit_date is NULL.",
+      "description": "No resolved exit is recorded in the upstream execution path. Some rows may still be bridgeable into terminal_event_unpriced when a pre-planned-exit delist terminal event and a post-delist full coverage gap are both proven. actual_exit_date remains NULL until a formal pricing layer is later applied.",
       "current_count": 10,
       "default_hard_blocker": true,
       "resolution_path": {
         "primary": "execution_path_completion",
-        "description": "Complete the execution path by determining whether the exit is a normal D5 close, a delayed sell, or a missing terminal event record. If the exit is truly unresolvable (no tradable path, no terminal event), it remains a hard blocker.",
+        "description": "Complete the execution path by determining whether the exit is a normal D5 close, a delayed sell, or a missing terminal event record. If post-delist coverage-gap evidence exists, the row must first bridge into terminal_event_unpriced rather than remaining exit_unresolved. If the exit is truly unresolvable (no tradable path, no terminal event), it remains a hard blocker.",
         "required_upstream_fields": [
           "actual_exit_date",
           "actual_sell_price",
           "execution_delayed_realized_return",
-          "execution_path_status"
+          "execution_path_status",
+          "terminal_event_flag",
+          "terminal_event_type",
+          "terminal_event_date"
         ],
         "resolution_criteria": "Row transitions from exit_unresolved to a resolved state when actual_exit_date, actual_sell_price, and execution_delayed_realized_return are all populated from the upstream execution path. This may require calendar/tradability source investigation if the exit path was never computed.",
         "auto_unblock_allowed": false,
@@ -115,9 +119,9 @@
     },
     {
       "step": 3,
-      "action": "Investigate exit_unresolved rows for calendar/source coverage gaps",
-      "rationale": "The 10 exit_unresolved rows may stem from calendar gaps, tradability source gaps, or genuinely missing exit signals. Diagnosis should distinguish these cases before any resolution is attempted.",
-      "expected_effect": "Identifies whether exit_unresolved rows are fixable via source repair or are permanently unresolvable."
+      "action": "Bridge post-delist coverage-gap rows from exit_unresolved into terminal_event_unpriced",
+      "rationale": "The 10 nonlinear confirmed5 exit_unresolved rows are not ordinary retry-path misses. They already have pre-planned-exit delist terminal events, and their post-planned-exit retry window has no tradability rows and no bars. Upstream execution standardization must therefore recognize the terminal event bridge before any pricing policy is considered.",
+      "expected_effect": "Turns misclassified post-delist coverage-gap rows into explicit terminal-event blockers without inventing actual_exit_date or actual_sell_price."
     },
     {
       "step": 4,

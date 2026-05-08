@@ -94,6 +94,24 @@ def fetch_dict_rows(con: duckdb.DuckDBPyConnection, sql: str) -> list[dict[str, 
     ]
 
 
+def is_expected_terminal_event_bridge(
+    panel_row: dict[str, Any],
+    source_row: dict[str, Any],
+) -> bool:
+    return (
+        source_row.get("execution_path_status") == "exit_unresolved"
+        and panel_row.get("execution_path_status") == "terminal_event_unpriced"
+        and panel_row.get("actual_exit_date") is None
+        and source_row.get("actual_exit_date") is None
+        and panel_row.get("actual_sell_price") is None
+        and source_row.get("actual_sell_price") is None
+        and panel_row.get("terminal_event_flag") is True
+        and panel_row.get("terminal_event_type") == "delist"
+        and panel_row.get("terminal_event_date") is not None
+        and panel_row.get("terminal_exit_pricing_method") == "terminal_event_bridge_required"
+    )
+
+
 def compare_panel_vs_source(
     panel_rows: list[dict[str, Any]],
     source_rows: list[dict[str, Any]],
@@ -123,6 +141,14 @@ def compare_panel_vs_source(
             continue
         for field in compare_fields:
             if row.get(field) != source_row.get(field):
+                if is_expected_terminal_event_bridge(row, source_row) and field in {
+                    "execution_path_status",
+                    "terminal_event_flag",
+                    "terminal_event_type",
+                    "terminal_event_date",
+                    "terminal_exit_pricing_method",
+                }:
+                    continue
                 mismatch_counts[field] += 1
                 if len(examples) < 5:
                     examples.append(
@@ -306,6 +332,7 @@ def build_diagnosis(
     terminal_pricing_policy_rows = 0
     terminal_event_unpriced_rows = 0
     nonterminal_exit_unresolved_rows = 0
+    terminal_event_bridge_rows = 0
     source_raw_null_rows = 0
     enriched_rows: list[dict[str, Any]] = []
     terminal_seen = set()
@@ -324,6 +351,8 @@ def build_diagnosis(
                 terminal_seen.add((str(row["instrument"]), str(row["terminal_event_date"])))
         if row["execution_path_status"] == "terminal_event_unpriced":
             terminal_event_unpriced_rows += 1
+            if source_row is not None and is_expected_terminal_event_bridge(row, source_row):
+                terminal_event_bridge_rows += 1
             if row.get("terminal_exit_pricing_method") == "no_terminal_pricing_source":
                 terminal_pricing_policy_rows += 1
         elif row["execution_path_status"] == "exit_unresolved":
@@ -356,6 +385,7 @@ def build_diagnosis(
             "source_execution_path_actual_exit_null_rows": source_raw_null_rows,
             "terminal_event_source_rows_matched": len(terminal_seen),
             "terminal_event_unpriced_rows": terminal_event_unpriced_rows,
+            "terminal_event_bridge_rows": terminal_event_bridge_rows,
             "nonterminal_exit_unresolved_rows": nonterminal_exit_unresolved_rows,
         },
         "judgment": {
@@ -389,8 +419,8 @@ def build_diagnosis(
         "conclusion": {
             "root_cause": (
                 "The unresolved actual_exit_date rows are already NULL in serving.vw_execution_path_daily. "
-                "project_execution_panel preserves those raw values; the build_project_panels.py join does not "
-                "create the NULLs."
+                "project_execution_panel may standardize post-delist coverage-gap rows into "
+                "terminal_event_unpriced, but it does not invent actual_exit_date or actual_sell_price."
             ),
             "terminal_policy_note": (
                 "The delist-linked terminal_event_unpriced rows point to a missing formal terminal pricing policy: "

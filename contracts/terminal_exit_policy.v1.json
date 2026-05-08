@@ -29,8 +29,8 @@
     "terminal_priced_cash_settlement": "Terminal exit has been priced via the cash_settlement layer. actual_exit_date and actual_sell_price are populated from auditable cash settlement data. terminal_exit_conservative_flag is false.",
     "terminal_priced_last_tradable_close": "Terminal exit has been priced via the last_tradable_close layer. actual_exit_date and actual_sell_price are populated from auditable last-tradable-day close or adjusted return. terminal_exit_conservative_flag is false.",
     "terminal_priced_zero_recovery": "Terminal exit has been priced via the zero_recovery layer. actual_sell_price is zero. terminal_exit_conservative_flag is true. This state must only be entered as an explicit policy decision, not as a default fallback.",
-    "terminal_event_unpriced": "A terminal event (e.g. delist) is recorded, but no pricing layer in the hierarchy could be applied. actual_exit_date and actual_sell_price remain NULL. This is a hard blocker and must not enter portfolio.",
-    "exit_unresolved": "No exit signal and no terminal event is recorded for this row. The exit path is entirely unresolved. actual_exit_date is NULL. This is a hard blocker and must not enter portfolio.",
+    "terminal_event_unpriced": "A terminal event (e.g. delist) is recorded, but no pricing layer in the hierarchy could be applied. This state also includes upstream bridge-standardized post-delist coverage-gap rows whose terminal event is now explicit but still unpriced. actual_exit_date and actual_sell_price remain NULL. This is a hard blocker and must not enter portfolio.",
+    "exit_unresolved": "No resolved exit signal and no bridgeable terminal event is recorded for this row. The exit path is entirely unresolved. actual_exit_date is NULL. This is a hard blocker and must not enter portfolio.",
     "calendar_insufficient": "Calendar data is insufficient to determine the exit date or to verify tradability windows. This is a hard blocker and must not enter portfolio."
   },
   "hard_blocker_rules": {
@@ -61,7 +61,7 @@
     "terminal_pricing_owner": "execution path / project_execution_panel upstream",
     "build_project_panels_role": "passthrough or standardize only; must not invent or approximate prices for terminal exits",
     "zero_recovery_constraint": "If zero_recovery is introduced, it must be output as a formal policy decision with terminal_exit_conservative_flag=true, not as a silent portfolio workaround",
-    "future_implementation_note": "Downstream formal implementation of terminal pricing should occur in the execution path or project_execution_panel layer, resolving each terminal event against the pricing hierarchy before the row reaches portfolio."
+    "future_implementation_note": "Downstream formal implementation of terminal pricing should occur in the execution path or project_execution_panel layer, resolving each terminal event against the pricing hierarchy before the row reaches portfolio. Before that pricing stage, post-delist coverage-gap rows may be bridge-standardized into terminal_event_unpriced but must remain hard blockers."
   },
   "notes": [
     "This contract defines policy and constraints only. It does not implement pricing logic or filter rows.",
