@@ -11,11 +11,15 @@ import duckdb
 
 ROOT = Path("/Users/wy/MiscProject/multi_factor")
 CONTRACT_PATH = ROOT / "contracts" / "run_input_contract.research_trainval_20211231.json"
+POLICY_PATH = ROOT / "contracts" / "terminal_exit_policy.v1.json"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Audit whether terminal_event_unpriced rows have auditable last_tradable_close pricing conditions."
+        description=(
+            "Audit whether terminal_event_unpriced rows satisfy the formal "
+            "last-tradable-close approval gate for repaired_terminal_event_candidate."
+        )
     )
     parser.add_argument(
         "--diagnosis-json",
@@ -26,6 +30,11 @@ def parse_args() -> argparse.Namespace:
         "--run-input-contract",
         default=str(CONTRACT_PATH),
         help="Run input contract to resolve source DB path",
+    )
+    parser.add_argument(
+        "--policy-contract",
+        default=str(POLICY_PATH),
+        help="Path to terminal_exit_policy.v1.json",
     )
     parser.add_argument("--output", required=True, help="Output audit JSON path")
     return parser.parse_args()
@@ -53,17 +62,61 @@ def fetch_one(con: duckdb.DuckDBPyConnection, sql: str) -> dict[str, Any] | None
     if not rows:
         return None
     cols = [col[0] for col in con.description]
-    result = {cols[i]: (rows[0][i].item() if hasattr(rows[0][i], "item") else rows[0][i]) for i in range(len(cols))}
-    return result
+    return {
+        cols[i]: (rows[0][i].item() if hasattr(rows[0][i], "item") else rows[0][i])
+        for i in range(len(cols))
+    }
 
 
-def fetch_all(con: duckdb.DuckDBPyConnection, sql: str) -> list[dict[str, Any]]:
-    rows = con.execute(sql).fetchall()
-    cols = [col[0] for col in con.description]
-    return [
-        {cols[i]: (row[i].item() if hasattr(row[i], "item") else row[i]) for i in range(len(cols))}
-        for row in rows
-    ]
+def infer_actual_last_trade_date(
+    con: duckdb.DuckDBPyConnection,
+    instrument: str,
+    declared_ltd: str,
+) -> tuple[str | None, dict[str, Any] | None, dict[str, Any] | None]:
+    actual_last = fetch_one(
+        con,
+        f"""
+        SELECT MAX(trade_date) AS max_trade_date
+        FROM wh.serving.vw_bars_daily
+        WHERE ts_code = '{instrument}' AND trade_date <= '{declared_ltd}'
+        """,
+    )
+    actual_trade_date = None if actual_last is None else actual_last["max_trade_date"]
+    if actual_trade_date is None or actual_trade_date == declared_ltd:
+        return actual_trade_date, None, None
+
+    actual_bar = fetch_one(
+        con,
+        f"""
+        SELECT close, adj_close, adj_factor, vol, amount
+        FROM wh.serving.vw_bars_daily
+        WHERE ts_code = '{instrument}' AND trade_date = '{actual_trade_date}'
+        """,
+    )
+    actual_trad = fetch_one(
+        con,
+        f"""
+        SELECT is_suspended_t, no_trade_t, is_listed_t
+        FROM wh.serving.vw_tradability_daily
+        WHERE ts_code = '{instrument}' AND trade_date = '{actual_trade_date}'
+        """,
+    )
+    return actual_trade_date, actual_bar, actual_trad
+
+
+def build_required_candidate_flags(
+    terminal_event_source_degraded_flag: bool,
+    terminal_exit_approximation_flag: bool,
+    source_repair_flag: bool,
+) -> list[str]:
+    flags: list[str] = []
+    if terminal_event_source_degraded_flag:
+        flags.append("terminal_event_source_degraded_flag")
+    if terminal_exit_approximation_flag:
+        flags.append("terminal_exit_approximation_flag")
+    if source_repair_flag:
+        flags.append("source_repair_flag")
+    return flags
 
 
 def audit_row(
@@ -76,11 +129,12 @@ def audit_row(
     terminal_type = row.get("terminal_event_type")
     pricing_method = row.get("terminal_exit_pricing_method")
     ts = row.get("terminal_event_source") or {}
+    snapshot_id = row.get("snapshot_id") or ts.get("snapshot_id")
     declared_ltd = ts.get("last_tradable_date")
-    degraded = ts.get("contract_degraded_flag", False)
+    degraded = bool(ts.get("contract_degraded_flag", False))
     degraded_reason = ts.get("contract_degraded_reason")
+    bridge_required = pricing_method == "terminal_event_bridge_required"
 
-    # If degraded_reason is not in the diagnosis JSON, query the source directly
     if degraded and not degraded_reason and terminal_date:
         term_row = fetch_one(
             con,
@@ -94,6 +148,7 @@ def audit_row(
             degraded_reason = term_row.get("contract_degraded_reason")
 
     result: dict[str, Any] = {
+        "snapshot_id": snapshot_id,
         "instrument": inst,
         "signal_date": signal_date,
         "entry_date": row.get("entry_date"),
@@ -101,25 +156,45 @@ def audit_row(
         "terminal_event_date": terminal_date,
         "terminal_event_type": terminal_type,
         "terminal_exit_pricing_method": pricing_method,
-        "last_tradable_date_from_terminal_source": declared_ltd,
-        "contract_degraded_flag": degraded,
-        "contract_degraded_reason": degraded_reason,
-        "last_tradable_close_auditable": False,
-        "can_price_with_last_tradable_close": False,
+        "approval_origin_case": (
+            "terminal_event_bridge_required" if bridge_required else "no_terminal_pricing_source"
+        ),
+        "approval_evidence_case": None,
+        "approval_gate_passed": False,
+        "approved_for_repaired_terminal_event_candidate": False,
+        "candidate_target_state": None,
+        "approved_terminal_pricing_path": None,
+        "declared_last_tradable_date": declared_ltd,
+        "candidate_pricing_date": None,
+        "candidate_last_tradable_close": None,
+        "candidate_adj_factor": None,
+        "candidate_volume": None,
+        "terminal_event_source_degraded_flag": degraded,
+        "terminal_exit_approximation_flag": False,
+        "source_repair_flag": False,
+        "terminal_event_bridge_required_flag": bridge_required,
+        "required_candidate_flags": [],
+        "zero_recovery_approved": False,
+        "still_hard_blocker": True,
+        "approval_gate_failure_reason": None,
+        "required_next_step": None,
         "blocking_reasons": [],
+        "contract_degraded_reason": degraded_reason,
+        "declared_ltd_is_suspended": None,
+        "declared_ltd_is_no_trade": None,
+        "declared_ltd_is_listed": None,
+        "actual_last_trade_date_in_bars": None,
+        "actual_last_trade_date_close_available": False,
     }
 
     if not declared_ltd:
+        result["approval_gate_failure_reason"] = "missing_declared_last_tradable_date"
         result["blocking_reasons"].append("no last_tradable_date in terminal_event source")
-        result["last_tradable_close_auditable"] = False
+        result["required_next_step"] = (
+            "Remain hard blocker. terminal_event source does not provide declared last_tradable_date."
+        )
         return result
 
-    if not terminal_date:
-        result["blocking_reasons"].append("no terminal_event_date")
-        result["last_tradable_close_auditable"] = False
-        return result
-
-    # check tradability on declared last_tradable_date
     trad = fetch_one(
         con,
         f"""
@@ -128,19 +203,21 @@ def audit_row(
         WHERE ts_code = '{inst}' AND trade_date = '{declared_ltd}'
         """,
     )
-
     if trad is None:
-        result["blocking_reasons"].append(f"no tradability data on declared last_tradable_date {declared_ltd}")
-        result["declared_ltd_is_suspended"] = None
-        result["declared_ltd_is_no_trade"] = None
-        result["declared_ltd_is_listed"] = None
-    else:
-        result["declared_ltd_is_suspended"] = trad["is_suspended_t"]
-        result["declared_ltd_is_no_trade"] = trad["no_trade_t"]
-        result["declared_ltd_is_listed"] = trad["is_listed_t"]
+        result["approval_gate_failure_reason"] = "missing_declared_last_tradable_tradability"
+        result["blocking_reasons"].append(
+            f"no tradability data on declared last_tradable_date {declared_ltd}"
+        )
+        result["required_next_step"] = (
+            "Remain hard blocker. tradability_daily coverage is missing on declared last_tradable_date."
+        )
+        return result
 
-    # check bars_daily on declared last_tradable_date
-    bar = fetch_one(
+    result["declared_ltd_is_suspended"] = trad["is_suspended_t"]
+    result["declared_ltd_is_no_trade"] = trad["no_trade_t"]
+    result["declared_ltd_is_listed"] = trad["is_listed_t"]
+
+    declared_bar = fetch_one(
         con,
         f"""
         SELECT close, adj_close, adj_factor, vol, amount
@@ -149,197 +226,158 @@ def audit_row(
         """,
     )
 
-    if bar is not None:
-        result["pricing_date_used"] = declared_ltd
-        result["pricing_date_source"] = "terminal_event_last_tradable_date"
-        result["raw_close"] = bar["close"]
-        result["adj_close"] = bar["adj_close"]
-        result["adj_factor"] = bar["adj_factor"]
-        result["volume"] = bar["vol"]
-        result["amount"] = bar["amount"]
-        result["close_source"] = "vw_bars_daily"
-        result["close_source_auditable"] = True
+    declared_is_blocked = bool(trad["is_suspended_t"] or trad["no_trade_t"])
+    if declared_is_blocked:
+        result["approval_evidence_case"] = "declared_last_tradable_date_suspended"
+        result["terminal_exit_approximation_flag"] = True
+        result["source_repair_flag"] = True
 
-        if bar["close"] is None:
-            result["blocking_reasons"].append("close is NULL on last_tradable_date")
-        elif bar["close"] == 0:
-            result["blocking_reasons"].append("close is zero on last_tradable_date")
-        elif bar["adj_factor"] is None:
-            result["blocking_reasons"].append("adj_factor is NULL on last_tradable_date; cannot construct adjusted return")
-        elif bar["vol"] is not None and bar["vol"] == 0:
-            result["blocking_reasons"].append("volume is zero on last_tradable_date; no trading occurred")
-        elif trad and (trad["is_suspended_t"] or trad["no_trade_t"]):
-            result["blocking_reasons"].append(
-                f"declared last_tradable_date {declared_ltd} has close data but is suspended/no_trade "
-                f"(suspended={trad['is_suspended_t']}, no_trade={trad['no_trade_t']})"
+        actual_trade_date, actual_bar, actual_trad = infer_actual_last_trade_date(con, inst, declared_ltd)
+        result["actual_last_trade_date_in_bars"] = actual_trade_date
+        result["actual_last_trade_date_close_available"] = actual_bar is not None
+
+        if (
+            actual_trade_date
+            and actual_bar
+            and actual_bar.get("close") not in (None, 0)
+            and actual_bar.get("adj_factor") not in (None, 0)
+            and actual_bar.get("vol") not in (None, 0)
+            and actual_trad is not None
+            and not actual_trad.get("is_suspended_t")
+            and not actual_trad.get("no_trade_t")
+        ):
+            result["approval_gate_passed"] = True
+            result["approved_for_repaired_terminal_event_candidate"] = True
+            result["candidate_target_state"] = "repaired_terminal_event_candidate"
+            result["approved_terminal_pricing_path"] = "terminal_priced_last_tradable_close"
+            result["candidate_pricing_date"] = actual_trade_date
+            result["candidate_last_tradable_close"] = actual_bar["close"]
+            result["candidate_adj_factor"] = actual_bar["adj_factor"]
+            result["candidate_volume"] = actual_bar["vol"]
+            result["required_next_step"] = (
+                "Approval gate passed for repaired_terminal_event_candidate. "
+                "Execution path must still compute formal actual exit fields upstream."
             )
-        elif degraded:
-            result["blocking_reasons"].append(
-                "terminal_event source is contract_degraded: "
-                f"{degraded_reason or 'no reason provided'}"
-            )
-            result["last_tradable_close_auditable"] = False
         else:
-            result["last_tradable_close_auditable"] = True
-            result["can_price_with_last_tradable_close"] = True
-    else:
-        result["pricing_date_used"] = None
-        result["pricing_date_source"] = None
-        result["raw_close"] = None
-        result["adj_close"] = None
-        result["adj_factor"] = None
-        result["volume"] = None
-        result["amount"] = None
-        result["close_source"] = None
-        result["close_source_auditable"] = False
-
-        missing_reason = f"no bars_daily data on declared last_tradable_date {declared_ltd}"
-        if trad and (trad.get("is_suspended_t") or trad.get("no_trade_t")):
-            missing_reason += (
-                f" (suspended={trad['is_suspended_t']}, no_trade={trad['no_trade_t']})"
-            )
-        result["blocking_reasons"].append(missing_reason)
-
-        # check actual last trade date
-        max_dt_row = fetch_one(
-            con,
-            f"""
-            SELECT MAX(trade_date) AS max_trade_date
-            FROM wh.serving.vw_bars_daily
-            WHERE ts_code = '{inst}' AND trade_date <= '{declared_ltd}'
-            """,
-        )
-        actual_last = max_dt_row["max_trade_date"] if max_dt_row else None
-        result["actual_last_trade_date_in_bars"] = actual_last
-
-        if actual_last and actual_last != declared_ltd:
-            # check bars on actual last trade date
-            actual_bar = fetch_one(
-                con,
-                f"""
-                SELECT close, adj_close, adj_factor, vol
-                FROM wh.serving.vw_bars_daily
-                WHERE ts_code = '{inst}' AND trade_date = '{actual_last}'
-                """,
-            )
-            if actual_bar:
-                result["actual_last_trade_date_close_available"] = True
-                result["actual_last_trade_date_close"] = actual_bar["close"]
-                result["actual_last_trade_date_adj_close"] = actual_bar["adj_close"]
-                result["actual_last_trade_date_adj_factor"] = actual_bar["adj_factor"]
-
-                # check tradability on actual last trade date
-                actual_trad = fetch_one(
-                    con,
-                    f"""
-                    SELECT is_suspended_t, no_trade_t
-                    FROM wh.serving.vw_tradability_daily
-                    WHERE ts_code = '{inst}' AND trade_date = '{actual_last}'
-                    """,
-                )
-                if actual_trad:
-                    result["actual_last_trade_date_is_suspended"] = actual_trad["is_suspended_t"]
-                    result["actual_last_trade_date_is_no_trade"] = actual_trad["no_trade_t"]
-
-                    if actual_trad["is_suspended_t"] or actual_trad["no_trade_t"]:
-                        result["blocking_reasons"].append(
-                            f"actual last trade date {actual_last} is also suspended/no_trade"
-                        )
-                    else:
-                        result["actual_last_trade_date_data_auditable"] = True
-                        result["blocking_reasons"].append(
-                            f"declared last_tradable_date {declared_ltd} is suspended; "
-                            f"actual last trade date is {actual_last} with close={actual_bar['close']}. "
-                            f"Terminal event source last_tradable_date does not match actual last trading day."
-                        )
-            else:
-                result["actual_last_trade_date_close_available"] = False
-        elif actual_last is None:
-            result["actual_last_trade_date_close_available"] = False
+            result["approval_gate_failure_reason"] = "missing_auditable_actual_last_trade_date"
             result["blocking_reasons"].append(
-                f"no bars_daily data exists for {inst} up to {declared_ltd}"
+                f"declared last_tradable_date {declared_ltd} is suspended/no_trade and no auditable earlier trading day was confirmed"
+            )
+            result["required_next_step"] = (
+                "Remain hard blocker. Need auditable actual_last_tradable_date with close/adj_factor/volume."
+            )
+    else:
+        result["approval_evidence_case"] = "degraded_terminal_source_with_auditable_bars"
+        result["source_repair_flag"] = True
+        if declared_bar is None:
+            result["approval_gate_failure_reason"] = "missing_declared_last_tradable_bar"
+            result["blocking_reasons"].append(
+                f"no bars_daily data on declared last_tradable_date {declared_ltd}"
+            )
+            result["required_next_step"] = (
+                "Remain hard blocker. Need auditable bars_daily close/adj_factor/volume on declared last_tradable_date."
+            )
+        elif declared_bar.get("close") in (None, 0):
+            result["approval_gate_failure_reason"] = "invalid_declared_last_tradable_close"
+            result["blocking_reasons"].append("close is NULL or zero on declared last_tradable_date")
+            result["required_next_step"] = (
+                "Remain hard blocker. close must be > 0 on declared last_tradable_date."
+            )
+        elif declared_bar.get("adj_factor") in (None, 0):
+            result["approval_gate_failure_reason"] = "invalid_declared_last_tradable_adj_factor"
+            result["blocking_reasons"].append("adj_factor is NULL or zero on declared last_tradable_date")
+            result["required_next_step"] = (
+                "Remain hard blocker. adj_factor must be > 0 on declared last_tradable_date."
+            )
+        elif declared_bar.get("vol") in (None, 0):
+            result["approval_gate_failure_reason"] = "invalid_declared_last_tradable_volume"
+            result["blocking_reasons"].append("volume is NULL or zero on declared last_tradable_date")
+            result["required_next_step"] = (
+                "Remain hard blocker. volume must be > 0 on declared last_tradable_date."
+            )
+        else:
+            result["approval_gate_passed"] = True
+            result["approved_for_repaired_terminal_event_candidate"] = True
+            result["candidate_target_state"] = "repaired_terminal_event_candidate"
+            result["approved_terminal_pricing_path"] = "terminal_priced_last_tradable_close"
+            result["candidate_pricing_date"] = declared_ltd
+            result["candidate_last_tradable_close"] = declared_bar["close"]
+            result["candidate_adj_factor"] = declared_bar["adj_factor"]
+            result["candidate_volume"] = declared_bar["vol"]
+            result["required_next_step"] = (
+                "Approval gate passed for repaired_terminal_event_candidate. "
+                "Execution path must still compute formal actual exit fields upstream."
             )
 
-    # terminal_event_date must be after declared_ltd
-    if declared_ltd and terminal_date:
-        result["terminal_event_date_after_last_tradable_date"] = declared_ltd < terminal_date
+    result["required_candidate_flags"] = build_required_candidate_flags(
+        terminal_event_source_degraded_flag=result["terminal_event_source_degraded_flag"],
+        terminal_exit_approximation_flag=result["terminal_exit_approximation_flag"],
+        source_repair_flag=result["source_repair_flag"],
+    )
+    if bridge_required:
+        result["required_candidate_flags"].append("terminal_event_bridge_required")
+
+    if not result["approval_gate_passed"] and not result["blocking_reasons"]:
+        result["blocking_reasons"].append("approval gate did not pass")
+    if not result["approval_gate_passed"] and result["required_next_step"] is None:
+        result["required_next_step"] = "Remain hard blocker until approval gate requirements are satisfied."
 
     return result
 
 
-def build_audit(diagnosis_path: Path, contract_path: Path) -> dict[str, Any]:
+def build_audit(
+    diagnosis_path: Path,
+    contract_path: Path,
+    policy_path: Path,
+) -> dict[str, Any]:
     diagnosis = load_json(diagnosis_path)
     source_db_path = resolve_source_db(contract_path)
+    policy = load_json(policy_path)
+    policy_version = policy["contract_version"]
 
     tep_rows = [r for r in diagnosis["rows"] if r["execution_path_status"] == "terminal_event_unpriced"]
 
     con = duckdb.connect()
     try:
         con.execute(f"ATTACH '{source_db_path.as_posix()}' AS wh (READ_ONLY)")
-
         audited = [audit_row(con, row) for row in tep_rows]
     finally:
         con.close()
 
-    auditable = [r for r in audited if r["last_tradable_close_auditable"]]
-    not_auditable = [r for r in audited if not r["last_tradable_close_auditable"]]
-    can_price = [r for r in audited if r["can_price_with_last_tradable_close"]]
-
-    actual_last_available = [
-        r for r in audited
-        if r.get("actual_last_trade_date_close_available") and not r["last_tradable_close_auditable"]
+    passed_rows = [r for r in audited if r["approval_gate_passed"]]
+    failed_rows = [r for r in audited if not r["approval_gate_passed"]]
+    bridge_rows = [r for r in audited if r["terminal_event_bridge_required_flag"]]
+    suspended_rows = [
+        r for r in audited if r["approval_evidence_case"] == "declared_last_tradable_date_suspended"
     ]
-    declared_ltd_suspended = [
-        r for r in audited
-        if r.get("declared_ltd_is_suspended") or r.get("declared_ltd_is_no_trade")
+    degraded_rows = [
+        r
+        for r in audited
+        if r["approval_evidence_case"] == "degraded_terminal_source_with_auditable_bars"
     ]
-
-    can_recommend = len(can_price) > 0
 
     return {
-        "audit_status": "last_tradable_close_audit_only",
-        "total_terminal_event_unpriced_rows": len(audited),
-        "auditable_count": len(auditable),
-        "not_auditable_count": len(not_auditable),
-        "can_price_with_last_tradable_close_count": len(can_price),
+        "audit_status": "terminal_last_tradable_close_approval_audit_only",
+        "contract_ref": "contracts/terminal_exit_policy.v1.json",
+        "approval_policy_version": policy_version,
         "summary": {
-            "rows_with_close_on_declared_ltd": sum(
-                1 for r in audited if r.get("raw_close") is not None
-            ),
-            "rows_without_close_on_declared_ltd": sum(
-                1 for r in audited if r.get("raw_close") is None
-            ),
-            "rows_with_close_data_but_contract_degraded": sum(
-                1 for r in audited
-                if r.get("raw_close") is not None and r["contract_degraded_flag"] is True
-            ),
-            "rows_with_declared_ltd_suspended_or_no_trade": len(declared_ltd_suspended),
-            "rows_with_actual_last_trade_close_available": len(actual_last_available),
-            "rows_with_actual_last_trade_data_auditable": sum(
-                1 for r in audited if r.get("actual_last_trade_date_data_auditable")
-            ),
+            "total_rows": len(audited),
+            "candidate_rows_count": len(passed_rows),
+            "approval_gate_passed_count": len(passed_rows),
+            "approval_gate_failed_count": len(failed_rows),
+            "still_hard_blocker_count": len(audited),
+            "zero_recovery_approved_count": 0,
+            "terminal_event_bridge_required_count": len(bridge_rows),
+            "declared_last_tradable_date_suspended_count": len(suspended_rows),
+            "degraded_terminal_source_with_auditable_bars_count": len(degraded_rows),
         },
         "rows": audited,
-        "recommendation": (
-            "4 of 10 rows have close data on the declared last_tradable_date but all 10 are blocked "
-            "by contract_degraded_flag=true on the terminal_event source. The bars_daily data itself "
-            "is from a separate standard shared-source view and is auditable on its own. "
-            "6 rows have a declared last_tradable_date that is suspended/no_trade; the actual last "
-            "trading day (earlier) has auditable close data. "
-            "Recommendation: "
-            "(1) Resolve whether bars_daily close is sufficient to override contract_degraded terminal_event source. "
-            "If yes, 4 rows can be priced via last_tradable_close immediately. "
-            "(2) For the 6 suspended rows, decide whether the actual last trade date (from bars_daily) "
-            "can serve as the last_tradable_date for pricing purposes, since the terminal_event source "
-            "declares a suspended date. "
-            "(3) Do NOT enable zero_recovery until the above is resolved."
-        ),
         "notes": [
-            "This audit only examines last_tradable_close pricing conditions. It does not implement pricing, modify data, or unblock any rows.",
-            "zero_recovery is not assessed or enabled by this audit.",
-            "actual_exit_date and actual_sell_price are never backfilled by this script.",
-            "The terminal_event source is contract_degraded for all 10 rows. The bars_daily source is a separate shared-source view.",
-            "For suspended rows, the discrepancy between terminal_event last_tradable_date and actual last trade date must be investigated upstream.",
+            "This approval audit only determines eligibility for repaired_terminal_event_candidate.",
+            "Approval gate passed does not mean the row is priced. All rows remain hard blockers until upstream execution path emits actual_exit_date, actual_sell_price, and execution_delayed_realized_return.",
+            "zero_recovery remains disabled by default in this audit.",
+            "approval audit never backfills actual_exit_date, actual_sell_price, or execution_delayed_realized_return.",
+            "Bridge-origin rows must retain terminal_event_bridge_required as an audit breadcrumb when they enter repaired_terminal_event_candidate.",
         ],
     }
 
@@ -348,12 +386,16 @@ def main() -> None:
     args = parse_args()
     diagnosis_path = Path(args.diagnosis_json)
     contract_path = Path(args.run_input_contract)
+    policy_path = Path(args.policy_contract)
 
     if not diagnosis_path.exists():
         print(f"ERROR: diagnosis JSON not found: {diagnosis_path}", file=sys.stderr)
         sys.exit(1)
+    if not policy_path.exists():
+        print(f"ERROR: policy contract not found: {policy_path}", file=sys.stderr)
+        sys.exit(1)
 
-    payload = build_audit(diagnosis_path, contract_path)
+    payload = build_audit(diagnosis_path, contract_path, policy_path)
     output_path = Path(args.output)
     write_json(output_path, payload)
     print(f"Audit written to {output_path}")

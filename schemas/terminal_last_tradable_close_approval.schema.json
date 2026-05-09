@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/terminal_last_tradable_close_approval.schema.json",
+  "title": "Terminal Last Tradable Close Approval Audit",
+  "description": "Intermediate artifact produced by audit_terminal_last_tradable_close.py. Determines whether terminal_event_unpriced rows satisfy the formal approval gate for repaired_terminal_event_candidate on the terminal_priced_last_tradable_close path. Does not price exits and does not backfill actual exit fields.",
+  "type": "object",
+  "required": [
+    "audit_status",
+    "contract_ref",
+    "approval_policy_version",
+    "summary",
+    "rows",
+    "notes"
+  ],
+  "properties": {
+    "audit_status": {
+      "type": "string",
+      "const": "terminal_last_tradable_close_approval_audit_only"
+    },
+    "contract_ref": {
+      "type": "string"
+    },
+    "approval_policy_version": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_rows",
+        "candidate_rows_count",
+        "approval_gate_passed_count",
+        "approval_gate_failed_count",
+        "still_hard_blocker_count",
+        "zero_recovery_approved_count",
+        "terminal_event_bridge_required_count",
+        "declared_last_tradable_date_suspended_count",
+        "degraded_terminal_source_with_auditable_bars_count"
+      ],
+      "properties": {
+        "total_rows": { "type": "integer", "minimum": 0 },
+        "candidate_rows_count": { "type": "integer", "minimum": 0 },
+        "approval_gate_passed_count": { "type": "integer", "minimum": 0 },
+        "approval_gate_failed_count": { "type": "integer", "minimum": 0 },
+        "still_hard_blocker_count": { "type": "integer", "minimum": 0 },
+        "zero_recovery_approved_count": { "type": "integer", "const": 0 },
+        "terminal_event_bridge_required_count": { "type": "integer", "minimum": 0 },
+        "declared_last_tradable_date_suspended_count": { "type": "integer", "minimum": 0 },
+        "degraded_terminal_source_with_auditable_bars_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "instrument",
+          "signal_date",
+          "entry_date",
+          "planned_exit_date",
+          "terminal_event_date",
+          "terminal_event_type",
+          "terminal_exit_pricing_method",
+          "approval_origin_case",
+          "approval_evidence_case",
+          "approval_gate_passed",
+          "approved_for_repaired_terminal_event_candidate",
+          "candidate_target_state",
+          "approved_terminal_pricing_path",
+          "declared_last_tradable_date",
+          "candidate_pricing_date",
+          "candidate_last_tradable_close",
+          "candidate_adj_factor",
+          "candidate_volume",
+          "terminal_event_source_degraded_flag",
+          "terminal_exit_approximation_flag",
+          "source_repair_flag",
+          "terminal_event_bridge_required_flag",
+          "required_candidate_flags",
+          "zero_recovery_approved",
+          "still_hard_blocker",
+          "approval_gate_failure_reason",
+          "required_next_step",
+          "blocking_reasons"
+        ],
+        "properties": {
+          "snapshot_id": { "type": ["string", "null"] },
+          "instrument": { "type": "string" },
+          "signal_date": { "type": "string" },
+          "entry_date": { "type": ["string", "null"] },
+          "planned_exit_date": { "type": ["string", "null"] },
+          "terminal_event_date": { "type": ["string", "null"] },
+          "terminal_event_type": { "type": ["string", "null"] },
+          "terminal_exit_pricing_method": { "type": ["string", "null"] },
+          "approval_origin_case": {
+            "type": "string",
+            "enum": ["no_terminal_pricing_source", "terminal_event_bridge_required"]
+          },
+          "approval_evidence_case": {
+            "type": ["string", "null"],
+            "enum": [
+              "degraded_terminal_source_with_auditable_bars",
+              "declared_last_tradable_date_suspended",
+              null
+            ]
+          },
+          "approval_gate_passed": { "type": "boolean" },
+          "approved_for_repaired_terminal_event_candidate": { "type": "boolean" },
+          "candidate_target_state": { "type": ["string", "null"] },
+          "approved_terminal_pricing_path": { "type": ["string", "null"] },
+          "declared_last_tradable_date": { "type": ["string", "null"] },
+          "candidate_pricing_date": { "type": ["string", "null"] },
+          "candidate_last_tradable_close": { "type": ["number", "null"] },
+          "candidate_adj_factor": { "type": ["number", "null"] },
+          "candidate_volume": { "type": ["number", "null"] },
+          "terminal_event_source_degraded_flag": { "type": "boolean" },
+          "terminal_exit_approximation_flag": { "type": "boolean" },
+          "source_repair_flag": { "type": "boolean" },
+          "terminal_event_bridge_required_flag": { "type": "boolean" },
+          "required_candidate_flags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "zero_recovery_approved": { "type": "boolean", "const": false },
+          "still_hard_blocker": { "type": "boolean", "const": true },
+          "approval_gate_failure_reason": { "type": ["string", "null"] },
+          "required_next_step": { "type": ["string", "null"] },
+          "blocking_reasons": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

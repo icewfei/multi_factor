@@ -94,6 +94,35 @@ def build_source_db(path: Path) -> None:
         )
         con.execute(
             """
+            CREATE TABLE serving.vw_labels_daily (
+                snapshot_id VARCHAR,
+                ts_code VARCHAR,
+                trade_date VARCHAR,
+                entry_date_D1 VARCHAR,
+                planned_exit_date_D5 VARCHAR,
+                open_D1 DOUBLE,
+                close_D5 DOUBLE,
+                adj_factor_D1 DOUBLE,
+                adj_factor_D5 DOUBLE,
+                adj_open_base_D1 DOUBLE,
+                adj_close_base_D5 DOUBLE,
+                label_defined BOOLEAN,
+                label_5d_next_open_close_raw DOUBLE,
+                label_5d_next_open_close DOUBLE,
+                label_masked_reason VARCHAR
+            )
+            """
+        )
+        con.execute(
+            """
+            INSERT INTO serving.vw_labels_daily VALUES
+                ('snap', 'AAA.SZ', '20210106', '20210107', '20210111', 10.0, 10.5, 1.0, 1.0, 10.0, 10.5, TRUE, 0.05, 0.05, NULL),
+                ('snap', 'BBB.SZ', '20210106', '20210107', '20210111', 10.0, 10.5, 1.0, 1.0, 10.0, 10.5, TRUE, 0.05, 0.05, NULL),
+                ('snap', 'CCC.SZ', '20210106', '20210107', '20210111', 10.0, 10.5, 1.0, 1.0, 10.0, 10.5, TRUE, 0.05, 0.05, NULL)
+            """
+        )
+        con.execute(
+            """
             CREATE TABLE serving.vw_calendar (
                 trade_date VARCHAR
             )
@@ -123,6 +152,7 @@ def test_project_execution_panel_bridges_post_delist_gap_without_pricing(tmp_pat
         source_db_path=source_db,
         output_dir=tmp_path,
         run_input_contract_path=REPO_ROOT / "contracts" / "run_input_contract.current.json",
+        repaired_terminal_event_candidate_path=None,
         run_input_contract={"snapshot_id": "snap"},
         field_mapping=module.load_yaml(REPO_ROOT / "contracts" / "source_field_mapping.yaml"),
         table_mapping=module.load_yaml(REPO_ROOT / "contracts" / "source_table_mapping.yaml"),

@@ -1,7 +1,7 @@
 {
   "contract_version": "terminal_exit_policy_v1",
   "generated_at": "2026-05-08T10:00:00+08:00",
-  "scope": "Defines terminal pricing hierarchy, unresolved exit policy, and hard-blocker rules for portfolio consumption. This contract governs the boundary between execution-path upstream pricing and portfolio-layer fail-fast enforcement.",
+  "scope": "Defines terminal pricing hierarchy, last-tradable-close approval policy, unresolved exit policy, and hard-blocker rules for portfolio consumption. This contract governs the boundary between execution-path upstream pricing and portfolio-layer fail-fast enforcement.",
   "terminal_pricing_hierarchy": {
     "order": ["cash_settlement", "last_tradable_close", "zero_recovery"],
     "layers": {
@@ -24,6 +24,74 @@
         "terminal_exit_conservative_flag": true
       }
     }
+  },
+  "last_tradable_close_approval_policy": {
+    "candidate_artifact": "repaired_terminal_event_candidate",
+    "approval_outcomes": {
+      "approved_repair_candidate": "Row may enter repaired_terminal_event_candidate for the terminal_priced_last_tradable_close path, but it remains a hard blocker until the upstream execution path emits complete actual_exit_date, actual_sell_price, and execution_delayed_realized_return.",
+      "remain_hard_blocker": "Row does not meet the approval gate for repaired_terminal_event_candidate and must remain terminal_event_unpriced."
+    },
+    "zero_recovery_default_enabled": false,
+    "origin_cases": {
+      "no_terminal_pricing_source": {
+        "candidate_allowed_if_evidence_case_approved": true,
+        "must_retain_markers": [],
+        "notes": "These rows already expose terminal-event evidence directly in execution_path/project_execution_panel, but they still require formal approval before entering repaired_terminal_event_candidate."
+      },
+      "terminal_event_bridge_required": {
+        "candidate_allowed_if_evidence_case_approved": true,
+        "must_retain_markers": ["terminal_event_bridge_required"],
+        "notes": "Bridge-standardized rows may enter repaired_terminal_event_candidate only if the last-tradable-close evidence case is approved. The bridge marker must remain as an audit breadcrumb."
+      }
+    },
+    "evidence_cases": {
+      "degraded_terminal_source_with_auditable_bars": {
+        "candidate_allowed": true,
+        "approval_requirements": [
+          "terminal_event source carries contract_degraded_flag=true",
+          "declared last_tradable_date is tradable (not suspended and not no_trade)",
+          "bars_daily close > 0 exists on declared last_tradable_date",
+          "bars_daily adj_factor > 0 exists on declared last_tradable_date",
+          "bars_daily volume > 0 exists on declared last_tradable_date"
+        ],
+        "required_flags": [
+          "terminal_event_source_degraded_flag",
+          "source_repair_flag"
+        ],
+        "still_hard_blocker_until_execution_path_pricing": true,
+        "candidate_pricing_date_rule": "candidate_pricing_date = declared_last_tradable_date"
+      },
+      "declared_last_tradable_date_suspended": {
+        "candidate_allowed": true,
+        "approval_requirements": [
+          "declared last_tradable_date is suspended or no_trade",
+          "actual_last_tradable_date is inferred by scanning backward through tradability_daily and bars_daily",
+          "bars_daily close > 0 exists on actual_last_tradable_date",
+          "bars_daily adj_factor > 0 exists on actual_last_tradable_date",
+          "bars_daily volume > 0 exists on actual_last_tradable_date"
+        ],
+        "required_flags": [
+          "terminal_event_source_degraded_flag",
+          "terminal_exit_approximation_flag",
+          "source_repair_flag"
+        ],
+        "still_hard_blocker_until_execution_path_pricing": true,
+        "candidate_pricing_date_rule": "candidate_pricing_date = actual_last_tradable_date"
+      }
+    },
+    "hard_blocker_defaults": {
+      "current_state_before_execution_path_integration": "terminal_event_unpriced",
+      "portfolio_allowed_before_actual_exit_fields_complete": false,
+      "approval_audit_must_not_backfill_actual_exit_fields": true
+    },
+    "prohibited_actions": [
+      "Treat repaired_terminal_event_candidate as a priced exit",
+      "Backfill actual_exit_date during approval audit",
+      "Backfill actual_sell_price during approval audit",
+      "Backfill execution_delayed_realized_return during approval audit",
+      "Enable zero_recovery by default",
+      "Let portfolio consume repaired_terminal_event_candidate directly"
+    ]
   },
   "state_definitions": {
     "terminal_priced_cash_settlement": "Terminal exit has been priced via the cash_settlement layer. actual_exit_date and actual_sell_price are populated from auditable cash settlement data. terminal_exit_conservative_flag is false.",
@@ -67,6 +135,7 @@
     "This contract defines policy and constraints only. It does not implement pricing logic or filter rows.",
     "The terminal pricing hierarchy is ordered: cash_settlement > last_tradable_close > zero_recovery. Higher-ranked layers must be exhausted before falling to the next.",
     "shared_source_degraded_flags.terminal_event_daily in run_input_contract declares the shared source as degraded truth for terminal pricing. Project-side data may supplement but must be auditable.",
+    "Approval for repaired_terminal_event_candidate is not equivalent to pricing approval in execution path. The row remains terminal_event_unpriced until complete actual exit fields are emitted upstream.",
     "Any future implementation must produce actual_exit_date, actual_sell_price, and execution_delayed_realized_return before the row reaches portfolio."
   ]
 }

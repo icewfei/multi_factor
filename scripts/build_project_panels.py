@@ -50,6 +50,7 @@ class BuildContext:
     source_db_path: Path
     output_dir: Path
     run_input_contract_path: Path
+    repaired_terminal_event_candidate_path: Path | None
     run_input_contract: dict[str, Any]
     field_mapping: dict[str, Any]
     table_mapping: dict[str, Any]
@@ -80,7 +81,12 @@ def enforce_holding_period_days_guardrail(holding_period_days: int | None) -> No
         raise ValueError(HOLDING_PERIOD_OVERRIDE_BLOCKED_MESSAGE)
 
 
-def build_context(run_id: str, output_dir: Path | None, run_input_contract_path: Path | None) -> BuildContext:
+def build_context(
+    run_id: str,
+    output_dir: Path | None,
+    run_input_contract_path: Path | None,
+    repaired_terminal_event_candidate_path: Path | None = None,
+) -> BuildContext:
     resolved_contract_path = run_input_contract_path or (CONTRACTS_DIR / "run_input_contract.current.json")
     run_input = load_json(resolved_contract_path)
     field_mapping = load_yaml(CONTRACTS_DIR / "source_field_mapping.yaml")
@@ -100,6 +106,7 @@ def build_context(run_id: str, output_dir: Path | None, run_input_contract_path:
         source_db_path=source_db_path,
         output_dir=resolved_output_dir,
         run_input_contract_path=resolved_contract_path,
+        repaired_terminal_event_candidate_path=repaired_terminal_event_candidate_path,
         run_input_contract=run_input,
         field_mapping=field_mapping,
         table_mapping=table_mapping,
@@ -132,6 +139,51 @@ def mapped_select_expr(
     source_field = mapped_source_field(ctx, section, local_field)
     qualified = f"{table_alias}.{source_field}" if table_alias else source_field
     return f"{qualified} AS {output_alias or local_field}"
+
+
+def load_repaired_terminal_event_candidate_rows(path: Path | None) -> list[dict[str, Any]]:
+    if path is None:
+        return []
+    payload = load_json(path)
+    rows = payload.get("rows", [])
+    if not isinstance(rows, list):
+        raise ValueError(f"repaired_terminal_event_candidate rows must be an array: {path}")
+    return [dict(row) for row in rows]
+
+
+def register_repaired_terminal_event_candidate(
+    con: duckdb.DuckDBPyConnection,
+    path: Path | None,
+) -> None:
+    rows = load_repaired_terminal_event_candidate_rows(path)
+    if rows:
+        table = pa.Table.from_pylist(rows)
+    else:
+        table = pa.table(
+            {
+                "snapshot_id": pa.array([], type=pa.string()),
+                "instrument": pa.array([], type=pa.string()),
+                "signal_date": pa.array([], type=pa.string()),
+                "entry_date": pa.array([], type=pa.string()),
+                "planned_exit_date": pa.array([], type=pa.string()),
+                "terminal_event_date": pa.array([], type=pa.string()),
+                "terminal_event_type": pa.array([], type=pa.string()),
+                "approval_origin_case": pa.array([], type=pa.string()),
+                "approval_evidence_case": pa.array([], type=pa.string()),
+                "candidate_target_state": pa.array([], type=pa.string()),
+                "approved_terminal_pricing_path": pa.array([], type=pa.string()),
+                "candidate_pricing_date": pa.array([], type=pa.string()),
+                "candidate_last_tradable_close": pa.array([], type=pa.float64()),
+                "candidate_adj_factor": pa.array([], type=pa.float64()),
+                "candidate_volume": pa.array([], type=pa.float64()),
+                "pricing_policy_version": pa.array([], type=pa.string()),
+                "terminal_event_source_degraded_flag": pa.array([], type=pa.bool_()),
+                "terminal_exit_approximation_flag": pa.array([], type=pa.bool_()),
+                "source_repair_flag": pa.array([], type=pa.bool_()),
+                "terminal_event_bridge_required_flag": pa.array([], type=pa.bool_()),
+            }
+        )
+    con.register("repaired_terminal_event_candidate_t", table)
 
 
 def build_project_label_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext) -> pa.Table:
@@ -200,18 +252,32 @@ def build_project_sample_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext
 
 
 def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildContext) -> pa.Table:
+    register_repaired_terminal_event_candidate(con, ctx.repaired_terminal_event_candidate_path)
+
     e_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
     e_signal_date = mapped_source_field(ctx, "common_keys", "signal_date")
     e_instrument = mapped_source_field(ctx, "common_keys", "instrument")
     e_entry_date = mapped_source_field(ctx, "execution_path_daily", "entry_date")
     e_planned_exit_date = mapped_source_field(ctx, "execution_path_daily", "planned_exit_date")
     e_actual_exit_date = mapped_source_field(ctx, "execution_path_daily", "actual_exit_date")
+    e_actual_exit_event_type = mapped_source_field(ctx, "execution_path_daily", "actual_exit_event_type")
+    e_actual_exit_price_field = mapped_source_field(ctx, "execution_path_daily", "actual_exit_price_field")
     e_actual_sell_price = mapped_source_field(ctx, "execution_path_daily", "actual_sell_price")
+    e_exit_delay_days = mapped_source_field(ctx, "execution_path_daily", "exit_delay_days")
     e_execution_path_status = mapped_source_field(ctx, "execution_path_daily", "execution_path_status")
+    e_execution_delayed_realized_return = mapped_source_field(
+        ctx, "execution_path_daily", "execution_delayed_realized_return"
+    )
     e_terminal_event_flag = mapped_source_field(ctx, "execution_path_daily", "terminal_event_flag")
     e_terminal_event_type = mapped_source_field(ctx, "execution_path_daily", "terminal_event_type")
     e_terminal_event_date = mapped_source_field(ctx, "execution_path_daily", "terminal_event_date")
     e_terminal_exit_pricing_method = mapped_source_field(ctx, "execution_path_daily", "terminal_exit_pricing_method")
+    e_terminal_exit_approximation_flag = mapped_source_field(
+        ctx, "execution_path_daily", "terminal_exit_approximation_flag"
+    )
+    e_terminal_exit_conservative_flag = mapped_source_field(
+        ctx, "execution_path_daily", "terminal_exit_conservative_flag"
+    )
     t_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
     t_instrument = mapped_source_field(ctx, "common_keys", "instrument")
     t_trade_date = mapped_source_field(ctx, "common_keys", "signal_date")
@@ -224,15 +290,57 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
     b_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
     b_instrument = mapped_source_field(ctx, "common_keys", "instrument")
     b_trade_date = mapped_source_field(ctx, "common_keys", "signal_date")
+    l_snapshot_id = mapped_source_field(ctx, "common_keys", "snapshot_id")
+    l_instrument = mapped_source_field(ctx, "common_keys", "instrument")
+    l_signal_date = mapped_source_field(ctx, "common_keys", "signal_date")
+    l_adj_open_base_D1 = mapped_source_field(ctx, "labels_daily", "adj_open_base_D1")
 
     planned_exit_expr = f"e.{e_planned_exit_date} AS planned_exit_date"
+    candidate_apply_expr = (
+        "CASE "
+        "WHEN rc.candidate_target_state = 'repaired_terminal_event_candidate' "
+        " AND rc.approved_terminal_pricing_path = 'terminal_priced_last_tradable_close' "
+        f" AND l.{l_adj_open_base_D1} IS NOT NULL "
+        f" AND l.{l_adj_open_base_D1} > 0 "
+        " AND rc.candidate_pricing_date IS NOT NULL "
+        " AND rc.candidate_last_tradable_close IS NOT NULL "
+        " AND rc.candidate_adj_factor IS NOT NULL "
+        "THEN TRUE ELSE FALSE END"
+    )
+    actual_exit_date_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN rc.candidate_pricing_date "
+        f"ELSE e.{e_actual_exit_date} END AS actual_exit_date"
+    )
+    actual_exit_event_type_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN 'TERMINAL_LAST_CLOSE' "
+        f"ELSE e.{e_actual_exit_event_type} END AS actual_exit_event_type"
+    )
+    actual_exit_price_field_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN 'close' "
+        f"ELSE e.{e_actual_exit_price_field} END AS actual_exit_price_field"
+    )
+    actual_sell_price_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN rc.candidate_last_tradable_close "
+        f"ELSE e.{e_actual_sell_price} END AS actual_sell_price"
+    )
+    exit_delay_days_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN candidate_exit_offset.exit_trading_day_offset "
+        f"ELSE e.{e_exit_delay_days} END AS exit_delay_days"
+    )
     bridge_terminal_event_flag_expr = (
         "CASE "
+        f"WHEN {candidate_apply_expr} THEN TRUE "
         "WHEN bridge.bridge_to_terminal_event_unpriced THEN TRUE "
         f"ELSE e.{e_terminal_event_flag} END AS terminal_event_flag"
     )
     bridge_terminal_event_type_expr = (
         "COALESCE("
+        f"CASE WHEN {candidate_apply_expr} THEN rc.terminal_event_type ELSE NULL END, "
         f"e.{e_terminal_event_type}, "
         f"t.{t_terminal_event_type}, "
         "CASE "
@@ -244,6 +352,7 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
     )
     bridge_terminal_event_date_expr = (
         "COALESCE("
+        f"CASE WHEN {candidate_apply_expr} THEN rc.terminal_event_date ELSE NULL END, "
         f"e.{e_terminal_event_date}, "
         f"t.{t_terminal_event_date}, "
         "CASE "
@@ -255,14 +364,42 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
     )
     bridge_execution_path_status_expr = (
         "CASE "
+        f"WHEN {candidate_apply_expr} THEN 'terminal_priced_last_tradable_close' "
         "WHEN bridge.bridge_to_terminal_event_unpriced THEN 'terminal_event_unpriced' "
         f"ELSE e.{e_execution_path_status} END AS execution_path_status"
     )
     bridge_terminal_exit_pricing_method_expr = (
         "CASE "
+        f"WHEN {candidate_apply_expr} THEN 'last_tradable_close' "
         "WHEN bridge.bridge_to_terminal_event_unpriced "
         f"AND e.{e_terminal_exit_pricing_method} IS NULL THEN '{POST_DELIST_TERMINAL_EVENT_BRIDGE_PRICING_METHOD}' "
         f"ELSE e.{e_terminal_exit_pricing_method} END AS terminal_exit_pricing_method"
+    )
+    pricing_policy_version_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN rc.pricing_policy_version "
+        "ELSE NULL END AS pricing_policy_version"
+    )
+    source_repair_flag_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN rc.source_repair_flag "
+        "ELSE NULL END AS source_repair_flag"
+    )
+    execution_delayed_realized_return_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN "
+        f"((rc.candidate_last_tradable_close * rc.candidate_adj_factor) / l.{l_adj_open_base_D1}) - 1.0 "
+        f"ELSE e.{e_execution_delayed_realized_return} END AS execution_delayed_realized_return"
+    )
+    terminal_exit_approximation_flag_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN rc.terminal_exit_approximation_flag "
+        f"ELSE e.{e_terminal_exit_approximation_flag} END AS terminal_exit_approximation_flag"
+    )
+    terminal_exit_conservative_flag_expr = (
+        "CASE "
+        f"WHEN {candidate_apply_expr} THEN FALSE "
+        f"ELSE e.{e_terminal_exit_conservative_flag} END AS terminal_exit_conservative_flag"
     )
 
     select_exprs = [
@@ -271,19 +408,21 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
         f"e.{e_signal_date} AS signal_date",
         f"e.{e_entry_date} AS entry_date",
         planned_exit_expr,
-        mapped_select_expr(ctx, "execution_path_daily", "actual_exit_date", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "actual_exit_event_type", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "actual_exit_price_field", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "actual_sell_price", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "exit_delay_days", table_alias="e"),
+        actual_exit_date_expr,
+        actual_exit_event_type_expr,
+        actual_exit_price_field_expr,
+        actual_sell_price_expr,
+        exit_delay_days_expr,
         bridge_execution_path_status_expr,
-        mapped_select_expr(ctx, "execution_path_daily", "execution_delayed_realized_return", table_alias="e"),
+        execution_delayed_realized_return_expr,
         bridge_terminal_event_flag_expr,
         bridge_terminal_event_type_expr,
         bridge_terminal_event_date_expr,
         bridge_terminal_exit_pricing_method_expr,
-        mapped_select_expr(ctx, "execution_path_daily", "terminal_exit_approximation_flag", table_alias="e"),
-        mapped_select_expr(ctx, "execution_path_daily", "terminal_exit_conservative_flag", table_alias="e"),
+        pricing_policy_version_expr,
+        source_repair_flag_expr,
+        terminal_exit_approximation_flag_expr,
+        terminal_exit_conservative_flag_expr,
     ]
     sql = """
         WITH bridge_candidates AS (
@@ -351,10 +490,37 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
             ON e.{e_snapshot_id} = t.{t_snapshot_id}
            AND e.{e_instrument} = t.{t_instrument}
            AND e.{e_terminal_event_date} = t.{t_terminal_event_date}
+        LEFT JOIN repaired_terminal_event_candidate_t rc
+            ON e.{e_snapshot_id} = rc.snapshot_id
+           AND e.{e_instrument} = rc.instrument
+           AND e.{e_signal_date} = rc.signal_date
+        LEFT JOIN serving.vw_labels_daily l
+            ON e.{e_snapshot_id} = l.{l_snapshot_id}
+           AND e.{e_instrument} = l.{l_instrument}
+           AND e.{e_signal_date} = l.{l_signal_date}
         LEFT JOIN bridge_candidates bridge
             ON e.{e_snapshot_id} = bridge.snapshot_id
            AND e.{e_instrument} = bridge.instrument
            AND e.{e_signal_date} = bridge.signal_date
+        LEFT JOIN LATERAL (
+            SELECT
+                CASE
+                    WHEN rc.candidate_pricing_date IS NULL OR e.{e_planned_exit_date} IS NULL THEN NULL
+                    WHEN rc.candidate_pricing_date = e.{e_planned_exit_date} THEN 0
+                    WHEN rc.candidate_pricing_date > e.{e_planned_exit_date} THEN (
+                        SELECT COUNT(*) - 1
+                        FROM serving.vw_calendar cal
+                        WHERE cal.trade_date >= e.{e_planned_exit_date}
+                          AND cal.trade_date <= rc.candidate_pricing_date
+                    )
+                    ELSE -(
+                        SELECT COUNT(*) - 1
+                        FROM serving.vw_calendar cal
+                        WHERE cal.trade_date >= rc.candidate_pricing_date
+                          AND cal.trade_date <= e.{e_planned_exit_date}
+                    )
+                END AS exit_trading_day_offset
+        ) candidate_exit_offset ON TRUE
         WHERE e.snapshot_id = ?
     """
     return fetch_arrow_table(
@@ -379,13 +545,16 @@ def build_project_execution_panel(con: duckdb.DuckDBPyConnection, ctx: BuildCont
             t_last_tradable_date=t_last_tradable_date,
             tr_snapshot_id=tr_snapshot_id,
             tr_instrument=tr_instrument,
-            tr_trade_date=tr_trade_date,
-            b_snapshot_id=b_snapshot_id,
-            b_instrument=b_instrument,
-            b_trade_date=b_trade_date,
-        ),
-        [ctx.snapshot_id, ctx.snapshot_id],
-    )
+                tr_trade_date=tr_trade_date,
+                b_snapshot_id=b_snapshot_id,
+                b_instrument=b_instrument,
+                b_trade_date=b_trade_date,
+                l_snapshot_id=l_snapshot_id,
+                l_instrument=l_instrument,
+                l_signal_date=l_signal_date,
+            ),
+            [ctx.snapshot_id, ctx.snapshot_id],
+        )
 
 
 def scalar_count(con: duckdb.DuckDBPyConnection, sql: str, params: list[Any] | None = None) -> int:
@@ -401,6 +570,7 @@ def build_data_quality_audit(
     execution_panel: pa.Table,
 ) -> dict[str, Any]:
     shared_degraded_flags = dict(ctx.run_input_contract.get("shared_source_degraded_flags", {}))
+    con.register("project_execution_panel_audit_t", execution_panel)
 
     summary_counts = {
         "project_label_panel_rows": label_panel.num_rows,
@@ -465,6 +635,25 @@ def build_data_quality_audit(
             """,
             [ctx.snapshot_id],
         ),
+        "project_execution_unresolved_rows": scalar_count(
+            con,
+            """
+            SELECT COUNT(*)
+            FROM project_execution_panel_audit_t
+            WHERE execution_path_status IN ('terminal_event_unpriced', 'exit_unresolved', 'calendar_insufficient')
+               OR actual_exit_date IS NULL
+               OR actual_sell_price IS NULL
+               OR execution_delayed_realized_return IS NULL
+            """,
+        ),
+        "project_execution_terminal_priced_last_tradable_close_rows": scalar_count(
+            con,
+            """
+            SELECT COUNT(*)
+            FROM project_execution_panel_audit_t
+            WHERE execution_path_status = 'terminal_priced_last_tradable_close'
+            """,
+        ),
         "sample_masked_rows": scalar_count(
             con,
             """
@@ -492,6 +681,8 @@ def build_data_quality_audit(
         warnings.append("tradability_daily contains degraded rows; downstream research must audit these rows.")
     if summary_counts["execution_unresolved_rows"] > 0:
         warnings.append("execution_path_daily contains unresolved or unpriced rows.")
+    if summary_counts["project_execution_unresolved_rows"] > 0:
+        warnings.append("project_execution_panel still contains unresolved or incomplete actual exit rows.")
 
     return {
         "run_id": ctx.run_id,
@@ -537,6 +728,15 @@ def parse_args() -> argparse.Namespace:
         help="Optional explicit run input contract JSON path. Defaults to contracts/run_input_contract.current.json",
     )
     parser.add_argument(
+        "--repaired-terminal-event-candidate",
+        default=None,
+        help=(
+            "Optional repaired_terminal_event_candidate JSON path. "
+            "When provided, build_project_panels may emit upstream terminal_priced_last_tradable_close "
+            "rows with complete actual exit fields."
+        ),
+    )
+    parser.add_argument(
         "--holding-period-days",
         type=int,
         default=None,
@@ -555,6 +755,7 @@ def main() -> None:
         args.run_id,
         Path(args.output_dir) if args.output_dir else None,
         Path(args.run_input_contract) if args.run_input_contract else None,
+        Path(args.repaired_terminal_event_candidate) if args.repaired_terminal_event_candidate else None,
     )
 
     with duckdb.connect(str(ctx.source_db_path), read_only=True) as con:

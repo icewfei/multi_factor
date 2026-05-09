@@ -6,11 +6,13 @@ import sys
 from pathlib import Path
 
 import duckdb
+import jsonschema
 import pytest
 
-from conftest import REPO_ROOT
+from conftest import REPO_ROOT, load_json
 
 SCRIPT_PATH = "scripts/audit_terminal_last_tradable_close.py"
+SCHEMA_PATH = "schemas/terminal_last_tradable_close_approval.schema.json"
 
 
 def _make_audit_diagnosis_row(
@@ -18,9 +20,11 @@ def _make_audit_diagnosis_row(
     signal_date: str,
     terminal_event_date: str,
     declared_ltd: str,
+    pricing_method: str,
     degraded: bool = True,
 ) -> dict:
     return {
+        "snapshot_id": "snap",
         "instrument": instrument,
         "signal_date": signal_date,
         "entry_date": "20210104",
@@ -29,8 +33,9 @@ def _make_audit_diagnosis_row(
         "terminal_event_flag": True,
         "terminal_event_type": "delist",
         "terminal_event_date": terminal_event_date,
-        "terminal_exit_pricing_method": "no_terminal_pricing_source",
+        "terminal_exit_pricing_method": pricing_method,
         "terminal_event_source": {
+            "snapshot_id": "snap",
             "last_tradable_date": declared_ltd,
             "contract_degraded_flag": degraded,
             "contract_degraded_reason": "source contract degraded",
@@ -40,7 +45,6 @@ def _make_audit_diagnosis_row(
 
 @pytest.fixture
 def source_db_path(tmp_path: Path) -> Path:
-    """Create a minimal DuckDB with serving.vw_bars_daily, vw_tradability_daily, vw_terminal_event_daily."""
     db_path = tmp_path / "duckdb" / "warehouse.duckdb"
     db_path.parent.mkdir(parents=True)
     con = duckdb.connect(str(db_path))
@@ -65,7 +69,6 @@ def source_db_path(tmp_path: Path) -> Path:
             )
         """)
 
-        # 4 degraded-source instruments: close data exists on declared LTD 20210107
         for i in range(4):
             inst = f"DEG{i:03d}.SZ"
             con.execute(
@@ -80,30 +83,37 @@ def source_db_path(tmp_path: Path) -> Path:
                 ('{inst}', '20210107', FALSE, FALSE, TRUE)
                 """
             )
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_terminal_event_daily VALUES
+                ('{inst}', '20210110', 'source contract degraded')
+                """
+            )
 
-        # 6 suspended-date instruments: no close on declared LTD 20210108,
-        # but close exists on actual last trade date 20210107
         for i in range(6):
             inst = f"SUS{i:03d}.SZ"
-            # actual last trade date has bars data
             con.execute(
                 f"""
                 INSERT INTO serving.vw_bars_daily VALUES
                 ('{inst}', '20210107', 10.0, 10.5, 1.05, 50000.0, 500000.0)
                 """
             )
-            # declared LTD is suspended
             con.execute(
                 f"""
                 INSERT INTO serving.vw_tradability_daily VALUES
                 ('{inst}', '20210108', TRUE, FALSE, TRUE)
                 """
             )
-            # actual last trade date is tradable
             con.execute(
                 f"""
                 INSERT INTO serving.vw_tradability_daily VALUES
                 ('{inst}', '20210107', FALSE, FALSE, TRUE)
+                """
+            )
+            con.execute(
+                f"""
+                INSERT INTO serving.vw_terminal_event_daily VALUES
+                ('{inst}', '20210110', 'source contract degraded')
                 """
             )
     finally:
@@ -113,7 +123,6 @@ def source_db_path(tmp_path: Path) -> Path:
 
 @pytest.fixture
 def run_input_contract_path(tmp_path: Path) -> Path:
-    """Create a run_input_contract pointing to the test DuckDB snapshot root."""
     path = tmp_path / "run_input_contract.json"
     path.write_text(
         json.dumps(
@@ -129,9 +138,6 @@ def run_input_contract_path(tmp_path: Path) -> Path:
 
 @pytest.fixture
 def diagnosis_path(tmp_path: Path) -> str:
-    """Create a minimal diagnosis JSON with 10 terminal_event_unpriced rows:
-    4 degraded source with auditable bars on declared LTD,
-    6 suspended declared LTD with actual last trade date earlier."""
     rows = []
     for i in range(4):
         rows.append(
@@ -140,6 +146,7 @@ def diagnosis_path(tmp_path: Path) -> str:
                 signal_date=f"2021010{i+1}",
                 terminal_event_date="20210110",
                 declared_ltd="20210107",
+                pricing_method="terminal_event_bridge_required" if i < 2 else "no_terminal_pricing_source",
             )
         )
     for i in range(6):
@@ -149,6 +156,7 @@ def diagnosis_path(tmp_path: Path) -> str:
                 signal_date=f"2021011{i+1}",
                 terminal_event_date="20210110",
                 declared_ltd="20210108",
+                pricing_method="terminal_event_bridge_required" if i < 3 else "no_terminal_pricing_source",
             )
         )
     path = tmp_path / "diagnosis.json"
@@ -185,82 +193,88 @@ def audit_output(
 
 
 def test_audit_output_is_valid_json(audit_output: dict) -> None:
-    assert audit_output["audit_status"] == "last_tradable_close_audit_only"
-    assert audit_output["total_terminal_event_unpriced_rows"] == 10
+    assert audit_output["audit_status"] == "terminal_last_tradable_close_approval_audit_only"
+    assert audit_output["approval_policy_version"] == "terminal_exit_policy_v1"
 
 
-def test_only_terminal_event_unpriced_rows_audited(audit_output: dict) -> None:
+def test_audit_output_conforms_to_schema(audit_output: dict) -> None:
+    schema = load_json(SCHEMA_PATH)
+    jsonschema.validate(audit_output, schema)
+
+
+def test_all_rows_still_hard_blockers(audit_output: dict) -> None:
     for row in audit_output["rows"]:
-        assert "exit_unresolved" not in row.get("blocker_category", "")
+        assert row["still_hard_blocker"] is True
+        assert row["zero_recovery_approved"] is False
 
 
-def test_zero_recovery_not_enabled(audit_output: dict) -> None:
-    assert "zero_recovery" not in audit_output["audit_status"].lower()
+def test_no_actual_exit_fields_are_backfilled(audit_output: dict) -> None:
+    row_props = load_json(SCHEMA_PATH)["properties"]["rows"]["items"]["properties"]
+    assert "actual_exit_date" not in row_props
+    assert "actual_sell_price" not in row_props
+    assert "execution_delayed_realized_return" not in row_props
 
 
-def test_no_actual_exit_date_backfilled(audit_output: dict) -> None:
+def test_all_fixture_rows_pass_candidate_approval_gate(audit_output: dict) -> None:
+    assert audit_output["summary"]["candidate_rows_count"] == 10
+    assert audit_output["summary"]["approval_gate_passed_count"] == 10
+    assert audit_output["summary"]["approval_gate_failed_count"] == 0
     for row in audit_output["rows"]:
-        assert "actual_exit_date" not in row or row.get("actual_exit_date") is None
+        assert row["approval_gate_passed"] is True
+        assert row["approved_for_repaired_terminal_event_candidate"] is True
+        assert row["candidate_target_state"] == "repaired_terminal_event_candidate"
+        assert row["approved_terminal_pricing_path"] == "terminal_priced_last_tradable_close"
 
 
-def test_all_rows_have_can_price_with_last_tradable_close(audit_output: dict) -> None:
-    for row in audit_output["rows"]:
-        assert "can_price_with_last_tradable_close" in row
-        assert isinstance(row["can_price_with_last_tradable_close"], bool)
+def test_summary_distinguishes_bridge_and_evidence_cases(audit_output: dict) -> None:
+    summary = audit_output["summary"]
+    assert summary["terminal_event_bridge_required_count"] == 5
+    assert summary["degraded_terminal_source_with_auditable_bars_count"] == 4
+    assert summary["declared_last_tradable_date_suspended_count"] == 6
+    assert summary["still_hard_blocker_count"] == 10
 
 
-def test_all_rows_have_last_tradable_close_auditable(audit_output: dict) -> None:
-    for row in audit_output["rows"]:
-        assert "last_tradable_close_auditable" in row
-        assert isinstance(row["last_tradable_close_auditable"], bool)
-
-
-def test_all_rows_have_blocking_reasons(audit_output: dict) -> None:
-    for row in audit_output["rows"]:
-        assert "blocking_reasons" in row
-        assert isinstance(row["blocking_reasons"], list)
-        if not row["can_price_with_last_tradable_close"]:
-            assert len(row["blocking_reasons"]) > 0
-
-
-def test_all_rows_have_contract_degraded_flag(audit_output: dict) -> None:
-    for row in audit_output["rows"]:
-        assert "contract_degraded_flag" in row
-        if row.get("raw_close") is not None:
-            assert row["contract_degraded_flag"] is True
-
-
-def test_no_row_has_can_price_true(audit_output: dict) -> None:
-    for row in audit_output["rows"]:
-        assert row["can_price_with_last_tradable_close"] is False
-
-
-def test_all_rows_have_last_tradable_date(audit_output: dict) -> None:
-    for row in audit_output["rows"]:
-        assert row.get("last_tradable_date_from_terminal_source") is not None
-
-
-def test_summary_counts_are_consistent(audit_output: dict) -> None:
-    total = audit_output["total_terminal_event_unpriced_rows"]
-    assert audit_output["auditable_count"] + audit_output["not_auditable_count"] == total
-    assert audit_output["not_auditable_count"] == 10
-    assert audit_output["auditable_count"] == 0
-
-
-def test_rows_have_audit_source_information(audit_output: dict) -> None:
-    rows_with_close = [r for r in audit_output["rows"] if r.get("raw_close") is not None]
-    assert len(rows_with_close) == audit_output["summary"]["rows_with_close_on_declared_ltd"]
-    for row in rows_with_close:
-        assert row["close_source"] == "vw_bars_daily"
-        assert row["close_source_auditable"] is True
-
-
-def test_suspended_rows_have_actual_last_trade_investigation(audit_output: dict) -> None:
-    suspended = [
-        r for r in audit_output["rows"]
-        if r.get("declared_ltd_is_suspended") or r.get("declared_ltd_is_no_trade")
+def test_degraded_rows_use_declared_last_tradable_date(audit_output: dict) -> None:
+    degraded_rows = [
+        row
+        for row in audit_output["rows"]
+        if row["approval_evidence_case"] == "degraded_terminal_source_with_auditable_bars"
     ]
-    assert len(suspended) == 6
-    for row in suspended:
-        assert row.get("actual_last_trade_date_in_bars") is not None
-        assert row.get("actual_last_trade_date_close_available") is True
+    assert len(degraded_rows) == 4
+    for row in degraded_rows:
+        assert row["terminal_exit_approximation_flag"] is False
+        assert row["source_repair_flag"] is True
+        assert row["candidate_pricing_date"] == row["declared_last_tradable_date"]
+        assert row["candidate_last_tradable_close"] == 10.5
+        assert "terminal_event_source_degraded_flag" in row["required_candidate_flags"]
+
+
+def test_suspended_rows_use_actual_last_trade_date_with_flags(audit_output: dict) -> None:
+    suspended_rows = [
+        row
+        for row in audit_output["rows"]
+        if row["approval_evidence_case"] == "declared_last_tradable_date_suspended"
+    ]
+    assert len(suspended_rows) == 6
+    for row in suspended_rows:
+        assert row["terminal_exit_approximation_flag"] is True
+        assert row["source_repair_flag"] is True
+        assert row["actual_last_trade_date_in_bars"] == "20210107"
+        assert row["candidate_pricing_date"] == "20210107"
+        assert row["candidate_last_tradable_close"] == 10.0
+        assert "terminal_exit_approximation_flag" in row["required_candidate_flags"]
+        assert "source_repair_flag" in row["required_candidate_flags"]
+
+
+def test_bridge_rows_retain_bridge_marker_requirement(audit_output: dict) -> None:
+    bridge_rows = [row for row in audit_output["rows"] if row["terminal_event_bridge_required_flag"]]
+    assert len(bridge_rows) == 5
+    for row in bridge_rows:
+        assert row["approval_origin_case"] == "terminal_event_bridge_required"
+        assert "terminal_event_bridge_required" in row["required_candidate_flags"]
+
+
+def test_notes_state_candidate_not_equal_priced_exit(audit_output: dict) -> None:
+    notes = "\n".join(audit_output["notes"])
+    assert "does not mean the row is priced" in notes
+    assert "zero_recovery remains disabled by default" in notes

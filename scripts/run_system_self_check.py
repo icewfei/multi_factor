@@ -72,6 +72,22 @@ def parse_args() -> argparse.Namespace:
             "Defaults to <run_dir>/terminal_event_repair_audit.json."
         ),
     )
+    parser.add_argument(
+        "--terminal-last-tradable-approval-audit",
+        default=None,
+        help=(
+            "Optional path to terminal_last_tradable_close approval audit JSON. "
+            "Used for execution-exit resolution self-check reporting."
+        ),
+    )
+    parser.add_argument(
+        "--repaired-terminal-event-candidate",
+        default=None,
+        help=(
+            "Optional path to repaired_terminal_event_candidate JSON. "
+            "Used for execution-exit resolution self-check reporting."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -189,6 +205,283 @@ def inspect_terminal_event_repair_audit(audit_path: Path) -> dict[str, object]:
     return result
 
 
+def inspect_terminal_last_tradable_approval_audit(audit_path: Path | None) -> dict[str, object]:
+    result: dict[str, object] = {
+        "audit_path": str(audit_path) if audit_path is not None else None,
+        "present": False,
+        "status": "missing",
+        "candidate_rows_count": 0,
+        "still_hard_blocker_count": 0,
+        "approval_gate_passed_count": 0,
+        "approval_gate_failed_count": 0,
+        "notes": [],
+    }
+    if audit_path is None or not audit_path.exists():
+        return result
+
+    payload = load_json(audit_path)
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        result.update({
+            "present": True,
+            "status": "invalid",
+            "notes": ["terminal_last_tradable_close approval audit JSON is invalid: missing summary object."],
+        })
+        return result
+
+    result.update({
+        "present": True,
+        "status": "ok",
+        "candidate_rows_count": int(summary.get("candidate_rows_count") or 0),
+        "still_hard_blocker_count": int(summary.get("still_hard_blocker_count") or 0),
+        "approval_gate_passed_count": int(summary.get("approval_gate_passed_count") or 0),
+        "approval_gate_failed_count": int(summary.get("approval_gate_failed_count") or 0),
+        "notes": [
+            "Approval audit is candidate-only and does not by itself price exits or unblock portfolio.",
+        ],
+    })
+    return result
+
+
+def inspect_repaired_terminal_event_candidate(candidate_path: Path | None) -> dict[str, object]:
+    result: dict[str, object] = {
+        "candidate_path": str(candidate_path) if candidate_path is not None else None,
+        "present": False,
+        "status": "missing",
+        "candidate_rows_count": 0,
+        "priced_rows_count": 0,
+        "still_hard_blocker_count": 0,
+        "notes": [],
+    }
+    if candidate_path is None or not candidate_path.exists():
+        return result
+
+    payload = load_json(candidate_path)
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        result.update({
+            "present": True,
+            "status": "invalid",
+            "notes": ["repaired_terminal_event_candidate JSON is invalid: missing summary object."],
+        })
+        return result
+
+    result.update({
+        "present": True,
+        "status": "ok",
+        "candidate_rows_count": int(summary.get("candidate_rows_count") or 0),
+        "priced_rows_count": int(summary.get("priced_rows_count") or 0),
+        "still_hard_blocker_count": int(summary.get("still_hard_blocker_count") or 0),
+        "notes": [
+            "Candidate artifact remains upstream-only until execution path emits complete actual exit fields.",
+        ],
+    })
+    return result
+
+
+def inspect_execution_exit_resolution(
+    project_execution_panel_path: Path,
+    execution_state_path: Path,
+    repaired_terminal_event_candidate_path: Path | None = None,
+    terminal_last_tradable_approval_audit_path: Path | None = None,
+) -> dict[str, object]:
+    result: dict[str, object] = {
+        "project_execution_panel_path": str(project_execution_panel_path),
+        "execution_state_path": str(execution_state_path),
+        "repaired_terminal_event_candidate_path": (
+            str(repaired_terminal_event_candidate_path)
+            if repaired_terminal_event_candidate_path is not None
+            else None
+        ),
+        "terminal_last_tradable_approval_audit_path": (
+            str(terminal_last_tradable_approval_audit_path)
+            if terminal_last_tradable_approval_audit_path is not None
+            else None
+        ),
+        "present": False,
+        "status": "missing_inputs",
+        "pass_flag": False,
+        "portfolio_recovery_allowed": False,
+        "backtest_executable_rows": 0,
+        "missing_actual_exit_date_rows": 0,
+        "missing_actual_sell_price_rows": 0,
+        "missing_realized_return_rows": 0,
+        "hard_blocker_rows": 0,
+        "hard_blocker_status_counts": {},
+        "terminal_priced_last_tradable_close_rows": 0,
+        "approval_candidate_rows_count": 0,
+        "repaired_candidate_rows_count": 0,
+        "missing_input_paths": [],
+        "notes": [],
+    }
+
+    missing_input_paths: list[str] = []
+    if not project_execution_panel_path.exists():
+        missing_input_paths.append(str(project_execution_panel_path))
+    if not execution_state_path.exists():
+        missing_input_paths.append(str(execution_state_path))
+    if missing_input_paths:
+        result["missing_input_paths"] = missing_input_paths
+        result["notes"] = ["Required execution exit resolution inputs are missing."]
+        return result
+
+    approval_check = inspect_terminal_last_tradable_approval_audit(
+        terminal_last_tradable_approval_audit_path
+    )
+    candidate_check = inspect_repaired_terminal_event_candidate(
+        repaired_terminal_event_candidate_path
+    )
+
+    con = duckdb.connect()
+    try:
+        con.execute(
+            f"""
+            CREATE OR REPLACE VIEW project_execution_panel_t AS
+            SELECT * FROM read_parquet({sql_path(project_execution_panel_path)})
+            """
+        )
+        con.execute(
+            f"""
+            CREATE OR REPLACE VIEW execution_state_t AS
+            SELECT * FROM read_parquet({sql_path(execution_state_path)})
+            """
+        )
+        summary_row = con.execute(
+            """
+            WITH executable AS (
+                SELECT
+                    p.execution_path_status,
+                    p.actual_exit_date,
+                    p.actual_sell_price,
+                    p.execution_delayed_realized_return
+                FROM execution_state_t e
+                INNER JOIN project_execution_panel_t p
+                  ON e.snapshot_id = p.snapshot_id
+                 AND e.instrument = p.instrument
+                 AND e.signal_date = p.signal_date
+                WHERE e.backtest_executable
+            )
+            SELECT
+                COUNT(*) AS backtest_executable_rows,
+                SUM(CASE WHEN actual_exit_date IS NULL THEN 1 ELSE 0 END) AS missing_actual_exit_date_rows,
+                SUM(CASE WHEN actual_sell_price IS NULL THEN 1 ELSE 0 END) AS missing_actual_sell_price_rows,
+                SUM(CASE WHEN execution_delayed_realized_return IS NULL THEN 1 ELSE 0 END) AS missing_realized_return_rows,
+                SUM(
+                    CASE
+                        WHEN execution_path_status IN ('terminal_event_unpriced', 'exit_unresolved', 'calendar_insufficient')
+                        THEN 1 ELSE 0
+                    END
+                ) AS hard_blocker_rows,
+                SUM(
+                    CASE
+                        WHEN execution_path_status = 'terminal_priced_last_tradable_close'
+                        THEN 1 ELSE 0
+                    END
+                ) AS terminal_priced_last_tradable_close_rows
+            FROM executable
+            """
+        ).fetchone()
+
+        hard_blocker_rows = con.execute(
+            """
+            WITH executable AS (
+                SELECT p.execution_path_status
+                FROM execution_state_t e
+                INNER JOIN project_execution_panel_t p
+                  ON e.snapshot_id = p.snapshot_id
+                 AND e.instrument = p.instrument
+                 AND e.signal_date = p.signal_date
+                WHERE e.backtest_executable
+            )
+            SELECT execution_path_status, COUNT(*) AS n
+            FROM executable
+            WHERE execution_path_status IN ('terminal_event_unpriced', 'exit_unresolved', 'calendar_insufficient')
+            GROUP BY 1
+            ORDER BY 1
+            """
+        ).fetchall()
+    finally:
+        con.close()
+
+    backtest_executable_rows = int(summary_row[0] or 0)
+    missing_actual_exit_date_rows = int(summary_row[1] or 0)
+    missing_actual_sell_price_rows = int(summary_row[2] or 0)
+    missing_realized_return_rows = int(summary_row[3] or 0)
+    hard_blocker_rows_count = int(summary_row[4] or 0)
+    terminal_priced_rows = int(summary_row[5] or 0)
+    hard_blocker_status_counts = {str(status): int(count) for status, count in hard_blocker_rows}
+    approval_candidate_rows_count = int(approval_check["candidate_rows_count"] or 0)
+    repaired_candidate_rows_count = int(candidate_check["candidate_rows_count"] or 0)
+
+    fully_resolved = (
+        backtest_executable_rows > 0
+        and missing_actual_exit_date_rows == 0
+        and missing_actual_sell_price_rows == 0
+        and missing_realized_return_rows == 0
+        and hard_blocker_rows_count == 0
+    )
+    partially_resolved = (
+        not fully_resolved
+        and (
+            terminal_priced_rows > 0
+            or repaired_candidate_rows_count > 0
+            or approval_candidate_rows_count > 0
+        )
+    )
+
+    status = "still_blocked"
+    notes = [
+        "Portfolio recovery is allowed only when backtest_executable rows have complete actual exit fields and no hard-blocker execution states remain.",
+    ]
+    if fully_resolved:
+        status = "fully_resolved"
+        notes.append(
+            "Execution path produced complete actual_exit_date, actual_sell_price, and execution_delayed_realized_return for all backtest_executable rows."
+        )
+    elif partially_resolved:
+        status = "partially_resolved"
+        notes.append(
+            "Some approval/candidate/priced progress exists upstream, but execution exit resolution is still incomplete."
+        )
+    else:
+        notes.append(
+            "Execution exit blockers remain unresolved upstream; portfolio must stay blocked."
+        )
+
+    result.update({
+        "present": True,
+        "status": status,
+        "pass_flag": fully_resolved,
+        "portfolio_recovery_allowed": fully_resolved,
+        "backtest_executable_rows": backtest_executable_rows,
+        "missing_actual_exit_date_rows": missing_actual_exit_date_rows,
+        "missing_actual_sell_price_rows": missing_actual_sell_price_rows,
+        "missing_realized_return_rows": missing_realized_return_rows,
+        "hard_blocker_rows": hard_blocker_rows_count,
+        "hard_blocker_status_counts": hard_blocker_status_counts,
+        "terminal_priced_last_tradable_close_rows": terminal_priced_rows,
+        "approval_candidate_rows_count": approval_candidate_rows_count,
+        "repaired_candidate_rows_count": repaired_candidate_rows_count,
+        "missing_input_paths": [],
+        "notes": notes,
+    })
+    return result
+
+
+def resolve_latest_attempt_dir(run_dir: Path) -> tuple[str | None, Path | None]:
+    latest_pointer = run_dir / "run_state_latest_attempt.json"
+    if not latest_pointer.exists():
+        return None, None
+    payload = load_json(latest_pointer)
+    attempt_id = payload.get("attempt_id")
+    if not isinstance(attempt_id, str) or not attempt_id:
+        return None, None
+    attempt_dir = run_dir / "attempts" / attempt_id
+    if not attempt_dir.exists():
+        return attempt_id, None
+    return attempt_id, attempt_dir
+
+
 def fmt(v: float | None, decimals: int = 6) -> str:
     if v is None:
         return "null"
@@ -221,6 +514,22 @@ def main() -> None:
     sample_panel = require_path(run_dir / "project_sample_panel.parquet")
     execution_panel = require_path(run_dir / "project_execution_panel.parquet")
     terminal_event_repair_audit_path = Path(args.terminal_event_repair_audit) if args.terminal_event_repair_audit else run_dir / "terminal_event_repair_audit.json"
+    terminal_last_tradable_approval_audit_path = (
+        Path(args.terminal_last_tradable_approval_audit)
+        if args.terminal_last_tradable_approval_audit
+        else run_dir / "terminal_last_tradable_close_approval_audit.json"
+    )
+    repaired_terminal_event_candidate_path = (
+        Path(args.repaired_terminal_event_candidate)
+        if args.repaired_terminal_event_candidate
+        else run_dir / "repaired_terminal_event_candidate.json"
+    )
+    latest_attempt_id, latest_attempt_dir = resolve_latest_attempt_dir(run_dir)
+    execution_state_path = (
+        latest_attempt_dir / "execution_state_daily.parquet"
+        if latest_attempt_dir is not None
+        else run_dir / "attempts" / "missing" / "execution_state_daily.parquet"
+    )
 
     run_input = load_json(CONTRACTS_DIR / "run_input_contract.current.json")
     snapshot_id = run_input["snapshot_id"]
@@ -388,18 +697,59 @@ def main() -> None:
             "",
         ])
 
-        # ---- 1f. Terminal event repair audit gate ----
+        # ---- 1f. Execution exit resolution gate ----
+        execution_exit_resolution_check = inspect_execution_exit_resolution(
+            execution_panel,
+            execution_state_path,
+            repaired_terminal_event_candidate_path=repaired_terminal_event_candidate_path,
+            terminal_last_tradable_approval_audit_path=terminal_last_tradable_approval_audit_path,
+        )
+        execution_exit_resolution_pass = bool(execution_exit_resolution_check["pass_flag"])
+        md_lines.append("### Execution Exit Resolution Gate")
+        md_lines.append("")
+        md_lines.append(f"- Latest attempt id: `{latest_attempt_id}`")
+        md_lines.append(
+            f"- Execution state path: `{execution_exit_resolution_check['execution_state_path']}`"
+        )
+        md_lines.append(
+            f"- Resolution status: `{execution_exit_resolution_check['status']}`"
+        )
+        md_lines.extend([
+            f"- backtest_executable_rows: `{execution_exit_resolution_check['backtest_executable_rows']}`",
+            f"- missing_actual_exit_date_rows: `{execution_exit_resolution_check['missing_actual_exit_date_rows']}`",
+            f"- missing_actual_sell_price_rows: `{execution_exit_resolution_check['missing_actual_sell_price_rows']}`",
+            f"- missing_realized_return_rows: `{execution_exit_resolution_check['missing_realized_return_rows']}`",
+            f"- hard_blocker_rows: `{execution_exit_resolution_check['hard_blocker_rows']}`",
+            f"- terminal_priced_last_tradable_close_rows: `{execution_exit_resolution_check['terminal_priced_last_tradable_close_rows']}`",
+            f"- approval_candidate_rows_count: `{execution_exit_resolution_check['approval_candidate_rows_count']}`",
+            f"- repaired_candidate_rows_count: `{execution_exit_resolution_check['repaired_candidate_rows_count']}`",
+            f"- portfolio_recovery_allowed: `{execution_exit_resolution_check['portfolio_recovery_allowed']}`",
+        ])
+        if execution_exit_resolution_check["missing_input_paths"]:
+            md_lines.append(
+                f"{BOLD_FAIL} execution exit resolution inputs missing: "
+                + ", ".join(execution_exit_resolution_check["missing_input_paths"])
+            )
+        else:
+            md_lines.append(
+                check_pass(
+                    execution_exit_resolution_pass,
+                    "Execution exit resolution is fully resolved for all backtest_executable rows",
+                )
+            )
+        md_lines.append("")
+
+        # ---- 1g. Terminal event repair audit gate ----
         terminal_event_repair_check = inspect_terminal_event_repair_audit(terminal_event_repair_audit_path)
         terminal_event_repair_present = bool(terminal_event_repair_check["present"])
-        terminal_event_repair_pass = bool(terminal_event_repair_check["pass_flag"])
         terminal_event_repair_status = str(terminal_event_repair_check["status"])
-        md_lines.append("### Terminal Event Repair Audit Gate")
+        md_lines.append("### Legacy Terminal Event Repair Audit Gate")
         md_lines.append("")
         md_lines.append(f"- Audit path: `{terminal_event_repair_check['audit_path']}`")
         if not terminal_event_repair_present:
             md_lines.extend([
                 "- Audit status: `missing`",
-                f"{BOLD_FAIL} terminal_event_repair_audit missing",
+                f"{BOLD_WARN} terminal_event_repair_audit missing",
                 "",
             ])
         else:
@@ -416,9 +766,14 @@ def main() -> None:
                     + ", ".join(terminal_event_repair_check["missing_fields"])
                 )
             elif terminal_event_repair_status == "terminal_event_repair_blocked":
-                md_lines.append(f"{BOLD_FAIL} terminal_event_repair_blocked")
+                md_lines.append(f"{BOLD_WARN} terminal_event_repair_blocked")
             else:
-                md_lines.append(check_pass(terminal_event_repair_pass, "terminal_event_repair_audit has no hard blockers"))
+                md_lines.append(
+                    check_pass(
+                        bool(terminal_event_repair_check["pass_flag"]),
+                        "terminal_event_repair_audit has no hard blockers",
+                    )
+                )
             if bool(terminal_event_repair_check["requires_upstream_execution_path_implementation"]):
                 md_lines.append(
                     f"{BOLD_WARN} terminal_event_repair_audit found rows that may require upstream execution path implementation; this does not unblock portfolio handling."
@@ -1005,7 +1360,7 @@ def main() -> None:
             ("Data quality: train coverage >= 50%", coverage_pass),
             ("Data quality: no tradability degradation", degrad_pass),
             ("Data quality: no unresolved exit paths", unresolved_pass),
-            ("Data quality: terminal event repair audit present and clear of hard blockers", terminal_event_repair_pass),
+            ("Data quality: execution exit fully resolved for backtest_executable rows", execution_exit_resolution_pass),
             ("Label consistency: label-defined rate >= 80%", ld_pass),
             ("Label consistency: entry-tradeable rate >= 70%", et_pass),
             ("Label consistency: actually-exited rate >= 95%", ae_pass),
@@ -1065,6 +1420,7 @@ def main() -> None:
                 "terminal_event_rows": terminal_rows,
                 "unresolved_exit_rows": unresolved_rows,
                 "unresolved_exit_flag": unresolved_pass,
+                "execution_exit_resolution": execution_exit_resolution_check,
                 "terminal_event_repair_audit": terminal_event_repair_check,
             },
             "label_consistency": {

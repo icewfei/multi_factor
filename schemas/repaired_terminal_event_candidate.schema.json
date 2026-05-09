@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/repaired_terminal_event_candidate.schema.json",
+  "title": "Repaired Terminal Event Candidate",
+  "description": "Intermediate artifact produced from the terminal last tradable close approval audit. Marks rows that may enter upstream execution-path terminal_priced_last_tradable_close processing. This artifact does not price exits and must not be treated as actual exit output.",
+  "type": "object",
+  "required": [
+    "artifact_status",
+    "source_approval_audit",
+    "pricing_policy_version",
+    "summary",
+    "rows",
+    "notes"
+  ],
+  "properties": {
+    "artifact_status": {
+      "type": "string",
+      "const": "repaired_terminal_event_candidate_only"
+    },
+    "source_approval_audit": {
+      "type": "string"
+    },
+    "pricing_policy_version": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total_rows_in_source_audit",
+        "candidate_rows_count",
+        "still_hard_blocker_count",
+        "priced_rows_count"
+      ],
+      "properties": {
+        "total_rows_in_source_audit": { "type": "integer", "minimum": 0 },
+        "candidate_rows_count": { "type": "integer", "minimum": 0 },
+        "still_hard_blocker_count": { "type": "integer", "minimum": 0 },
+        "priced_rows_count": { "type": "integer", "const": 0 }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "instrument",
+          "signal_date",
+          "entry_date",
+          "planned_exit_date",
+          "terminal_event_date",
+          "terminal_event_type",
+          "approval_origin_case",
+          "approval_evidence_case",
+          "candidate_target_state",
+          "approved_terminal_pricing_path",
+          "candidate_pricing_date",
+          "candidate_last_tradable_close",
+          "candidate_adj_factor",
+          "candidate_volume",
+          "pricing_policy_version",
+          "terminal_event_source_degraded_flag",
+          "terminal_exit_approximation_flag",
+          "source_repair_flag",
+          "terminal_event_bridge_required_flag",
+          "required_candidate_flags",
+          "still_hard_blocker",
+          "candidate_notes"
+        ],
+        "properties": {
+          "snapshot_id": { "type": ["string", "null"] },
+          "instrument": { "type": "string" },
+          "signal_date": { "type": "string" },
+          "entry_date": { "type": ["string", "null"] },
+          "planned_exit_date": { "type": ["string", "null"] },
+          "terminal_event_date": { "type": ["string", "null"] },
+          "terminal_event_type": { "type": ["string", "null"] },
+          "approval_origin_case": {
+            "type": "string",
+            "enum": ["no_terminal_pricing_source", "terminal_event_bridge_required"]
+          },
+          "approval_evidence_case": {
+            "type": "string",
+            "enum": [
+              "degraded_terminal_source_with_auditable_bars",
+              "declared_last_tradable_date_suspended"
+            ]
+          },
+          "candidate_target_state": {
+            "type": "string",
+            "const": "repaired_terminal_event_candidate"
+          },
+          "approved_terminal_pricing_path": {
+            "type": "string",
+            "const": "terminal_priced_last_tradable_close"
+          },
+          "candidate_pricing_date": { "type": "string" },
+          "candidate_last_tradable_close": { "type": "number" },
+          "candidate_adj_factor": { "type": "number" },
+          "candidate_volume": { "type": "number" },
+          "pricing_policy_version": { "type": "string" },
+          "terminal_event_source_degraded_flag": { "type": "boolean" },
+          "terminal_exit_approximation_flag": { "type": "boolean" },
+          "source_repair_flag": { "type": "boolean" },
+          "terminal_event_bridge_required_flag": { "type": "boolean" },
+          "required_candidate_flags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "still_hard_blocker": {
+            "type": "boolean",
+            "const": true
+          },
+          "candidate_notes": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

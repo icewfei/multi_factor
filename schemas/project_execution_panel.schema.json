@@ -28,6 +28,8 @@
     "terminal_event_type": { "type": ["string", "null"] },
     "terminal_event_date": { "type": ["string", "null"] },
     "terminal_exit_pricing_method": { "type": ["string", "null"] },
+    "pricing_policy_version": { "type": ["string", "null"] },
+    "source_repair_flag": { "type": ["boolean", "null"] },
     "terminal_exit_approximation_flag": { "type": ["boolean", "null"] },
     "terminal_exit_conservative_flag": { "type": ["boolean", "null"] }
   }

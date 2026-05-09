@@ -117,6 +117,11 @@ def require_path(path: Path) -> Path:
     return path
 
 
+def existing_columns(con: duckdb.DuckDBPyConnection, reader_sql: str) -> set[str]:
+    rows = con.execute(f"DESCRIBE SELECT * FROM {reader_sql}").fetchall()
+    return {row[0] for row in rows}
+
+
 def resolve_attempt_dir(run_dir: Path, attempt_id: str | None) -> tuple[str, Path]:
     if attempt_id:
         resolved_attempt_id = attempt_id
@@ -594,10 +599,36 @@ def main() -> None:
             SELECT * FROM read_parquet({sql_path(ranking_state)})
             """
         )
+        project_execution_panel_reader = f"read_parquet({sql_path(project_execution_panel)})"
+        project_execution_panel_columns = existing_columns(con, project_execution_panel_reader)
+        project_execution_panel_optional_exprs: list[str] = []
+        if "pricing_policy_version" not in project_execution_panel_columns:
+            project_execution_panel_optional_exprs.append(
+                "CAST(NULL AS VARCHAR) AS pricing_policy_version"
+            )
+        if "source_repair_flag" not in project_execution_panel_columns:
+            project_execution_panel_optional_exprs.append(
+                "CAST(NULL AS BOOLEAN) AS source_repair_flag"
+            )
+        if "terminal_exit_approximation_flag" not in project_execution_panel_columns:
+            project_execution_panel_optional_exprs.append(
+                "CAST(NULL AS BOOLEAN) AS terminal_exit_approximation_flag"
+            )
+        if "terminal_exit_conservative_flag" not in project_execution_panel_columns:
+            project_execution_panel_optional_exprs.append(
+                "CAST(NULL AS BOOLEAN) AS terminal_exit_conservative_flag"
+            )
+        project_execution_panel_select = "p0.*"
+        if project_execution_panel_optional_exprs:
+            project_execution_panel_select += ",\n                " + ",\n                ".join(
+                project_execution_panel_optional_exprs
+            )
         con.execute(
             f"""
             CREATE OR REPLACE VIEW project_execution_panel_t AS
-            SELECT * FROM read_parquet({sql_path(project_execution_panel)})
+            SELECT
+                {project_execution_panel_select}
+            FROM {project_execution_panel_reader} p0
             """
         )
         if weight_mapping_contract is not None:
@@ -944,6 +975,8 @@ def main() -> None:
                     p.terminal_event_type,
                     p.terminal_event_date,
                     p.terminal_exit_pricing_method,
+                    p.pricing_policy_version,
+                    p.source_repair_flag,
                     p.terminal_exit_approximation_flag,
                     p.terminal_exit_conservative_flag,
                     t.mapped_target_weight_D0 AS target_weight_D0,
@@ -993,6 +1026,8 @@ def main() -> None:
                     p.terminal_event_type,
                     p.terminal_event_date,
                     p.terminal_exit_pricing_method,
+                    p.pricing_policy_version,
+                    p.source_repair_flag,
                     p.terminal_exit_approximation_flag,
                     p.terminal_exit_conservative_flag
                 FROM ranking_state_t r
@@ -1075,6 +1110,8 @@ def main() -> None:
                             "terminal_event_type": row["terminal_event_type"],
                             "terminal_event_date": row["terminal_event_date"],
                             "terminal_exit_pricing_method": row["terminal_exit_pricing_method"],
+                            "pricing_policy_version": row["pricing_policy_version"],
+                            "source_repair_flag": row["source_repair_flag"],
                             "terminal_exit_approximation_flag": row["terminal_exit_approximation_flag"],
                             "terminal_exit_conservative_flag": row["terminal_exit_conservative_flag"],
                             "target_weight_D0": target_weight,
@@ -1108,6 +1145,8 @@ def main() -> None:
                     "terminal_event_type",
                     "terminal_event_date",
                     "terminal_exit_pricing_method",
+                    "pricing_policy_version",
+                    "source_repair_flag",
                     "terminal_exit_approximation_flag",
                     "terminal_exit_conservative_flag",
                     "target_weight_D0",
@@ -1143,6 +1182,8 @@ def main() -> None:
                     CAST(terminal_event_type AS VARCHAR) AS terminal_event_type,
                     CAST(terminal_event_date AS VARCHAR) AS terminal_event_date,
                     CAST(terminal_exit_pricing_method AS VARCHAR) AS terminal_exit_pricing_method,
+                    CAST(pricing_policy_version AS VARCHAR) AS pricing_policy_version,
+                    CAST(source_repair_flag AS BOOLEAN) AS source_repair_flag,
                     CAST(terminal_exit_approximation_flag AS BOOLEAN) AS terminal_exit_approximation_flag,
                     CAST(terminal_exit_conservative_flag AS BOOLEAN) AS terminal_exit_conservative_flag,
                     CAST(target_weight_D0 AS DOUBLE) AS target_weight_D0,
@@ -1213,6 +1254,8 @@ def main() -> None:
                 h.terminal_event_type,
                 h.terminal_event_date,
                 h.terminal_exit_pricing_method,
+                h.pricing_policy_version,
+                h.source_repair_flag,
                 h.terminal_exit_approximation_flag,
                 h.terminal_exit_conservative_flag,
                 h.target_weight_D0,
@@ -1259,6 +1302,8 @@ def main() -> None:
                 terminal_event_type,
                 terminal_event_date,
                 terminal_exit_pricing_method,
+                pricing_policy_version,
+                source_repair_flag,
                 terminal_exit_approximation_flag,
                 terminal_exit_conservative_flag
             FROM holdings_positions_t

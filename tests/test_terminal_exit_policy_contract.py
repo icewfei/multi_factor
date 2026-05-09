@@ -20,6 +20,54 @@ def test_hierarchy_order_is_cash_settlement_then_last_tradable_close_then_zero_r
     assert order[2] == "zero_recovery"
 
 
+def test_last_tradable_close_approval_policy_disables_zero_recovery_by_default() -> None:
+    contract = load_json(CONTRACT_PATH)
+    approval = contract["last_tradable_close_approval_policy"]
+
+    assert approval["candidate_artifact"] == "repaired_terminal_event_candidate"
+    assert approval["zero_recovery_default_enabled"] is False
+
+
+def test_last_tradable_close_approval_policy_distinguishes_bridge_and_non_bridge_origin_cases() -> None:
+    contract = load_json(CONTRACT_PATH)
+    origin_cases = contract["last_tradable_close_approval_policy"]["origin_cases"]
+
+    assert "no_terminal_pricing_source" in origin_cases
+    assert "terminal_event_bridge_required" in origin_cases
+    assert origin_cases["terminal_event_bridge_required"]["candidate_allowed_if_evidence_case_approved"] is True
+    assert "terminal_event_bridge_required" in origin_cases["terminal_event_bridge_required"]["must_retain_markers"]
+
+
+def test_last_tradable_close_approval_policy_distinguishes_two_evidence_cases() -> None:
+    contract = load_json(CONTRACT_PATH)
+    evidence_cases = contract["last_tradable_close_approval_policy"]["evidence_cases"]
+
+    assert "degraded_terminal_source_with_auditable_bars" in evidence_cases
+    assert "declared_last_tradable_date_suspended" in evidence_cases
+    assert evidence_cases["degraded_terminal_source_with_auditable_bars"]["candidate_allowed"] is True
+    assert evidence_cases["declared_last_tradable_date_suspended"]["candidate_allowed"] is True
+
+
+def test_suspended_evidence_case_requires_approximation_and_source_repair_flags() -> None:
+    contract = load_json(CONTRACT_PATH)
+    suspended = contract["last_tradable_close_approval_policy"]["evidence_cases"][
+        "declared_last_tradable_date_suspended"
+    ]
+
+    assert "terminal_exit_approximation_flag" in suspended["required_flags"]
+    assert "source_repair_flag" in suspended["required_flags"]
+
+
+def test_degraded_evidence_case_requires_degraded_and_source_repair_flags() -> None:
+    contract = load_json(CONTRACT_PATH)
+    degraded = contract["last_tradable_close_approval_policy"]["evidence_cases"][
+        "degraded_terminal_source_with_auditable_bars"
+    ]
+
+    assert "terminal_event_source_degraded_flag" in degraded["required_flags"]
+    assert "source_repair_flag" in degraded["required_flags"]
+
+
 def test_hard_blocker_states_are_terminal_event_unpriced_exit_unresolved_calendar_insufficient() -> None:
     contract = load_json(CONTRACT_PATH)
     blockers = contract["hard_blocker_rules"]
