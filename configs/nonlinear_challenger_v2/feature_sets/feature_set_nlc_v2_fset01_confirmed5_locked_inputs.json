@@ -1,0 +1,50 @@
+{
+  "feature_set_id": "nlc_v2_fset01_confirmed5_locked_inputs",
+  "source_parent_feature_set_id": "nlc_v1_fset01_confirmed5",
+  "source_audit_file": "configs/nonlinear_challenger_v1/feature_sets/confirmed5_data_source_audit.json",
+  "feature_set_version": "v2_confirmed5_locked_inputs_draft",
+  "created_at": "2026-05-09",
+  "created_by": "codex_manifest_v2_design",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "source_data_scope": "confirmed5_locked_existing_project_sources_only",
+  "feature_count": 5,
+  "feature_list": [
+    "reversal_5d",
+    "cord30",
+    "corr30",
+    "vsumd60",
+    "volatility_20d"
+  ],
+  "feature_family": [
+    "price_reversal",
+    "price_volume_correlation",
+    "volume_strength",
+    "state_liquidity"
+  ],
+  "feature_description": "Locked-input feature set for nonlinear challenger v2. It intentionally reuses the same five confirmed5 inputs and introduces no new feature freedom. volatility_20d remains part of the fixed input set and is also the predeclared state input for the post-score volatility discount contract.",
+  "source_column_mapping_required": true,
+  "feature_column_existence_status": "must_reconfirm_confirmed5_source_mapping_before_training",
+  "d0_visibility_statement": "All listed features and any score-transformation inputs must be computable using D0-visible information only. No D1 entry, realized exit, terminal pricing, or post-signal execution outcome may appear in feature computation or score transformation.",
+  "pit_check_required": true,
+  "leakage_risk_notes": "Do not include labels, realized execution outcomes, terminal exit results, frozen ranking outputs, or any field known only after D0 signal formation. The v2 transformation layer must remain PIT-safe and depend only on raw model score and same-day D0-visible state inputs.",
+  "missing_value_policy": "Missing values may only be handled by a preregistered training-time policy inherited from the locked model config; no feature-specific validation-driven imputation changes are allowed.",
+  "winsorize_or_clip_policy": "No new feature clipping or tail surgery may be introduced in v2. The only new freedom is the preregistered post-score transformation contract declared in the v2 model_config.",
+  "standardization_policy": "No mandatory global standardization is introduced. v2 does not add preprocessing freedom beyond the fixed score transformation contract.",
+  "allowed_training_split": "train_validation_only_bound_to_run_input_contract.research_trainval_20211231",
+  "prohibited_fields": [
+    "label_5d_next_open_close",
+    "label_5d_next_open_close_raw",
+    "actual_exit_date",
+    "actual_sell_price",
+    "execution_delayed_realized_return",
+    "topk_frozen_D0",
+    "entry_filled_D1",
+    "backtest_executable"
+  ],
+  "training_authorization_prerequisites": [
+    "confirmed5 source mapping must be re-confirmed for all five locked inputs",
+    "volatility_20d source mapping must be explicitly accepted as the fixed auxiliary state input for score transformation",
+    "validator must pass before any training authorization"
+  ],
+  "feature_set_hash": "<to_be_computed_after_freeze>"
+}

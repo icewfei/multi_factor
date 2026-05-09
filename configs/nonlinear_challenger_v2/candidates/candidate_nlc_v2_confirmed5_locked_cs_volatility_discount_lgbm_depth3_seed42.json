@@ -1,0 +1,74 @@
+{
+  "candidate_scheme_id": "nlc_v2_confirmed5_locked_cs_volatility_discount_lgbm_depth3_seed42",
+  "research_round_id": "rr_nonlinear_challenger_v2_cs_volatility_discount_20260509",
+  "feature_set_id": "nlc_v2_fset01_confirmed5_locked_inputs",
+  "model_config_id": "nlc_v2_lgbm_regressor_depth3_seed42_cs_volatility_discount_v1",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_id": "<to_be_assigned_after_training_authorization>",
+  "attempt_id": "<to_be_assigned_after_training_authorization>",
+  "candidate_tier": "nonlinear_challenger",
+  "preregistered_at": "2026-05-09",
+  "preregistered_by": "codex_manifest_v2_design",
+  "relation_to_confirmed5": {
+    "parent_candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42",
+    "parent_research_round_id": "rr_nonlinear_challenger_v1_confirmed5",
+    "confirmed5_follow_on_allowed": false,
+    "relationship_type": "new_challenger_not_confirmed5_retuning",
+    "confirmed5_files_modified": false
+  },
+  "single_primary_change_dimension": "portfolio_aware_cross_sectional_score_transformation",
+  "single_primary_change_description": "Apply a fixed, non-tunable cross-sectional volatility discount to D0 raw model scores so that capital deployment is penalized in high-volatility states without altering the confirmed5 feature list or LightGBM hyperparameters.",
+  "expected_outputs": [
+    "train_rankic_summary",
+    "validation_rankic_summary",
+    "same_contract_baseline_comparison_summary",
+    "portfolio_total_equity_summary",
+    "portfolio_invested_capital_summary",
+    "capital_usage_summary",
+    "terminal_exit_flag_audit_summary"
+  ],
+  "allowed_readouts": [
+    "train_rankic_summary",
+    "validation_rankic_summary",
+    "same_contract_baseline_comparison_summary",
+    "portfolio_total_equity_summary",
+    "portfolio_invested_capital_summary",
+    "capital_usage_summary",
+    "terminal_exit_flag_audit_summary"
+  ],
+  "promotion_criteria": [
+    "model-layer diagnostics must not show material deterioration versus confirmed5",
+    "same-contract portfolio comparison must exceed baseline multi_equal_weight_v1",
+    "total equity must be reported in the comparison package",
+    "invested capital must be reported in the comparison package",
+    "average invested_weight must be reported in the comparison package",
+    "average cash_weight must be reported in the comparison package",
+    "terminal exit flags must be complete for all repaired terminal rows used by the comparison"
+  ],
+  "failure_criteria": [
+    "any attempt to improve results by modifying confirmed5 instead of launching a new challenger",
+    "any attempt to use validation readout to repeatedly rewrite the transformation rule",
+    "same-contract portfolio comparison does not beat baseline",
+    "required total equity or invested capital reporting is missing",
+    "capital usage reporting is missing",
+    "terminal exit flags are incomplete",
+    "source mapping remains unresolved at training authorization time"
+  ],
+  "training_fail_fast_conditions": [
+    "source mapping not confirmed -> cannot train",
+    "baseline comparison not bound -> cannot train",
+    "manifest validator not passed -> cannot train"
+  ],
+  "prohibited_actions": [
+    "do_not_retune_confirmed5",
+    "do_not_repeat_validation_screening",
+    "do_not_access_frozen_test",
+    "do_not_treat_trainval_dryrun_as_oos"
+  ],
+  "baseline_binding_required_before_training": true,
+  "baseline_candidate_scheme_id": "multi_equal_weight_v1",
+  "baseline_binding_status": "bound_for_v2_preregistration",
+  "baseline_comparison_policy": "must_compare_against_multi_equal_weight_v1_under_same_split_execution_contract_portfolio_rules_cash_invested_capital_basis_and_terminal_exit_policy",
+  "candidate_status": "preregistered",
+  "frozen_test_access": false
+}
