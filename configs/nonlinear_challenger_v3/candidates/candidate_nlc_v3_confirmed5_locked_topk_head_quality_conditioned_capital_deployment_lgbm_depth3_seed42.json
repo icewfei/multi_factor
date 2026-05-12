@@ -1,0 +1,112 @@
+{
+  "candidate_scheme_id": "nlc_v3_confirmed5_locked_topk_head_quality_conditioned_capital_deployment_lgbm_depth3_seed42",
+  "research_round_id": "rr_nonlinear_challenger_v3_topk_head_quality_conditioned_capital_deployment_20260512",
+  "feature_set_id": "nlc_v3_fset01_confirmed5_locked_inputs",
+  "model_config_id": "nlc_v3_lgbm_regressor_depth3_seed42_locked_hparams_topk_head_quality_conditioned_capital_deployment",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "run_id": "<to_be_assigned_after_implementation_authorization>",
+  "attempt_id": "<to_be_assigned_after_implementation_authorization>",
+  "candidate_tier": "nonlinear_challenger",
+  "preregistered_at": "2026-05-12",
+  "preregistered_by": "codex_manifest_v3_governance_draft",
+  "relation_to_confirmed5": {
+    "parent_candidate_scheme_id": "nlc_v1_confirmed5_lgbm_depth3_seed42",
+    "parent_research_round_id": "rr_nonlinear_challenger_v1_confirmed5",
+    "confirmed5_locked": true,
+    "confirmed5_follow_on_allowed": false,
+    "relationship_type": "new_research_round_not_confirmed5_retuning",
+    "confirmed5_files_modified": false
+  },
+  "relation_to_v2": {
+    "parent_candidate_scheme_id": "nlc_v2_confirmed5_locked_cs_volatility_discount_lgbm_depth3_seed42",
+    "parent_research_round_id": "rr_nonlinear_challenger_v2_cs_volatility_discount_20260509",
+    "v2_locked": true,
+    "v2_follow_on_allowed": false,
+    "relationship_type": "new_research_round_not_v2_retuning",
+    "v2_files_modified": false
+  },
+  "single_primary_change_dimension": "topk_head_quality_conditioned_capital_deployment",
+  "single_primary_change_description": "v3 is a new research round that keeps the confirmed5 and v2 model inputs and LightGBM hyperparameters fixed while preregistering only one future implementation freedom: capital deployment may be conditioned on deployed TopK head quality rather than assumed from model complexity alone.",
+  "unchanged_constraints": [
+    "do_not_change_model_input_features",
+    "do_not_change_lightgbm_hyperparameters",
+    "do_not_change_execution_semantics",
+    "do_not_change_terminal_exit_policy",
+    "do_not_change_portfolio_guard"
+  ],
+  "expected_outputs": [
+    "train_rankic_summary",
+    "validation_rankic_summary",
+    "train_topk_head_quality_summary",
+    "validation_topk_head_quality_summary",
+    "validation_same_contract_baseline_comparison_summary",
+    "validation_total_equity_summary",
+    "validation_invested_capital_summary",
+    "validation_cash_summary",
+    "validation_turnover_summary",
+    "validation_terminal_exit_flag_audit_summary"
+  ],
+  "allowed_readouts": [
+    "train_rankic_summary",
+    "validation_rankic_summary",
+    "train_topk_head_quality_summary",
+    "validation_topk_head_quality_summary",
+    "validation_same_contract_baseline_comparison_summary",
+    "validation_total_equity_summary",
+    "validation_invested_capital_summary",
+    "validation_cash_summary",
+    "validation_turnover_summary",
+    "validation_terminal_exit_flag_audit_summary"
+  ],
+  "promotion_criteria": [
+    "model-layer diagnostics must not show material deterioration versus confirmed5 and v2",
+    "TopK head quality must improve versus baseline on the validation same-contract comparison package",
+    "same-contract portfolio comparison must exceed baseline multi_equal_weight_v1",
+    "total equity must be reported in the comparison package",
+    "invested capital must be reported in the comparison package",
+    "cash must be reported in the comparison package",
+    "turnover must be reported in the comparison package",
+    "terminal exit flags must be complete for all repaired terminal rows used by the comparison"
+  ],
+  "failure_criteria": [
+    "any attempt to improve results by modifying confirmed5 instead of launching a new research round",
+    "any attempt to improve results by continuing v2 formula retuning instead of launching a new research round",
+    "baseline same-contract comparison is missing",
+    "TopK head quality does not improve",
+    "same-contract portfolio comparison does not beat baseline",
+    "high cash disclosure is missing",
+    "required total equity, invested capital, cash, or turnover reporting is incomplete",
+    "terminal exit flags are incomplete",
+    "frozen test or fixed test is accessed",
+    "manifest validator or pytest manifest checks fail",
+    "validation is used for repeated selection or retuning"
+  ],
+  "training_fail_fast_conditions": [
+    "baseline same-contract comparison contract not bound -> cannot implement",
+    "TopK head quality evaluation contract not declared -> cannot implement",
+    "terminal exit flag audit contract incomplete -> cannot implement",
+    "manifest validator not passed -> cannot implement",
+    "pytest tests/test_nonlinear_challenger_v3_manifests.py not passed -> cannot implement",
+    "any frozen_test or fixed_test access plan detected -> void"
+  ],
+  "prohibited_actions": [
+    "do_not_retune_confirmed5",
+    "do_not_retune_v2",
+    "do_not_access_frozen_test",
+    "do_not_access_fixed_test",
+    "do_not_write_training_script",
+    "do_not_write_backtest_script",
+    "do_not_train_before_manifest_approval",
+    "do_not_run_portfolio_before_manifest_approval",
+    "do_not_change_execution_semantics",
+    "do_not_change_terminal_exit_policy",
+    "do_not_change_portfolio_guard",
+    "do_not_optimize_on_validation"
+  ],
+  "baseline_binding_required_before_training": true,
+  "baseline_candidate_scheme_id": "multi_equal_weight_v1",
+  "baseline_binding_status": "bound_for_v3_governance_draft",
+  "baseline_comparison_policy": "must_compare_against_multi_equal_weight_v1_under_same_split_execution_contract_terminal_exit_policy_portfolio_rules_and_same_contract_total_equity_invested_capital_cash_turnover_basis",
+  "candidate_status": "preregistered",
+  "frozen_test_access": false
+}

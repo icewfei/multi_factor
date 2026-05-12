@@ -1,0 +1,55 @@
+{
+  "feature_set_id": "nlc_v3_fset01_confirmed5_locked_inputs",
+  "source_parent_feature_set_id": "nlc_v2_fset01_confirmed5_locked_inputs",
+  "source_audit_file": "configs/nonlinear_challenger_v1/feature_sets/confirmed5_data_source_audit.json",
+  "feature_set_version": "v3_confirmed5_locked_inputs_governance_draft",
+  "created_at": "2026-05-12",
+  "created_by": "codex_manifest_v3_governance_draft",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "source_data_scope": "confirmed5_locked_existing_project_sources_only",
+  "feature_count": 5,
+  "feature_list": [
+    "reversal_5d",
+    "cord30",
+    "corr30",
+    "vsumd60",
+    "volatility_20d"
+  ],
+  "feature_family": [
+    "price_reversal",
+    "price_volume_correlation",
+    "volume_strength",
+    "state_liquidity"
+  ],
+  "feature_description": "Locked-input feature set for nonlinear challenger v3 governance review. It intentionally reuses the exact confirmed5 and v2 input set so that v3 can be reviewed as a new research round focused only on future capital deployment logic rather than model-input expansion.",
+  "source_column_mapping_required": true,
+  "feature_column_existence_status": "must_reconfirm_confirmed5_source_mapping_before_implementation_authorization",
+  "d0_visibility_statement": "All listed features and any future deployment-conditioning signals must be computable using D0-visible information only. No D1 entry, realized exit, terminal pricing, test readout, or post-signal execution outcome may appear in feature computation or deployment conditioning.",
+  "pit_check_required": true,
+  "leakage_risk_notes": "Do not include labels, realized execution outcomes, terminal exit results, frozen ranking outputs, fixed_test artifacts, frozen_test artifacts, or any field known only after D0 signal formation. v3 does not authorize new model-input freedom or any implementation that reads sample-outside governance artifacts.",
+  "missing_value_policy": "Missing values may only be handled by the preregistered LightGBM policy inherited from confirmed5 and v2; no feature-specific validation-driven imputation changes are allowed.",
+  "winsorize_or_clip_policy": "No new feature clipping, tail surgery, or feature engineering freedom is introduced in v3. The feature layer remains fully locked to the confirmed5 and v2 inputs.",
+  "standardization_policy": "No mandatory global standardization is introduced. v3 draft manifests do not change preprocessing freedom.",
+  "allowed_training_split": "train_validation_only_bound_to_run_input_contract.research_trainval_20211231",
+  "prohibited_fields": [
+    "label_5d_next_open_close",
+    "label_5d_next_open_close_raw",
+    "actual_exit_date",
+    "actual_sell_price",
+    "execution_delayed_realized_return",
+    "topk_frozen_D0",
+    "entry_filled_D1",
+    "backtest_executable",
+    "fixed_test_manifest",
+    "fixed_test_summary",
+    "frozen_test_manifest",
+    "frozen_test_summary",
+    "test_rankic_summary"
+  ],
+  "training_authorization_prerequisites": [
+    "confirmed5 source mapping must be re-confirmed for all five locked inputs",
+    "v3 governance review must confirm that no new model input features are introduced",
+    "validator and pytest manifest checks must pass before any implementation authorization"
+  ],
+  "feature_set_hash": "<to_be_computed_after_freeze>"
+}
