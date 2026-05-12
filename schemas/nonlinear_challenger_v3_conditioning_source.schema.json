@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/nonlinear_challenger_v3_conditioning_source.schema.json",
+  "title": "Nonlinear Challenger V3 Conditioning Source",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "candidate_scheme_id",
+    "base_score_source",
+    "conditioning_policy_version",
+    "head_quality_conditioning_source",
+    "calibration_scope",
+    "topk",
+    "leakage_audit_flags",
+    "forbidden_input_tags",
+    "calibration_rows",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "snapshot_id": {
+      "type": "string"
+    },
+    "candidate_scheme_id": {
+      "type": "string"
+    },
+    "base_score_source": {
+      "type": "string"
+    },
+    "conditioning_policy_version": {
+      "type": "string"
+    },
+    "head_quality_conditioning_source": {
+      "type": "string",
+      "enum": [
+        "train_window_frozen_calibration",
+        "expanding_past_calibration"
+      ]
+    },
+    "calibration_scope": {
+      "type": "string",
+      "enum": [
+        "train_only",
+        "expanding_past_only"
+      ]
+    },
+    "topk": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "leakage_audit_flags": {
+      "type": "object",
+      "required": [
+        "train_only_or_expanding_past_only",
+        "no_validation_lookup",
+        "no_frozen_test_lookup",
+        "no_future_signal_date_lookup",
+        "no_portfolio_feedback_lookup",
+        "state_inputs_d0_visible"
+      ],
+      "properties": {
+        "train_only_or_expanding_past_only": {
+          "type": "boolean"
+        },
+        "no_validation_lookup": {
+          "type": "boolean"
+        },
+        "no_frozen_test_lookup": {
+          "type": "boolean"
+        },
+        "no_future_signal_date_lookup": {
+          "type": "boolean"
+        },
+        "no_portfolio_feedback_lookup": {
+          "type": "boolean"
+        },
+        "state_inputs_d0_visible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "forbidden_input_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "calibration_rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "topk_rank_bucket",
+          "head_quality_cell_id",
+          "head_quality_cell_percentile_rank"
+        ],
+        "properties": {
+          "topk_rank_bucket": {
+            "type": "string"
+          },
+          "head_quality_cell_id": {
+            "type": "string"
+          },
+          "head_quality_cell_percentile_rank": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "head_quality_estimate": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_binding_id",
+        "source_score_candidate_scheme_id",
+        "source_score_artifact_path",
+        "source_label_panel_path",
+        "source_split_panel_path",
+        "generated_by",
+        "generated_at",
+        "temporal_scope",
+        "validation_used",
+        "frozen_test_used",
+        "portfolio_feedback_used",
+        "storage_policy"
+      ],
+      "properties": {
+        "source_binding_id": {
+          "type": "string"
+        },
+        "source_score_candidate_scheme_id": {
+          "type": "string"
+        },
+        "source_score_artifact_path": {
+          "type": "string"
+        },
+        "source_label_panel_path": {
+          "type": "string"
+        },
+        "source_split_panel_path": {
+          "type": "string"
+        },
+        "generated_by": {
+          "type": "string"
+        },
+        "generated_at": {
+          "type": "string"
+        },
+        "temporal_scope": {
+          "type": "string",
+          "enum": [
+            "train_only",
+            "expanding_past_only"
+          ]
+        },
+        "validation_used": {
+          "type": "boolean"
+        },
+        "frozen_test_used": {
+          "type": "boolean"
+        },
+        "portfolio_feedback_used": {
+          "type": "boolean"
+        },
+        "storage_policy": {
+          "type": "string",
+          "enum": [
+            "temporary_local_gate_only",
+            "repo_governed_artifact"
+          ]
+        }
+      }
+    }
+  }
+}

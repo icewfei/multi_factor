@@ -23,12 +23,14 @@ CANDIDATE_PATH = (
     "configs/nonlinear_challenger_v3/candidates/"
     "candidate_nlc_v3_confirmed5_locked_topk_head_quality_conditioned_capital_deployment_lgbm_depth3_seed42.json"
 )
+SOURCE_BINDING_PATH = "configs/nonlinear_challenger_v3/source_bindings/v3_score_source_binding.json"
 SCRIPT_PATH = "scripts/build_nonlinear_challenger_v3_scores.py"
 EXPECTED_CANDIDATE_SCHEME_ID = (
     "nlc_v3_confirmed5_locked_topk_head_quality_conditioned_capital_deployment_lgbm_depth3_seed42"
 )
 EXPECTED_BASE_INPUT_CANDIDATE_SCHEME_ID = "nlc_v1_confirmed5_lgbm_depth3_seed42"
 EXPECTED_CONDITIONING_POLICY_VERSION = "nlc_v3_hqcd_v1"
+EXPECTED_SOURCE_BINDING_ID = "nlc_v3_score_source_binding_v1"
 
 
 def write_json(path: Path, payload: dict) -> None:
@@ -100,6 +102,7 @@ def build_conditioning_source_fixture(
         )
 
     payload = {
+        "schema_version": "nlc_v3_conditioning_source_schema_v1",
         "snapshot_id": "warehouse_20260429_trainval_20211231",
         "candidate_scheme_id": EXPECTED_CANDIDATE_SCHEME_ID,
         "base_score_source": "confirmed5_raw_score_D0",
@@ -117,6 +120,20 @@ def build_conditioning_source_fixture(
         },
         "forbidden_input_tags": [] if forbidden_input_tags is None else forbidden_input_tags,
         "calibration_rows": calibration_rows,
+        "provenance": {
+            "source_binding_id": EXPECTED_SOURCE_BINDING_ID,
+            "source_score_candidate_scheme_id": EXPECTED_BASE_INPUT_CANDIDATE_SCHEME_ID,
+            "source_score_artifact_path": str(tmp_path / "confirmed5_model_scores.parquet"),
+            "source_label_panel_path": "fixture://project_label_panel.parquet",
+            "source_split_panel_path": "fixture://dataset_split_daily.parquet",
+            "generated_by": "tests.test_build_nonlinear_challenger_v3_scores",
+            "generated_at": "2026-05-12T00:00:00+00:00",
+            "temporal_scope": "train_only",
+            "validation_used": False,
+            "frozen_test_used": False,
+            "portfolio_feedback_used": False,
+            "storage_policy": "repo_governed_artifact",
+        },
     }
     conditioning_path = tmp_path / "conditioning_source.json"
     write_json(conditioning_path, payload)
@@ -131,7 +148,10 @@ def run_builder(
     base_scores_path: Path,
     conditioning_source_path: Path,
     output_dir: Path,
+    source_binding_path: Path | None = None,
 ) -> subprocess.CompletedProcess[str]:
+    if source_binding_path is None:
+        source_binding_path = repo_root / SOURCE_BINDING_PATH
     return subprocess.run(
         [
             sys.executable,
@@ -146,6 +166,8 @@ def run_builder(
             str(base_scores_path),
             "--conditioning-source",
             str(conditioning_source_path),
+            "--source-binding",
+            str(source_binding_path),
             "--run-id",
             "nlc_v3_score_builder_fixture",
             "--attempt-id",
@@ -371,5 +393,8 @@ def test_v3_score_builder_script_does_not_train_model() -> None:
 
 def test_module_level_base_score_binding_matches_v3_candidate() -> None:
     module = load_module(SCRIPT_PATH, "build_nonlinear_challenger_v3_scores_module")
-    assert module.MANIFEST_BASE_SCORE_BINDINGS[EXPECTED_CANDIDATE_SCHEME_ID] == "confirmed5_raw_score_D0"
+    binding = load_json(SOURCE_BINDING_PATH)
+    assert module.DEFAULT_SOURCE_BINDING_PATH.name == "v3_score_source_binding.json"
+    assert binding["candidate_scheme_id"] == EXPECTED_CANDIDATE_SCHEME_ID
+    assert binding["base_score_binding"]["base_score_source"] == "confirmed5_raw_score_D0"
     assert module.EXPECTED_CONDITIONING_POLICY_VERSION == EXPECTED_CONDITIONING_POLICY_VERSION

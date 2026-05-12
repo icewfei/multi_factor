@@ -1,0 +1,58 @@
+{
+  "source_binding_id": "nlc_v3_score_source_binding_v1",
+  "candidate_scheme_id": "nlc_v3_confirmed5_locked_topk_head_quality_conditioned_capital_deployment_lgbm_depth3_seed42",
+  "research_round_id": "rr_nonlinear_challenger_v3_topk_head_quality_conditioned_capital_deployment_20260512",
+  "snapshot_id": "warehouse_20260429_trainval_20211231",
+  "binding_status": "governed_score_layer_input_contract",
+  "base_score_binding": {
+    "base_score_source": "confirmed5_raw_score_D0",
+    "bound_input_candidate_scheme_ids": [
+      "nlc_v1_confirmed5_lgbm_depth3_seed42"
+    ],
+    "bound_input_score_column": "model_score_D0",
+    "prohibited_candidate_scheme_ids": [
+      "reversal_tail_exclude_p98_v1"
+    ],
+    "prohibited_source_aliases": [
+      "confirmed5_repo_reversal_tail_alias"
+    ],
+    "prohibited_source_reason": "reversal_tail_exclude_p98_v1 is a separate reversal candidate and must not be treated as nonlinear confirmed5 input for v3.",
+    "long_term_formal_source_must_not_use_path_prefixes": [
+      "/private/tmp/"
+    ]
+  },
+  "conditioning_source_binding": {
+    "conditioning_policy_version": "nlc_v3_hqcd_v1",
+    "required_schema_path": "schemas/nonlinear_challenger_v3_conditioning_source.schema.json",
+    "required_provenance_fields": [
+      "source_binding_id",
+      "source_score_candidate_scheme_id",
+      "source_score_artifact_path",
+      "source_label_panel_path",
+      "source_split_panel_path",
+      "generated_by",
+      "generated_at",
+      "temporal_scope",
+      "validation_used",
+      "frozen_test_used",
+      "portfolio_feedback_used",
+      "storage_policy"
+    ],
+    "allowed_head_quality_conditioning_sources": [
+      "train_window_frozen_calibration",
+      "expanding_past_calibration"
+    ],
+    "long_term_formal_source_must_not_use_path_prefixes": [
+      "/private/tmp/"
+    ],
+    "canonical_source_requirement": "conditioning source must exist as a governed artifact with schema, audit, and provenance before v3 can rely on it as a long-term formal input source."
+  },
+  "prohibited_source_confusions": [
+    "do_not_treat_reversal_tail_exclude_p98_v1_as_confirmed5",
+    "do_not_use_private_tmp_as_long_term_formal_source"
+  ],
+  "notes": [
+    "This binding contract only governs score-layer inputs for nonlinear challenger v3.",
+    "It does not authorize portfolio, holdings, metrics, readout, or frozen-test usage."
+  ]
+}

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import duckdb
+import jsonschema
 
 
 EXPECTED_FEATURE_SET_ID = "nlc_v3_fset01_confirmed5_locked_inputs"
@@ -21,8 +22,13 @@ EXPECTED_PARENT_V2_CANDIDATE_SCHEME_ID = "nlc_v2_confirmed5_locked_cs_volatility
 EXPECTED_SNAPSHOT_ID = "warehouse_20260429_trainval_20211231"
 EXPECTED_PRIMARY_CHANGE_DIMENSION = "topk_head_quality_conditioned_capital_deployment"
 EXPECTED_CONDITIONING_POLICY_VERSION = "nlc_v3_hqcd_v1"
+EXPECTED_SOURCE_BINDING_ID = "nlc_v3_score_source_binding_v1"
 MODEL_SCORES_FILENAME = "model_scores_D0.parquet"
 AUDIT_FILENAME = "score_builder_audit.json"
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_SOURCE_BINDING_PATH = (
+    ROOT / "configs" / "nonlinear_challenger_v3" / "source_bindings" / "v3_score_source_binding.json"
+)
 ALLOWED_HEAD_QUALITY_CONDITIONING_SOURCES = {
     "train_window_frozen_calibration",
     "expanding_past_calibration",
@@ -46,9 +52,6 @@ FORBIDDEN_INPUT_TAGS = {
     "future_signal_date",
     "future",
     "portfolio_feedback",
-}
-MANIFEST_BASE_SCORE_BINDINGS = {
-    EXPECTED_CANDIDATE_SCHEME_ID: "confirmed5_raw_score_D0",
 }
 BASE_SCORE_SOURCE_SPECS = {
     "confirmed5_raw_score_D0": {
@@ -85,6 +88,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         help="Path to the train-only or expanding-past head-quality conditioning JSON.",
     )
+    parser.add_argument(
+        "--source-binding",
+        default=DEFAULT_SOURCE_BINDING_PATH,
+        type=Path,
+        help="Path to the v3 source binding contract JSON.",
+    )
     parser.add_argument("--run-id", required=True, help="Run identifier to stamp into the output rows.")
     parser.add_argument("--attempt-id", required=True, help="Attempt identifier to stamp into the audit JSON.")
     parser.add_argument("--output-dir", required=True, type=Path, help="Output directory for parquet and audit JSON.")
@@ -112,6 +121,15 @@ def require_field(payload: dict[str, Any], field: str, label: str) -> Any:
 def ensure_path_exists(path: Path, label: str) -> None:
     if not path.exists():
         raise BuildError(f"{label} not found: {path}")
+
+
+def resolve_repo_path(path_value: str, *, label: str) -> Path:
+    path = Path(path_value)
+    if not path.is_absolute():
+        path = ROOT / path
+    if not path.exists():
+        raise BuildError(f"{label} not found: {path}")
+    return path
 
 
 def validate_manifest_ids(
@@ -175,25 +193,117 @@ def validate_manifest_ids(
         raise BuildError("candidate.relation_to_v2.parent_candidate_scheme_id mismatch")
 
 
-def resolve_base_score_spec(candidate: dict[str, Any]) -> tuple[str, dict[str, Any]]:
-    candidate_scheme_id = require_field(candidate, "candidate_scheme_id", "candidate")
-    try:
-        bound_base_score_source = MANIFEST_BASE_SCORE_BINDINGS[candidate_scheme_id]
-    except KeyError as exc:
-        raise BuildError(f"manifest id not bound to a base score source: {candidate_scheme_id!r}") from exc
+def validate_source_binding(
+    source_binding: dict[str, Any],
+    *,
+    candidate: dict[str, Any],
+) -> tuple[str, dict[str, Any], Path]:
+    if require_field(source_binding, "source_binding_id", "source_binding") != EXPECTED_SOURCE_BINDING_ID:
+        raise BuildError("source_binding.source_binding_id mismatch")
+    if require_field(source_binding, "candidate_scheme_id", "source_binding") != candidate["candidate_scheme_id"]:
+        raise BuildError("source_binding.candidate_scheme_id mismatch")
+    if require_field(source_binding, "research_round_id", "source_binding") != candidate["research_round_id"]:
+        raise BuildError("source_binding.research_round_id mismatch")
+    if require_field(source_binding, "snapshot_id", "source_binding") != EXPECTED_SNAPSHOT_ID:
+        raise BuildError("source_binding.snapshot_id mismatch")
+
+    base_score_binding = require_field(source_binding, "base_score_binding", "source_binding")
+    if not isinstance(base_score_binding, dict):
+        raise BuildError("source_binding.base_score_binding must be a JSON object")
+    bound_base_score_source = require_field(base_score_binding, "base_score_source", "source_binding.base_score_binding")
+    if bound_base_score_source != "confirmed5_raw_score_D0":
+        raise BuildError("source_binding.base_score_binding.base_score_source mismatch")
+
+    bound_input_candidate_scheme_ids = require_field(
+        base_score_binding,
+        "bound_input_candidate_scheme_ids",
+        "source_binding.base_score_binding",
+    )
+    if bound_input_candidate_scheme_ids != [EXPECTED_PARENT_CONFIRMED5_CANDIDATE_SCHEME_ID]:
+        raise BuildError("source_binding.base_score_binding.bound_input_candidate_scheme_ids mismatch")
+    if require_field(
+        base_score_binding,
+        "bound_input_score_column",
+        "source_binding.base_score_binding",
+    ) != "model_score_D0":
+        raise BuildError("source_binding.base_score_binding.bound_input_score_column mismatch")
+
+    prohibited_candidate_scheme_ids = require_field(
+        base_score_binding,
+        "prohibited_candidate_scheme_ids",
+        "source_binding.base_score_binding",
+    )
+    if "reversal_tail_exclude_p98_v1" not in prohibited_candidate_scheme_ids:
+        raise BuildError(
+            "source_binding.base_score_binding.prohibited_candidate_scheme_ids must include reversal_tail_exclude_p98_v1"
+        )
+
+    long_term_prefixes = require_field(
+        base_score_binding,
+        "long_term_formal_source_must_not_use_path_prefixes",
+        "source_binding.base_score_binding",
+    )
+    if "/private/tmp/" not in long_term_prefixes:
+        raise BuildError(
+            "source_binding.base_score_binding.long_term_formal_source_must_not_use_path_prefixes must include /private/tmp/"
+        )
+
+    conditioning_source_binding = require_field(source_binding, "conditioning_source_binding", "source_binding")
+    if not isinstance(conditioning_source_binding, dict):
+        raise BuildError("source_binding.conditioning_source_binding must be a JSON object")
+    if require_field(
+        conditioning_source_binding,
+        "conditioning_policy_version",
+        "source_binding.conditioning_source_binding",
+    ) != EXPECTED_CONDITIONING_POLICY_VERSION:
+        raise BuildError("source_binding.conditioning_source_binding.conditioning_policy_version mismatch")
+
+    schema_path = resolve_repo_path(
+        str(
+            require_field(
+                conditioning_source_binding,
+                "required_schema_path",
+                "source_binding.conditioning_source_binding",
+            )
+        ),
+        label="conditioning source schema",
+    )
+    required_provenance_fields = require_field(
+        conditioning_source_binding,
+        "required_provenance_fields",
+        "source_binding.conditioning_source_binding",
+    )
+    if not isinstance(required_provenance_fields, list) or not required_provenance_fields:
+        raise BuildError("source_binding.conditioning_source_binding.required_provenance_fields must be a non-empty list")
+    if "source_score_candidate_scheme_id" not in required_provenance_fields:
+        raise BuildError(
+            "source_binding.conditioning_source_binding.required_provenance_fields must include source_score_candidate_scheme_id"
+        )
+    if "source_binding_id" not in required_provenance_fields:
+        raise BuildError(
+            "source_binding.conditioning_source_binding.required_provenance_fields must include source_binding_id"
+        )
+
     try:
         spec = BASE_SCORE_SOURCE_SPECS[bound_base_score_source]
     except KeyError as exc:
         raise BuildError(f"base score source spec is not registered: {bound_base_score_source!r}") from exc
-    return bound_base_score_source, spec
+    return bound_base_score_source, spec, schema_path
 
 
 def validate_conditioning_source(
     conditioning_source: dict[str, Any],
     *,
+    conditioning_source_schema: dict[str, Any],
+    source_binding: dict[str, Any],
     candidate_scheme_id: str,
     bound_base_score_source: str,
 ) -> tuple[int, str, str]:
+    try:
+        jsonschema.validate(conditioning_source, conditioning_source_schema)
+    except jsonschema.ValidationError as exc:
+        raise BuildError(f"conditioning_source schema validation failed: {exc.message}") from exc
+
     if require_field(conditioning_source, "snapshot_id", "conditioning_source") != EXPECTED_SNAPSHOT_ID:
         raise BuildError("conditioning_source.snapshot_id mismatch")
     if require_field(conditioning_source, "candidate_scheme_id", "conditioning_source") != candidate_scheme_id:
@@ -251,6 +361,27 @@ def validate_conditioning_source(
     if not isinstance(calibration_rows, list) or not calibration_rows:
         raise BuildError("conditioning source missing calibration_rows")
 
+    conditioning_source_binding = source_binding["conditioning_source_binding"]
+    provenance = require_field(conditioning_source, "provenance", "conditioning_source")
+    if not isinstance(provenance, dict):
+        raise BuildError("conditioning_source.provenance must be a JSON object")
+    for field in conditioning_source_binding["required_provenance_fields"]:
+        value = require_field(provenance, field, "conditioning_source.provenance")
+        if isinstance(value, str) and not value.strip():
+            raise BuildError(f"conditioning_source.provenance.{field} must be non-empty")
+    if provenance["source_binding_id"] != source_binding["source_binding_id"]:
+        raise BuildError("conditioning_source.provenance.source_binding_id mismatch")
+    if provenance["source_score_candidate_scheme_id"] not in BASE_SCORE_SOURCE_SPECS[bound_base_score_source]["input_candidate_scheme_ids"]:
+        raise BuildError("conditioning_source.provenance.source_score_candidate_scheme_id mismatch")
+    if provenance["temporal_scope"] != calibration_scope:
+        raise BuildError("conditioning_source.provenance.temporal_scope mismatch")
+    if provenance["validation_used"] is not False:
+        raise BuildError("conditioning_source.provenance.validation_used must be false")
+    if provenance["frozen_test_used"] is not False:
+        raise BuildError("conditioning_source.provenance.frozen_test_used must be false")
+    if provenance["portfolio_feedback_used"] is not False:
+        raise BuildError("conditioning_source.provenance.portfolio_feedback_used must be false")
+
     global_reference_count = 0
     for row in calibration_rows:
         if not isinstance(row, dict):
@@ -285,6 +416,8 @@ def build_scores_or_fail(
     base_scores_path: Path,
     conditioning_source_path: Path,
     conditioning_source: dict[str, Any],
+    conditioning_source_schema: dict[str, Any],
+    source_binding: dict[str, Any],
     bound_base_score_source: str,
     base_score_spec: dict[str, Any],
     candidate: dict[str, Any],
@@ -298,6 +431,8 @@ def build_scores_or_fail(
 
     topk, conditioning_policy_version, head_quality_conditioning_source = validate_conditioning_source(
         conditioning_source,
+        conditioning_source_schema=conditioning_source_schema,
+        source_binding=source_binding,
         candidate_scheme_id=str(candidate["candidate_scheme_id"]),
         bound_base_score_source=bound_base_score_source,
     )
@@ -343,6 +478,12 @@ def build_scores_or_fail(
             for row in con.execute("SELECT DISTINCT candidate_scheme_id FROM base_scores ORDER BY candidate_scheme_id").fetchall()
         }
         allowed_input_candidate_ids = set(base_score_spec["input_candidate_scheme_ids"])
+        prohibited_input_candidate_ids = set(source_binding["base_score_binding"]["prohibited_candidate_scheme_ids"])
+        prohibited_hits = sorted(input_candidate_ids & prohibited_input_candidate_ids)
+        if prohibited_hits:
+            raise BuildError(
+                "base scores candidate_scheme_id is prohibited for v3 confirmed5 binding: " + ", ".join(prohibited_hits)
+            )
         if input_candidate_ids != allowed_input_candidate_ids:
             raise BuildError(
                 "base scores candidate_scheme_id mismatch: "
@@ -614,18 +755,25 @@ def run_builder(args: argparse.Namespace) -> int:
     feature_set = load_json(args.feature_set, "feature_set manifest")
     model_config = load_json(args.model_config, "model_config manifest")
     candidate = load_json(args.candidate, "candidate manifest")
+    source_binding = load_json(args.source_binding, "source binding")
     validate_manifest_ids(feature_set, model_config, candidate)
 
     ensure_path_exists(args.base_scores, "base scores")
     ensure_path_exists(args.conditioning_source, "conditioning source")
 
-    bound_base_score_source, base_score_spec = resolve_base_score_spec(candidate)
+    bound_base_score_source, base_score_spec, conditioning_schema_path = validate_source_binding(
+        source_binding,
+        candidate=candidate,
+    )
     conditioning_source = load_json(args.conditioning_source, "conditioning source")
+    conditioning_source_schema = load_json(conditioning_schema_path, "conditioning source schema")
 
     result = build_scores_or_fail(
         base_scores_path=args.base_scores,
         conditioning_source_path=args.conditioning_source,
         conditioning_source=conditioning_source,
+        conditioning_source_schema=conditioning_source_schema,
+        source_binding=source_binding,
         bound_base_score_source=bound_base_score_source,
         base_score_spec=base_score_spec,
         candidate=candidate,
