@@ -1,0 +1,432 @@
+{
+  "contract_version": "data_field_enrichment_contract_v1",
+  "design_status": "design_only_no_download_no_training_no_backtest_no_frozen_test",
+  "entity_name": "enriched_security_state_daily_v1",
+  "objective": "Define a shared D0-visible enriched security state / tradability metadata contract for future clean baseline and challenger research inputs only.",
+  "global_boundaries": [
+    "D0 visible only",
+    "no frozen test access",
+    "no data download",
+    "no ML training",
+    "no backtest",
+    "no metrics/readout",
+    "no v4",
+    "no new strategy",
+    "not alpha",
+    "not strategy approval",
+    "no future state"
+  ],
+  "visibility_rules": {
+    "primary_key": [
+      "snapshot_id",
+      "instrument",
+      "signal_date"
+    ],
+    "canonical_date_field": "signal_date",
+    "trade_date_alias_policy": "trade_date is an optional warehouse alias only and must equal signal_date whenever present.",
+    "d0_visible_only": true,
+    "future_state_allowed": false,
+    "frozen_test_access_allowed": false
+  },
+  "fail_fast_rules": [
+    "fail fast if any field cannot be proven D0 visible",
+    "fail fast if any field uses D1 or later execution outcome",
+    "fail fast if any field uses frozen test evidence",
+    "fail fast if trade_date and signal_date disagree",
+    "fail fast if point-in-time effective dates are missing for stateful fields",
+    "fail fast if source_snapshot_id is missing or not bound to the declared research snapshot",
+    "fail fast if d0_visible is false",
+    "fail fast if no_frozen_test_access is false"
+  ],
+  "audit_outputs": {
+    "expected_contract_audits": [
+      "field_contract_audit.json",
+      "field_source_binding_audit.json",
+      "field_population_audit.json"
+    ],
+    "required_assertions": [
+      "all required fields exist",
+      "all fields retain d0_visibility",
+      "all fields retain fail_fast_condition",
+      "d0_visible=true",
+      "no_frozen_test_access=true",
+      "no future-state source used"
+    ],
+    "forbidden_outputs": [
+      "metrics/readout",
+      "portfolio readout",
+      "alpha report",
+      "strategy approval memo"
+    ]
+  },
+  "categories": [
+    {
+      "category_name": "identity fields",
+      "priority": "required",
+      "fields": [
+        {
+          "field_name": "snapshot_id",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Snapshot binding is known at build time and must refer to the declared D0-visible research snapshot.",
+          "allowed_null_policy": "forbidden",
+          "source": "run manifest / warehouse snapshot binding",
+          "leakage_risk": "Rebinding after reviewing later evidence would corrupt provenance and make downstream state fields unauditable.",
+          "fail_fast_condition": "Missing snapshot binding or snapshot binding differs from the declared research snapshot."
+        },
+        {
+          "field_name": "instrument",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Instrument identifier is known on D0 and used as part of the canonical primary key.",
+          "allowed_null_policy": "forbidden",
+          "source": "security master / research snapshot constituents",
+          "leakage_risk": "Using a later remapped identifier or post-delist symbol rewrite can backfill future identity state.",
+          "fail_fast_condition": "Instrument identifier is missing, duplicated within primary key, or cannot be matched to security master."
+        },
+        {
+          "field_name": "trade_date",
+          "dtype": "date",
+          "required": false,
+          "d0_visibility": "Optional warehouse alias only; if present it must equal signal_date and represent the same D0 session.",
+          "allowed_null_policy": "allowed_if_not_applicable",
+          "source": "warehouse daily state alias",
+          "leakage_risk": "If trade_date drifts from signal_date, later-session state can be mistakenly injected.",
+          "fail_fast_condition": "trade_date is present but not equal to signal_date."
+        },
+        {
+          "field_name": "signal_date",
+          "dtype": "date",
+          "required": true,
+          "d0_visibility": "Canonical D0 date field; all state fields must be interpretable as of this date only.",
+          "allowed_null_policy": "forbidden",
+          "source": "research snapshot row date / canonical trading session date",
+          "leakage_risk": "A non-canonical signal_date can shift the interpretation window and silently import future state.",
+          "fail_fast_condition": "signal_date is missing, non-trading-session aligned, or inconsistent with the declared snapshot date semantics."
+        }
+      ]
+    },
+    {
+      "category_name": "ST fields",
+      "priority": "high",
+      "fields": [
+        {
+          "field_name": "is_st",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must reflect whether the security is under ST or equivalent risk-warning status on D0.",
+          "allowed_null_policy": "forbidden",
+          "source": "point-in-time security status table / exchange risk-warning state table",
+          "leakage_risk": "Using current-name ST detection or backfilled status tables can leak future risk warnings into history.",
+          "fail_fast_condition": "ST state cannot be resolved from a point-in-time source for D0."
+        },
+        {
+          "field_name": "st_source",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Must identify the D0-valid upstream ST source or precedence rule used to derive is_st.",
+          "allowed_null_policy": "forbidden",
+          "source": "field source binding / provenance mapping",
+          "leakage_risk": "Opaque derivation hides whether the ST flag came from a future-corrected source.",
+          "fail_fast_condition": "Source precedence for ST resolution is missing or ambiguous."
+        },
+        {
+          "field_name": "st_effective_start",
+          "dtype": "date",
+          "required": true,
+          "d0_visibility": "Must be the historical effective start date already known by D0 for the active ST interval.",
+          "allowed_null_policy": "allowed_if_not_applicable",
+          "source": "point-in-time ST interval table",
+          "leakage_risk": "Backfilled interval starts can make the status appear known earlier than it was.",
+          "fail_fast_condition": "is_st=true but st_effective_start is missing or after signal_date."
+        },
+        {
+          "field_name": "st_effective_end",
+          "dtype": "date",
+          "required": true,
+          "d0_visibility": "Must be the interval end only if already recorded by D0; open intervals remain null.",
+          "allowed_null_policy": "allowed_if_open_interval",
+          "source": "point-in-time ST interval table",
+          "leakage_risk": "Using the eventual end date before it becomes known would leak future regime resolution.",
+          "fail_fast_condition": "st_effective_end is populated from a future-known closeout date not available on D0."
+        }
+      ]
+    },
+    {
+      "category_name": "suspension / no trade fields",
+      "priority": "high",
+      "fields": [
+        {
+          "field_name": "is_suspended",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must reflect D0 suspension status only, based on the D0 trading session state.",
+          "allowed_null_policy": "forbidden",
+          "source": "exchange suspension state table / trading status snapshot",
+          "leakage_risk": "Using D1 resumption or later execution outcome to infer D0 suspension would leak future tradability.",
+          "fail_fast_condition": "Suspension status cannot be resolved or conflicts irreconcilably with D0 market-state source."
+        },
+        {
+          "field_name": "no_trade_flag",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must indicate whether D0 ended with no valid trade prints for the session.",
+          "allowed_null_policy": "forbidden",
+          "source": "daily market data state from D0 volume/amount/trade count and trading status",
+          "leakage_risk": "Inferring from later fills or portfolio outcome would turn execution results into input state.",
+          "fail_fast_condition": "No-trade rule is undefined or cannot distinguish suspension from ordinary zero-print sessions."
+        },
+        {
+          "field_name": "volume_zero_flag",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must be derived only from D0 session volume field.",
+          "allowed_null_policy": "forbidden",
+          "source": "daily volume field in D0 market data snapshot",
+          "leakage_risk": "A repaired or forward-filled volume field can hide true D0 no-trade state.",
+          "fail_fast_condition": "D0 volume field is missing, non-numeric, or sourced from a repaired future-aware table."
+        },
+        {
+          "field_name": "amount_zero_flag",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must be derived only from D0 session amount/turnover field.",
+          "allowed_null_policy": "forbidden",
+          "source": "daily amount field in D0 market data snapshot",
+          "leakage_risk": "Using a later-adjusted amount field can overwrite true D0 trading absence.",
+          "fail_fast_condition": "D0 amount field is missing, non-numeric, or inconsistent with the no_trade_flag rule."
+        }
+      ]
+    },
+    {
+      "category_name": "limit status fields",
+      "priority": "high",
+      "fields": [
+        {
+          "field_name": "is_limit_up",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must reflect whether D0 session ends in an upper-limit state under the D0-valid price-limit regime.",
+          "allowed_null_policy": "forbidden",
+          "source": "D0 market data plus board-aware limit rule lookup",
+          "leakage_risk": "Using D1 open-board behavior or a future regime table would leak tradability resolution.",
+          "fail_fast_condition": "Upper-limit status cannot be reproduced from D0 prices and the declared limit_rule_version."
+        },
+        {
+          "field_name": "is_limit_down",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must reflect whether D0 session ends in a lower-limit state under the D0-valid price-limit regime.",
+          "allowed_null_policy": "forbidden",
+          "source": "D0 market data plus board-aware limit rule lookup",
+          "leakage_risk": "Using later recovery or reopen information would inject future downside resolution.",
+          "fail_fast_condition": "Lower-limit status cannot be reproduced from D0 prices and the declared limit_rule_version."
+        },
+        {
+          "field_name": "open_at_up_limit",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must indicate whether the D0 open price is already at the upper limit under the D0-valid rule.",
+          "allowed_null_policy": "forbidden",
+          "source": "D0 open price plus board-aware limit rule lookup",
+          "leakage_risk": "Post-open intraday behavior must not be used to redefine the opening limit state.",
+          "fail_fast_condition": "Open price or upper-limit rule inputs are missing."
+        },
+        {
+          "field_name": "close_at_down_limit",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must indicate whether the D0 close price equals the D0 lower limit.",
+          "allowed_null_policy": "forbidden",
+          "source": "D0 close price plus board-aware limit rule lookup",
+          "leakage_risk": "Using next-day close or later adjudicated limit records would leak future session state.",
+          "fail_fast_condition": "Close price or lower-limit rule inputs are missing."
+        },
+        {
+          "field_name": "limit_rule_version",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Must identify the price-limit regime version that is already valid on D0 for the given board and exchange.",
+          "allowed_null_policy": "forbidden",
+          "source": "board/exchange regime mapping contract",
+          "leakage_risk": "A retroactively normalized rule version can overwrite historical limit semantics.",
+          "fail_fast_condition": "limit_rule_version cannot be explained by board_type, exchange, and limit_pct_rule on D0."
+        }
+      ]
+    },
+    {
+      "category_name": "tradability state fields",
+      "priority": "high",
+      "fields": [
+        {
+          "field_name": "entry_buyable",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must be a D0-only buy-side eligibility state derived from D0 market-state blockers, not from D1 fill results.",
+          "allowed_null_policy": "forbidden",
+          "source": "contracted combination of D0 suspension, limit, quote, and no-trade blockers",
+          "leakage_risk": "Using entry_filled_D1 or real execution success would convert outcomes into features.",
+          "fail_fast_condition": "entry_buyable depends on any D1+ execution field or an unspecified blocker precedence."
+        },
+        {
+          "field_name": "exit_sellable",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must be a D0-only sell-side state derived from D0 market-state blockers and planned exit semantics known by D0.",
+          "allowed_null_policy": "forbidden",
+          "source": "contracted D0 market-state blocker composition",
+          "leakage_risk": "Using future exit path resolution would silently import realized execution information.",
+          "fail_fast_condition": "exit_sellable depends on any D1+ realized exit or unresolved future repair outcome."
+        },
+        {
+          "field_name": "sellable_retry_next_open",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must represent a policy-state flag declared from D0-observed blockers only; it cannot rely on whether the next open actually traded.",
+          "allowed_null_policy": "forbidden",
+          "source": "tradability policy contract over D0 blockers",
+          "leakage_risk": "Looking at the next open outcome to define retry eligibility would leak future execution availability.",
+          "fail_fast_condition": "Retry state is inferred from next-day realized trading instead of D0 blocker taxonomy."
+        }
+      ]
+    },
+    {
+      "category_name": "listing age fields",
+      "priority": "high",
+      "fields": [
+        {
+          "field_name": "list_date",
+          "dtype": "date",
+          "required": true,
+          "d0_visibility": "Must be the listing date already known by D0 under the chosen point-in-time security master.",
+          "allowed_null_policy": "forbidden",
+          "source": "security master listing-date field",
+          "leakage_risk": "Later corrected listing dates or merged identities can backfill future knowledge into historical age.",
+          "fail_fast_condition": "Listing date is missing, duplicated with conflicting values, or not point-in-time auditable."
+        },
+        {
+          "field_name": "listing_age_days",
+          "dtype": "integer",
+          "required": true,
+          "d0_visibility": "Must be computed from list_date to signal_date using calendar-day difference only.",
+          "allowed_null_policy": "forbidden",
+          "source": "derived from list_date and signal_date",
+          "leakage_risk": "Manual overrides or future-aware recoding of list_date would distort age buckets.",
+          "fail_fast_condition": "listing_age_days cannot be reproduced from list_date and signal_date exactly."
+        },
+        {
+          "field_name": "listing_age_trading_days",
+          "dtype": "integer",
+          "required": true,
+          "d0_visibility": "Must be computed from list_date through the D0 trading calendar only.",
+          "allowed_null_policy": "forbidden",
+          "source": "derived from list_date and the declared exchange trading calendar through D0",
+          "leakage_risk": "Using a later-repaired trading calendar can make the age count unavailable at the original time.",
+          "fail_fast_condition": "Trading-day calendar binding is missing or the count cannot be reproduced through D0."
+        },
+        {
+          "field_name": "newly_listed_flag",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Must be a deterministic thresholded state derived from D0-visible listing_age fields only.",
+          "allowed_null_policy": "forbidden",
+          "source": "derived from list_date, listing_age_days, and/or listing_age_trading_days using fixed threshold policy",
+          "leakage_risk": "A threshold tuned on later performance would turn the flag into a disguised alpha filter.",
+          "fail_fast_condition": "Threshold policy is missing, mutable, or depends on future performance slices."
+        }
+      ]
+    },
+    {
+      "category_name": "board / segment fields",
+      "priority": "required",
+      "fields": [
+        {
+          "field_name": "board_type",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Must identify the D0-valid board or segment assignment for the security.",
+          "allowed_null_policy": "forbidden",
+          "source": "point-in-time security master / board assignment table",
+          "leakage_risk": "Applying today's board label to history can rewrite the applicable trading regime.",
+          "fail_fast_condition": "Board assignment lacks D0 point-in-time evidence or conflicts with exchange segment source."
+        },
+        {
+          "field_name": "exchange",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Must identify the D0-valid exchange for the security.",
+          "allowed_null_policy": "forbidden",
+          "source": "security master exchange code",
+          "leakage_risk": "Identifier remapping after later corporate events can backfill exchange identity.",
+          "fail_fast_condition": "Exchange code is missing or conflicts with instrument identity binding."
+        },
+        {
+          "field_name": "limit_pct_rule",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Must encode the D0-valid percentage-limit regime implied by board_type and exchange.",
+          "allowed_null_policy": "forbidden",
+          "source": "board/exchange regime mapping contract",
+          "leakage_risk": "Using a later normalized regime label can misprice historical limit states.",
+          "fail_fast_condition": "Percentage-limit regime is absent or inconsistent with the declared board_type or exchange."
+        }
+      ]
+    },
+    {
+      "category_name": "audit/provenance fields",
+      "priority": "audit",
+      "fields": [
+        {
+          "field_name": "source_snapshot_id",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Must record the exact upstream D0-visible snapshot binding used to build the row.",
+          "allowed_null_policy": "forbidden",
+          "source": "upstream snapshot manifest / source binding",
+          "leakage_risk": "Without immutable snapshot provenance, future rebinding can masquerade as the original state build.",
+          "fail_fast_condition": "source_snapshot_id is missing or differs from declared snapshot binding rules."
+        },
+        {
+          "field_name": "build_time",
+          "dtype": "timestamp",
+          "required": true,
+          "d0_visibility": "Audit-only timestamp of when the artifact was built; not a market-state input.",
+          "allowed_null_policy": "forbidden",
+          "source": "artifact build metadata",
+          "leakage_risk": "Missing build metadata makes it impossible to audit when a state artifact was materialized.",
+          "fail_fast_condition": "Artifact build timestamp is missing or not serialized in a stable timestamp format."
+        },
+        {
+          "field_name": "builder_version",
+          "dtype": "string",
+          "required": true,
+          "d0_visibility": "Audit-only builder identifier describing the contract implementation version.",
+          "allowed_null_policy": "forbidden",
+          "source": "builder metadata / repo-governed contract version",
+          "leakage_risk": "Unknown builder version makes downstream reproducibility and diff auditing impossible.",
+          "fail_fast_condition": "Builder version is missing or not pinned to a governed contract release."
+        },
+        {
+          "field_name": "d0_visible",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Audit assertion flag and must be true for every emitted row.",
+          "allowed_null_policy": "forbidden",
+          "source": "contract audit assertion",
+          "leakage_risk": "A false or omitted flag means downstream consumers cannot trust the entire artifact boundary.",
+          "fail_fast_condition": "d0_visible is false, null, or omitted."
+        },
+        {
+          "field_name": "no_frozen_test_access",
+          "dtype": "boolean",
+          "required": true,
+          "d0_visibility": "Audit assertion flag and must be true for every emitted row and build attempt.",
+          "allowed_null_policy": "forbidden",
+          "source": "contract audit assertion / run manifest",
+          "leakage_risk": "If frozen test access is allowed or ambiguous, the contract boundary is invalidated.",
+          "fail_fast_condition": "no_frozen_test_access is false, null, omitted, or contradicted by run provenance."
+        }
+      ]
+    }
+  ]
+}

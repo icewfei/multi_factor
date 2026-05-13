@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "multifactor/data_field_enrichment_contract.schema.json",
+  "title": "Data Field Enrichment Contract",
+  "description": "Design-only contract for D0-visible enriched security state / tradability metadata. Defines field-level visibility, fail-fast, provenance, and audit output requirements. Does not download data, train models, run backtests, or access frozen test.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "design_status",
+    "entity_name",
+    "objective",
+    "global_boundaries",
+    "visibility_rules",
+    "fail_fast_rules",
+    "audit_outputs",
+    "categories"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "const": "data_field_enrichment_contract_v1"
+    },
+    "design_status": {
+      "type": "string",
+      "const": "design_only_no_download_no_training_no_backtest_no_frozen_test"
+    },
+    "entity_name": {
+      "type": "string",
+      "const": "enriched_security_state_daily_v1"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "global_boundaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "visibility_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_key",
+        "canonical_date_field",
+        "trade_date_alias_policy",
+        "d0_visible_only",
+        "future_state_allowed",
+        "frozen_test_access_allowed"
+      ],
+      "properties": {
+        "primary_key": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3
+        },
+        "canonical_date_field": {
+          "type": "string",
+          "const": "signal_date"
+        },
+        "trade_date_alias_policy": {
+          "type": "string"
+        },
+        "d0_visible_only": {
+          "type": "boolean",
+          "const": true
+        },
+        "future_state_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "frozen_test_access_allowed": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "fail_fast_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "audit_outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_contract_audits",
+        "required_assertions",
+        "forbidden_outputs"
+      ],
+      "properties": {
+        "expected_contract_audits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "required_assertions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbidden_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "category_name",
+          "priority",
+          "fields"
+        ],
+        "properties": {
+          "category_name": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "high",
+              "required",
+              "audit"
+            ]
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "field_name",
+                "dtype",
+                "required",
+                "d0_visibility",
+                "allowed_null_policy",
+                "source",
+                "leakage_risk",
+                "fail_fast_condition"
+              ],
+              "properties": {
+                "field_name": {
+                  "type": "string"
+                },
+                "dtype": {
+                  "type": "string",
+                  "enum": [
+                    "string",
+                    "boolean",
+                    "integer",
+                    "timestamp",
+                    "date"
+                  ]
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "d0_visibility": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "allowed_null_policy": {
+                  "type": "string",
+                  "enum": [
+                    "forbidden",
+                    "allowed_if_source_missing",
+                    "allowed_if_not_applicable",
+                    "allowed_if_open_interval"
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "leakage_risk": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fail_fast_condition": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
