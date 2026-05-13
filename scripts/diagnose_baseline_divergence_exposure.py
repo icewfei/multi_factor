@@ -2,13 +2,27 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import duckdb
 import pandas as pd
+
+try:
+    from scripts.data_enrichment_next_use_guardrail_adapter import require_data_enrichment_next_use
+except ModuleNotFoundError:
+    adapter_path = Path(__file__).with_name("data_enrichment_next_use_guardrail_adapter.py")
+    spec = importlib.util.spec_from_file_location("data_enrichment_next_use_guardrail_adapter", adapter_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Unable to load guardrail adapter from {adapter_path}")
+    adapter_module = importlib.util.module_from_spec(spec)
+    sys.modules.setdefault("data_enrichment_next_use_guardrail_adapter", adapter_module)
+    spec.loader.exec_module(adapter_module)
+    require_data_enrichment_next_use = adapter_module.require_data_enrichment_next_use
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,7 +82,39 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--topk", type=int, default=10)
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--output-md", type=Path, required=True)
+    parser.add_argument(
+        "--enrichment-requested-fields",
+        nargs="*",
+        default=[],
+        help="Explicit data_field_enrichment_v1 fields requested by this diagnostic. Default: none.",
+    )
+    parser.add_argument(
+        "--next-use-audit-path",
+        type=Path,
+        default=None,
+        help="Path to write the data enrichment next-use guardrail audit JSON.",
+    )
     return parser.parse_args()
+
+
+def default_next_use_audit_path(output_json: Path) -> Path:
+    return output_json.with_name(f"{output_json.stem}_next_use_audit.json")
+
+
+def run_next_use_guardrail(args: argparse.Namespace) -> tuple[Path, dict[str, Any]]:
+    audit_path = args.next_use_audit_path or default_next_use_audit_path(args.output_json)
+    audit = require_data_enrichment_next_use(
+        requested_fields=list(args.enrichment_requested_fields),
+        intended_use="diagnostic",
+        consumer_name="diagnose_baseline_divergence_exposure",
+        run_scope="trainval_diagnostic_only",
+        declared_no_frozen_test_access=True,
+        declared_conditional_pass=True,
+        requested_layer_status="conditional_pass",
+        allow_silent_fallback=False,
+        audit_json=audit_path,
+    )
+    return audit_path, audit
 
 
 def ensure_exists(path: Path, label: str) -> None:
@@ -532,6 +578,7 @@ def build_markdown(payload: dict[str, Any]) -> str:
 
 def main() -> None:
     args = parse_args()
+    next_use_audit_path, next_use_audit = run_next_use_guardrail(args)
     required_paths = {
         "source_db": args.source_db,
         "split_panel": args.split_panel,
@@ -631,6 +678,8 @@ def main() -> None:
         "frozen_test_read": False,
         "portfolio_run_executed": False,
         "formal_metrics_readout_generated": False,
+        "next_use_audit_path": next_use_audit_path.as_posix(),
+        "data_enrichment_next_use": next_use_audit,
         "topk": int(args.topk),
         "pairs": pairs,
         "conclusion": infer_conclusion(pairs),
