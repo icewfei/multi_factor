@@ -17,14 +17,15 @@
 项目当前状态为：
 
 ```text
-status: data_enrichment_and_guarded_research_workflow_phase
+status: current_data_regime_research_stopped
 p98 / multi_equal_weight_v1: conditional reference only
 clean_baseline_family: clean but insufficient TopK head quality; not portfolio-ready
-data_field_enrichment_v1: conditional enrichment layer
-guarded_clean_baseline_workflow_v1: implemented
+current D0 OHLCV + state regime: stopped for clean baseline / TopK / mid-rank research
+strategy_research: paused
+repository_role: audit asset and engineering asset
 ```
 
-这意味着当前工作重点是把已完成的 baseline、data enrichment 与 guarded workflow 治理结论同步为可审计入口状态，而不是把 `p98` 包装为 gold standard，也不是继续追求更高历史收益。
+这意味着当前工作重点已经从继续策略研究，转为保留、整理和审计既有研究资产。当前不应把 `p98` 包装为 gold standard，也不应继续追求更高历史收益、开启 v4、训练、回测或跑 portfolio。
 
 当前主结论：
 
@@ -32,6 +33,8 @@ guarded_clean_baseline_workflow_v1: implemented
 - clean baseline family 的 score-layer 4/4 通过，整体 clean，但 model-layer / TopK head quality 不足，not portfolio-ready。
 - `data_field_enrichment_v1` 是 `conditional enrichment layer`，只允许通过 next-use policy 的字段进入后续受控诊断或 baseline 研究。
 - `guarded_clean_baseline_workflow_v1` 已实现，作为使用 enrichment 字段的 clean baseline score 与 model-layer diagnosis 受控入口。
+- 当前 D0 OHLCV + state 字段体系下，clean baseline / TopK / mid-rank 研究已经停止。
+- 后续只有在出现新信息源、新数据模态，或独立 pre-register 的新研究问题后，才允许考虑重启。
 
 ## 目录结构说明
 
@@ -50,7 +53,7 @@ guarded_clean_baseline_workflow_v1: implemented
 - [`src/`](/Users/wy/MiscProject/multi_factor/src)：
   预留给后续模块化抽取的标准源码入口。当前核心逻辑仍在 `scripts/`。
 - [`tests/`](/Users/wy/MiscProject/multi_factor/tests)：
-  预留给后续正式测试集合。当前尚缺 pytest 测试骨架。
+  contract-level audit tests 与部分 fixture-level 实现测试，用于固定核心研究语义、字段边界、执行语义和治理红线。
 - [`configs/`](/Users/wy/MiscProject/multi_factor/configs)：
   预留给后续运行配置索引。当前正式契约仍位于 `contracts/` 与 `schemas/`。
 
@@ -73,19 +76,18 @@ guarded_clean_baseline_workflow_v1: implemented
 建议按以下顺序阅读：
 
 1. 先看 [docs/current_stage.md](/Users/wy/MiscProject/multi_factor/docs/current_stage.md)，快速了解当前阶段结论。
-2. 再看 [docs/multi_equal_weight_baseline_status_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/multi_equal_weight_baseline_status_decision_record.md)，理解 `p98` / `multi_equal_weight_v1` 为什么只能作为 conditional reference only。
-3. 再看 [docs/clean_baseline_family_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/clean_baseline_family_decision_record.md)，理解 clean baseline family 为什么 clean but not portfolio-ready。
-4. 再看 [docs/data_enrichment_v1_next_use_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/data_enrichment_v1_next_use_decision_record.md)，理解 `data_field_enrichment_v1` 的 conditional enrichment layer 边界。
-5. 再看 [docs/guarded_clean_baseline_workflow_v1_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/guarded_clean_baseline_workflow_v1_decision_record.md)，理解 guarded clean baseline workflow v1 的受控入口语义。
-6. 再看 [docs/project_governance_addendum_after_guarded_workflow.md](/Users/wy/MiscProject/multi_factor/docs/project_governance_addendum_after_guarded_workflow.md)，理解当前阶段对项目总纲的附录解释。
-7. 再看 [docs/repo_map.md](/Users/wy/MiscProject/multi_factor/docs/repo_map.md)，理解各目录职责与当前工程边界。
-8. 然后看 [docs/phase1_signal_engineering_closure_report.md](/Users/wy/MiscProject/multi_factor/docs/phase1_signal_engineering_closure_report.md)，理解第一阶段信号工程为什么收口。
-9. 审计口径相关内容看 [docs/audit_boundary.md](/Users/wy/MiscProject/multi_factor/docs/audit_boundary.md) 与 [docs/research_freeze_policy.md](/Users/wy/MiscProject/multi_factor/docs/research_freeze_policy.md)。
-10. 若要理解冻结后的受控 ML challenger 设计，先看 [docs/nonlinear_challenger_v1_design.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_design.md) 与 [docs/nonlinear_challenger_v1_manifest_spec.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_manifest_spec.md)。
-11. 若要理解未来训练脚本必须遵守的边界，再看 [docs/nonlinear_challenger_v1_training_script_design.md](/Users/wy/MiscProject/multi_factor/docs/nonlinear_challenger_v1_training_script_design.md)。
-12. 若要查看预注册模板骨架，再看 [configs/nonlinear_challenger_v1/README.md](/Users/wy/MiscProject/multi_factor/configs/nonlinear_challenger_v1/README.md)。
-13. 如果要运行当前审计测试，先看 [docs/test_running.md](/Users/wy/MiscProject/multi_factor/docs/test_running.md)。
-14. 需要原始治理与方法背景时，再回到 [项目总纲及计划](/Users/wy/MiscProject/multi_factor/项目总纲及计划) 与 [项目总纲](/Users/wy/MiscProject/multi_factor/项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md)。
+2. 再看 [docs/final_project_review_after_data_regime_stop.md](/Users/wy/MiscProject/multi_factor/docs/final_project_review_after_data_regime_stop.md)，理解项目研究路径、工程状态、无法继续的原因和下一步建议。
+3. 再看 [docs/current_data_regime_research_stop_decision.md](/Users/wy/MiscProject/multi_factor/docs/current_data_regime_research_stop_decision.md)，理解为什么当前 D0 OHLCV + state 研究范式停止。
+4. 再看 [docs/research_problem_reframing_options_after_data_regime_stop.md](/Users/wy/MiscProject/multi_factor/docs/research_problem_reframing_options_after_data_regime_stop.md)，理解哪些问题重定义只允许纸面预研，为什么最终建议暂停策略研究。
+5. 再看 [docs/multi_equal_weight_baseline_status_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/multi_equal_weight_baseline_status_decision_record.md)，理解 `p98` / `multi_equal_weight_v1` 为什么只能作为 conditional reference only。
+6. 再看 [docs/clean_baseline_family_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/clean_baseline_family_decision_record.md)，理解 clean baseline family 为什么 clean but not portfolio-ready。
+7. 再看 [docs/data_enrichment_v1_next_use_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/data_enrichment_v1_next_use_decision_record.md)，理解 `data_field_enrichment_v1` 的 conditional enrichment layer 边界。
+8. 再看 [docs/guarded_clean_baseline_workflow_v1_decision_record.md](/Users/wy/MiscProject/multi_factor/docs/guarded_clean_baseline_workflow_v1_decision_record.md)，理解 guarded clean baseline workflow v1 的受控入口语义。
+9. 再看 [docs/repo_map.md](/Users/wy/MiscProject/multi_factor/docs/repo_map.md)，理解各目录职责与当前工程边界。
+10. 然后看 [docs/phase1_signal_engineering_closure_report.md](/Users/wy/MiscProject/multi_factor/docs/phase1_signal_engineering_closure_report.md)，理解第一阶段信号工程为什么收口。
+11. 审计口径相关内容看 [docs/audit_boundary.md](/Users/wy/MiscProject/multi_factor/docs/audit_boundary.md) 与 [docs/research_freeze_policy.md](/Users/wy/MiscProject/multi_factor/docs/research_freeze_policy.md)。
+12. 如果要运行当前审计测试，先看 [docs/test_running.md](/Users/wy/MiscProject/multi_factor/docs/test_running.md)。
+13. 需要原始治理与方法背景时，再回到 [项目总纲及计划](/Users/wy/MiscProject/multi_factor/项目总纲及计划) 与 [项目总纲](/Users/wy/MiscProject/multi_factor/项目总纲及计划/项目总纲/new_multifactor_project_framework_v1.md)。
 
 ## 运行审计测试
 

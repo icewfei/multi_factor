@@ -26,12 +26,20 @@
 python -m pip install -r requirements-dev.txt
 ```
 
+`requirements-dev.txt` 记录的是当前审计测试和小样本 fixture 测试需要的最小开发依赖。测试运行时应使用同一个 Python 解释器安装依赖并启动 pytest，避免 `pytest` 与 subprocess 调用的 `python` / `python3` 指向不同环境。
+
 ## 运行方式
 
 在项目根目录执行：
 
 ```bash
 python -m pytest tests/
+```
+
+如果本机同时存在系统 Python 与 conda/venv Python，优先使用当前环境的显式解释器：
+
+```bash
+$(python -c "import sys; print(sys.executable)") -m pytest tests/
 ```
 
 如果只想单独检查当前 `Nonlinear Challenger v1` draft manifests 是否满足基础治理约束，也可以执行：
@@ -69,6 +77,8 @@ python scripts/validate_nonlinear_challenger_manifests.py \
 - 完整实现审计
 - 端到端数据质量验收
 - 新的 fixed test / frozen test
+- 策略研究重启授权
+- portfolio 或 backtest 入口
 
 它们只是第一层机器化审计入口，用来确保核心研究语义、字段边界和治理红线不会在工程整理过程中被静默漂移。
 

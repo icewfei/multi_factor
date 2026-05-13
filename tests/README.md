@@ -26,37 +26,7 @@ python -m pip install -r requirements-dev.txt
 python -m pytest tests/
 ```
 
-## 后续必须补齐的测试
-
-后续应优先补齐以下测试文件：
-
-- `test_label_semantics.py`
-- `test_execution_semantics.py`
-- `test_tradability_rules.py`
-- `test_no_future_leakage.py`
-- `test_ranking_entry_separation.py`
-
-## 各测试的目标
-
-### `test_label_semantics.py`
-
-验证标签定义与持有期口径是否与项目正式语义一致，避免训练标签与真实清算语义漂移。
-
-### `test_execution_semantics.py`
-
-验证 `D0` 出信号、`D1` 开盘买入、持有到 `D5` 收盘卖出及延迟退出规则是否保持一致。
-
-### `test_tradability_rules.py`
-
-验证涨停不能买、跌停不能卖、停牌不可交易、低成交审计旗标等规则的实现边界。
-
-### `test_no_future_leakage.py`
-
-验证特征、标签、评分与组合构造过程中不存在未来信息泄漏。
-
-### `test_ranking_entry_separation.py`
-
-验证“排名形成”和“实际入场执行”这两个层次没有被混写，避免用可执行结果倒灌排名层逻辑。
+请确保安装依赖和运行测试使用同一个 Python 解释器。部分旧测试会通过 subprocess 调用脚本；如果解释器混用，可能出现当前 pytest 环境有依赖、子进程环境缺依赖的问题。
 
 ## 后续升级方向
 
@@ -66,6 +36,7 @@ python -m pytest tests/
 - 小样本 DataFrame fixture 测试
 - 小样本端到端执行语义测试
 - feature timestamp / PIT freshness 机器化审计
+- 依赖和 subprocess 环境一致性检查
 
 ## 本轮范围外事项
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -18,7 +19,7 @@ MD_OUTPUT = "/private/tmp/model_edge_diagnosis.md"
 def run_diagnosis():
     """Run the diagnosis script and return the JSON output."""
     result = subprocess.run(
-        ["python3", SCRIPT_PATH],
+        [sys.executable, SCRIPT_PATH],
         capture_output=True,
         text=True,
         cwd=Path(__file__).resolve().parents[1],

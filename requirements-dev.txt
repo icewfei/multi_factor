@@ -1,1 +1,7 @@
+duckdb
+jsonschema
+numpy
+pandas
+pyarrow
 pytest
+PyYAML

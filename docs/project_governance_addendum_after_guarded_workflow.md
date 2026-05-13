@@ -22,14 +22,14 @@ The original project governance rules continue to apply:
 - blocked enrichment fields are `listing_age_trading_days` and `newly_listed_flag`.
 - guarded workflow required: downstream clean baseline and challenger research that consumes enrichment fields must use `guarded_clean_baseline_workflow_v1` or an equivalent guarded workflow.
 
-## Current Research Route
+## Historical Research Route
 
-The current research route is constrained by two simultaneous findings:
+At the time of this addendum, the research route was constrained by two simultaneous findings:
 
 - the strong baseline is not clean enough to become an unconditional gold standard.
 - the clean baseline family is clean but not strong enough; its model-layer / TopK head quality is insufficient.
 
-Therefore the next research direction is clean baseline redesign, not platform expansion. The next round should focus on a cleaner baseline with better TopK head quality before any portfolio consideration.
+Therefore the next research direction at that stage was clean baseline redesign, not platform expansion. That route has since been superseded by `current_data_regime_research_stop_decision`, which stops clean baseline / TopK / mid-rank research under the current D0 OHLCV + state field regime.
 
 ## Non-Changes
 
@@ -41,8 +41,10 @@ This addendum does not permit trainval-as-OOS. Trainval diagnosis remains diagno
 
 ## Final Position
 
-Current phase: `data_enrichment_and_guarded_research_workflow_phase`.
+Historical phase: `data_enrichment_and_guarded_research_workflow_phase`.
 
-Current route: clean baseline redesign research round.
+Superseded route: clean baseline redesign research round.
 
-Current restrictions: no portfolio, no frozen test, no v4, no trainval-as-OOS.
+Current phase: `current_data_regime_research_stopped`.
+
+Current restrictions: no portfolio, no frozen test, no v4, no training, no backtest, no formal metrics/readout, no concrete trading rules, no trainval-as-OOS.
