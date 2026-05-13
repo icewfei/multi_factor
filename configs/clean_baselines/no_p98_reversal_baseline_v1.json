@@ -1,0 +1,66 @@
+{
+  "baseline_id": "no_p98_reversal_baseline_v1",
+  "baseline_family": "clean_baseline_candidate",
+  "design_status": "governed_rebuild_design_only",
+  "snapshot_policy": "trainval_snapshot_allowed_for_artifact_rebuild_only_not_oos",
+  "score_source": {
+    "source_candidate_scheme_id": "exploratory_cross_horizon_c1_reversal_only",
+    "source_score_definition": "c1 ASC / reversal_rank",
+    "score_column": "model_score_D0",
+    "p98_used": false,
+    "label_based_source_selection_used": false
+  },
+  "allowed_input_fields": [
+    "adj_close",
+    "ranking_eligible_D0",
+    "snapshot_id"
+  ],
+  "input_visibility_policy": "D0 visible only",
+  "prohibited_fields": [
+    "label_*",
+    "realized_return",
+    "actual_exit_date",
+    "actual_sell_price",
+    "future return",
+    "validation/frozen/test feedback"
+  ],
+  "promotion_usage": {
+    "role": "clean baseline candidate",
+    "success_claim_allowed": false,
+    "replacement_or_parallel_to_conditional_baseline": true
+  },
+  "required_future_artifacts": [
+    "model_scores_D0.parquet",
+    "model_scores_D0_audit.json",
+    "source_chain_audit.json",
+    "run_state_attempt_manifest.json"
+  ],
+  "fail_fast_conditions": [
+    "p98 appears",
+    "label diagnostics appear",
+    "frozen test appears",
+    "score direction unclear",
+    "D0 visibility not satisfied"
+  ],
+  "prohibited_inputs_and_feedback": [
+    "reversal_tail_exclude_p98_v1",
+    "median_daily_ic",
+    "top10_avg_label",
+    "top10_bot10_spread",
+    "label_5d_next_open_close",
+    "frozen test access",
+    "validation retuning"
+  ],
+  "hard_boundaries": {
+    "ml_training_allowed": false,
+    "portfolio_run_allowed": false,
+    "formal_metrics_readout_allowed": false,
+    "frozen_test_access_allowed": false,
+    "complex_model_allowed": false,
+    "modify_conditional_baseline_history_allowed": false
+  },
+  "notes": [
+    "This config defines governance and rebuild boundaries only.",
+    "It does not authorize training, backtest, portfolio execution, or frozen-test access."
+  ]
+}
