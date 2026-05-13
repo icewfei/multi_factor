@@ -5,8 +5,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pyarrow as pa
+import pyarrow.parquet as pq
+
 
 SCRIPT_PATH = "scripts/run_guarded_research_task.py"
+BASELINE_ID = "clean_equal_weight_random_eligible_baseline_v1"
 
 
 def write_request(
@@ -64,6 +68,47 @@ def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def write_sample_panel(path: Path) -> None:
+    pq.write_table(
+        pa.table(
+            {
+                "snapshot_id": ["snap", "snap"],
+                "instrument": ["AAA.SZ", "BBB.SZ"],
+                "signal_date": ["20210121", "20210121"],
+                "ranking_eligible_D0": [True, True],
+            }
+        ),
+        path,
+    )
+
+
+def build_score_payload_fixture(tmp_path: Path) -> dict[str, str]:
+    sample_panel_path = tmp_path / "clean_sample_panel.parquet"
+    snapshot_root = tmp_path / "snapshot"
+    run_input_contract_path = tmp_path / "run_input_contract.json"
+    output_dir = tmp_path / "score_output"
+    write_sample_panel(sample_panel_path)
+    snapshot_root.mkdir(parents=True, exist_ok=True)
+    run_input_contract_path.write_text(
+        json.dumps(
+            {
+                "snapshot_id": "snap",
+                "source_root": {"snapshot_path": snapshot_root.as_posix()},
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return {
+        "baseline_id": BASELINE_ID,
+        "clean_sample_panel_path": sample_panel_path.as_posix(),
+        "run_input_contract_path": run_input_contract_path.as_posix(),
+        "output_dir": output_dir.as_posix(),
+        "attempt_id": "attempt_guarded_runner_fixture",
+    }
+
+
 def assert_blocked_without_task(repo_root: Path, tmp_path: Path, **overrides) -> dict:
     request_path = tmp_path / "request.json"
     audit_path = tmp_path / "audit.json"
@@ -116,17 +161,21 @@ def test_allowed_clean_baseline_score_empty_fields_executes_dry_dispatch(
         task_type="clean_baseline_score",
         requested_enrichment_fields=[],
     )
+    request = read_json(request_path)
+    request["task_payload"] = build_score_payload_fixture(tmp_path)
+    request_path.write_text(json.dumps(request, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     result = run_runner(repo_root, request_path)
 
     assert result.returncode == 0, result.stderr
     audit = read_json(audit_path)
-    marker = read_json(marker_path)
     assert audit["task_executed"] is True
     assert audit["requested_enrichment_fields"] == []
     assert audit["next_use_guardrail_audit"]["allowed_fields_used"] == []
-    assert audit["task_result"]["dispatch"] == "clean_baseline_score_dry_noop"
-    assert marker["builder_invoked"] is False
+    assert audit["task_result"]["dispatch"] == "clean_baseline_score_builder"
+    assert audit["builder_invoked"] is True
+    assert audit["baseline_id"] == BASELINE_ID
+    assert Path(audit["output_paths"]["score_output_path"]).exists()
 
 
 def test_blocked_listing_age_trading_days_does_not_execute_task(
