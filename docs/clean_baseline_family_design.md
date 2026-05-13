@@ -76,14 +76,14 @@
 ### 3. clean_liquidity_adjusted_reversal_baseline_v1
 
 - baseline_id: `clean_liquidity_adjusted_reversal_baseline_v1`
-- score source: `1d reversal primary, 20d median dollar-volume DESC tiebreak`
-- allowed inputs: `D0 visible only` 的 `adj_close` 历史窗口、`volume` 历史窗口、`ranking_eligible_D0`、`snapshot_id`
+- score source: `1d reversal primary, 20d median amount DESC tiebreak`
+- allowed inputs: `D0 visible only` 的 `adj_close` 历史窗口、warehouse `vol` 历史窗口、warehouse `amount` 历史窗口、`ranking_eligible_D0`、`snapshot_id`
 - forbidden inputs: `no p98`、`no label diagnostics`、`no trainval source-selection feedback`、`no frozen test access`、任何 `label_*`、任何 execution outcome、任何 validation retuning
 - score direction: `ascending 1d return first, descending liquidity tiebreak`
 - expected artifacts: `model_scores_D0.parquet`、`model_scores_D0_audit.json`、`source_chain_audit.json`、`run_state_attempt_manifest.json`
-- fail-fast conditions: 出现 `p98`，出现 label diagnostics，出现 frozen test access，`D0 visible only` 不成立，liquidity tiebreak 不是固定 20d median dollar-volume
+- fail-fast conditions: 出现 `p98`，出现 label diagnostics，出现 frozen test access，`D0 visible only` 不成立，liquidity tiebreak 不是固定 20d median amount，或 warehouse `vol/amount` 任一缺失
 - intended role: `clean comparison anchor candidate`；作为 clean family 中的 liquidity-aware reversal leg
-- why it is clean: 只增加一个固定、可见、非标签的流动性 tie-break，避免用 trainval 反馈去挑 source，同时保留可复现 source-chain audit
+- why it is clean: 只增加一个固定、可见、非标签的流动性 tie-break；在真实 warehouse 契约下显式使用 `amount` 作为 liquidity proxy，并记录 `vol` / `amount` 字段来源，避免用 trainval 反馈去挑 source，同时保留可复现 source-chain audit
 
 ### 4. clean_equal_weight_random_eligible_baseline_v1
 

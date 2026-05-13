@@ -170,8 +170,11 @@ COPY (
     "clean_liquidity_adjusted_reversal_baseline_v1": {
         "source_candidate_scheme_id": "clean_liquidity_adjusted_reversal_source_v1",
         "score_direction": "ascending 1d return first, descending liquidity tiebreak",
-        "used_data_fields": ["adj_close", "volume", "ranking_eligible_D0", "snapshot_id"],
-        "required_bar_fields": ["adj_close", "volume"],
+        "used_data_fields": ["adj_close", "vol", "amount", "ranking_eligible_D0", "snapshot_id"],
+        "required_bar_fields": ["adj_close", "vol", "amount"],
+        "liquidity_field_used": "amount",
+        "volume_field_source": "vol",
+        "amount_field_source": "amount",
         "feature_sql_template": """
 CREATE OR REPLACE VIEW sample_panel AS
 SELECT
@@ -187,7 +190,8 @@ SELECT
     ts_code,
     trade_date,
     adj_close,
-    volume
+    vol,
+    amount
 FROM warehouse_db.serving.vw_bars_daily;
 
 CREATE OR REPLACE VIEW reversal_liquidity_features AS
@@ -206,11 +210,16 @@ SELECT
         ) - 1.0
         ELSE NULL
     END AS reversal_1d_raw,
-    MEDIAN(adj_close * volume) OVER (
+    MEDIAN(vol) OVER (
         PARTITION BY snapshot_id, ts_code
         ORDER BY trade_date
         ROWS BETWEEN 19 PRECEDING AND CURRENT ROW
-    ) AS median_dollar_volume_20d
+    ) AS median_vol_20d,
+    MEDIAN(amount) OVER (
+        PARTITION BY snapshot_id, ts_code
+        ORDER BY trade_date
+        ROWS BETWEEN 19 PRECEDING AND CURRENT ROW
+    ) AS median_amount_20d
 FROM bars;
 """,
         "build_sql_template": """
@@ -221,7 +230,8 @@ COPY (
             s.instrument,
             s.signal_date,
             f.reversal_1d_raw,
-            f.median_dollar_volume_20d
+            f.median_vol_20d,
+            f.median_amount_20d
         FROM sample_panel s
         LEFT JOIN reversal_liquidity_features f
           ON s.snapshot_id = f.snapshot_id
@@ -229,7 +239,8 @@ COPY (
          AND s.signal_date = f.signal_date
         WHERE s.ranking_eligible_D0
           AND f.reversal_1d_raw IS NOT NULL
-          AND f.median_dollar_volume_20d IS NOT NULL
+          AND f.median_vol_20d IS NOT NULL
+          AND f.median_amount_20d IS NOT NULL
     ),
     ranked AS (
         SELECT
@@ -237,10 +248,11 @@ COPY (
             instrument,
             signal_date,
             reversal_1d_raw,
-            median_dollar_volume_20d,
+            median_vol_20d,
+            median_amount_20d,
             PERCENT_RANK() OVER (
                 PARTITION BY snapshot_id, signal_date
-                ORDER BY reversal_1d_raw ASC, median_dollar_volume_20d DESC, instrument ASC
+                ORDER BY reversal_1d_raw ASC, median_amount_20d DESC, instrument ASC
             ) AS reversal_liquidity_rank
         FROM eligible
     )
@@ -251,7 +263,8 @@ COPY (
         CAST({baseline_id} AS VARCHAR) AS candidate_scheme_id,
         CAST({baseline_id} AS VARCHAR) AS baseline_id,
         r.reversal_1d_raw,
-        r.median_dollar_volume_20d,
+        r.median_vol_20d,
+        r.median_amount_20d,
         r.reversal_liquidity_rank,
         r.reversal_liquidity_rank AS model_score_D0,
         CASE WHEN r.reversal_liquidity_rank IS NOT NULL THEN 1 ELSE 0 END AS score_component_count
@@ -263,13 +276,15 @@ COPY (
 ) TO {score_output_path} (FORMAT PARQUET);
 """,
         "direction_sql_token": (
-            "order by reversal_1d_raw asc, median_dollar_volume_20d desc, instrument asc"
+            "order by reversal_1d_raw asc, median_amount_20d desc, instrument asc"
         ),
         "d0_check_tokens": {
             "adj_close_present": "adj_close",
-            "volume_present": "volume",
+            "vol_present": "vol",
+            "amount_present": "amount",
             "lag_1_present": "lag(adj_close, 1)",
-            "median_20d_present": "median(adj_close * volume) over",
+            "median_vol_20d_present": "median(vol) over",
+            "median_amount_20d_present": "median(amount) over",
             "window_20d_present": "rows between 19 preceding and current row",
             "ranking_guard_present": "where s.ranking_eligible_d0",
             "cross_section_partition_present": "partition by snapshot_id, signal_date",
@@ -610,6 +625,9 @@ def build_model_scores_audit(
         "frozen_test_accessed": False,
         "sample_panel_columns": sample_panel_columns,
         "used_data_fields": spec["used_data_fields"],
+        "liquidity_field_used": spec.get("liquidity_field_used"),
+        "volume_field_source": spec.get("volume_field_source"),
+        "amount_field_source": spec.get("amount_field_source"),
         "manifest_allowed_inputs": manifest_baseline["allowed_inputs"],
         "manifest_forbidden_inputs": manifest_baseline["forbidden_inputs"],
         "d0_visibility_audit": {
@@ -679,6 +697,9 @@ def build_source_chain_audit(
         "manifest_allowed_inputs": manifest_baseline["allowed_inputs"],
         "manifest_forbidden_inputs": manifest_baseline["forbidden_inputs"],
         "used_data_fields": spec["used_data_fields"],
+        "liquidity_field_used": spec.get("liquidity_field_used"),
+        "volume_field_source": spec.get("volume_field_source"),
+        "amount_field_source": spec.get("amount_field_source"),
         "d0_visibility_audit": {
             "pass": sql_audit["d0_visibility_pass"],
             "checks": sql_audit["d0_visibility_checks"],

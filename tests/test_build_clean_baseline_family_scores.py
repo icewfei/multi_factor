@@ -37,12 +37,13 @@ def build_source_db(path: Path, rows: list[tuple]) -> None:
                 ts_code VARCHAR,
                 trade_date VARCHAR,
                 adj_close DOUBLE,
-                volume DOUBLE
+                vol DOUBLE,
+                amount DOUBLE
             )
             """
         )
         if rows:
-            con.executemany("INSERT INTO serving.vw_bars_daily VALUES (?, ?, ?, ?, ?)", rows)
+            con.executemany("INSERT INTO serving.vw_bars_daily VALUES (?, ?, ?, ?, ?, ?)", rows)
     finally:
         con.close()
 
@@ -107,8 +108,8 @@ def momentum_fixture_rows() -> list[tuple]:
         date = f"202101{day:02d}"
         aaa_close = 100.0 + float(day - 1)
         bbb_close = 100.0 - float(day - 1)
-        rows.append(("snap", "AAA.SZ", date, aaa_close, 100.0))
-        rows.append(("snap", "BBB.SZ", date, bbb_close, 100.0))
+        rows.append(("snap", "AAA.SZ", date, aaa_close, 100.0, 1000.0))
+        rows.append(("snap", "BBB.SZ", date, bbb_close, 100.0, 1000.0))
     return rows
 
 
@@ -119,10 +120,42 @@ def liquidity_fixture_rows() -> list[tuple]:
         aaa_close = 100.0 if day < 20 else 90.0
         bbb_close = 100.0 if day < 20 else 90.0
         ccc_close = 100.0 if day < 20 else 80.0
-        rows.append(("snap", "AAA.SZ", date, aaa_close, 10.0))
-        rows.append(("snap", "BBB.SZ", date, bbb_close, 1000.0))
-        rows.append(("snap", "CCC.SZ", date, ccc_close, 100.0))
+        rows.append(("snap", "AAA.SZ", date, aaa_close, 10.0, 1000.0))
+        rows.append(("snap", "BBB.SZ", date, bbb_close, 1000.0, 100000.0))
+        rows.append(("snap", "CCC.SZ", date, ccc_close, 100.0, 10000.0))
     return rows
+
+
+def build_source_db_missing_field(path: Path, *, missing_field: str, rows: list[tuple]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    columns = [
+        ("snapshot_id", "VARCHAR"),
+        ("ts_code", "VARCHAR"),
+        ("trade_date", "VARCHAR"),
+        ("adj_close", "DOUBLE"),
+        ("vol", "DOUBLE"),
+        ("amount", "DOUBLE"),
+    ]
+    kept_columns = [column for column in columns if column[0] != missing_field]
+    con = duckdb.connect(str(path))
+    try:
+        con.execute("CREATE SCHEMA serving")
+        ddl = ",\n                ".join(f"{name} {dtype}" for name, dtype in kept_columns)
+        con.execute(
+            f"""
+            CREATE TABLE serving.vw_bars_daily (
+                {ddl}
+            )
+            """
+        )
+        if rows:
+            placeholders = ", ".join("?" for _ in kept_columns)
+            con.executemany(
+                f"INSERT INTO serving.vw_bars_daily VALUES ({placeholders})",
+                [[value for idx, value in enumerate(row) if columns[idx][0] != missing_field] for row in rows],
+            )
+    finally:
+        con.close()
 
 
 def test_build_clean_momentum_20d_baseline_scores_success_fixture(tmp_path: Path) -> None:
@@ -249,7 +282,8 @@ def test_build_clean_liquidity_adjusted_reversal_scores_success_fixture(tmp_path
         SELECT
             instrument,
             reversal_1d_raw,
-            median_dollar_volume_20d,
+            median_vol_20d,
+            median_amount_20d,
             reversal_liquidity_rank,
             model_score_D0
         FROM read_parquet('{score_output}')
@@ -262,9 +296,56 @@ def test_build_clean_liquidity_adjusted_reversal_scores_success_fixture(tmp_path
     assert by_instrument["CCC.SZ"][1] < by_instrument["BBB.SZ"][1]
     assert by_instrument["AAA.SZ"][1] == pytest.approx(by_instrument["BBB.SZ"][1])
     assert by_instrument["BBB.SZ"][2] > by_instrument["AAA.SZ"][2]
-    assert by_instrument["CCC.SZ"][3] == pytest.approx(0.0)
-    assert by_instrument["BBB.SZ"][3] < by_instrument["AAA.SZ"][3]
-    assert by_instrument["BBB.SZ"][4] == by_instrument["BBB.SZ"][3]
+    assert by_instrument["BBB.SZ"][3] > by_instrument["AAA.SZ"][3]
+    assert by_instrument["CCC.SZ"][4] == pytest.approx(0.0)
+    assert by_instrument["BBB.SZ"][4] < by_instrument["AAA.SZ"][4]
+    assert by_instrument["BBB.SZ"][5] == by_instrument["BBB.SZ"][4]
+
+    audit = read_json(output_dir / "model_scores_D0_audit.json")
+    assert audit["liquidity_field_used"] == "amount"
+    assert audit["volume_field_source"] == "vol"
+    assert audit["amount_field_source"] == "amount"
+    assert audit["p98_used"] is False
+    assert audit["label_diagnostics_used"] is False
+    assert audit["frozen_test_accessed"] is False
+
+
+@pytest.mark.parametrize("missing_field", ["vol", "amount"])
+def test_build_clean_liquidity_adjusted_reversal_fails_fast_when_required_field_missing(
+    tmp_path: Path,
+    missing_field: str,
+) -> None:
+    snapshot_root = tmp_path / "snapshot"
+    build_source_db_missing_field(
+        snapshot_root / "duckdb" / "warehouse.duckdb",
+        missing_field=missing_field,
+        rows=liquidity_fixture_rows(),
+    )
+
+    sample_panel_path = tmp_path / "clean_sample_panel.parquet"
+    write_sample_panel(
+        sample_panel_path,
+        {
+            "snapshot_id": ["snap", "snap", "snap"],
+            "instrument": ["AAA.SZ", "BBB.SZ", "CCC.SZ"],
+            "signal_date": ["20210120", "20210120", "20210120"],
+            "ranking_eligible_D0": [True, True, True],
+        },
+    )
+
+    run_input_contract = tmp_path / "run_input_contract.json"
+    write_run_input_contract(run_input_contract, snapshot_root)
+
+    result = run_builder(
+        tmp_path=tmp_path,
+        baseline_id="clean_liquidity_adjusted_reversal_baseline_v1",
+        sample_panel_path=sample_panel_path,
+        run_input_contract=run_input_contract,
+        output_dir=tmp_path / f"liquidity_missing_{missing_field}",
+    )
+    assert result.returncode != 0
+    assert "Missing required warehouse bar fields" in result.stderr
+    assert missing_field in result.stderr
 
 
 def test_build_clean_equal_weight_random_eligible_scores_hash_is_stable(tmp_path: Path) -> None:

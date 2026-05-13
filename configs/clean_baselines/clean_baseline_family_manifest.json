@@ -104,14 +104,15 @@
     {
       "baseline_id": "clean_liquidity_adjusted_reversal_baseline_v1",
       "score_source": {
-        "definition": "1d reversal primary, 20d median dollar-volume DESC tiebreak",
-        "construction_rule": "Sort by 1-day reversal first; break ties with trailing 20-day median dollar volume computed from D0-visible price and volume history.",
-        "source_chain_auditability": "Primary rule and tiebreak rule are fixed and can be reconstructed exactly from visible inputs."
+        "definition": "1d reversal primary, 20d median amount DESC tiebreak",
+        "construction_rule": "Sort by 1-day reversal first; break ties with trailing 20-day median amount computed from D0-visible warehouse amount history. Warehouse vol and amount are both required visible source fields, while amount is the liquidity proxy used in ranking.",
+        "source_chain_auditability": "Primary rule and tiebreak rule are fixed and can be reconstructed exactly from visible inputs, with audit recording vol and amount field bindings."
       },
       "allowed_inputs": [
         "D0 visible only",
         "adj_close history required for 1-day reversal",
-        "volume history required for 20-day median dollar volume",
+        "vol history required as warehouse volume source",
+        "amount history required for 20-day median amount liquidity proxy",
         "ranking_eligible_D0",
         "snapshot_id"
       ],
@@ -137,10 +138,12 @@
         "label diagnostics appear anywhere in the source chain",
         "frozen test access is requested or observed",
         "D0 visible only is violated",
-        "liquidity adjustment is changed from fixed 20d median dollar-volume tiebreak"
+        "liquidity adjustment is changed from fixed 20d median amount tiebreak",
+        "warehouse vol field is missing",
+        "warehouse amount field is missing"
       ],
       "intended_role": "clean comparison anchor candidate for a liquidity-aware reversal leg",
-      "why_it_is_clean": "It adds one fixed non-label tiebreak to the reversal rule, stays within D0-visible inputs, avoids p98, and avoids trainval source-selection feedback."
+      "why_it_is_clean": "It adds one fixed non-label tiebreak to the reversal rule, stays within D0-visible inputs, uses warehouse amount as the explicit liquidity proxy, avoids p98, and avoids trainval source-selection feedback."
     },
     {
       "baseline_id": "clean_equal_weight_random_eligible_baseline_v1",
