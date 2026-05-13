@@ -1,0 +1,243 @@
+{
+  "round_id": "clean_baseline_redesign_round_v1",
+  "design_status": "pre_registered_no_training_no_portfolio_no_formal_metrics",
+  "score_convention": "lower model_score_D0 is better; diagnosis uses -model_score_D0 as effective score",
+  "global_boundaries": {
+    "no_p98": true,
+    "no_label_diagnostics_for_source_selection": true,
+    "no_frozen_test_access": true,
+    "no_ml_training": true,
+    "no_portfolio": true,
+    "no_formal_metrics_readout": true,
+    "no_validation_tuning": true,
+    "d0_visible_only": true,
+    "no_silent_fallback": true
+  },
+  "blocked_enrichment_fields": [
+    "listing_age_trading_days",
+    "newly_listed_flag"
+  ],
+  "common_forbidden_fields": [
+    "p98",
+    "label_*",
+    "realized_return",
+    "actual_exit_date",
+    "actual_sell_price",
+    "future_return",
+    "frozen_test",
+    "fixed_test",
+    "listing_age_trading_days",
+    "newly_listed_flag"
+  ],
+  "candidates": [
+    {
+      "baseline_id": "clean_reversal_5d_tradability_filtered_v1",
+      "score_formula": "Rank 5d reversal ascending after fixed tradability filter: entry_buyable=true, is_suspended=false, no_trade_flag=false, volume_zero_flag=false, amount_zero_flag=false.",
+      "score_direction": "ascending 5d return after tradability filter; lower score is better",
+      "allowed_fields": [
+        "adj_close",
+        "ranking_eligible_D0",
+        "entry_buyable",
+        "is_suspended",
+        "no_trade_flag",
+        "volume_zero_flag",
+        "amount_zero_flag"
+      ],
+      "forbidden_fields": [
+        "p98",
+        "label_*",
+        "realized_return",
+        "future_return",
+        "frozen_test",
+        "listing_age_trading_days",
+        "newly_listed_flag"
+      ],
+      "d0_visible": true,
+      "no_p98": true,
+      "no_label_diagnostics": true,
+      "no_frozen_test": true,
+      "fail_fast": [
+        "blocked enrichment field appears",
+        "forbidden label or future field appears",
+        "conditional_pass is promoted to full pass",
+        "silent fallback is requested"
+      ],
+      "intended_diagnosis": "Model-layer train/validation RankIC, ICIR, deciles, TopK proxy, and TopK-minus-nextK only.",
+      "why_it_is_clean": "It uses a fixed 5d D0 reversal formula and fixed D0 tradability gates, with no p98, no labels, no validation tuning, and no frozen test.",
+      "why_it_may_improve_topk_head_quality": "Removing unbuyable, suspended, no-trade, or zero-volume rows may reduce false top-ranked names that cannot represent a clean D0 head."
+    },
+    {
+      "baseline_id": "clean_reversal_5d_board_neutral_v1",
+      "score_formula": "Rank 5d reversal ascending within fixed board_type/exchange groups; use the within-group percentile rank as model_score_D0.",
+      "score_direction": "ascending board/exchange-neutral 5d reversal rank; lower score is better",
+      "allowed_fields": [
+        "adj_close",
+        "ranking_eligible_D0",
+        "board_type",
+        "exchange"
+      ],
+      "forbidden_fields": [
+        "p98",
+        "label_*",
+        "realized_return",
+        "future_return",
+        "frozen_test",
+        "listing_age_trading_days",
+        "newly_listed_flag"
+      ],
+      "d0_visible": true,
+      "no_p98": true,
+      "no_label_diagnostics": true,
+      "no_frozen_test": true,
+      "fail_fast": [
+        "blocked enrichment field appears",
+        "forbidden label or future field appears",
+        "board/exchange grouping is changed after seeing validation",
+        "silent fallback is requested"
+      ],
+      "intended_diagnosis": "Model-layer train/validation RankIC, ICIR, deciles, TopK proxy, and TopK-minus-nextK only.",
+      "why_it_is_clean": "It only normalizes a fixed reversal signal within D0 visible regime groups and does not select groups using outcomes.",
+      "why_it_may_improve_topk_head_quality": "Board and exchange regimes may have different price-limit and liquidity behavior; neutral ranking may avoid concentration in structurally noisy regimes."
+    },
+    {
+      "baseline_id": "clean_reversal_5d_limit_aware_v1",
+      "score_formula": "Rank 5d reversal ascending after fixed exclusion of D0 limit-state rows: is_limit_up, is_limit_down, open_at_up_limit, or close_at_down_limit.",
+      "score_direction": "ascending 5d reversal after limit-state exclusion; lower score is better",
+      "allowed_fields": [
+        "adj_close",
+        "ranking_eligible_D0",
+        "is_limit_up",
+        "is_limit_down",
+        "open_at_up_limit",
+        "close_at_down_limit"
+      ],
+      "forbidden_fields": [
+        "p98",
+        "label_*",
+        "realized_return",
+        "future_return",
+        "frozen_test",
+        "listing_age_trading_days",
+        "newly_listed_flag"
+      ],
+      "d0_visible": true,
+      "no_p98": true,
+      "no_label_diagnostics": true,
+      "no_frozen_test": true,
+      "fail_fast": [
+        "blocked enrichment field appears",
+        "forbidden label or future field appears",
+        "limit exclusion is tuned from validation",
+        "silent fallback is requested"
+      ],
+      "intended_diagnosis": "Model-layer train/validation RankIC, ICIR, deciles, TopK proxy, and TopK-minus-nextK only.",
+      "why_it_is_clean": "The limit-state exclusion is fixed before diagnosis and only uses D0 visible state flags.",
+      "why_it_may_improve_topk_head_quality": "D0 limit-state names can dominate reversal tails while being operationally distorted; fixed exclusion may improve head quality."
+    },
+    {
+      "baseline_id": "clean_reversal_5d_liquidity_quality_v1",
+      "score_formula": "Rank 5d reversal ascending among rows with amount_zero_flag=false, volume_zero_flag=false, and same-day amount percentile >= 0.20; amount desc is a fixed tiebreak.",
+      "score_direction": "ascending 5d reversal with fixed liquidity quality gate; lower score is better",
+      "allowed_fields": [
+        "adj_close",
+        "amount",
+        "ranking_eligible_D0",
+        "amount_zero_flag",
+        "volume_zero_flag"
+      ],
+      "forbidden_fields": [
+        "p98",
+        "label_*",
+        "realized_return",
+        "future_return",
+        "frozen_test",
+        "listing_age_trading_days",
+        "newly_listed_flag"
+      ],
+      "d0_visible": true,
+      "no_p98": true,
+      "no_label_diagnostics": true,
+      "no_frozen_test": true,
+      "fail_fast": [
+        "blocked enrichment field appears",
+        "forbidden label or future field appears",
+        "liquidity threshold is tuned from validation",
+        "silent fallback is requested"
+      ],
+      "intended_diagnosis": "Model-layer train/validation RankIC, ICIR, deciles, TopK proxy, and TopK-minus-nextK only.",
+      "why_it_is_clean": "The liquidity gate is fixed and uses D0 amount/zero flags only, with no p98 or labels.",
+      "why_it_may_improve_topk_head_quality": "Thin or zero-trade names may generate unstable reversal tails; a fixed quality gate may reduce noisy head names."
+    },
+    {
+      "baseline_id": "clean_reversal_5d_listing_age_calendar_v1",
+      "score_formula": "Rank 5d reversal ascending among rows with listing_age_days >= 180 calendar days; this is explicitly not trading-day listing age.",
+      "score_direction": "ascending 5d reversal after fixed calendar-age gate; lower score is better",
+      "allowed_fields": [
+        "adj_close",
+        "ranking_eligible_D0",
+        "listing_age_days"
+      ],
+      "forbidden_fields": [
+        "p98",
+        "label_*",
+        "realized_return",
+        "future_return",
+        "frozen_test",
+        "listing_age_trading_days",
+        "newly_listed_flag"
+      ],
+      "d0_visible": true,
+      "no_p98": true,
+      "no_label_diagnostics": true,
+      "no_frozen_test": true,
+      "fail_fast": [
+        "blocked trading-day listing-age field appears",
+        "newly_listed_flag appears",
+        "calendar proxy is renamed as trading-day age",
+        "silent fallback is requested"
+      ],
+      "intended_diagnosis": "Model-layer train/validation RankIC, ICIR, deciles, TopK proxy, and TopK-minus-nextK only.",
+      "why_it_is_clean": "It uses only D0 visible calendar listing age and explicitly refuses the blocked trading-day age fields.",
+      "why_it_may_improve_topk_head_quality": "Very newly listed names may distort reversal head behavior; a conservative calendar-age gate may reduce this noise."
+    },
+    {
+      "baseline_id": "clean_composite_reversal_tradability_v1",
+      "score_formula": "Equal-weight rank average of fixed D0 components: reversal_5d_rank, board-neutral reversal rank, liquidity rank, and tradability penalty. No validation weighting.",
+      "score_direction": "ascending fixed composite rank average; lower score is better",
+      "allowed_fields": [
+        "adj_close",
+        "amount",
+        "ranking_eligible_D0",
+        "entry_buyable",
+        "is_suspended",
+        "no_trade_flag",
+        "amount_zero_flag",
+        "volume_zero_flag",
+        "board_type",
+        "exchange"
+      ],
+      "forbidden_fields": [
+        "p98",
+        "label_*",
+        "realized_return",
+        "future_return",
+        "frozen_test",
+        "listing_age_trading_days",
+        "newly_listed_flag"
+      ],
+      "d0_visible": true,
+      "no_p98": true,
+      "no_label_diagnostics": true,
+      "no_frozen_test": true,
+      "fail_fast": [
+        "blocked enrichment field appears",
+        "forbidden label or future field appears",
+        "component weights are changed from fixed equal-weight",
+        "silent fallback is requested"
+      ],
+      "intended_diagnosis": "Model-layer train/validation RankIC, ICIR, deciles, TopK proxy, and TopK-minus-nextK only.",
+      "why_it_is_clean": "It combines only fixed D0 visible components with fixed equal weights and does not tune from validation outcomes.",
+      "why_it_may_improve_topk_head_quality": "A simple composite may keep reversal exposure while reducing operationally weak, illiquid, or regime-concentrated head names."
+    }
+  ]
+}
