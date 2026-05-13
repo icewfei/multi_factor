@@ -1,0 +1,71 @@
+{
+  "policy_version": "data_field_enrichment_v1_next_use_policy",
+  "entity_name": "enriched_security_state_daily_v1",
+  "layer_type": "conditional enrichment layer",
+  "conditional_pass": true,
+  "no_frozen_test_access": true,
+  "allowed_fields": [
+    "snapshot_id",
+    "instrument",
+    "trade_date",
+    "signal_date",
+    "is_st",
+    "st_source",
+    "st_effective_start",
+    "st_effective_end",
+    "is_suspended",
+    "no_trade_flag",
+    "volume_zero_flag",
+    "amount_zero_flag",
+    "is_limit_up",
+    "is_limit_down",
+    "open_at_up_limit",
+    "close_at_down_limit",
+    "limit_rule_version",
+    "entry_buyable",
+    "exit_sellable",
+    "sellable_retry_next_open",
+    "list_date",
+    "listing_age_days",
+    "board_type",
+    "exchange",
+    "limit_pct_rule",
+    "source_snapshot_id",
+    "build_time",
+    "builder_version",
+    "d0_visible",
+    "no_frozen_test_access"
+  ],
+  "blocked_fields": [
+    "listing_age_trading_days",
+    "newly_listed_flag"
+  ],
+  "conditional_fields": [],
+  "required_disclosure": [
+    "data_field_enrichment_v1 is a conditional enrichment layer",
+    "blocked fields are excluded from downstream research until remediation is completed",
+    "no silent fallback",
+    "no frozen test access",
+    "not alpha",
+    "not strategy approval",
+    "not OOS"
+  ],
+  "forbidden_downstream_usage": [
+    "blocked_fields in model inputs",
+    "blocked_fields in clean baseline inputs",
+    "blocked_fields in challenger inputs",
+    "blocked_fields in portfolio construction",
+    "blocked_fields in screening rules",
+    "promotion of conditional_pass to full pass",
+    "silent fallback from trading-day fields to calendar-day proxies",
+    "frozen test access"
+  ],
+  "fail_fast_conditions": [
+    "fail fast if downstream code references listing_age_trading_days",
+    "fail fast if downstream code references newly_listed_flag",
+    "fail fast if a blocked field is routed into model, baseline, challenger, portfolio, or screening code paths",
+    "fail fast if any code attempts to promote conditional_pass to full pass",
+    "fail fast if any code attempts silent fallback to a calendar-day proxy",
+    "fail fast if frozen test access is requested or observed"
+  ]
+}
