@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guarded_research_request.schema.json",
+  "title": "Guarded Research Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "consumer_name",
+    "task_type",
+    "run_scope",
+    "requested_enrichment_fields",
+    "declared_no_frozen_test_access",
+    "declared_conditional_pass",
+    "requested_layer_status",
+    "allow_silent_fallback",
+    "output_audit_path",
+    "task_payload"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "consumer_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_type": {
+      "type": "string",
+      "enum": [
+        "diagnostic",
+        "clean_baseline_score",
+        "challenger_prep",
+        "portfolio",
+        "screening"
+      ]
+    },
+    "run_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requested_enrichment_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "declared_no_frozen_test_access": {
+      "type": "boolean"
+    },
+    "declared_conditional_pass": {
+      "type": "boolean"
+    },
+    "requested_layer_status": {
+      "type": "string",
+      "enum": [
+        "conditional_pass",
+        "full_pass"
+      ]
+    },
+    "allow_silent_fallback": {
+      "type": "boolean"
+    },
+    "output_audit_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_payload": {
+      "type": "object"
+    }
+  }
+}
