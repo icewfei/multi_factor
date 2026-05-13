@@ -1,0 +1,186 @@
+{
+  "family_id": "clean_baseline_family_v1",
+  "design_status": "design_only_no_training_no_portfolio_no_metrics",
+  "objective": "Replace a single p98-conditional comparison anchor with a low-freedom clean baseline family.",
+  "global_boundaries": [
+    "no p98",
+    "no label diagnostics",
+    "no trainval source-selection feedback",
+    "D0 visible only",
+    "no frozen test access",
+    "no ML training",
+    "no portfolio run",
+    "no metrics/readout",
+    "no validation tuning",
+    "no strategy effectiveness claim"
+  ],
+  "common_expected_artifacts": [
+    "model_scores_D0.parquet",
+    "model_scores_D0_audit.json",
+    "source_chain_audit.json",
+    "run_state_attempt_manifest.json"
+  ],
+  "baselines": [
+    {
+      "baseline_id": "no_p98_reversal_baseline_v1",
+      "score_source": {
+        "definition": "c1 ASC / reversal_rank",
+        "construction_rule": "Rank names by 1-day reversal using D0-visible adjusted close history only.",
+        "source_chain_auditability": "Deterministic formula with fixed direction and no discretionary source-selection branch."
+      },
+      "allowed_inputs": [
+        "D0 visible only",
+        "adj_close history required for 1-day reversal",
+        "ranking_eligible_D0",
+        "snapshot_id"
+      ],
+      "forbidden_inputs": [
+        "no p98",
+        "no label diagnostics",
+        "no trainval source-selection feedback",
+        "no frozen test access",
+        "label_*",
+        "validation retuning",
+        "future return",
+        "execution outcome fields"
+      ],
+      "score_direction": "ascending 1d return / stronger reversal first",
+      "expected_artifacts": [
+        "model_scores_D0.parquet",
+        "model_scores_D0_audit.json",
+        "source_chain_audit.json",
+        "run_state_attempt_manifest.json"
+      ],
+      "fail_fast_conditions": [
+        "p98 appears anywhere in the source chain",
+        "label diagnostics appear anywhere in the source chain",
+        "frozen test access is requested or observed",
+        "D0 visible only is violated",
+        "score direction is not explicitly c1 ASC"
+      ],
+      "intended_role": "clean comparison anchor candidate for the pure reversal leg",
+      "why_it_is_clean": "It uses only D0-visible price history and eligibility, excludes p98, excludes label diagnostics, excludes trainval source-selection feedback, and remains directly auditable."
+    },
+    {
+      "baseline_id": "clean_momentum_20d_baseline_v1",
+      "score_source": {
+        "definition": "20d cumulative return DESC / momentum_rank",
+        "construction_rule": "Rank names by trailing 20-day cumulative return using D0-visible adjusted close history only.",
+        "source_chain_auditability": "Single fixed lookback and single fixed direction with no trainval-driven source swap."
+      },
+      "allowed_inputs": [
+        "D0 visible only",
+        "adj_close history required for 20-day momentum",
+        "ranking_eligible_D0",
+        "snapshot_id"
+      ],
+      "forbidden_inputs": [
+        "no p98",
+        "no label diagnostics",
+        "no trainval source-selection feedback",
+        "no frozen test access",
+        "label_*",
+        "validation retuning",
+        "future return",
+        "execution outcome fields"
+      ],
+      "score_direction": "descending 20d cumulative return / stronger momentum first",
+      "expected_artifacts": [
+        "model_scores_D0.parquet",
+        "model_scores_D0_audit.json",
+        "source_chain_audit.json",
+        "run_state_attempt_manifest.json"
+      ],
+      "fail_fast_conditions": [
+        "p98 appears anywhere in the source chain",
+        "label diagnostics appear anywhere in the source chain",
+        "frozen test access is requested or observed",
+        "D0 visible only is violated",
+        "lookback or direction is changed from fixed 20d DESC momentum"
+      ],
+      "intended_role": "clean comparison anchor candidate for the pure momentum leg",
+      "why_it_is_clean": "It is a fixed-formula historical-price baseline with no labels, no p98, no validation tuning, and an auditable source chain."
+    },
+    {
+      "baseline_id": "clean_liquidity_adjusted_reversal_baseline_v1",
+      "score_source": {
+        "definition": "1d reversal primary, 20d median dollar-volume DESC tiebreak",
+        "construction_rule": "Sort by 1-day reversal first; break ties with trailing 20-day median dollar volume computed from D0-visible price and volume history.",
+        "source_chain_auditability": "Primary rule and tiebreak rule are fixed and can be reconstructed exactly from visible inputs."
+      },
+      "allowed_inputs": [
+        "D0 visible only",
+        "adj_close history required for 1-day reversal",
+        "volume history required for 20-day median dollar volume",
+        "ranking_eligible_D0",
+        "snapshot_id"
+      ],
+      "forbidden_inputs": [
+        "no p98",
+        "no label diagnostics",
+        "no trainval source-selection feedback",
+        "no frozen test access",
+        "label_*",
+        "validation retuning",
+        "future return",
+        "execution outcome fields"
+      ],
+      "score_direction": "ascending 1d return first, descending liquidity tiebreak",
+      "expected_artifacts": [
+        "model_scores_D0.parquet",
+        "model_scores_D0_audit.json",
+        "source_chain_audit.json",
+        "run_state_attempt_manifest.json"
+      ],
+      "fail_fast_conditions": [
+        "p98 appears anywhere in the source chain",
+        "label diagnostics appear anywhere in the source chain",
+        "frozen test access is requested or observed",
+        "D0 visible only is violated",
+        "liquidity adjustment is changed from fixed 20d median dollar-volume tiebreak"
+      ],
+      "intended_role": "clean comparison anchor candidate for a liquidity-aware reversal leg",
+      "why_it_is_clean": "It adds one fixed non-label tiebreak to the reversal rule, stays within D0-visible inputs, avoids p98, and avoids trainval source-selection feedback."
+    },
+    {
+      "baseline_id": "clean_equal_weight_random_eligible_baseline_v1",
+      "score_source": {
+        "definition": "stable hash(snapshot_id, instrument_id, baseline_id) ASC",
+        "construction_rule": "Assign a deterministic pseudo-random score from a stable hash over snapshot_id, instrument_id, and baseline_id; rank ascending by hash.",
+        "source_chain_auditability": "The hash seed is fixed, the ordering is reproducible, and there is no label- or validation-dependent branch."
+      },
+      "allowed_inputs": [
+        "D0 visible only",
+        "ranking_eligible_D0",
+        "instrument_id",
+        "snapshot_id"
+      ],
+      "forbidden_inputs": [
+        "no p98",
+        "no label diagnostics",
+        "no trainval source-selection feedback",
+        "no frozen test access",
+        "label_*",
+        "validation retuning",
+        "future return",
+        "execution outcome fields"
+      ],
+      "score_direction": "ascending deterministic hash / pseudo-random but reproducible order",
+      "expected_artifacts": [
+        "model_scores_D0.parquet",
+        "model_scores_D0_audit.json",
+        "source_chain_audit.json",
+        "run_state_attempt_manifest.json"
+      ],
+      "fail_fast_conditions": [
+        "p98 appears anywhere in the source chain",
+        "label diagnostics appear anywhere in the source chain",
+        "frozen test access is requested or observed",
+        "D0 visible only is violated",
+        "hash seed or sort rule is not fixed and reproducible"
+      ],
+      "intended_role": "clean comparison anchor candidate serving as a neutral control",
+      "why_it_is_clean": "It depends only on D0-visible eligibility and fixed identifiers, uses no p98, uses no label diagnostics, uses no trainval source-selection feedback, and is maximally reproducible."
+    }
+  ]
+}
