@@ -10,7 +10,9 @@ CURRENT_STAGE_PATH = Path("docs/current_stage.md")
 def test_readme_contains_current_phase(repo_root: Path) -> None:
     text = (repo_root / README_PATH).read_text(encoding="utf-8")
 
-    assert "data_enrichment_and_guarded_research_workflow_phase" in text
+    assert "current_data_regime_research_stopped" in text
+    assert "strategy_research: paused" in text
+    assert "repository_role: audit asset and engineering asset" in text
 
 
 def test_readme_contains_current_baseline_and_enrichment_status(repo_root: Path) -> None:
@@ -19,7 +21,7 @@ def test_readme_contains_current_baseline_and_enrichment_status(repo_root: Path)
     assert "p98" in text
     assert "conditional reference only" in text
     assert "clean_baseline_family: clean but insufficient TopK head quality; not portfolio-ready" in text
-    assert "data_field_enrichment_v1: conditional enrichment layer" in text
+    assert "current D0 OHLCV + state regime: stopped" in text
 
 
 def test_readme_contains_current_prohibitions(repo_root: Path) -> None:
@@ -28,13 +30,16 @@ def test_readme_contains_current_prohibitions(repo_root: Path) -> None:
     assert "不读取 frozen test" in text
     assert "不跑 portfolio" in text
     assert "不开启 v4" in text
+    assert "训练" in text
+    assert "回测" in text
     assert "不把 trainval diagnosis 当 OOS" in text
 
 
 def test_current_stage_contains_guarded_workflow_and_no_portfolio(repo_root: Path) -> None:
     text = (repo_root / CURRENT_STAGE_PATH).read_text(encoding="utf-8")
 
-    assert "guarded_clean_baseline_workflow_v1: implemented" in text
+    assert "current_data_regime_research_stopped" in text
+    assert "strategy_research: paused" in text
     assert "当前不进入 portfolio" in text
     assert "listing_age_trading_days" in text
     assert "newly_listed_flag" in text

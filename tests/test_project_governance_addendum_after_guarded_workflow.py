@@ -27,12 +27,13 @@ def test_addendum_contains_new_governance_conclusions(repo_root: Path) -> None:
     assert "guarded workflow required" in text
 
 
-def test_addendum_contains_clean_baseline_redesign_direction(repo_root: Path) -> None:
+def test_addendum_contains_superseded_clean_baseline_redesign_direction(repo_root: Path) -> None:
     text = (repo_root / DOC_PATH).read_text(encoding="utf-8")
 
     assert "strong baseline is not clean enough" in text
     assert "clean baseline family is clean but not strong enough" in text
-    assert "next research direction is clean baseline redesign" in text
+    assert "next research direction at that stage was clean baseline redesign" in text
+    assert "superseded by `current_data_regime_research_stop_decision`" in text
     assert "not platform expansion" in text
 
 
@@ -42,3 +43,11 @@ def test_addendum_preserves_hard_boundaries(repo_root: Path) -> None:
     assert "does not change the frozen test rule" in text
     assert "does not change execution semantics" in text
     assert "does not permit trainval-as-OOS" in text
+
+
+def test_addendum_contains_current_stopped_phase(repo_root: Path) -> None:
+    text = (repo_root / DOC_PATH).read_text(encoding="utf-8")
+
+    assert "Current phase: `current_data_regime_research_stopped`" in text
+    assert "no training" in text
+    assert "no backtest" in text
