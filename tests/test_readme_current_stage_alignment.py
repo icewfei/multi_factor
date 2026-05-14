@@ -35,6 +35,15 @@ def test_readme_contains_current_prohibitions(repo_root: Path) -> None:
     assert "不把 trainval diagnosis 当 OOS" in text
 
 
+def test_readme_contains_exploratory_sandbox_allowed_zone(repo_root: Path) -> None:
+    text = (repo_root / README_PATH).read_text(encoding="utf-8")
+
+    assert "exploratory_sandbox_policy_after_data_regime_stop.md" in text
+    assert "paper-only" in text
+    assert "exploratory descriptive" in text
+    assert "不得宣称 alpha" in text
+
+
 def test_current_stage_contains_guarded_workflow_and_no_portfolio(repo_root: Path) -> None:
     text = (repo_root / CURRENT_STAGE_PATH).read_text(encoding="utf-8")
 
@@ -43,3 +52,12 @@ def test_current_stage_contains_guarded_workflow_and_no_portfolio(repo_root: Pat
     assert "当前不进入 portfolio" in text
     assert "listing_age_trading_days" in text
     assert "newly_listed_flag" in text
+
+
+def test_current_stage_contains_exploratory_sandbox_allowed_zone(repo_root: Path) -> None:
+    text = (repo_root / CURRENT_STAGE_PATH).read_text(encoding="utf-8")
+
+    assert "只停止策略推进，不停止所有研究理解" in text
+    assert "paper-only" in text
+    assert "exploratory descriptive" in text
+    assert "rank_band_full_profile_descriptive_research_design.md" in text

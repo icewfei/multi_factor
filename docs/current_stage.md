@@ -25,6 +25,8 @@ repository_role: audit asset and engineering asset
 - mid-rank edge yearly stability 不足。
 - 当前 D0 OHLCV + state 字段体系下没有 portfolio-ready clean candidate。
 
+`current_data_regime_research_stopped` 只停止策略推进，不停止所有研究理解。当前仍允许 `paper-only` pre-registration 与 `exploratory descriptive` mechanism research；允许区只用于解释失败机制、整理问题定义和准备未来独立立项，不得宣称 alpha、生成 candidate、跑 portfolio、读取 frozen test，或把 trainval diagnosis 包装为 OOS。具体边界见 [exploratory_sandbox_policy_after_data_regime_stop.md](/Users/wy/MiscProject/multi_factor/docs/exploratory_sandbox_policy_after_data_regime_stop.md)。
+
 ## Current Portfolio Decision
 
 当前不进入 portfolio。原因是：
@@ -79,3 +81,5 @@ blocked 字段修复前不得使用。任何 downstream 入口必须通过 next-
 - 只在出现新信息源、新数据模态，或独立 pre-register 的新研究问题后，才允许考虑重启研究。
 
 当前不建议继续平台化扩张，不建议跑 portfolio，不建议把 trainval diagnosis 当 OOS，不建议继续开 nonlinear v4，不建议继续当前 D0 OHLCV + state 规则变体。
+
+当前允许的下一步应落在 exploratory sandbox 内，例如 paper-only pre-registration 或 descriptive mechanism research。第一个建议的 descriptive-only 设计是 [rank_band_full_profile_descriptive_research_design.md](/Users/wy/MiscProject/multi_factor/docs/rank_band_full_profile_descriptive_research_design.md)。
